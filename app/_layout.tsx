@@ -23,7 +23,12 @@ export default function RootLayout() {
 
   return (
     <SafeAreaView style={{ flex: 1 }} className="bg-white">
-      <Stack screenOptions={{headerShown:false}}/>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen 
+          name="(tabs)"
+          options={{ headerShown: false }}
+        />
+      </Stack>
     </SafeAreaView>
       );
 }
