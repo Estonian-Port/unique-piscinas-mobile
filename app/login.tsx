@@ -6,10 +6,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Modal,
 } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
+import ModalError from '@/components/modalError';
 
 const login = () => {
   const [username, setUsername] = useState('');
@@ -18,13 +18,12 @@ const login = () => {
   const [modalMessage, setModalMessage] = useState('');
 
   const handleLogin = (username: String, password: String) => {
-    // Ver como seran las validaciones del login
     if (!username || !password) {
       setModalMessage('Por favor, completa todos los campos.');
       setModalVisible(true);
       return;
     }
-    if (username != 'admin' && password != 'admin') {
+    if (username !== 'admin' || password !== 'admin') {
       setModalMessage('Usuario o contraseña incorrectos.');
       setModalVisible(true);
       return;
@@ -74,28 +73,11 @@ const login = () => {
           </View>
         </KeyboardAvoidingView>
       </View>
-      <Modal
-        animationType="fade"
-        transparent={true}
+      <ModalError
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white p-6 rounded-lg w-4/5">
-            <Text className="text-lg font-geist-bold text-center mb-4">
-              {modalMessage}
-            </Text>
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              className="bg-danger py-2 px-4 rounded-lg"
-            >
-              <Text className="text-white text-center font-geist-semiBold">
-                Cerrar
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        message={modalMessage}
+        onClose={() => setModalVisible(false)}
+      />
     </ScrollView>
   );
 };
