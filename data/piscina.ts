@@ -12,8 +12,10 @@ interface Piscina {
     workingPressure:number;
     lastActivity:Date;
     nextCycle:Date;
-    //Control del filtro
+    //Entradas de agua
     waterInlets:waterInletsType;
+    //Control de filtro
+    waterEntryFilter: EntryFilter[];
     //Lampara UV
     hoursUsedUV:number;
     remainingHoursUV:number;
@@ -33,12 +35,8 @@ interface Piscina {
     lastReading:Date;
 }
 
-type waterInletsType = {
-    background:boolean;
-    skimmer:boolean;
-    bottomSweeper:boolean
-}
+type waterInletsType = "background" | "skimmer" | "bottomSweeper";
 
-type ligthsType = {
-    mode:string;
-}
+type ligthsType = "manual" | "programmed";
+
+type EntryFilter = "filter" | "backwash" | "rinse" | "drain" | "recirculate";
