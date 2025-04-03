@@ -48,15 +48,17 @@ const Index = () => {
           <View>
             <View className="border border-gray-300 rounded-md mb-4 h-10">
               <TextInput
-                placeholder="Username"
-                className="h-full w-full text-center p-2"
-                value={username}
-                onChangeText={setUsername}
+              placeholder="Username"
+              placeholderTextColor="#888888"
+              className="h-full w-full text-center p-2"
+              value={username}
+              onChangeText={setUsername}
               />
             </View>
             <View className="border border-gray-300 rounded-md mb-2 h-10">
               <TextInput
                 placeholder="Password"
+                placeholderTextColor="#888888"
                 secureTextEntry
                 className="h-full w-full text-center p-2"
                 value={password}
