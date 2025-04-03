@@ -5,10 +5,10 @@ import { LineChart } from 'react-native-chart-kit';
 const Graphics = () => {
   return (
     <View className="bg-white p-4 rounded-lg shadow-md w-11/12">
-      <Text className="text-lg font-bold text-black mb-1">
+      <Text className="font-geist-bold text-3xl text-text mb-1">
         Tendencias de Parámetros
       </Text>
-      <Text className="text-sm text-gray-500 mb-4">
+      <Text className="font-geist text-sm text-text mb-4">
         Evolución de los parámetros en los últimos 7 días
       </Text>
         <LineChart

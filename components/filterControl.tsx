@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import CardFilter from './cardFilter';
+import CardFilterWater from './cardFilterWater';
 
 const filterData = [
   {
@@ -70,11 +70,13 @@ export default function FilterControl({
         </View>
       )}
       {filterData.map((filter, index) => (
-        <CardFilter
+        <CardFilterWater
           key={index}
           icon={filter.icon}
           title={filter.title}
           description={filter.description}
+          colorIcon={'#b9d1d3'}
+          sizeIcon={24}
         />
       ))}
     </View>

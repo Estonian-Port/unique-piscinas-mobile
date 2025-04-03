@@ -3,6 +3,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import CardStats from '@/components/cardStats';
 import FilterControl from '@/components/filterControl';
 import Graphics from '@/components/graphics';
+import EntryWater from '@/components/entryWater';
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
           data={22.9}
           color={'#FF4500'}
         ></CardStats>
+        <EntryWater entryWater={['skimmer']}></EntryWater>
         <FilterControl waterEntryFilter={['filter']}></FilterControl>
         <Graphics></Graphics>
       </View>
