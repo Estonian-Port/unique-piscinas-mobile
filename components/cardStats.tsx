@@ -8,9 +8,10 @@ type CardStatsProps = {
     icon: any;
     data: number;
     color: string;
+    isTemperature?: boolean;
 }
 
-const CardStats = ({ title, icon, data, color}: CardStatsProps) => {
+const CardStats = ({ title, icon, data, color, isTemperature}: CardStatsProps) => {
     const min = Math.floor(data) - 2; // Dos puntos hacia atrás
     const max = Math.ceil(data) + 2; // Dos puntos hacia adelante
     
@@ -28,12 +29,13 @@ const CardStats = ({ title, icon, data, color}: CardStatsProps) => {
       };
 
   return (
-    <View className='bg-white shadow-md rounded-lg p-4 mb-4 w-11/12'>
+    <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12'>
         <View className='flex-row justify-between items-center w-full'>
             <Text className='font-geist-semiBold text-text text-l mb-3'>{title}</Text>
             <FontAwesome name={icon} size={24} color={color} />
         </View>
-        <Text className='font-geist-semiBold text-text text-3xl'>{data}</Text>
+        <Text className='font-geist-semiBold text-text text-3xl'>{data} {isTemperature ? '°C' : ''}
+        </Text>
         <Text className='font-geist-light text-text text-base'>{differenceLastData()}</Text>
         <View className="w-full bg-gray-200 h-2 rounded-full mt-4">
         <View

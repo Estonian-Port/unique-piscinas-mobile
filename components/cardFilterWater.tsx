@@ -18,7 +18,7 @@ const CardFilterWater = ({ icon, title, description, colorIcon, sizeIcon }: Card
           <MaterialIcons name={icon} size={sizeIcon} color={'023236'} />
         </View>
         <Text className="font-geist-semiBold text-2xl text-text">{title}</Text>
-        <Text className="font-geist-regular text-l text-text">
+        <Text className="font-geist-regular text-lg text-text">
           {description}
         </Text>
       </View>
