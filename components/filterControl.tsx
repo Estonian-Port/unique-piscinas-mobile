@@ -41,7 +41,7 @@ export default function FilterControl({
   const filterControl = waterEntryFilter.length > 0 ? true : false;
 
   return (
-    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12">
+    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
       <View className="flex-row justify-between items-center mb-4">
         <Text className="font-geist-semiBold text-3xl text-text">
           Control de Filtro

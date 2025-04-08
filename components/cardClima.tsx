@@ -14,7 +14,7 @@ type CardClimaProps = {
 
 const CardClima = ({temperature, weatherIcon, colorIcon, location, weatherStatus, humidity, wind} : CardClimaProps) => {
   return (
-    <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12'>
+    <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200'>
         <Text className='font-geist-semiBold text-text text-lg mb-3'>Clima Local</Text>
         <View className='flex-row justify-between items-center w-full mb-1'>
             <Text className='font-geist-semiBold text-text text-3xl'>{temperature} °C</Text>

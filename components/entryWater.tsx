@@ -29,7 +29,7 @@ export default function EntryWater({ entryWater }: WaterControlProps) {
   const hasEntryWater = entryWater.length > 0 ? true : false;
 
   return (
-    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12">
+    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
       <View className="justify-between mb-4 flex-1">
         <Text className="font-geist-semiBold text-3xl text-text">
           Entradas de Agua

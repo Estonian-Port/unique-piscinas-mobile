@@ -16,7 +16,7 @@ const PickerPool = ({ setIsPoolSelected } : {setIsPoolSelected: (value: boolean)
     }));
   
     return (
-      <View className="w-full bg-white shadow-xl rounded-lg p-4 mb-4">
+      <View className="w-full bg-white shadow-xl rounded-lg p-4 mb-4 border border-gray-200">
         <Text className='font-geist text-text text-lg'>Selecciona una piscina:</Text>
         <RNPickerSelect
           onValueChange={(value) => {

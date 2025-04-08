@@ -29,7 +29,7 @@ const CardStats = ({ title, icon, data, color, isTemperature}: CardStatsProps) =
       };
 
   return (
-    <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12'>
+    <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200'>
         <View className='flex-row justify-between items-center w-full'>
             <Text className='font-geist-semiBold text-text text-l mb-3'>{title}</Text>
             <FontAwesome name={icon} size={24} color={color} />
