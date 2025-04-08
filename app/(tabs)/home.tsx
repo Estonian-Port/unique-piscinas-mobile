@@ -8,6 +8,7 @@ import CardClima from '@/components/cardClima';
 import PickerPool from '@/components/pickerPool';
 import { useState } from 'react';
 import SystemStatus from '@/components/systemStatus';
+import RecentReadings from '@/components/recentReadings';
 
 export default function Home() {
   const [isPoolSelected, setIsPoolSelected] = useState(false);
@@ -55,6 +56,7 @@ export default function Home() {
         <EntryWater entryWater={['skimmer']}></EntryWater>
         <FilterControl waterEntryFilter={['filter']}></FilterControl>
         <Graphics></Graphics>
+        <RecentReadings></RecentReadings>
         </>)}
       </View>
     </ScrollView>
