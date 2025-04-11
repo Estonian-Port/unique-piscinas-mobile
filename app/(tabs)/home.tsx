@@ -9,9 +9,10 @@ import PickerPool from '@/components/pickerPool';
 import { useState } from 'react';
 import SystemStatus from '@/components/systemStatus';
 import RecentReadings from '@/components/recentReadings';
+import CardLamparaUV from '@/components/cardLamparaUV';
 
 export default function Home() {
-  const [isPoolSelected, setIsPoolSelected] = useState(false);
+  const [isPoolSelected, setIsPoolSelected] = useState(true);
 
 
   return (
@@ -23,7 +24,7 @@ export default function Home() {
           Unique Piscinas
         </Text>
         </View>
-        <View className="w-11/12 bg-white my-3">
+        <View className="w-11/12 my-3">
         <Text className="font-geist-semiBold text-2xl text-text mb-3">
           Hola, Leo bienvenido!
         </Text>
@@ -55,6 +56,7 @@ export default function Home() {
         <SystemStatus></SystemStatus>
         <EntryWater entryWater={['skimmer']}></EntryWater>
         <FilterControl waterEntryFilter={['filter']}></FilterControl>
+        <CardLamparaUV/>
         <Graphics></Graphics>
         <RecentReadings></RecentReadings>
         </>)}
