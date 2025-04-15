@@ -1,5 +1,4 @@
-import { ScrollView, Text, View } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { ScrollView, Text, View, Image } from 'react-native';
 import CardStats from '@/components/cardStats';
 import FilterControl from '@/components/filterControl';
 import Graphics from '@/components/graphics';
@@ -9,7 +8,10 @@ import PickerPool from '@/components/pickerPool';
 import { useState } from 'react';
 import SystemStatus from '@/components/systemStatus';
 import RecentReadings from '@/components/recentReadings';
-import CardLamparaUV from '@/components/cardLamparaUV';
+import LightControlCard from '@/components/controlLuces';
+import CardIonizador from '@/components/cardIonizador';
+import CardTransductor from '@/components/cardTransductor';
+import LamparaUV from '@/components/lamparaUV';
 
 export default function Home() {
   const [isPoolSelected, setIsPoolSelected] = useState(true);
@@ -18,12 +20,13 @@ export default function Home() {
   return (
     <ScrollView className="flex-1 bg-white mb-32">
       <View className="flex-1 items-center justify-center bg- h-full">
-        <View className='w-full bg-cyan-100 shadow-xl items-center'>
-        <FontAwesome name="tint" size={30} color="#00BFFF" />
-        <Text className="font-geist-bold text-5xl text-cyan-800 my-3">
-          Unique Piscinas
-        </Text>
-        </View>
+        <View className='w-full shadow-xl items-center'>
+          <Image 
+                        source={require('../../assets/images/logo-unique-encabezado.png')} 
+                        resizeMode='contain' 
+                        style={{ width: 280, height: 100 }} // Ajusta el tamaño de la imagen
+                        />
+                                </View>
         <View className="w-11/12 my-3">
         <Text className="font-geist-semiBold text-2xl text-text mb-3">
           Hola, Leo bienvenido!
@@ -56,7 +59,10 @@ export default function Home() {
         <SystemStatus></SystemStatus>
         <EntryWater entryWater={['skimmer']}></EntryWater>
         <FilterControl waterEntryFilter={['filter']}></FilterControl>
-        <CardLamparaUV/>
+        <LamparaUV/>
+        <CardIonizador/>
+        <CardTransductor/>
+        <LightControlCard/>
         <Graphics></Graphics>
         <RecentReadings></RecentReadings>
         </>)}
