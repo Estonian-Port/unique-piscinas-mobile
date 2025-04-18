@@ -1,42 +1,40 @@
-const mockPiscina: Piscina = {
+const piscinaPrincipal: Piscina = {
   id: 1,
-  name: 'Piscina Principal',
-  volume: 50000, // Volumen en litros
-  ph: 7.2, // Nivel de pH
-  temperature: 28, // Temperatura en grados Celsius
-  location: 'Buenos Aires, Argentina', // Ubicación de la piscina
-  // Estado del sistema
-  filterStatus: true,
-  activeMode: true,
-  activeEntries: false,
-  workingPressure: 1.2, // Presión en bares
-  lastActivity: new Date('2025-04-01T10:30:00'), // Última actividad
-  nextCycle: new Date('2025-04-02T08:00:00'), // Próximo ciclo
-  // Control del filtro
-  waterInlets: {
-    background: false,
-    skimmer: true,
-    bottomSweeper: false,
-  },
-  // Lámpara UV
-  hoursUsedUV: 1200, // Horas de uso
-  remainingHoursUV: 300, // Horas restantes
-  // Ionizador de cobre
-  positiveElectrode: 85, // Porcentaje de desgaste
-  negativeElectrode: 80, // Porcentaje de desgaste
-  copperIonLevel: 0.5, // Nivel de iones de cobre en ppm
-  // Transductor de ultrasonido
-  hoursUsed: 1500, // Horas de uso
-  remainingHours: 500, // Horas restantes
-  currentPower: 75, // Potencia actual en porcentaje
-  germicidalEffectiveness: 95, // Efectividad germicida en porcentaje
-  // Control de luces
-  lightsStatus: true,
-  mode: {
-    mode: 'Manual', // Modo de luces (por ejemplo, RGB, blanco, etc.)
-  },
-  // Última lectura
-  lastReading: new Date('2025-04-01T10:00:00'), // Fecha de la última lectura
+  name: 'Piscina Principal - Roca 4567',
 };
 
-export default mockPiscina;
+const piscinaSecundaria: Piscina = {
+  id: 2,
+  name: 'Piscina Secundaria - Roca 4567',
+};
+
+const piscinaNiños: Piscina = {
+  id: 3,
+  name: 'Piscina Niños - Av San Martín 1234',
+};
+
+const piscinaTerraza: Piscina = {
+  id: 4,
+  name: 'Piscina Terraza - Av San Martín 1234',
+};
+
+const piscinaPatio: Piscina = {
+  id: 5,
+  name: 'Piscina Patio - Av La Plata 1234',
+};
+
+export { piscinaPrincipal, piscinaSecundaria, piscinaNiños, piscinaTerraza, piscinaPatio };
+export const piscinas: Piscina[] = [
+  piscinaPrincipal,
+  piscinaSecundaria,
+  piscinaNiños,
+  piscinaTerraza,
+  piscinaPatio,
+];
+export const piscinas2: Piscina[] = [
+  { id: 1, name: 'Piscina Principal - Roca 4567' },
+  { id: 2, name: 'Piscina Secundaria - Roca 4567' },
+  { id: 3, name: 'Piscina Niños - Av San Martín 1234' },
+  { id: 4, name: 'Piscina Terraza - Av San Martín 1234' },
+  { id: 5, name: 'Piscina Patio - Av La Plata 1234' },
+];

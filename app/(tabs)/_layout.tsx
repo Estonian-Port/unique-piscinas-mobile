@@ -27,12 +27,12 @@ const _Layout = () => {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="[idPiscina]"
         options={{
-          title: 'Inicio',
+          title: 'Detalles',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="home" title="Home" />
+            <TabIcon focused={focused} icon="file" title="Detalles" />
           ),
         }}
       />
@@ -47,12 +47,12 @@ const _Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="analysis"
+        name="programation"
         options={{
-          title: 'Análisis',
+          title: 'Programación',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="bar-chart" title="Análisis" />
+            <TabIcon focused={focused} icon="calendar" title="Programación" />
           ),
         }}
       />

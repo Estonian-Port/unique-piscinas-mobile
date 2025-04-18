@@ -14,8 +14,8 @@ import ModalError from '@/components/modalError';
 import { useRouter } from 'expo-router';
 
 const Index = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [password, setPassword] = useState('admin');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter(); // Inicializa el router
@@ -31,7 +31,7 @@ const Index = () => {
       setModalVisible(true);
       return;
     }
-    router.replace('./home');
+    router.replace('./pools');
   };
 
   return (
