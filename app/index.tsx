@@ -15,7 +15,7 @@ import { useRouter } from 'expo-router';
 
 const Index = () => {
   const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin');
+  const [password, setPassword] = useState('12345');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter(); // Inicializa el router
@@ -26,7 +26,7 @@ const Index = () => {
       setModalVisible(true);
       return;
     }
-    if (username !== 'admin' || password !== 'admin') {
+    if (username !== 'admin' || password !== '12345') {
       setModalMessage('Usuario o contraseña incorrectos.');
       setModalVisible(true);
       return;
