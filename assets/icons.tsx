@@ -55,3 +55,7 @@ export const BubbleIcon = (props: any) => (
 export const InfoIcon = (props: any) => (
   <MaterialIcons name="info" size={24} color="B87E9F" {...props} />
 );
+
+export const LogoutIcon = (props: any) => (
+  <MaterialIcons name="logout" size={24} color="B87E9F" {...props} />
+);

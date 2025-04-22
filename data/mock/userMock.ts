@@ -3,6 +3,7 @@ import { piscinaPrincipal, piscinas, piscinaSecundaria } from "./piscinaMock";
 const leo : User = {
     id: 1,
     name: 'Leo',
+    lastname: 'Rodriguez',
     email: 'leo@unique.com',
     piscinas: piscinas,
 };
@@ -10,6 +11,7 @@ const leo : User = {
 const gabi : User = {
     id: 2,
     name: 'Gabriel',
+    lastname: 'Tarquini',
     email: 'gabi@unique.com',
     piscinas: [],
 };
@@ -17,6 +19,7 @@ const gabi : User = {
 const seba : User = {
     id: 3,
     name: 'Sebastian',
+    lastname: 'Rodriguez',
     email: 'seba@unique.com',
     piscinas: [piscinaPrincipal, piscinaSecundaria],
 };
@@ -24,6 +27,7 @@ const seba : User = {
 const diego : User = {
     id: 4,
     name: 'Diego',
+    lastname: 'Maradona',
     email: 'diego@unique.com',
     piscinas: [piscinaPrincipal]
 };

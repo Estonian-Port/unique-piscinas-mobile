@@ -27,8 +27,8 @@ const Indicadores = () => {
     <ScreenCard>
       <View className="flex-row justify-between items-center">
         {indicadores.map((indicador, index) => (
-          <View className='flex-1 items-center'>
-            <View key={index} className="border border-orange-400 p-3 rounded-full bg-white items-center">
+          <View key={index} className='flex-1 items-center'>
+            <View className="border border-orange-400 p-3 rounded-full bg-white items-center">
               <MaterialIcons name={indicador.icon} size={32} color="black" />
             </View>
             <Text className="font-geist-semiBold text-base mt-1">{indicador.title}</Text>

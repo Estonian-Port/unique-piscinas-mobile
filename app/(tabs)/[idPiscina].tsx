@@ -5,7 +5,7 @@ import Clima from '@/components/clima';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { piscinas } from '@/data/mock/piscinaMock';
 import { gabi, leo } from '@/data/mock/userMock';
-import { Screen } from '@/components/Screen';
+import { ScreenTabs } from '@/components/Screen';
 import { ChangeIcon } from '@/assets/icons';
 import Indicadores from '@/components/indicadores';
 
@@ -21,7 +21,7 @@ export default function ParamsPiscina() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Screen>
+      <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
             Hola, {user.name} bienvenido!
@@ -87,7 +87,7 @@ export default function ParamsPiscina() {
         />
         <ControlFiltro waterEntryFilter={['filter']}/>
         <Indicadores/>
-      </Screen>
+      </ScreenTabs>
     </ScrollView>
   );
 }

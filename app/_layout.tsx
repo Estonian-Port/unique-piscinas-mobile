@@ -32,6 +32,7 @@ export default function RootLayout() {
         screenOptions={{
           headerLeft: () => <Header />,
           headerRight: () => <BotonPerfil />,
+          headerTitle: () => '',
         }}
       >
         <Stack.Screen name="index" options={{ headerShown: false }} />

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import PoolCard from '@/components/poolCard';
 import { diego, gabi, leo, seba } from '@/data/mock/userMock';
 import { router } from 'expo-router';
+import BotonPerfil from '@/components/botonPerfil';
 
 const Pools = () => {
   const user: User = leo;
@@ -26,6 +27,7 @@ const Pools = () => {
 
   return (
     <View className="flex-1 bg-white items-center h-full">
+      <BotonPerfil></BotonPerfil>
       
       {/* Texto de bienvenida */}
       <View className="w-11/12 my-3">
@@ -54,7 +56,7 @@ const Pools = () => {
             contentContainerStyle={{
               gap: 20, // Espacio entre los elementos
               flexGrow: 1, // Asegura que el contenedor ocupe todo el espacio disponible
-              paddingBottom: 96, // Espacio al final de la lista
+              paddingBottom: 15, // Espacio al final de la lista
             }}
             style={{ width: '90%' }}
             showsVerticalScrollIndicator={false}

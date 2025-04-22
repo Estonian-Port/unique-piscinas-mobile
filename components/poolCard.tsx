@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 const PoolCard = ({ piscina }: { piscina: Piscina }) => {
   return (
     <Link asChild href={`/${piscina.id}`}>
-    <Pressable className="relative bg-white rounded-sm shadow-md w-full justify-center items-center">
+    <Pressable className="relative bg-white rounded-sm shadow-sm w-full justify-center items-center">
         <Image
           source={require('../assets/images/portada-card-piscina.webp')}
           style={{ width: '100%', height: 120, borderRadius: 3, opacity: 0.3 }}
