@@ -26,14 +26,7 @@ const Pools = () => {
 
   return (
     <View className="flex-1 bg-white items-center h-full">
-      {/* Encabezado */}
-      <View className="w-full items-center">
-        <Image
-          source={require('../assets/images/logo-unique-encabezado.png')}
-          resizeMode="contain"
-          style={{ width: 280, height: 100 }}
-        />
-      </View>
+      
       {/* Texto de bienvenida */}
       <View className="w-11/12 my-3">
         <Text className="font-geist-semiBold text-2xl text-text mb-3">

@@ -9,9 +9,9 @@ import {
   Image,
 } from 'react-native';
 import React, { useState } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
 import ModalError from '@/components/modalError';
 import { useRouter } from 'expo-router';
+import { LoginIcon } from '@/assets/icons';
 
 const Index = () => {
   const [username, setUsername] = useState('admin');
@@ -51,7 +51,7 @@ const Index = () => {
               <TextInput
               placeholder="Username"
               placeholderTextColor="#888888"
-              style={{ backgroundColor: '#fff' }}
+              style={{ backgroundColor: '#fff', borderRadius: 5 }}
               className="h-full w-full text-center p-2"
               value={username}
               onChangeText={setUsername}
@@ -61,7 +61,7 @@ const Index = () => {
               <TextInput
                 placeholder="Password"
                 placeholderTextColor="#888888"
-                style={{ backgroundColor: '#fff' }}
+                style={{ backgroundColor: '#fff', borderRadius: 5, width: '100%' }}
                 secureTextEntry
                 className="h-full w-full text-center p-2"
                 value={password}
@@ -72,7 +72,7 @@ const Index = () => {
               onPress={() => handleLogin(username, password)}
               className="bg-[#A38E63] rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
             >
-              <FontAwesome name="sign-in" size={20} color="#fff" />
+              <LoginIcon/>
               <Text className="font-geist-semiBold text-white ml-2">
                 Iniciar Sesión
               </Text>

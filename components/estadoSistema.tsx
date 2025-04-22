@@ -1,9 +1,8 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
 import PressureGauge from './pressure';
 
-const SystemStatus = () => {
+const EstadoSistema = () => {
   return (
     <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
       <Text className="font-geist-semiBold text-text text-3xl mb-3">
@@ -54,4 +53,4 @@ const SystemStatus = () => {
   );
 };
 
-export default SystemStatus;
+export default EstadoSistema;

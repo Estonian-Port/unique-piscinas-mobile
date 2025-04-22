@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import CardReading from './cardReading';
+import Lectura from './lectura';
 
 const RecentReadingsData = [
   {
@@ -33,7 +33,7 @@ const RecentReadingsData = [
   },
 ];
 
-const RecentReadings = () => {
+const LecturasRecientes = () => {
   return (
     <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
       <Text className="font-geist-semiBold text-text text-3xl">
@@ -43,17 +43,17 @@ const RecentReadings = () => {
               Últimas lecturas realizadas
         </Text>
       {RecentReadingsData.map((reading, index) => (
-        <CardReading
+        <Lectura
           icon={reading.icon}
           key={index}
           mainData={reading.mainData}
           timeData={reading.timeData}
           maintenanceData={reading.maintenanceData}
           status={reading.status}
-        ></CardReading>
+        ></Lectura>
       ))}
     </View>
   );
 };
 
-export default RecentReadings;
+export default LecturasRecientes;

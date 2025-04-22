@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { FontAwesome } from '@expo/vector-icons'
+import { TintIcon } from '@/assets/icons';
 
 
-type CardStatsProps = {
+type PhProps = {
     title: string;
     icon: any;
     data: number;
@@ -11,7 +11,7 @@ type CardStatsProps = {
     isTemperature?: boolean;
 }
 
-const CardStats = ({ title, icon, data, color, isTemperature}: CardStatsProps) => {
+const Ph = ({ data}: {data : number}) => {
     const min = Math.floor(data) - 2; // Dos puntos hacia atrás
     const max = Math.ceil(data) + 2; // Dos puntos hacia adelante
     
@@ -31,17 +31,16 @@ const CardStats = ({ title, icon, data, color, isTemperature}: CardStatsProps) =
   return (
     <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200'>
         <View className='flex-row justify-between items-center w-full'>
-            <Text className='font-geist-semiBold text-text text-l mb-3'>{title}</Text>
-            <FontAwesome name={icon} size={24} color={color} />
+            <Text className='font-geist-semiBold text-text text-l mb-3'>pH</Text>
+            <TintIcon/>
         </View>
-        <Text className='font-geist-semiBold text-text text-3xl'>{data} {isTemperature ? '°C' : ''}
-        </Text>
+        <Text className='font-geist-semiBold text-text text-3xl'>{data}</Text>
         <Text className='font-geist-light text-text text-base'>{differenceLastData()}</Text>
         <View className="w-full bg-gray-200 h-2 rounded-full mt-4">
         <View
           style={{
             width: `${progress * 100}%`,
-            backgroundColor: color,
+            backgroundColor: 'black',
             height: '100%',
             borderRadius: 4,
           }}
@@ -56,4 +55,4 @@ const CardStats = ({ title, icon, data, color, isTemperature}: CardStatsProps) =
   )
 }
 
-export default CardStats
+export default Ph

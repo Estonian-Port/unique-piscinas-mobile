@@ -4,6 +4,7 @@ import TabIcon from '../../components/tabIcon';
 
 const _Layout = () => {
   return (
+
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
@@ -32,7 +33,7 @@ const _Layout = () => {
           title: 'Detalles',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="file" title="Detalles" />
+            <TabIcon focused={focused} icon="article" title="Detalles" />
           ),
         }}
       />
@@ -42,7 +43,7 @@ const _Layout = () => {
           title: 'Equipos',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="wrench" title="Equipamiento" />
+            <TabIcon focused={focused} icon="build" title="Equipamiento" />
           ),
         }}
       />
@@ -52,17 +53,17 @@ const _Layout = () => {
           title: 'Programación',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="calendar" title="Programación" />
+            <TabIcon focused={focused} icon="calendar-month" title="Programación" />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="faq"
         options={{
-          title: 'Perfil',
+          title: 'FAQ',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="user" title="Perfil" />
+            <TabIcon focused={focused} icon="question-answer" title="FAQ" />
           ),
         }}
       />

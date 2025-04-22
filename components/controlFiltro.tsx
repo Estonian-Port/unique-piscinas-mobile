@@ -1,47 +1,19 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import CardFilterWater from './cardFilterWater';
+import { ScreenCard } from './ScreenCard';
+import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
 
-const filterData = [
-  {
-    icon: 'filter-alt',
-    title: 'Filtrar',
-    description: 'Filtrado normal del agua',
-  },
-  {
-    icon: 'replay',
-    title: 'Retrolavar',
-    description: 'Limpieza de filtro con flujo inverso',
-  },
-  {
-    icon: 'waves',
-    title: 'Enjuagar',
-    description: 'Aclarado después del retrolavado',
-  },
-  {
-    icon: 'delete',
-    title: 'Desagotar',
-    description: 'Vaciado del agua al desagüe',
-  },
-  {
-    icon: 'autorenew',
-    title: 'Recircular',
-    description: 'Recirculación sin filtrado',
-  },
-];
-
-interface FilterControlProps {
+interface ControlFiltroProps {
   waterEntryFilter: EntryFilter[];
 }
 
-export default function FilterControl({
+export default function ControlFiltro({
   waterEntryFilter,
-}: FilterControlProps) {
+}: ControlFiltroProps) {
   const filterControl = waterEntryFilter.length > 0 ? true : false;
 
   return (
-    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
+    <ScreenCard>
       <View className="flex-row justify-between items-center mb-4">
         <Text className="font-geist-semiBold text-3xl text-text">
           Control de Filtro
@@ -60,25 +32,42 @@ export default function FilterControl({
           </View>
         )}
       </View>
+
+      {/*ENTRADAS DE AGUA */}
+      <View className="flex-row justify-between gap-2">
+        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+          <TintIcon size={32} />
+          <Text className="font-geist-semiBold text-base text-text mt-2">
+            Fondo
+          </Text>
+        </View>
+        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+          <BubbleIcon size={32} />
+          <Text className="font-geist-semiBold text-base text-text mt-2">
+            Barrefondo
+          </Text>
+        </View>
+        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+          <EyeIcon size={32} />
+          <Text className="font-geist-semiBold text-base text-text mt-2">
+            Skimmer
+          </Text>
+        </View>
+      </View>
+
+      {/*MENSAJE DE ADVERTENCIA */}
       {!filterControl && (
         <View className="border border-gray-200 rounded-sm flex-row justify-between items-center py-3 px-1">
-          <MaterialIcons name="info" size={24} color="#B87E9F" />
+          <InfoIcon />
           <Text className="flex-1 font-geist-semiBold text-base text-text ml-2">
             Seleccione al menos una entrada de agua para activar el sistema de
             filtrado.
           </Text>
         </View>
       )}
-      {filterData.map((filter, index) => (
-        <CardFilterWater
-          key={index}
-          icon={filter.icon}
-          title={filter.title}
-          description={filter.description}
-          colorIcon={'#b9d1d3'}
-          sizeIcon={24}
-        />
-      ))}
-    </View>
+
+      {/*MODO DE FILTRO */}
+      
+    </ScreenCard>
   );
 }

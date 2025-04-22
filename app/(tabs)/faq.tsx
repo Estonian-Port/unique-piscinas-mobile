@@ -2,12 +2,11 @@ import { View, Text, ScrollView, Pressable } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
-import { piscinas } from '@/data/mock/piscinaMock';
 import { Screen } from '@/components/Screen';
+import { piscinas } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
-import ControlLuces from '@/components/controlLuces';
 
-const Programation = () => {
+const FAQ = () => {
   const idPiscina = 1;
   const user = leo;
 
@@ -73,11 +72,9 @@ const Programation = () => {
           )}
         </View>
 
-        <ControlLuces/>
-
       </Screen>
     </ScrollView>
   );
 }
 
-export default Programation
+export default FAQ

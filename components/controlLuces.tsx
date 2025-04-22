@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import CustomSwitch from './customSwitch';
 import LightSchedule from './lightSchedule';
 
-const LightControlCard = () => {
+const ControlLuces = () => {
   const [isOn, setIsOn] = useState(false);
   const [isManual, setIsManual] = useState(false);
 
@@ -62,4 +62,4 @@ const LightControlCard = () => {
   );
 };
 
-export default LightControlCard;
+export default ControlLuces;

@@ -1,8 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
+import { AirIcon, TintIcon } from '@/assets/icons';
 
-type CardClimaProps = {
+type ClimaProps = {
   temperature: number;
     weatherIcon: any;
     colorIcon: string;
@@ -12,7 +13,7 @@ type CardClimaProps = {
     wind: number;
 }
 
-const CardClima = ({temperature, weatherIcon, colorIcon, location, weatherStatus, humidity, wind} : CardClimaProps) => {
+const Clima = ({temperature, weatherIcon, colorIcon, location, weatherStatus, humidity, wind} : ClimaProps) => {
   return (
     <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200'>
         <Text className='font-geist-semiBold text-text text-lg mb-3'>Clima Local</Text>
@@ -24,11 +25,11 @@ const CardClima = ({temperature, weatherIcon, colorIcon, location, weatherStatus
             <Text className='font-geist-semiBold text-text text-xl'>{weatherStatus}</Text>
     <View className="flex-row justify-between mt-2">
       <View className="flex-row items-center">
-        <MaterialIcons name="water-drop" size={18} color="#9B5278" />
+        <TintIcon color="#9B5278" size={18}/>
         <Text className="text-text text-sm ml-1">Humedad: {humidity}%</Text>
       </View>
       <View className="flex-row items-center">
-        <MaterialIcons name="air" size={18} color="#9B5278" />
+        <AirIcon/>
         <Text className="text-text text-sm ml-1">Viento: {wind} km/h</Text>
       </View>
     </View>
@@ -36,4 +37,4 @@ const CardClima = ({temperature, weatherIcon, colorIcon, location, weatherStatus
   )
 }
 
-export default CardClima
+export default Clima

@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 
-type CardReadingProps = {
+type LecturaProps = {
     icon: any;
     mainData: string;
     timeData: string;
@@ -10,7 +10,7 @@ type CardReadingProps = {
     status: string;
 };
 
-const CardReading = ({ icon, mainData, timeData, maintenanceData, status }: CardReadingProps) => {
+const Lectura = ({ icon, mainData, timeData, maintenanceData, status }: LecturaProps) => {
     return (
         <View className='w-full bg-white flex-row items-center justify-between my-3'>
                 <View className="w-min h-min bg-slate-300 rounded-full p-2 mb-3">
@@ -26,4 +26,4 @@ const CardReading = ({ icon, mainData, timeData, maintenanceData, status }: Card
     )
 }
 
-export default CardReading
+export default Lectura
