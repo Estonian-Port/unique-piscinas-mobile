@@ -7,6 +7,7 @@ import {
   Platform,
   ScrollView,
   Image,
+  StatusBar,
 } from 'react-native';
 import React, { useState } from 'react';
 import ModalError from '@/components/modalError';
@@ -18,7 +19,7 @@ const Index = () => {
   const [password, setPassword] = useState('12345');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const router = useRouter(); // Inicializa el router
+  const router = useRouter();
 
   const handleLogin = (username: String, password: String) => {
     if (!username || !password) {
@@ -35,26 +36,30 @@ const Index = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, height: '100%' }}>
-      <View className="flex-1 items-center justify-center bg-[#0054ae] h-full w-full">
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+    <>
+      {/* Configuración específica del StatusBar para el login */}
+      <StatusBar backgroundColor="#0054ae" barStyle="light-content" />
+
+      <ScrollView contentContainerStyle={{ flexGrow: 1, height: '100%' }}>
+        <View className="flex-1 items-center justify-center bg-[#0054ae] h-full w-full">
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
             <View className="mb-4 items-center">
-              <Image 
-              source={require('../assets/images/logo-unique.png')} 
-              resizeMode='contain' 
-              style={{ width: 250, height: 220 }} // Ajusta el tamaño de la imagen
+              <Image
+                source={require('../assets/images/logo-unique.png')}
+                resizeMode="contain"
+                style={{ width: 250, height: 220 }}
               />
             </View>
             <View className="border border-gray-300 rounded-md mb-4 h-10">
               <TextInput
-              placeholder="Username"
-              placeholderTextColor="#888888"
-              style={{ backgroundColor: '#fff', borderRadius: 5 }}
-              className="h-full w-full text-center p-2"
-              value={username}
-              onChangeText={setUsername}
+                placeholder="Username"
+                placeholderTextColor="#888888"
+                style={{ backgroundColor: '#fff', borderRadius: 5 }}
+                className="h-full w-full text-center p-2"
+                value={username}
+                onChangeText={setUsername}
               />
             </View>
             <View className="border border-gray-300 rounded-md mb-2 h-10">
@@ -72,19 +77,20 @@ const Index = () => {
               onPress={() => handleLogin(username, password)}
               className="bg-[#A38E63] rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
             >
-              <LoginIcon/>
+              <LoginIcon />
               <Text className="font-geist-semiBold text-white ml-2">
                 Iniciar Sesión
               </Text>
             </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </View>
-      <ModalError
-        visible={modalVisible}
-        message={modalMessage}
-        onClose={() => setModalVisible(false)}
-      />
-    </ScrollView>
+          </KeyboardAvoidingView>
+        </View>
+        <ModalError
+          visible={modalVisible}
+          message={modalMessage}
+          onClose={() => setModalVisible(false)}
+        />
+      </ScrollView>
+    </>
   );
 };
 

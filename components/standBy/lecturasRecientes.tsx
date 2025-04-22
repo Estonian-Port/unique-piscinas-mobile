@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import Lectura from './lectura';
+import Lectura from './standBy/lectura';
 
 const RecentReadingsData = [
   {

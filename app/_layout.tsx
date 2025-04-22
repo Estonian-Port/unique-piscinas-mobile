@@ -1,13 +1,12 @@
-import { Link, SplashScreen, Stack } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import './globals.css';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@/components/header';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Pressable } from 'react-native';
 import BotonPerfil from '@/components/botonPerfil';
 import BotonHome from '@/components/botonHome';
+import { StatusBar } from 'react-native';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -20,25 +19,31 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync;
+      SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className="bg-white">
-      <Stack
-        screenOptions={{
-          headerLeft: () => <Header />,
-          headerRight: () => <BotonPerfil />,
-          headerTitle: () => '',
-        }}
-      >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerBackVisible: false }} />
-        <Stack.Screen name="profile" options={{ headerRight: () => <BotonHome /> }} />
-      </Stack>
-    </SafeAreaView>
+    <>
+      {/* Configuración global del StatusBar */}
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
+
+      <SafeAreaView style={{ flex: 1 }} className='bg-white'>
+        <Stack
+          screenOptions={{
+            headerLeft: () => <Header />,
+            headerRight: () => <BotonPerfil />,
+            headerTitle: () => '',
+          }}
+        >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerBackVisible: false }} />
+          <Stack.Screen name="profile" options={{ headerRight: () => <BotonHome /> }} />
+          <Stack.Screen name="changePass" options={{ headerRight: () => null }} />
+        </Stack>
+      </SafeAreaView>
+    </>
   );
 }

@@ -1,7 +1,9 @@
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import React from 'react';
 import { ScreenCard } from './ScreenCard';
 import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
+import { FontAwesome } from '@expo/vector-icons';
+import ControlScreen from './ScreenFiltro';
 
 interface ControlFiltroProps {
   waterEntryFilter: EntryFilter[];
@@ -67,6 +69,7 @@ export default function ControlFiltro({
       )}
 
       {/*MODO DE FILTRO */}
+      <ControlScreen></ControlScreen>
       
     </ScreenCard>
   );
