@@ -59,3 +59,11 @@ export const InfoIcon = (props: any) => (
 export const LogoutIcon = (props: any) => (
   <MaterialIcons name="logout" size={24} color="B87E9F" {...props} />
 );
+
+export const ConfigurationIcon = (props: any) => (
+  <MaterialIcons name="settings" size={24} color="black" {...props} />
+);
+
+export const PowerIcon = (props: any) => (
+  <MaterialIcons name="power-settings-new" size={18} color="blue" {...props} />
+);

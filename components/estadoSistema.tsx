@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import PressureGauge from './pressure';
+import { ScreenCard } from './ScreenCard';
 
 const EstadoSistema = () => {
   return (
-    <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
+    <ScreenCard>
       <Text className="font-geist-semiBold text-text text-3xl mb-3">
         Estado del Sistema
       </Text>
@@ -49,7 +50,7 @@ const EstadoSistema = () => {
           En 4 horas
         </Text>
       </View>
-    </View>
+    </ScreenCard>
   );
 };
 

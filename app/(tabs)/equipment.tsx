@@ -2,10 +2,11 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import React from 'react';
 import { piscinas } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
-import { Link, useLocalSearchParams } from 'expo-router';
-import { Screen } from '@/components/Screen';
+import { Link } from 'expo-router';
+import { ScreenTabs } from '@/components/Screen';
 import EstadoSistema from '@/components/estadoSistema';
 import { ChangeIcon } from '@/assets/icons';
+import EquipamientoConfigurado from '@/components/equipamientoConfigurado';
 
 const Equipment = () => {
   const idPiscina = 1;
@@ -18,8 +19,8 @@ const Equipment = () => {
   const pool = searchPool(Number(idPiscina));
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <Screen>
+    <ScrollView className='flex-1'>
+      <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
             Hola, {user.name} bienvenido!
@@ -74,7 +75,8 @@ const Equipment = () => {
         </View>
 
         <EstadoSistema />
-      </Screen>
+        <EquipamientoConfigurado />
+      </ScreenTabs>
     </ScrollView>
   );
 };

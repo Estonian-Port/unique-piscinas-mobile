@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import PoolCard from '@/components/poolCard';
 import { diego, gabi, leo, seba } from '@/data/mock/userMock';
 import { router } from 'expo-router';
-import BotonPerfil from '@/components/botonPerfil';
 
 const Pools = () => {
   const user: User = leo;
@@ -27,7 +26,6 @@ const Pools = () => {
 
   return (
     <View className="flex-1 bg-white items-center h-full">
-      <BotonPerfil></BotonPerfil>
       
       {/* Texto de bienvenida */}
       <View className="w-11/12 my-3">
