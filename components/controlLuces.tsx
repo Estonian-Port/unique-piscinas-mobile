@@ -2,7 +2,7 @@ import { View, Text, Switch } from 'react-native';
 import React, { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import CustomSwitch from './standBy/customSwitch';
-import LightSchedule from './lightSchedule';
+import LightSchedule from './schedule';
 
 const ControlLuces = () => {
   const [isOn, setIsOn] = useState(false);

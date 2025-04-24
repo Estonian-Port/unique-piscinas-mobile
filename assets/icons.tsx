@@ -67,3 +67,11 @@ export const ConfigurationIcon = (props: any) => (
 export const PowerIcon = (props: any) => (
   <MaterialIcons name="power-settings-new" size={18} color="blue" {...props} />
 );
+
+export const ClockIcon = (props: any) => (
+  <MaterialIcons name="access-time" size={24} color="black" {...props} />
+);
+
+export const EditIcon = (props: any) => (
+  <MaterialIcons name="edit" size={24} color="black" {...props} />
+);

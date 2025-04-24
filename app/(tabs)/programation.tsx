@@ -1,11 +1,12 @@
-import { View, Text, ScrollView, Pressable } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, Pressable } from 'react-native';
+import React from 'react';
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
 import { piscinas } from '@/data/mock/piscinaMock';
 import { Screen } from '@/components/Screen';
 import { leo } from '@/data/mock/userMock';
 import ControlLuces from '@/components/controlLuces';
+import ProgramacionFiltrado from '@/components/programacionFiltrado';
 
 const Programation = () => {
   const idPiscina = 1;
@@ -26,28 +27,7 @@ const Programation = () => {
           </Text>
         </View>
 
-        {/*
-          {user.piscinas.length > 1 && (
-        <Link href={'/pools'} asChild>
-            <Pressable
-              className="w-11/12 items-center p-2 mb-3 border"
-              style={{
-                borderRadius: 5,
-                backgroundColor: '#94a3b8',
-                borderColor: '#94a3bd',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Text className="font-geist-semiBold text-text text-lg">
-                Volver a la lista de piscinas
-              </Text>
-            </Pressable>
-        </Link>
-          )}
-        */}
-
         <View className="flex-row w-11/12 justify-between mb-3">
-          {/* Contenedor del texto */}
           <View className="flex-1 pr-4">
             <Text className="font-geist-semiBold text-xl text-text">
               {pool.name}
@@ -57,7 +37,6 @@ const Programation = () => {
             </Text>
           </View>
 
-          {/* Botón redondo */}
           {user.piscinas.length > 1 && (
             <Link href={'/pools'} asChild>
               <Pressable
@@ -73,11 +52,11 @@ const Programation = () => {
           )}
         </View>
 
-        <ControlLuces/>
-
+        <ProgramacionFiltrado />
+        
       </Screen>
     </ScrollView>
   );
-}
+};
 
-export default Programation
+export default Programation;
