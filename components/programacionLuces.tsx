@@ -27,10 +27,10 @@ const ProgramacionLuces = () => {
 
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
-        <HandIcon size={18} color="light-blue" />
-        <Text className="font-geist-semiBold text-text text-base ml-1">
-          Control Manual
-        </Text>
+          <HandIcon size={18} color="light-blue" />
+          <Text className="font-geist-semiBold text-text text-base ml-1">
+            Control Manual
+          </Text>
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
@@ -55,23 +55,30 @@ const ProgramacionLuces = () => {
           <Text className="font-geist text-text text-base">+ Añadir</Text>
         </Pressable>
         {modalVisible && (
-          <ModalProgramacion visible={modalVisible} onClose={() => setModalVisible(false)} />)}
+          <ModalProgramacion
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+        )}
       </View>
 
-      <View className={`${isManual ? 'opacity-50' : ''}`} pointerEvents={isManual ? 'none' : 'auto'}>
-      {hasCicles ? (
-        <View className="items-center justify-between gap-2">
-          {ciclosProgramados.map((ciclo) => (
-            <Schedule cicle={ciclo} key={ciclo.id}></Schedule>
-          ))}
-        </View>
-      ) : (
-        <View className="flex-row items-center justify-between mt-4 mb-4">
-          <Text className="font-geist-semiBold text-text text-base">
-            No hay ciclos programados
-          </Text>
-        </View>
-      )}
+      <View
+        className={`${isManual ? 'opacity-50' : ''}`}
+        pointerEvents={isManual ? 'none' : 'auto'}
+      >
+        {hasCicles ? (
+          <View className="items-center justify-between gap-2">
+            {ciclosProgramados.map((ciclo) => (
+              <Schedule cicle={ciclo} key={ciclo.id}></Schedule>
+            ))}
+          </View>
+        ) : (
+          <View className="flex-row items-center justify-between mt-4 mb-4">
+            <Text className="font-geist-semiBold text-text text-base">
+              No hay ciclos programados
+            </Text>
+          </View>
+        )}
       </View>
     </ScreenCard>
   );

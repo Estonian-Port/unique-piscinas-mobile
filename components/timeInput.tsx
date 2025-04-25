@@ -13,13 +13,18 @@ const TimeInput = ({title} : {title:string}) => {
   };
 
   return (
-    <View>
-      <Pressable className='items-center flex-1' onPress={() => setPickerVisible(true)}>
+    <View className="items-center justify-center p-2">
+      <Pressable 
+        onPress={() => setPickerVisible(true)}
+        className="items-center"
+      >
+        <View className="flex-row items-center mb-1">
           <MaterialIcons name="schedule" size={20} color="#000" />
-                  <Text className="font-geist text-text text-base ml-2">
-                    {title}
-                  </Text>
-        <Text className='font-geist-semiBold text-text text-2xl mb-3'>
+          <Text className="font-geist text-text text-sm ml-1">
+            {title}
+          </Text>
+        </View>
+        <Text className="font-geist-semiBold text-text text-xl">
           {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </Text>
       </Pressable>

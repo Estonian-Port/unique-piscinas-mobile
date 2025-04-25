@@ -5,10 +5,11 @@ import { ClockIcon, FilterIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import { Cicle } from '@/data/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
+import ModalProgramacion from './modalProgramacion';
 
 const ProgramacionFiltrado = () => {
   const ciclosProgramados: Cicle[] = ciclosFiltradoMock;
-  
+  const [modalVisible, setModalVisible] = useState(false);
 
   const hasCicles = ciclosProgramados.length > 0;
 
@@ -32,10 +33,16 @@ const ProgramacionFiltrado = () => {
         </View>
         <Pressable
           className="border border-gray-200 rounded-md p-2 items-center justify-center"
-          onPress={addSchedule}
+          onPress={() => setModalVisible(true)}
         >
           <Text className="font-geist text-text text-base">+ Añadir</Text>
         </Pressable>
+        {modalVisible && (
+          <ModalProgramacion
+            visible={modalVisible}
+            onClose={() => setModalVisible(false)}
+          />
+        )}
       </View>
 
       {hasCicles ? (
