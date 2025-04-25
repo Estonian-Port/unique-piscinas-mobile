@@ -87,3 +87,15 @@ export const HandIcon = (props: any) => (
 export const SaveIcon = (props: any) => (
   <MaterialIcons name="save" size={24} color="black" {...props} />
 );
+
+export const HelpIcon = (props: any) => (
+  <MaterialIcons name="help" size={24} color="black" {...props} />
+);
+
+export const ChevronDownIcon = (props: any) => (
+  <MaterialIcons name="keyboard-arrow-down" size={24} color="black" {...props} />
+);
+
+export const ChevronUpIcon = (props: any) => (
+  <MaterialIcons name="keyboard-arrow-up" size={24} color="black" {...props} />
+);

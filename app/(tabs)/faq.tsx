@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, Pressable } from 'react-native'
-import React from 'react'
+import { View, Text, ScrollView, Pressable } from 'react-native';
+import React from 'react';
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
-import { Screen } from '@/components/Screen';
+import { Screen, ScreenTabs } from '@/components/Screen';
 import { piscinas } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
+import PreguntasFrecuentes from '@/components/preguntasFrecuentes';
 
 const FAQ = () => {
   const idPiscina = 1;
@@ -18,32 +19,12 @@ const FAQ = () => {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Screen>
+      <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
             Hola, {user.name} bienvenido!
           </Text>
         </View>
-
-        {/*
-          {user.piscinas.length > 1 && (
-        <Link href={'/pools'} asChild>
-            <Pressable
-              className="w-11/12 items-center p-2 mb-3 border"
-              style={{
-                borderRadius: 5,
-                backgroundColor: '#94a3b8',
-                borderColor: '#94a3bd',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Text className="font-geist-semiBold text-text text-lg">
-                Volver a la lista de piscinas
-              </Text>
-            </Pressable>
-        </Link>
-          )}
-        */}
 
         <View className="flex-row w-11/12 justify-between mb-3">
           {/* Contenedor del texto */}
@@ -71,10 +52,10 @@ const FAQ = () => {
             </Link>
           )}
         </View>
-
-      </Screen>
+        <PreguntasFrecuentes />
+      </ScreenTabs>
     </ScrollView>
   );
-}
+};
 
-export default FAQ
+export default FAQ;
