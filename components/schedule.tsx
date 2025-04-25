@@ -45,7 +45,7 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
           {daysOfWeek.map((day) => (
             <View
               key={day}
-              className={`flex-row items-center flex-1 justify-center rounded-full mx-0.5 p-0.5 ${
+              className={`flex-row items-center flex-1 justify-center rounded-full mx-0.5 p-0.5 border ${
                 isActiveDay(day) ? 'bg-black' : 'bg-white'
               }`}
             >

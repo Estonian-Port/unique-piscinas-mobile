@@ -3,9 +3,9 @@ import React from 'react';
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
 import { piscinas } from '@/data/mock/piscinaMock';
-import { Screen } from '@/components/Screen';
+import { Screen, ScreenTabs } from '@/components/Screen';
 import { leo } from '@/data/mock/userMock';
-import ControlLuces from '@/components/controlLuces';
+import ProgramacionLuces from '@/components/programacionLuces';
 import ProgramacionFiltrado from '@/components/programacionFiltrado';
 
 const Programation = () => {
@@ -20,7 +20,7 @@ const Programation = () => {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Screen>
+      <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
             Hola, {user.name} bienvenido!
@@ -53,8 +53,9 @@ const Programation = () => {
         </View>
 
         <ProgramacionFiltrado />
+        <ProgramacionLuces />
         
-      </Screen>
+      </ScreenTabs>
     </ScrollView>
   );
 };

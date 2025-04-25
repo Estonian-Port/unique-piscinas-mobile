@@ -1,14 +1,16 @@
 import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { ScreenCard } from './ScreenCard';
-import { ClockIcon, FilterIcon } from '@/assets/icons';
-import Schedule from './schedule';
 import { Cicle } from '@/data/cicloFiltrado';
-import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
+import { ScreenCard } from './ScreenCard';
+import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
+import Schedule from './schedule';
+import { ciclosLucesMock } from '@/data/mock/cicloLucesMock';
+import ModalProgramacion from './modalProgramacion';
 
-const ProgramacionFiltrado = () => {
-  const ciclosProgramados: Cicle[] = ciclosFiltradoMock;
-  
+const ProgramacionLuces = () => {
+  const ciclosProgramados: Cicle[] = ciclosLucesMock;
+  const [isManual, setIsActive] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const hasCicles = ciclosProgramados.length > 0;
 
@@ -17,27 +19,46 @@ const ProgramacionFiltrado = () => {
   return (
     <ScreenCard>
       <View className="flex-row items-center  mb-4">
-        <FilterIcon color="cyan" size={24} />
+        <LightIcon color="orange" size={24} />
         <Text className="font-geist-semiBold text-text text-2xl ml-1">
-          Programación de Filtrado
+          Control de Iluminación
         </Text>
+      </View>
+
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center">
+        <HandIcon size={18} color="light-blue" />
+        <Text className="font-geist-semiBold text-text text-base ml-1">
+          Control Manual
+        </Text>
+        </View>
+        <Switch
+          trackColor={{ false: '#d3d3d3', true: '#000000' }}
+          thumbColor="#ffffff"
+          ios_backgroundColor="#d3d3d3"
+          onValueChange={() => setIsActive(!isManual)}
+          value={isManual}
+        />
       </View>
 
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center">
           <ClockIcon size={18} color="light-blue" />
           <Text className="font-geist-semiBold text-text text-base ml-1">
-            Ciclos programados
+            Horarios programados
           </Text>
         </View>
         <Pressable
           className="border border-gray-200 rounded-md p-2 items-center justify-center"
-          onPress={addSchedule}
+          onPress={() => setModalVisible(true)}
         >
           <Text className="font-geist text-text text-base">+ Añadir</Text>
         </Pressable>
+        {modalVisible && (
+          <ModalProgramacion visible={modalVisible} onClose={() => setModalVisible(false)} />)}
       </View>
 
+      <View className={`${isManual ? 'opacity-50' : ''}`} pointerEvents={isManual ? 'none' : 'auto'}>
       {hasCicles ? (
         <View className="items-center justify-between gap-2">
           {ciclosProgramados.map((ciclo) => (
@@ -51,8 +72,9 @@ const ProgramacionFiltrado = () => {
           </Text>
         </View>
       )}
+      </View>
     </ScreenCard>
   );
 };
 
-export default ProgramacionFiltrado;
+export default ProgramacionLuces;

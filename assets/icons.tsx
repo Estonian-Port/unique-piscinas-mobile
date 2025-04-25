@@ -75,3 +75,15 @@ export const ClockIcon = (props: any) => (
 export const EditIcon = (props: any) => (
   <MaterialIcons name="edit" size={24} color="black" {...props} />
 );
+
+export const LightIcon = (props: any) => (
+  <MaterialIcons name="lightbulb-outline" size={24} color="black" {...props} />
+);
+
+export const HandIcon = (props: any) => (
+  <MaterialIcons name="pan-tool" size={24} color="black" {...props} />
+);
+
+export const SaveIcon = (props: any) => (
+  <MaterialIcons name="save" size={24} color="black" {...props} />
+);
