@@ -12,7 +12,7 @@ const PreguntasFrecuentes = () => {
     <ScreenCard>
         <View className='flex-row items-center justify-start mb-3'>
             <HelpIcon />
-            <Text className="font-geist-semiBold text-2xl text-text ml-2">Preguntas Frecuentes</Text>
+            <Text className="font-geist-semi-bold text-2xl text-text ml-2">Preguntas Frecuentes</Text>
         </View>
         <Text className='font-geist-extraLight text-text text-base'>Información sobre el funcionamiento del sistema de filtración</Text>
         {faqs.map((faq, index) => (

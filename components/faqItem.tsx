@@ -12,7 +12,7 @@ const FAQItem = ({ faq }: {faq:FAQ}) => {
           className="flex-row justify-between items-center" 
           onPress={() => setIsExpanded(!isExpanded)}
         >
-          <Text className="font-geist-semiBold text-text text-base flex-1 pr-2">
+          <Text className="font-geist-semi-bold text-text text-base flex-1 pr-2">
             {faq.question}
           </Text>
           {isExpanded ? 

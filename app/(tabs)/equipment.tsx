@@ -39,7 +39,7 @@ const Equipment = () => {
                 boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <Text className="font-geist-semiBold text-text text-lg">
+              <Text className="font-geist-semi-bold text-text text-lg">
                 Volver a la lista de piscinas
               </Text>
             </Pressable>
@@ -50,7 +50,7 @@ const Equipment = () => {
         <View className="flex-row w-11/12 justify-between mb-3">
           {/* Contenedor del texto */}
           <View className="flex-1 pr-4">
-            <Text className="font-geist-semiBold text-xl text-text">
+            <Text className="font-geist-semi-bold text-xl text-text">
               {pool.name}
             </Text>
             <Text className="font-geist text-base text-text">

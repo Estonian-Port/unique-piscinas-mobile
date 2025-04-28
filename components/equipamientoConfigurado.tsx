@@ -9,14 +9,14 @@ const EquipamientoConfigurado = () => {
     <ScreenCard>
       <View className="flex-row items-center self-start mb-3">
         <ConfigurationIcon />
-        <Text className="font-geist-semiBold text-text text-2xl ml-2">
+        <Text className="font-geist-semi-bold text-text text-2xl ml-2">
           Equipamiento configurado
         </Text>
       </View>
 
       <View className="flex-row items-center self-start my-2">
         <PowerIcon />
-        <Text className="font-geist-semiBold text-text text-lg ml-2">
+        <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Bombas
         </Text>
       </View>
@@ -49,7 +49,7 @@ const EquipamientoConfigurado = () => {
 
       <View className="flex-row items-center self-start my-2">
       <FilterIcon size={18} color={'blue'}/>
-        <Text className="font-geist-semiBold text-text text-lg ml-2">
+        <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Filtro
         </Text>
       </View>
@@ -69,7 +69,7 @@ const EquipamientoConfigurado = () => {
 
       <View className="flex-row items-center self-start my-2">
         <TintIcon size={18} color={'blue'}/>
-        <Text className="font-geist-semiBold text-text text-lg ml-2">
+        <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Válvulas
         </Text>
       </View>

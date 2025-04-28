@@ -29,7 +29,7 @@ const FAQ = () => {
         <View className="flex-row w-11/12 justify-between mb-3">
           {/* Contenedor del texto */}
           <View className="flex-1 pr-4">
-            <Text className="font-geist-semiBold text-xl text-text">
+            <Text className="font-geist-semi-bold text-xl text-text">
               {pool.name}
             </Text>
             <Text className="font-geist text-base text-text">

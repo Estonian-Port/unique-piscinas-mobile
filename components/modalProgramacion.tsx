@@ -50,7 +50,7 @@ const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
                   key={day}
                   className="items-center justify-center rounded-full p-1 px-2.5 border bg-white"
                 >
-                  <Text className="font-geist-semiBold text-lg text-black">
+                  <Text className="font-geist-semi-bold text-lg text-black">
                     {day}
                   </Text>
                 </Pressable>
@@ -66,7 +66,7 @@ const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
                 onPress={onClose}
                 className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
                 >
-                <Text className="text-white text-center font-geist-semiBold">
+                <Text className="text-white text-center font-geist-semi-bold">
                   Cancelar
                 </Text>
                 </Pressable>
@@ -76,7 +76,7 @@ const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
                 >
                 <View className="flex-row items-center justify-center">
                   <SaveIcon color="white" />
-                  <Text className="text-white text-center font-geist-semiBold ml-2">
+                  <Text className="text-white text-center font-geist-semi-bold ml-2">
                     Guardar
                   </Text>
                 </View>

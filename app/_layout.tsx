@@ -14,7 +14,7 @@ export default function RootLayout() {
     'Geist-Light': require('../assets/fonts/Geist-Light.ttf'),
     'Geist-Regular': require('../assets/fonts/Geist-Regular.ttf'),
     'Geist-Bold': require('../assets/fonts/Geist-Bold.ttf'),
-    'Geist-SemiBold': require('../assets/fonts/Geist-SemiBold.ttf'),
+    'Geist-semiBold': require('../assets/fonts/Geist-SemiBold.ttf'),
   });
 
   useEffect(() => {
@@ -42,6 +42,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" options={{ headerBackVisible: false }} />
           <Stack.Screen name="profile" options={{ headerRight: () => <BotonHome /> }} />
           <Stack.Screen name="changePass" options={{ headerRight: () => null }} />
+          <Stack.Screen name="(tabs-adm)" options={{ headerRight: () => null }} />
         </Stack>
       </SafeAreaView>
     </>

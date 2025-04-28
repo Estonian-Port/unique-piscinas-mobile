@@ -22,7 +22,7 @@ const ModalError = ({ visible, message, onClose }: CustomModalProps) => {
             onPress={onClose}
             className="bg-danger py-2 px-4 rounded-lg"
           >
-            <Text className="text-white text-center font-geist-semiBold">Cerrar</Text>
+            <Text className="text-white text-center font-geist-semi-bold">Cerrar</Text>
           </TouchableOpacity>
         </View>
       </View>

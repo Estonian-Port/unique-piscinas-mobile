@@ -24,7 +24,7 @@ const TimeInput = ({title} : {title:string}) => {
             {title}
           </Text>
         </View>
-        <Text className="font-geist-semiBold text-text text-xl">
+        <Text className="font-geist-semi-bold text-text text-xl">
           {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </Text>
       </Pressable>

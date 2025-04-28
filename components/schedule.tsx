@@ -50,7 +50,7 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
               }`}
             >
               <Text
-                className={`font-geist-semiBold text-base ${
+                className={`font-geist-semi-bold text-base ${
                   isActiveDay(day) ? 'text-white' : 'text-black'
                 }`}
               >

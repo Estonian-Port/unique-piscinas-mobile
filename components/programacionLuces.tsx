@@ -20,7 +20,7 @@ const ProgramacionLuces = () => {
     <ScreenCard>
       <View className="flex-row items-center  mb-4">
         <LightIcon color="orange" size={24} />
-        <Text className="font-geist-semiBold text-text text-2xl ml-1">
+        <Text className="font-geist-semi-bold text-text text-2xl ml-1">
           Control de Iluminación
         </Text>
       </View>
@@ -28,7 +28,7 @@ const ProgramacionLuces = () => {
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
           <HandIcon size={18} color="light-blue" />
-          <Text className="font-geist-semiBold text-text text-base ml-1">
+          <Text className="font-geist-semi-bold text-text text-base ml-1">
             Control Manual
           </Text>
         </View>
@@ -44,7 +44,7 @@ const ProgramacionLuces = () => {
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center">
           <ClockIcon size={18} color="light-blue" />
-          <Text className="font-geist-semiBold text-text text-base ml-1">
+          <Text className="font-geist-semi-bold text-text text-base ml-1">
             Horarios programados
           </Text>
         </View>
@@ -74,7 +74,7 @@ const ProgramacionLuces = () => {
           </View>
         ) : (
           <View className="flex-row items-center justify-between mt-4 mb-4">
-            <Text className="font-geist-semiBold text-text text-base">
+            <Text className="font-geist-semi-bold text-text text-base">
               No hay ciclos programados
             </Text>
           </View>

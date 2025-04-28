@@ -6,26 +6,26 @@ import { ScreenCard } from './ScreenCard';
 const EstadoSistema = () => {
   return (
     <ScreenCard>
-      <Text className="font-geist-semiBold text-text text-3xl mb-3">
+      <Text className="font-geist-semi-bold text-text text-3xl mb-3">
         Estado del Sistema
       </Text>
 
       <View className="flex-row justify-between items-center w-full mb-3">
-        <Text className='font-geist-semiBold text-text text-base'>Estado del filtro:</Text>
+        <Text className='font-geist-semi-bold text-text text-base'>Estado del filtro:</Text>
         <View className="bg-gray-200 rounded-full p-2">
-          <Text className="font-geist-semiBold text-sm text-text">
+          <Text className="font-geist-semi-bold text-sm text-text">
             En reposo
           </Text>
         </View>
       </View>
 
       <View className="flex-row justify-between items-center w-full mb-5">
-        <Text className='font-geist-semiBold text-text text-base'>Modo activo:</Text>
+        <Text className='font-geist-semi-bold text-text text-base'>Modo activo:</Text>
         <Text className="font-geist text-base text-text">Ninguno</Text>
       </View>
 
       <View className="flex-row justify-between items-center w-full mb-5">
-        <Text className='font-geist-semiBold text-text text-base'>Entradas activas:</Text>
+        <Text className='font-geist-semi-bold text-text text-base'>Entradas activas:</Text>
         <Text className="font-geist text-base text-text">Ninguna</Text>
       </View>
 
@@ -38,14 +38,14 @@ const EstadoSistema = () => {
       ></PressureGauge>
 
       <View className="flex-row justify-between items-center w-full mb-5">
-        <Text className='font-geist-semiBold text-text text-base'>Última actividad:</Text>
+        <Text className='font-geist-semi-bold text-text text-base'>Última actividad:</Text>
         <Text className="font-geist text-base text-text">
           Hace 2 horas
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center w-full mb-5">
-        <Text className='font-geist-semiBold text-text text-base'>Próximo ciclo:</Text>
+        <Text className='font-geist-semi-bold text-text text-base'>Próximo ciclo:</Text>
         <Text className="font-geist text-base text-text">
           En 4 horas
         </Text>

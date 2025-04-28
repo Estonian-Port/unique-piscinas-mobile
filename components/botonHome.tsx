@@ -10,7 +10,7 @@ const BotonHome = () => {
         <View className="p-1 border rounded-full bg-gray-200 items-center justify-center">
           <MaterialIcons name="home" size={24} color="#000" />
         </View>
-        <Text className="font-geist-semiBold text-text text-sm text-center">
+        <Text className="font-geist-semi-bold text-text text-sm text-center">
           Home
         </Text>
       </Pressable>

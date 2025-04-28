@@ -19,7 +19,7 @@ const ProgramacionFiltrado = () => {
     <ScreenCard>
       <View className="flex-row items-center  mb-4">
         <FilterIcon color="cyan" size={24} />
-        <Text className="font-geist-semiBold text-text text-2xl ml-1">
+        <Text className="font-geist-semi-bold text-text text-2xl ml-1">
           Programación de Filtrado
         </Text>
       </View>
@@ -27,7 +27,7 @@ const ProgramacionFiltrado = () => {
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center">
           <ClockIcon size={18} color="light-blue" />
-          <Text className="font-geist-semiBold text-text text-base ml-1">
+          <Text className="font-geist-semi-bold text-text text-base ml-1">
             Ciclos programados
           </Text>
         </View>
@@ -53,7 +53,7 @@ const ProgramacionFiltrado = () => {
         </View>
       ) : (
         <View className="flex-row items-center justify-between mt-4 mb-4">
-          <Text className="font-geist-semiBold text-text text-base">
+          <Text className="font-geist-semi-bold text-text text-base">
             No hay ciclos programados
           </Text>
         </View>

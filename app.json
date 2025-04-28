@@ -40,7 +40,7 @@
             "./assets/fonts/Geist-ExtraLight.ttf",
             "./assets/fonts/Geist-Light.ttf",
             "./assets/fonts/Geist-Regular.ttf",
-            "./assets/fonts/Geist-Semibold.ttf",
+            "./assets/fonts/geist-semi-bold.ttf",
             "./assets/fonts/Geist-Bold.ttf"        
           ]
         }

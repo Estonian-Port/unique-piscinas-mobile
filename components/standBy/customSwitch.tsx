@@ -17,7 +17,7 @@ const CustomSwitch = ({ isManual, setIsManual }: { isManual: boolean; setIsManua
           color={isManual ? '#fff' : '000'}
         />
         <Text
-          className={`font-geist-semiBold text-base ml-2 ${
+          className={`font-geist-semi-bold text-base ml-2 ${
             isManual ? 'text-white' : 'text-black'
           }`}
         >
@@ -37,7 +37,7 @@ const CustomSwitch = ({ isManual, setIsManual }: { isManual: boolean; setIsManua
           color={!isManual ? '#fff' : '#000'}
         />
         <Text
-          className={`font-geist-semiBold text-base ml-2 ${
+          className={`font-geist-semi-bold text-base ml-2 ${
             !isManual ? 'text-white' : 'text-black'
           }`}
         >

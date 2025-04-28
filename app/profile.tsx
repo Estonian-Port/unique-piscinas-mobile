@@ -18,7 +18,7 @@ const Profile = () => {
   return (
     <ScrollView className="bg-white">
       <Screen>
-        <Text className="font-geist-semiBold text-2xl text-text mt-4 ml-4 mb-2 self-start">
+        <Text className="font-geist-semi-bold text-2xl text-text mt-4 ml-4 mb-2 self-start">
           Mi perfil
         </Text>
         <View className="border rounded-full border-gray-300 p-4 mt-4">
@@ -51,19 +51,19 @@ const Profile = () => {
           />
           <Link asChild href={'/changePass'}>
             <Pressable className="mt-6 rounded-lg bg-red-400 p-4 w-3/5">
-              <Text className="font-geist-semiBold text-text text-lg text-center">
+              <Text className="font-geist-semi-bold text-text text-lg text-center">
                 Cambiar contraseña
               </Text>
             </Pressable>
           </Link>
           <Pressable className="mt-6 rounded-lg bg-gray-400 p-4 w-3/5">
-            <Text className="font-geist-semiBold text-text text-lg text-center">
+            <Text className="font-geist-semi-bold text-text text-lg text-center">
               Guardar cambios
             </Text>
           </Pressable>
           <Pressable className="flex-row items-center justify-center mt-10 rounded-lg p-4 w-3/5">
             <LogoutIcon color="#9ca3af" />
-            <Text className="ml-2 font-geist-semiBold text-gray-400 text-lg text-center">
+            <Text className="ml-2 font-geist-semi-bold text-gray-400 text-lg text-center">
               Cerrar sesión
             </Text>
           </Pressable>

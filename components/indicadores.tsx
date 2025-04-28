@@ -31,7 +31,7 @@ const Indicadores = () => {
             <View className="border border-orange-400 p-3 rounded-full bg-white items-center">
               <MaterialIcons name={indicador.icon} size={32} color="black" />
             </View>
-            <Text className="font-geist-semiBold text-base mt-1">{indicador.title}</Text>
+            <Text className="font-geist-semi-bold text-base mt-1">{indicador.title}</Text>
           </View>
         ))}
       </View>

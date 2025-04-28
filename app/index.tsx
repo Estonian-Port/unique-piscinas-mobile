@@ -14,9 +14,12 @@ import ModalError from '@/components/modalError';
 import { useRouter } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
 
+type rolType = 'admin' | 'user';
+
 const Index = () => {
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('12345');
+  const [rol, setRol] = useState<rolType>('admin');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
@@ -30,6 +33,10 @@ const Index = () => {
     if (username !== 'admin' || password !== '12345') {
       setModalMessage('Usuario o contraseña incorrectos.');
       setModalVisible(true);
+      return;
+    }
+    if (rol === 'admin') {
+      router.replace('./dashboard');
       return;
     }
     router.replace('./pools');
@@ -78,7 +85,7 @@ const Index = () => {
               className="bg-[#A38E63] rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
             >
               <LoginIcon />
-              <Text className="font-geist-semiBold text-white ml-2">
+              <Text className="font-geist-semi-bold text-white ml-2">
                 Iniciar Sesión
               </Text>
             </TouchableOpacity>

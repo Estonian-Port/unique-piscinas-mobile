@@ -31,10 +31,10 @@ const Ph = ({ data}: {data : number}) => {
   return (
     <View className='bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200'>
         <View className='flex-row justify-between items-center w-full'>
-            <Text className='font-geist-semiBold text-text text-l mb-3'>pH</Text>
+            <Text className='font-geist-semi-bold text-text text-l mb-3'>pH</Text>
             <TintIcon/>
         </View>
-        <Text className='font-geist-semiBold text-text text-3xl'>{data}</Text>
+        <Text className='font-geist-semi-bold text-text text-3xl'>{data}</Text>
         <Text className='font-geist-light text-text text-base'>{differenceLastData()}</Text>
         <View className="w-full bg-gray-200 h-2 rounded-full mt-4">
         <View

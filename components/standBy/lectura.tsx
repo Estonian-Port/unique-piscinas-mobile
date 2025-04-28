@@ -17,11 +17,11 @@ const Lectura = ({ icon, mainData, timeData, maintenanceData, status }: LecturaP
                     <MaterialIcons name={icon} size={20} color={'000'} />
                 </View>
                 <View className='items-start justify-start flex-1 mx-3'>
-                        <Text className='font-geist-semiBold text-text text-lg'>{mainData}</Text>
+                        <Text className='font-geist-semi-bold text-text text-lg'>{mainData}</Text>
                         <Text className='font-geist-light text-text text-base'>{timeData}</Text>
                         <Text className='font-geist-ligth text-text text-sm'>{maintenanceData}</Text>
                 </View>
-                <Text className='font-geist-semiBold text-text text-lg'>{status}</Text>
+                <Text className='font-geist-semi-bold text-text text-lg'>{status}</Text>
         </View>
     )
 }

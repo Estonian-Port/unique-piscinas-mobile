@@ -9,7 +9,7 @@ const ChangePass = () => {
   return (
     <ScrollView className="bg-white">
       <Screen>
-        <Text className="font-geist-semiBold text-2xl text-text mt-4 ml-4 mb-2 self-start">
+        <Text className="font-geist-semi-bold text-2xl text-text mt-4 ml-4 mb-2 self-start">
           Cambiar contraseña
         </Text>
         <View className="w-11/12 items-center justify-between">
@@ -30,7 +30,7 @@ const ChangePass = () => {
             placeholder={user.lastname}
           />
           <Pressable className="mt-10 rounded-lg bg-gray-400 p-4 w-3/5">
-            <Text className="font-geist-semiBold text-text text-lg text-center">
+            <Text className="font-geist-semi-bold text-text text-lg text-center">
               Guardar cambios
             </Text>
           </Pressable>

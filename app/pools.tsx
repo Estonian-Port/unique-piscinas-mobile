@@ -29,7 +29,7 @@ const Pools = () => {
       
       {/* Texto de bienvenida */}
       <View className="w-11/12 my-3">
-        <Text className="font-geist-semiBold text-2xl text-text mb-3">
+        <Text className="font-geist-semi-bold text-2xl text-text mb-3">
           Hola, {user.name} bienvenido!
         </Text>
       </View>
@@ -43,7 +43,7 @@ const Pools = () => {
       {usuarioConMultiplesPiscinas() && (
         <>
           <View className='w-11/12 items-start mb-3'>
-            <Text className="font-geist-semiBold text-text text-lg">
+            <Text className="font-geist-semi-bold text-text text-lg">
               Seleccione una piscina:
             </Text>
           </View>

@@ -36,7 +36,7 @@ const RecentReadingsData = [
 const LecturasRecientes = () => {
   return (
     <View className="bg-white shadow-xl rounded-lg p-4 mb-4 w-11/12 border border-gray-200">
-      <Text className="font-geist-semiBold text-text text-3xl">
+      <Text className="font-geist-semi-bold text-text text-3xl">
         Lecturas recientes
       </Text>
       <Text className="font-geist text-sm text-text mb-3">

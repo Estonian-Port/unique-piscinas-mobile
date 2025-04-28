@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         geist: ['Geist-Regular', 'sans-serif'],
-        "geist-semiBold": ['Geist-SemiBold', 'sans-serif'],
+        "geist-semi-bold": ['Geist-semiBold', 'sans-serif'],
         "geist-bold": ['Geist-Bold', 'sans-serif'],
         "geist-extraLight": ['Geist-ExtraLight', 'sans-serif'],
         "geist-light": ['Geist-Light', 'sans-serif'],
