@@ -1,323 +1,165 @@
-import { View, ScrollView, Text, TextInput, Pressable } from 'react-native';
-import React, { useState } from 'react';
-import { Table, Row, TableWrapper, Cell } from 'react-native-table-component';
-import { MaterialCommunityIcons, Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
-
-// Tipos para nuestros datos
-interface EquipoEstado {
-  tipo: 'power' | 'light' | 'water-outline' | 'temperature-high' | 'waves';
-  estado: 'optimo' | 'atencion' | 'error';
-}
-
-interface PiscinaData {
-  id: number;
-  nombre: string;
-  propietario: string;
-  tipo: 'Desborde' | 'Skimmer';
-  ph: string;
-  equipos: EquipoEstado[];
-}
+import { View, Text, ScrollView, Pressable, FlatList } from "react-native"
+import { ConfigurationIcon, EyeIcon } from "@/assets/icons"
+import { MaterialIcons } from "@expo/vector-icons"
 
 const TablaPiscinas = () => {
-  const [busqueda, setBusqueda] = useState('');
-  const [ordenColumna, setOrdenColumna] = useState<string>('Nombre');
-  const [ordenDireccion, setOrdenDireccion] = useState<'asc' | 'desc'>('asc');
-  const [piscinasData, setPiscinasData] = useState<PiscinaData[]>(piscinasMock);
-  const [datosFiltrados, setDatosFiltrados] = useState<PiscinaData[]>(piscinasMock);
+  const datos = Array.from({ length: 20 }, (_, index) => ({
+    nombre: `Piscina ${index + 1}`,
+    propietario: `Propietario ${index + 1}`,
+    tipo: index % 2 === 0 ? ("Skimmer" as const) : ("Desborde" as const),
+    ph: Number.parseFloat((6.5 + Math.random() * 2).toFixed(1)),
+    equipos: [
+      { tipo: "uv", estado: index % 3 === 0 ? "operativo" : "reemplazo" },
+      { tipo: "ionizador", estado: index % 4 === 0 ? "inactivo" : "operativo" },
+      { tipo: "trasductor", estado: index % 5 === 0 ? "reemplazo" : "operativo" },
+      { tipo: "calentador", estado: index % 2 === 0 ? "inactivo" : "operativo" },
+    ],
+  }))
 
-  // Encabezados y anchos de columna
-  const encabezados = ['Nombre', 'Propietario', 'Tipo', 'pH', 'Estado Equipos', 'Acciones'];
-  const anchoCol = [150, 150, 100, 60, 150, 180];
-
-  // Función para buscar piscinas
-  const buscarPiscinas = (texto: string) => {
-    setBusqueda(texto);
-    if (texto.trim() === '') {
-      setDatosFiltrados(piscinasData);
-      return;
-    }
-
-    const filtrados = piscinasData.filter(piscina => 
-      piscina.nombre.toLowerCase().includes(texto.toLowerCase()) || 
-      piscina.propietario.toLowerCase().includes(texto.toLowerCase())
-    );
-    setDatosFiltrados(filtrados);
-  };
-
-  // Función para ordenar piscinas
-  const ordenarPiscinas = (columna: string) => {
-    let nuevaDireccion: 'asc' | 'desc' = 'asc';
-    
-    if (ordenColumna === columna) {
-      nuevaDireccion = ordenDireccion === 'asc' ? 'desc' : 'asc';
-    }
-    
-    setOrdenColumna(columna);
-    setOrdenDireccion(nuevaDireccion);
-    
-    const ordenados = [...datosFiltrados].sort((a, b) => {
-      let comparacion = 0;
-      
-      switch (columna) {
-        case 'Nombre':
-          comparacion = a.nombre.localeCompare(b.nombre);
-          break;
-        case 'Propietario':
-          comparacion = a.propietario.localeCompare(b.propietario);
-          break;
-        case 'Tipo':
-          comparacion = a.tipo.localeCompare(b.tipo);
-          break;
-        case 'pH':
-          comparacion = parseFloat(a.ph) - parseFloat(b.ph);
-          break;
-      }
-      
-      return nuevaDireccion === 'asc' ? comparacion : -comparacion;
-    });
-    
-    setDatosFiltrados(ordenados);
-  };
-
-  // Renderizar encabezado con ícono de ordenamiento
-  const renderEncabezado = (texto: string) => (
-    <Pressable 
-      onPress={() => ordenarPiscinas(texto)}
-      className="flex-row items-center justify-center"
-    >
-      <Text className="font-bold text-black">{texto}</Text>
-      {ordenColumna === texto && (
-        <Text className="ml-1">
-          {ordenDireccion === 'asc' ? '↑' : '↓'}
-        </Text>
-      )}
-    </Pressable>
-  );
-
-  // Renderizado del tipo de piscina (badge)
-  const renderTipo = (tipo: 'Desborde' | 'Skimmer') => (
-    <View className={`px-3 py-1 rounded-full items-center ${tipo === 'Desborde' ? 'bg-gray-800' : 'bg-black'}`}>
-      <Text className="text-white font-medium text-xs">{tipo}</Text>
-    </View>
-  );
-
-  // Renderizado del pH con indicador de color
-  const renderPH = (ph: string) => {
-    const phNum = parseFloat(ph);
-    let color = 'green';
-    
-    if (phNum < 7.0) color = 'red';
-    if (phNum > 7.4) color = 'green';
-    
-    return (
-      <View className="flex-row items-center justify-center">
-        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: color, marginRight: 5 }} />
-        <Text>{ph}</Text>
-      </View>
-    );
-  };
-
-  // Renderización de estado de equipos
-  const renderEstadoEquipos = (equipos: EquipoEstado[]) => (
-    <View className="flex-row justify-center space-x-1">
-      {equipos.map((equipo, index) => {
-        let IconComponent: any = MaterialCommunityIcons;
-        let iconName = equipo.tipo;
-        let color = equipo.estado === 'optimo' ? '#4CAF50' : equipo.estado === 'atencion' ? '#FF9800' : '#F44336';
-        
-        if (equipo.tipo === 'temperature-high') {
-          IconComponent = FontAwesome5;
-        } else if (equipo.tipo === 'water-outline') {
-          IconComponent = Ionicons;
-        } else if (equipo.tipo === 'waves') {
-          IconComponent = MaterialIcons;
-          iconName = 'waves';
-        }
-        
-        return (
-          <IconComponent 
-            key={index}
-            name={iconName as any}
-            size={18} 
-            color={color}
-          />
-        );
-      })}
-    </View>
-  );
-
-  // Renderizado de acciones
-  const renderAcciones = () => (
-    <View className="flex-row justify-center space-x-2">
-      <Pressable className="flex-row items-center bg-gray-100 px-3 py-1.5 rounded-md border border-gray-200">
-        <Ionicons name="eye-outline" size={16} color="#333" />
-        <Text className="text-xs font-medium text-gray-700 ml-1">Panel</Text>
-      </Pressable>
-      
-      <Pressable className="flex-row items-center bg-gray-100 px-3 py-1.5 rounded-md border border-gray-200">
-        <MaterialIcons name="settings" size={16} color="#333" />
-        <Text className="text-xs font-medium text-gray-700 ml-1">Equipos</Text>
-      </Pressable>
-    </View>
-  );
+  // Define column widths for consistency
+  const columnWidths = {
+    nombre: 150,
+    propietario: 150,
+    tipo: 120,
+    ph: 100,
+    equipos: 150,
+    acciones: 190,
+  }
 
   return (
-    <View className="flex-1 p-4">
-
-      
-      {/* Tabla con scroll horizontal */}
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4">
+    <View className="flex-1">
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
         <View>
-          {/* Encabezados de la tabla */}
-          <Table borderStyle={{ borderWidth: 1, borderColor: '#e5e7eb' }}>
-            <Row
-              data={encabezados.map((header) => renderEncabezado(header))}
-              widthArr={anchoCol}
-              height={45}
-              style={{ backgroundColor: '#f9fafb' }}
-            />
-          </Table>
-          
-          {/* Datos de la tabla con scroll vertical */}
-          <ScrollView style={{ maxHeight: 500 }} showsVerticalScrollIndicator={false}>
-            <Table borderStyle={{ borderWidth: 1, borderColor: '#e5e7eb' }}>
-              {datosFiltrados.map((piscina, index) => (
-                <TableWrapper 
-                  key={piscina.id} 
-                  style={{ 
-                    flexDirection: 'row', 
-                    backgroundColor: index % 2 === 0 ? '#ffffff' : '#f9fafb',
-                    minHeight: 50,
-                    alignItems: 'center'
-                  }}
-                >
-                  <Cell 
-                    data={piscina.nombre} 
-                    width={anchoCol[0]} 
-                    textStyle={{ textAlign: 'center', color: '#374151' }}
-                  />
-                  <Cell 
-                    data={piscina.propietario} 
-                    width={anchoCol[1]} 
-                    textStyle={{ textAlign: 'center', color: '#374151' }}
-                  />
-                  <Cell 
-                    data={renderTipo(piscina.tipo)}
-                    width={anchoCol[2]}
-                  />
-                  <Cell 
-                    data={renderPH(piscina.ph)}
-                    width={anchoCol[3]}
-                  />
-                  <Cell 
-                    data={renderEstadoEquipos(piscina.equipos)}
-                    width={anchoCol[4]}
-                  />
-                  <Cell 
-                    data={renderAcciones()}
-                    width={anchoCol[5]}
-                  />
-                </TableWrapper>
-              ))}
-            </Table>
-          </ScrollView>
-          
-          {/* Mensaje si no hay datos */}
-          {datosFiltrados.length === 0 && (
-            <View className="p-4 border border-gray-200 bg-gray-50">
-              <Text className="text-center text-gray-500">No se encontraron piscinas</Text>
-            </View>
-          )}
+          <Encabezado columnWidths={columnWidths} />
+          <FlatList
+            data={datos}
+            renderItem={({ item }) => (
+              <Fila
+                key={item.nombre}
+                nombre={item.nombre}
+                propietario={item.propietario}
+                tipo={item.tipo}
+                ph={item.ph}
+                equipos={item.equipos}
+                columnWidths={columnWidths}
+              />
+            )}
+            getItemLayout={(data, index) => ({
+              length: 80, // altura aproximada de cada fila
+              offset: 80 * index,
+              index,
+            })}
+            removeClippedSubviews={true}
+            initialNumToRender={10}
+            maxToRenderPerBatch={10}
+            windowSize={10}
+          />
         </View>
       </ScrollView>
     </View>
-  );
-};
+  )
+}
 
-export default TablaPiscinas;
+export default TablaPiscinas
 
-// Datos de ejemplo que coinciden con la imagen
-const piscinasMock: PiscinaData[] = [
-  {
-    id: 1,
-    nombre: 'Piscina Comunitaria 1',
-    propietario: 'Carlos Rodríguez',
-    tipo: 'Desborde',
-    ph: '6.8',
-    equipos: [
-      { tipo: 'power', estado: 'optimo' },
-      { tipo: 'light', estado: 'atencion' }, 
-      { tipo: 'waves', estado: 'optimo' },
-      { tipo: 'temperature-high', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 2,
-    nombre: 'Piscina Comunitaria 2',
-    propietario: 'Carlos Rodríguez',
-    tipo: 'Skimmer',
-    ph: '7.3',
-    equipos: [
-      { tipo: 'power', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 3,
-    nombre: 'Piscina Comunitaria 3',
-    propietario: 'Carlos Rodríguez',
-    tipo: 'Skimmer',
-    ph: '7.2',
-    equipos: [
-      { tipo: 'light', estado: 'optimo' },
-      { tipo: 'waves', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 4,
-    nombre: 'Piscina Familiar',
-    propietario: 'Ana Martínez',
-    tipo: 'Skimmer',
-    ph: '7.4',
-    equipos: [
-      { tipo: 'power', estado: 'optimo' },
-      { tipo: 'light', estado: 'atencion' },
-      { tipo: 'temperature-high', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 5,
-    nombre: 'Piscina Principal',
-    propietario: 'Juan Pérez',
-    tipo: 'Skimmer',
-    ph: '7.2',
-    equipos: [
-      { tipo: 'power', estado: 'optimo' },
-      { tipo: 'light', estado: 'optimo' },
-      { tipo: 'waves', estado: 'atencion' },
-      { tipo: 'temperature-high', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 6,
-    nombre: 'Piscina Residencial',
-    propietario: 'María García',
-    tipo: 'Skimmer',
-    ph: '7.1',
-    equipos: [
-      { tipo: 'power', estado: 'optimo' },
-      { tipo: 'waves', estado: 'optimo' },
-      { tipo: 'temperature-high', estado: 'optimo' }
-    ]
-  },
-  {
-    id: 7,
-    nombre: 'Piscina Terraza',
-    propietario: 'Juan Pérez',
-    tipo: 'Desborde',
-    ph: '7.5',
-    equipos: [
-      { tipo: 'power', estado: 'error' },
-      { tipo: 'light', estado: 'optimo' }
-    ]
+const Encabezado = ({ columnWidths }: { columnWidths: { nombre: number; propietario: number; tipo: number; ph: number; equipos: number; acciones: number } }) => {
+  return (
+    <View className="flex-row border-b border-gray-300" style={{ backgroundColor: "#F3F4F6" }}>
+      <View style={{ width: columnWidths.nombre, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">Nombre</Text>
+      </View>
+      <View style={{ width: columnWidths.propietario, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">Propietario</Text>
+      </View>
+      <View style={{ width: columnWidths.tipo, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">Tipo</Text>
+      </View>
+      <View style={{ width: columnWidths.ph, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">pH</Text>
+      </View>
+      <View style={{ width: columnWidths.equipos, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">Estado Equipos</Text>
+      </View>
+      <View style={{ width: columnWidths.acciones, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="font-semibold text-text">Acciones</Text>
+      </View>
+    </View>
+  )
+}
+
+type FilaProps = {
+  nombre: string
+  propietario: string
+  tipo: "Skimmer" | "Desborde"
+  ph: number
+  equipos: Array<{ tipo: string; estado: string }>
+  columnWidths: {
+    nombre: number
+    propietario: number
+    tipo: number
+    ph: number
+    equipos: number
+    acciones: number
   }
-];
+}
+
+const Fila = ({ nombre, propietario, tipo, ph, equipos, columnWidths }: FilaProps) => {
+  return (
+    <View className="flex-row bg-white border-b border-gray-200">
+      <View style={{ width: columnWidths.nombre, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="text-gray-800">{nombre}</Text>
+      </View>
+
+      <View style={{ width: columnWidths.propietario, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <Text className="text-gray-800">{propietario}</Text>
+      </View>
+
+      <View style={{ width: columnWidths.tipo, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <View
+          className={`p-2 rounded-full ${tipo === "Skimmer" ? "bg-white border border-gray-300" : "bg-black"}`}
+        >
+          <Text className={`font-medium text-sm ${tipo === "Skimmer" ? "text-gray-800" : "text-white"}`}>{tipo}</Text>
+        </View>
+      </View>
+
+      <View style={{ width: columnWidths.ph, height: 40 }} className="flex-row py-4 px-3 items-center justify-center">
+        <View className={`w-3 h-3 rounded-full mr-2 ${ph < 7 || ph >= 8 ? "bg-orange-400" : "bg-green-500"}`} />
+        <Text className="text-gray-800">{ph}</Text>
+      </View>
+
+      <View style={{ width: columnWidths.equipos, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <View className="flex-row items-center gap-2">
+          {equipos.map((equipo, index) => (
+            <MaterialIcons
+              key={index}
+              name={
+                equipo.tipo === "uv"
+                  ? "electric-bolt"
+                  : equipo.tipo === "ionizador"
+                    ? "lightbulb"
+                    : equipo.tipo === "trasductor"
+                      ? "waves"
+                      : "thermostat"
+              }
+              size={24}
+              color={equipo.estado === "operativo" ? "#4CAF50" : equipo.estado === "inactivo" ? "#FF9800" : "#F44336"}
+            />
+          ))}
+        </View>
+      </View>
+
+      <View style={{ width: columnWidths.acciones, height: 40 }} className="py-4 px-3 items-center justify-center">
+        <View className="flex-row">
+          <Pressable className="bg-white rounded-md py-2 px-4 flex-row items-center justify-center border border-gray-200 mr-2">
+            <EyeIcon size={16} />
+            <Text className="text-gray-800 text-sm ml-1">Panel</Text>
+          </Pressable>
+          <Pressable className="bg-white rounded-md py-2 px-4 flex-row items-center justify-center border border-gray-200">
+            <ConfigurationIcon size={16} />
+            <Text className="text-gray-800 text-sm ml-1">Equipos</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  )
+}
