@@ -1,12 +1,14 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native';
+import React from 'react';
+import { ScreenTabs } from '@/components/Screen';
+import AltaUsuario from '@/components/altaUsuario';
 
 const Users = () => {
   return (
-    <View>
-      <Text>Users</Text>
-    </View>
-  )
-}
+    <ScreenTabs>
+      <AltaUsuario />
+    </ScreenTabs>
+  );
+};
 
-export default Users
+export default Users;
