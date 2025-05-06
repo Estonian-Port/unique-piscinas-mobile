@@ -103,3 +103,11 @@ export const ChevronUpIcon = (props: any) => (
 export const CalculatorIcon = (props: any) => (
   <MaterialIcons name="calculate" size={24} color="black" {...props} />
 );
+
+export const ThunderIcon = (props: any) => (
+  <MaterialIcons name='bolt' size={24} color="black" {...props} />
+);
+
+export const ThermostatIcon = (props: any) => (
+  <MaterialIcons name='thermostat' size={24} color="black" {...props} />
+);
