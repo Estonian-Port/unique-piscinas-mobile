@@ -99,3 +99,7 @@ export const ChevronDownIcon = (props: any) => (
 export const ChevronUpIcon = (props: any) => (
   <MaterialIcons name="keyboard-arrow-up" size={24} color="black" {...props} />
 );
+
+export const CalculatorIcon = (props: any) => (
+  <MaterialIcons name="calculate" size={24} color="black" {...props} />
+);
