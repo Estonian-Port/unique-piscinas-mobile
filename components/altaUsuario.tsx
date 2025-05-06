@@ -5,8 +5,8 @@ import { ScreenCard } from './ScreenCard';
 const AltaUsuario = () => {
   return (
     <ScreenCard>
-      <View className='flex-row items-center mb-4'>
-        <Text className='font-geist-semi-bold text-text text-2xl'>Alta Usuario</Text>
+      <View className='mb-4'>
+        <Text className='font-geist-semi-bold text-text text-3xl'>Alta Usuario</Text>
         <Text className='font-geist-light text-text text-base'>Registre un nuevo usuario en el sistema</Text>
       </View>
 
@@ -22,8 +22,8 @@ const AltaUsuario = () => {
         Se enviará un enlace de registro al correo electrónico proporcionado. El
         usuario deberá completar el formulario para finalizar el registro.
       </Text>
-      <Pressable className='bg-black rounded-md p-2 mt-4'>
-        <Text className='font-geist-semi-bold text-base text-white'>Enviar enlace de registro</Text>
+      <Pressable className='bg-black rounded-md py-3 mt-4 w-1/2 self-end'>
+        <Text className='font-geist-semi-bold text-sm text-center text-white'>Enviar enlace de registro</Text>
       </Pressable>
     </ScreenCard>
   );

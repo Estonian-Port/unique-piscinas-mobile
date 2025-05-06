@@ -1,0 +1,40 @@
+import { View, Text, FlatList } from 'react-native';
+import React, { useState } from 'react';  // Añadir useState
+import { ScreenCard } from './ScreenCard';
+import { diego, gabi, leo, seba } from '@/data/mock/userMock';
+import UserItem from './userItem';
+
+const UsuarioRegistrados = () => {
+  const users = [gabi, leo, seba, diego];
+  const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
+
+  const handleToggleExpand = (userId: number) => {
+    setExpandedUserId(expandedUserId === userId ? null : userId);
+  };
+
+  return (
+    <ScreenCard>
+      <View className="mb-4">
+        <Text className="font-geist-semi-bold text-text text-3xl">
+          Usuarios Registrados
+        </Text>
+        <Text className="font-geist-light text-text text-base">
+          Gestion de usuarios y sus piscinas
+        </Text>
+      </View>
+      <FlatList
+        data={users}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <UserItem 
+            user={item} 
+            isExpanded={expandedUserId === item.id}
+            onToggleExpand={() => handleToggleExpand(item.id)}
+          />
+        )}
+      />
+    </ScreenCard>
+  );
+};
+
+export default UsuarioRegistrados;
