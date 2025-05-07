@@ -1,21 +1,58 @@
 interface Piscina {
-    id:number;
-    name:string;
-    volume:number;
-    bombas:Bomba[]
+  id: number;
+  name: string;
+  volume: number;
+  bombas: Bomba[];
+  germicidas: Germicida[];
+  valvulas: Valvula[];
+  calefaccion: Calefaccion;
+  registro: Registro[];
 }
 
 type Bomba = {
-    id: number;
-    nombre: string;
-    marca: string;
-    modelo: string;
-    potencia: number;
-    activa: boolean;
-  };
+  id: number;
+  nombre: string;
+  marca: string;
+  modelo: string;
+  potencia: number;
+  activa: boolean;
+};
 
-type waterInletsType = "background" | "skimmer" | "bottomSweeper";
+type Germicida = {
+  id: number;
+  nombre: string;
+  vida: number;
+  activa: boolean;
+};
 
-type ligthsType = "manual" | "programmed";
+type Valvula = {
+  id: number;
+  nombre: string;
+  tipo: string;
+  estado: string;
+};
 
-type EntryFilter = "filter" | "backwash" | "rinse" | "drain" | "recirculate";
+type Calefaccion = {
+  id: number;
+  nombre: string;
+  tipo: string;
+  marca: string;
+  modelo: string;
+  potencia: number;
+  activa: boolean;
+};
+
+type Registro = {
+  id: number;
+  fecha: string;
+  dispositivo: string;
+  accion: string;
+  descripcion: string;
+  tecnico: string;
+};
+
+type waterInletsType = 'background' | 'skimmer' | 'bottomSweeper';
+
+type ligthsType = 'manual' | 'programmed';
+
+type EntryFilter = 'filter' | 'backwash' | 'rinse' | 'drain' | 'recirculate';
