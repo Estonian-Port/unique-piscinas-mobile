@@ -4,4 +4,5 @@ interface User {
     lastname: string;
     email: string;
     piscinas: Piscina[];
+    isAdmin: boolean;
 }    

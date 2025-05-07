@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { Screen } from '@/components/Screen';
+import Checkbox from 'expo-checkbox';
 import {
   CalculatorIcon,
   LightIcon,
@@ -16,12 +17,13 @@ import {
   WavesIcon,
 } from '@/assets/icons';
 import RadioButton from '@/components/radiusButton';
+import { CheckSquare } from 'react-native-feather';
 
 type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
 type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
 
 const NuevaPiscina = () => {
-  const [desbordante, setDesbordante] = useState(true);
+  const [desbordante, setDesbordante] = useState(false);
   const [tipoBomba, setTipoBomba] = useState<TipoBomba>('Bomba única');
   const [tipoFiltro, setTipoFiltro] = useState<TipoFiltro>('Arena');
   const [cloradorSalino, setCloradorSalino] = useState(false);
@@ -70,15 +72,22 @@ const NuevaPiscina = () => {
             <Text className="font-geist-semi-bold text-text text-xl">
               Configuracion de la Piscina
             </Text>
-            <View className="flex-row items-center mt-3">
-              <View className="bg-black h-5 w-5"></View>
-              <Text className="font-geist text-text text-base ml-2">
-                Piscina desbordante
-              </Text>
-            </View>
-            <Text className="font-geist-light text-text text-sm">
-              Pisicina de tipo desbordante o infinity
-            </Text>
+            <Pressable onPress={() => setDesbordante(!desbordante)} className="flex-row items-center mt-3">
+              <Checkbox
+                value={desbordante}
+                onValueChange={() => setDesbordante(!desbordante)}
+                color={desbordante ? '#4630EB' : undefined}
+              />
+              <View className='ml-2'>
+                <Text className="font-geist text-text text-base">
+                  Piscina desbordante
+                </Text>
+                <Text className="font-geist-light text-text text-sm">
+                  Pisicina de tipo desbordante o infinity
+                </Text>
+              </View>
+            </Pressable>
+
             <Text className="font-geist text-text text-base mt-3">
               Largo (m)
             </Text>
@@ -294,11 +303,11 @@ const NuevaPiscina = () => {
                 Calefacción
               </Text>
               <View className="flex-row items-center justify-between">
-              <View className='flex-row items-center'>
-                <ThermostatIcon size={18} color={'orange'}/>
-                <Text className="text-text text-base font-geist ml-1">
-                  Sistema de Calefacción
-                </Text>
+                <View className="flex-row items-center">
+                  <ThermostatIcon size={18} color={'orange'} />
+                  <Text className="text-text text-base font-geist ml-1">
+                    Sistema de Calefacción
+                  </Text>
                 </View>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}

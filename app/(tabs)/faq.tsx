@@ -38,7 +38,7 @@ const FAQ = () => {
           </View>
 
           {/* Botón redondo */}
-          {user.piscinas.length > 1 && (
+          {(user.piscinas.length > 1 && !user.isAdmin) && (
             <Link href={'/pools'} asChild>
               <Pressable
                 className="items-center justify-center rounded-full bg-[#0054ae]"

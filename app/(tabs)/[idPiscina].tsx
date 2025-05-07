@@ -28,26 +28,6 @@ export default function ParamsPiscina() {
           </Text>
         </View>
 
-        {/*
-          {user.piscinas.length > 1 && (
-        <Link href={'/pools'} asChild>
-            <Pressable
-              className="w-11/12 items-center p-2 mb-3 border"
-              style={{
-                borderRadius: 5,
-                backgroundColor: '#94a3b8',
-                borderColor: '#94a3bd',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <Text className="font-geist-semi-bold text-text text-lg">
-                Volver a la lista de piscinas
-              </Text>
-            </Pressable>
-        </Link>
-          )}
-        */}
-
         <View className="flex-row w-11/12 justify-between mb-3">
           {/* Contenedor del texto */}
           <View className="flex-1 pr-4">
@@ -60,7 +40,7 @@ export default function ParamsPiscina() {
           </View>
 
           {/* Botón redondo */}
-          {user.piscinas.length > 1 && (
+          {(user.piscinas.length > 1 && !user.isAdmin) && (
             <Link href={'/pools'} asChild>
               <Pressable
                 className="items-center justify-center rounded-full bg-[#0054ae]"

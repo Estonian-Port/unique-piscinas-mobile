@@ -6,6 +6,7 @@ const leo : User = {
     lastname: 'Rodriguez',
     email: 'leo@unique.com',
     piscinas: piscinas,
+    isAdmin: true,
 };
 
 const gabi : User = {
@@ -14,6 +15,7 @@ const gabi : User = {
     lastname: 'Tarquini',
     email: 'gabi@unique.com',
     piscinas: [],
+    isAdmin: false,
 };
 
 const seba : User = {
@@ -22,6 +24,7 @@ const seba : User = {
     lastname: 'Rodriguez',
     email: 'seba@unique.com',
     piscinas: [piscinaPrincipal, piscinaSecundaria],
+    isAdmin: false,
 };
 
 const diego : User = {
@@ -29,7 +32,8 @@ const diego : User = {
     name: 'Diego',
     lastname: 'Maradona',
     email: 'diego@unique.com',
-    piscinas: [piscinaPrincipal]
+    piscinas: [piscinaPrincipal],
+    isAdmin: false,
 };
 
 export { leo, gabi, seba, diego };
