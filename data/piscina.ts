@@ -2,7 +2,17 @@ interface Piscina {
     id:number;
     name:string;
     volume:number;
+    bombas:Bomba[]
 }
+
+type Bomba = {
+    id: number;
+    nombre: string;
+    marca: string;
+    modelo: string;
+    potencia: number;
+    activa: boolean;
+  };
 
 type waterInletsType = "background" | "skimmer" | "bottomSweeper";
 
