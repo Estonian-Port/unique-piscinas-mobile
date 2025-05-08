@@ -1,36 +1,43 @@
-import { View, Text, Pressable } from 'react-native';
-import React from 'react';
-import { ScreenCard } from './ScreenCard';
+import { View, Text, Switch, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { AutorenewIcon } from '@/assets/icons';
 
-const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
+const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
+  const [isActive, setIsActive] = useState(germicida.activa);
+
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <Text className="text-base font-geist-semi-bold text-text">
-          {valvula.nombre}
-        </Text>
+        <View className="flex-row items-center">
+          <Text className="text-base font-geist-semi-bold text-text">
+            {germicida.nombre}
+          </Text>
+        </View>
+        <Switch
+          trackColor={{ false: '#d3d3d3', true: '#000000' }}
+          thumbColor='#fcdb99'
+          ios_backgroundColor="#d3d3d3"
+          onValueChange={() => setIsActive(!isActive)}
+          value={isActive}
+        />
       </View>
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
           className={`rounded-full px-2 ${
-            valvula.estado === 'Operativa'
-              ? 'bg-green-500'
-              : valvula.estado === 'Requiere revisión'
-              ? 'bg-yellow-500'
-              : 'bg-red-500'
+            isActive ? 'bg-green-500' : 'bg-gray-500'
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-base">
-            {valvula.estado}
+            {isActive ? 'Activa' : 'Inactiva'}
           </Text>
         </View>
       </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Vida restante:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
-          {valvula.tipo}
+          {germicida.vida} %
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
@@ -43,4 +50,4 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
   );
 };
 
-export default ValvulaCard;
+export default GermicidaCard;

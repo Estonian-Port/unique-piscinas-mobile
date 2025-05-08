@@ -1,6 +1,6 @@
 import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, FilterIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import { Cicle } from '@/data/cicloFiltrado';

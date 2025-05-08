@@ -1,6 +1,6 @@
 import { View, Text, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { ThermostatIcon } from '@/assets/icons';
 
 const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {

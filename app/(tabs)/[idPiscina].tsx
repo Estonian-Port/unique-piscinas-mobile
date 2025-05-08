@@ -1,20 +1,20 @@
 import { ScrollView, Text, View, Image, Pressable } from 'react-native';
-import Ph from '@/components/ph';
-import ControlFiltro from '@/components/controlFiltro';
-import Clima from '@/components/clima';
+import Ph from '@/components/detalles/ph';
+import Clima from '@/components/detalles/clima';
 import { Link, useLocalSearchParams } from 'expo-router';
-import { piscinas } from '@/data/mock/piscinaMock';
+import { piscinasMock } from '@/data/mock/piscinaMock';
 import { gabi, leo } from '@/data/mock/userMock';
-import { ScreenTabs } from '@/components/Screen';
+import { ScreenTabs } from '@/components/utiles/Screen';
 import { ChangeIcon } from '@/assets/icons';
-import Indicadores from '@/components/indicadores';
+import Indicadores from '@/components/detalles/indicadores';
+import ControlFiltro from '@/components/detalles/controlFiltro';
 
 export default function ParamsPiscina() {
   const { idPiscina } = useLocalSearchParams();
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinas.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
   };
 
   const pool = searchPool(Number(idPiscina));

@@ -3,9 +3,9 @@ import './globals.css';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '@/components/header';
-import BotonPerfil from '@/components/botonPerfil';
-import BotonHome from '@/components/botonHome';
+import Header from '@/components/utiles/header';
+import BotonPerfil from '@/components/utiles/botonPerfil';
+import BotonHome from '@/components/utiles/botonHome';
 import { StatusBar } from 'react-native';
 
 export default function RootLayout() {

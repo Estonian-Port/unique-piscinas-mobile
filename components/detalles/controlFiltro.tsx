@@ -1,9 +1,8 @@
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
-import { ScreenCard } from './ScreenCard';
 import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
-import { FontAwesome } from '@expo/vector-icons';
-import ControlScreen from './ScreenFiltro';
+import { ScreenCard } from '../utiles/ScreenCard';
+import ControlScreen from './controlScreen';
 
 interface ControlFiltroProps {
   waterEntryFilter: EntryFilter[];

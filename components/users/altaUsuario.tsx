@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 
 const AltaUsuario = () => {
   return (

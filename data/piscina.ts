@@ -1,5 +1,6 @@
 interface Piscina {
   id: number;
+  propietario?: User;
   name: string;
   volume: number;
   bombas: Bomba[];

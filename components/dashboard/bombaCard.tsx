@@ -1,6 +1,6 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { EditIcon, TintIcon } from '@/assets/icons';
 
 const BombaCard = ({ bomba }: { bomba: Bomba }) => {

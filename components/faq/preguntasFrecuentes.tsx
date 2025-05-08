@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { ScreenCard } from './ScreenCard'
+import { ScreenCard } from '../utiles/ScreenCard'
 import { HelpIcon } from '@/assets/icons'
 import FAQItem from './faqItem'
 import { faqsMock } from '@/data/mock/faqMock'

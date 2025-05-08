@@ -2,18 +2,18 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
-import { piscinas } from '@/data/mock/piscinaMock';
-import { Screen, ScreenTabs } from '@/components/Screen';
+import { piscinasMock } from '@/data/mock/piscinaMock';
+import { Screen, ScreenTabs } from '@/components/utiles/Screen';
 import { leo } from '@/data/mock/userMock';
-import ProgramacionLuces from '@/components/programacionLuces';
-import ProgramacionFiltrado from '@/components/programacionFiltrado';
+import ProgramacionLuces from '@/components/programacion/programacionLuces';
+import ProgramacionFiltrado from '@/components/programacion/programacionFiltrado';
 
 const Programation = () => {
   const idPiscina = 1;
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinas.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
   };
 
   const pool = searchPool(Number(idPiscina));

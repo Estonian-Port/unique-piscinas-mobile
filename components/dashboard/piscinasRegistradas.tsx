@@ -1,6 +1,6 @@
 import { View, Text, Pressable, TextInput } from 'react-native';
 import React, { useState } from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import TablaPiscinas from './tablaPiscinas';
 import { Link } from 'expo-router';
 

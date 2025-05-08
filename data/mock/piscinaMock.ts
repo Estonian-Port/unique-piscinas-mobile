@@ -1,3 +1,5 @@
+import { diego, gabi, seba } from "./userMock";
+
 const bomba1: Bomba = {
   id: 1,
   nombre: 'Bomba Principal',
@@ -115,6 +117,7 @@ const piscinaPrincipal: Piscina = {
 
 const piscinaSecundaria: Piscina = {
   id: 2,
+  propietario: seba,
   name: 'Piscina Secundaria - Roca 4567',
   volume: 500,
   bombas: [bomba2],
@@ -126,6 +129,7 @@ const piscinaSecundaria: Piscina = {
 
 const piscinaNiños: Piscina = {
   id: 3,
+  propietario: diego,
   name: 'Piscina Niños - Av San Martín 1234',
   volume: 200,
   bombas: [bomba1],
@@ -137,6 +141,7 @@ const piscinaNiños: Piscina = {
 
 const piscinaTerraza: Piscina = {
   id: 4,
+  propietario: diego,
   name: 'Piscina Terraza - Av San Martín 1234',
   volume: 300,
   bombas: [bomba1, bomba3],
@@ -165,7 +170,7 @@ export {
   piscinaPatio,
 };
 
-export const piscinas: Piscina[] = [
+export const piscinasMock: Piscina[] = [
   piscinaPrincipal,
   piscinaSecundaria,
   piscinaNiños,

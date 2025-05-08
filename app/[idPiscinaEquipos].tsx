@@ -1,20 +1,20 @@
 import { ScrollView, Text, FlatList, View } from 'react-native';
-import { Link, useLocalSearchParams } from 'expo-router';
-import { piscinas } from '@/data/mock/piscinaMock';
+import { useLocalSearchParams } from 'expo-router';
+import { piscinasMock } from '@/data/mock/piscinaMock';
 import { gabi, leo } from '@/data/mock/userMock';
-import { Screen } from '@/components/Screen';
-import BombaCard from '@/components/bombaCard';
-import CalefaccionCard from '@/components/calefaccionCard';
-import GermicidaCard from '@/components/germicidaCard';
-import ValvulaCard from '@/components/valvulaCard';
-import RegistroCard from '@/components/registroCard';
+import { Screen } from '@/components/utiles/Screen';
+import BombaCard from '@/components/dashboard/bombaCard';
+import CalefaccionCard from '@/components/dashboard/calefaccionCard';
+import GermicidaCard from '@/components/dashboard/germicidaCard';
+import ValvulaCard from '@/components/dashboard/valvulaCard';
+import RegistroCard from '@/components/dashboard/registroCard';
 
 export default function Equipos() {
   const { idPiscinaEquipos } = useLocalSearchParams();
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinas.filter(
+    return piscinasMock.filter(
       (piscina) => piscina.id === Number(idPiscinaEquipos)
     )[0];
   };

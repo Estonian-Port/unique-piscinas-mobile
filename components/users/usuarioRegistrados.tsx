@@ -1,7 +1,7 @@
 import { View, Text, FlatList } from 'react-native';
 import React, { useState } from 'react';  // Añadir useState
-import { ScreenCard } from './ScreenCard';
 import { diego, gabi, leo, seba } from '@/data/mock/userMock';
+import { ScreenCard } from '../utiles/ScreenCard';
 import UserItem from './userItem';
 
 const UsuarioRegistrados = () => {

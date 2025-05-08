@@ -2,17 +2,17 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
 import { ChangeIcon } from '@/assets/icons';
-import { Screen, ScreenTabs } from '@/components/Screen';
-import { piscinas } from '@/data/mock/piscinaMock';
+import { Screen, ScreenTabs } from '@/components/utiles/Screen';
+import { piscinasMock } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
-import PreguntasFrecuentes from '@/components/preguntasFrecuentes';
+import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
 
 const FAQ = () => {
   const idPiscina = 1;
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinas.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
   };
 
   const pool = searchPool(Number(idPiscina));

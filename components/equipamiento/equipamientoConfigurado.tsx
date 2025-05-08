@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { ConfigurationIcon, FilterIcon, InfoIcon, PowerIcon, TintIcon } from '@/assets/icons';
 import IndicadorEstado from './indicadorEstado';
 

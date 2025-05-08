@@ -1,9 +1,9 @@
 import { ScrollView, Text } from 'react-native';
 import React from 'react';
-import { ScreenTabs } from '@/components/Screen';
-import StatCard from '@/components/statCard';
+import { ScreenTabs } from '@/components/utiles/Screen';
+import StatCard from '@/components/dashboard/statCard';
 import { statsMocks } from '@/data/mock/statMock';
-import PiscinasRegistradas from '@/components/piscinasRegistradas';
+import PiscinasRegistradas from '@/components/dashboard/piscinasRegistradas';
 
 const Dashboard = () => {
   const stats = statsMocks;

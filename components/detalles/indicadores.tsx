@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const indicadores: { title: string; icon: 'bolt' | 'lightbulb-outline' | 'water' | 'thermostat' }[] = [

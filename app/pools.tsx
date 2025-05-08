@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Image } from 'react-native';
 import React, { useEffect } from 'react';
-import PoolCard from '@/components/poolCard';
+import PoolCard from '@/components/utiles/poolCard';
 import { diego, gabi, leo, seba } from '@/data/mock/userMock';
 import { router } from 'expo-router';
 

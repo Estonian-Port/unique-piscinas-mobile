@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import { ScreenCard } from '../utiles/ScreenCard';
 import PressureGauge from './pressure';
-import { ScreenCard } from './ScreenCard';
 
 const EstadoSistema = () => {
   return (

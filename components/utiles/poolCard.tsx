@@ -7,7 +7,7 @@ const PoolCard = ({ piscina }: { piscina: Piscina }) => {
     <Link asChild href={`/${piscina.id}`}>
     <Pressable className="relative bg-white rounded-sm shadow-sm w-full justify-center items-center">
         <Image
-          source={require('../assets/images/portada-card-piscina.webp')}
+          source={require('../../assets/images/portada-card-piscina.webp')}
           style={{ width: '100%', height: 120, borderRadius: 3, opacity: 0.3 }}
         />
         <View className="absolute inset-0 justify-center items-center">

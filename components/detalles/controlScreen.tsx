@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { View, Text, SafeAreaView } from "react-native"
-import CircularControl from "../components/funcionFiltro"
+import CircularControl from "./funcionFiltro"
 
 const StyledView = View
 const StyledText = Text

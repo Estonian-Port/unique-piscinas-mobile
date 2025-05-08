@@ -1,11 +1,11 @@
-import { piscinaPrincipal, piscinas, piscinaSecundaria } from "./piscinaMock";
+import { piscinaPrincipal, piscinasMock, piscinaSecundaria } from "./piscinaMock";
 
 const leo : User = {
     id: 1,
     name: 'Leo',
     lastname: 'Rodriguez',
     email: 'leo@unique.com',
-    piscinas: piscinas,
+    piscinas: piscinasMock,
     isAdmin: true,
 };
 
@@ -37,3 +37,10 @@ const diego : User = {
 };
 
 export { leo, gabi, seba, diego };
+
+export const users: User[] = [
+    leo,
+    gabi,
+    seba,
+    diego,
+];

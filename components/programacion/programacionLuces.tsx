@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
 import { Cicle } from '@/data/cicloFiltrado';
-import { ScreenCard } from './ScreenCard';
+import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import { ciclosLucesMock } from '@/data/mock/cicloLucesMock';

@@ -1,8 +1,8 @@
 import React from 'react';
-import { ScreenTabs } from '@/components/Screen';
-import AltaUsuario from '@/components/altaUsuario';
-import UsuarioRegistrados from '@/components/usuarioRegistrados';
+import { ScreenTabs } from '@/components/utiles/Screen';
 import { ScrollView, Text } from 'react-native';
+import AltaUsuario from '@/components/users/altaUsuario';
+import UsuarioRegistrados from '@/components/users/usuarioRegistrados';
 
 const Users = () => {
   return (

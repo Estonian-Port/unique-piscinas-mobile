@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TextInput, Pressable } from 'react-native';
 import React from 'react';
-import { Screen } from '@/components/Screen';
+import { Screen } from '@/components/utiles/Screen';
 import { leo } from '@/data/mock/userMock';
 
 const ChangePass = () => {

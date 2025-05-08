@@ -5,16 +5,19 @@ import {
   EyeIcon,
 } from '@/assets/icons';
 import { Pressable, View, Text } from 'react-native';
+import ModalAñadirPiscina from './modalAñadirPiscina';
+import { useState } from 'react';
 
-const UserItem = ({ 
-  user, 
-  isExpanded, 
-  onToggleExpand 
-}: { 
-  user: User; 
+const UserItem = ({
+  user,
+  isExpanded,
+  onToggleExpand,
+}: {
+  user: User;
   isExpanded: boolean;
   onToggleExpand: () => void;
 }) => {
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View className="border-b border-gray-200 py-5">
@@ -51,9 +54,20 @@ const UserItem = ({
             <Text className="font-geist-semi-bold text-text text-base flex-1 pr-2">
               Piscinas asignadas
             </Text>
-            <Pressable className='border border-gray-300 rounded-md p-2 flex-row items-center justify-center'>
+            <Pressable
+              className="border border-gray-300 rounded-md p-2 flex-row items-center justify-center"
+              onPress={() => setModalVisible(true)}
+            >
               <Text> + Añadir Piscina</Text>
             </Pressable>
+            {modalVisible && (
+              <ModalAñadirPiscina
+                visible={modalVisible}
+                onClose={() => setModalVisible(false)}
+                nombreUsuario={user.name}
+                apellidoUsuario={user.lastname}
+              />
+            )}
           </View>
 
           {user.piscinas.map((piscina) => (

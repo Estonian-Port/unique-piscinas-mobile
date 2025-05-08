@@ -7,9 +7,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import TimeInput from './timeInput';
 import { SaveIcon } from '@/assets/icons';
 import { Day } from '@/data/cicloFiltrado';
+import TimeInput from '../utiles/timeInput';
 
 type ModalProgramacionProps = {
   visible: boolean;

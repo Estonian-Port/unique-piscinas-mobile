@@ -10,7 +10,7 @@ import {
   StatusBar,
 } from 'react-native';
 import React, { useState } from 'react';
-import ModalError from '@/components/modalError';
+import ModalError from '@/components/utiles/modalError';
 import { useRouter } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
 
