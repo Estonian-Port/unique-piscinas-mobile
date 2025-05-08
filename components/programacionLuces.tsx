@@ -34,7 +34,7 @@ const ProgramacionLuces = () => {
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor="#ffffff"
+          thumbColor='#fcdb99'
           ios_backgroundColor="#d3d3d3"
           onValueChange={() => setIsActive(!isManual)}
           value={isManual}

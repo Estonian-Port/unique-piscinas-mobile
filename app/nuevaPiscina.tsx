@@ -217,7 +217,7 @@ const NuevaPiscina = () => {
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setCloradorSalino(!cloradorSalino)}
                   value={cloradorSalino}
@@ -229,7 +229,7 @@ const NuevaPiscina = () => {
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setControlPh(!controlPh)}
                   value={controlPh}
@@ -241,7 +241,7 @@ const NuevaPiscina = () => {
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setControlOrp(!controlOrp)}
                   value={controlOrp}
@@ -261,7 +261,7 @@ const NuevaPiscina = () => {
                 </View>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setUv(!uv)}
                   value={uv}
@@ -276,7 +276,7 @@ const NuevaPiscina = () => {
                 </View>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setIonizador(!ionizador)}
                   value={ionizador}
@@ -291,7 +291,7 @@ const NuevaPiscina = () => {
                 </View>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setTrasductor(!trasductor)}
                   value={trasductor}
@@ -311,7 +311,7 @@ const NuevaPiscina = () => {
                 </View>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor="#ffffff"
+                  thumbColor='#fcdb99'
                   ios_backgroundColor="#d3d3d3"
                   onValueChange={() => setCalefaccion(!calefaccion)}
                   value={calefaccion}

@@ -16,7 +16,7 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor="#ffffff"
+          thumbColor='#fcdb99'
           ios_backgroundColor="#d3d3d3"
           onValueChange={() => setIsActive(!isActive)}
           value={isActive}

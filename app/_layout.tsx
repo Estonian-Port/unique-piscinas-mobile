@@ -43,6 +43,8 @@ export default function RootLayout() {
           <Stack.Screen name="profile" options={{ headerRight: () => <BotonHome /> }} />
           <Stack.Screen name="changePass" options={{ headerRight: () => null }} />
           <Stack.Screen name="(tabs-adm)" options={{ headerRight: () => null }} />
+          <Stack.Screen name="nuevaPiscina" options={{ headerRight: () => null }} />
+          <Stack.Screen name="[idPiscinaEquipos]" options={{ headerRight: () => null }} />
         </Stack>
       </SafeAreaView>
     </>

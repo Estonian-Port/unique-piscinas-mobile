@@ -19,6 +19,7 @@ module.exports = {
         danger: "#FF6B6B", // Rojo coral
         text: "#333333", // Gris oscuro para texto
         muted: "#F5F5F5", // Gris claro para fondos secundarios
+        unique: "#a38e63", // Ocre único
       },
     },
   },

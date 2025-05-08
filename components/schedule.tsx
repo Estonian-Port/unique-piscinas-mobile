@@ -62,7 +62,7 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
         <View className="flex-row items-center justify-around gap-3">
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#ffffff"
+            thumbColor='#fcdb99'
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setIsActive(!isActive)}
             value={isActive}
