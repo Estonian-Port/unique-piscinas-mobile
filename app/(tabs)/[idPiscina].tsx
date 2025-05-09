@@ -8,6 +8,7 @@ import { ScreenTabs } from '@/components/utiles/Screen';
 import { ChangeIcon } from '@/assets/icons';
 import Indicadores from '@/components/detalles/indicadores';
 import ControlFiltro from '@/components/detalles/controlFiltro';
+import BotonCambio from '@/components/utiles/botonCambio';
 
 export default function ParamsPiscina() {
   const { idPiscina } = useLocalSearchParams();
@@ -39,20 +40,10 @@ export default function ParamsPiscina() {
             </Text>
           </View>
 
-          {/* Botón redondo */}
           {(user.piscinas.length > 1 && !user.isAdmin) && (
-            <Link href={'/pools'} asChild>
-              <Pressable
-                className="items-center justify-center rounded-full bg-[#0054ae]"
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              >
-                <ChangeIcon/>
-              </Pressable>
-            </Link>
+            <BotonCambio />
           )}
+
         </View>
 
         <Ph data={5.5} />

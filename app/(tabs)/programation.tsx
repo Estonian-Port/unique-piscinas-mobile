@@ -7,13 +7,16 @@ import { Screen, ScreenTabs } from '@/components/utiles/Screen';
 import { leo } from '@/data/mock/userMock';
 import ProgramacionLuces from '@/components/programacion/programacionLuces';
 import ProgramacionFiltrado from '@/components/programacion/programacionFiltrado';
+import BotonCambio from '@/components/utiles/botonCambio';
 
 const Programation = () => {
   const idPiscina = 1;
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter(
+      (piscina) => piscina.id === Number(idPiscina)
+    )[0];
   };
 
   const pool = searchPool(Number(idPiscina));
@@ -37,24 +40,12 @@ const Programation = () => {
             </Text>
           </View>
 
-          {(user.piscinas.length > 1 && !user.isAdmin) && (
-            <Link href={'/pools'} asChild>
-              <Pressable
-                className="items-center justify-center rounded-full bg-[#0054ae]"
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              >
-                <ChangeIcon />
-              </Pressable>
-            </Link>
-          )}
+          {user.piscinas.length > 1 && !user.isAdmin && <BotonCambio />}
+          
         </View>
 
         <ProgramacionFiltrado />
         <ProgramacionLuces />
-        
       </ScreenTabs>
     </ScrollView>
   );

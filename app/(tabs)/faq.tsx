@@ -6,13 +6,16 @@ import { Screen, ScreenTabs } from '@/components/utiles/Screen';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
 import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
+import BotonCambio from '@/components/utiles/botonCambio';
 
 const FAQ = () => {
   const idPiscina = 1;
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter(
+      (piscina) => piscina.id === Number(idPiscina)
+    )[0];
   };
 
   const pool = searchPool(Number(idPiscina));
@@ -38,19 +41,8 @@ const FAQ = () => {
           </View>
 
           {/* Botón redondo */}
-          {(user.piscinas.length > 1 && !user.isAdmin) && (
-            <Link href={'/pools'} asChild>
-              <Pressable
-                className="items-center justify-center rounded-full bg-[#0054ae]"
-                style={{
-                  width: 50,
-                  height: 50,
-                }}
-              >
-                <ChangeIcon />
-              </Pressable>
-            </Link>
-          )}
+          {user.piscinas.length > 1 && !user.isAdmin && <BotonCambio />}
+          
         </View>
         <PreguntasFrecuentes />
       </ScreenTabs>
