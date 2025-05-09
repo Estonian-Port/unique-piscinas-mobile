@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import TablaPiscinas from './tablaPiscinas';
 import { Link } from 'expo-router';
+import CardPiscinaTabla from './cardPiscinaTabla';
 
 const PiscinasRegistradas = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,7 +29,7 @@ const PiscinasRegistradas = () => {
         value={searchQuery}
         autoCapitalize="none"
       />
-      <TablaPiscinas />
+      <CardPiscinaTabla/>
     </ScreenCard>
   );
 };
