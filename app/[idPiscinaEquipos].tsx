@@ -8,6 +8,7 @@ import CalefaccionCard from '@/components/dashboard/calefaccionCard';
 import GermicidaCard from '@/components/dashboard/germicidaCard';
 import ValvulaCard from '@/components/dashboard/valvulaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
+import { ScreenCard } from '@/components/utiles/ScreenCard';
 
 export default function Equipos() {
   const { idPiscinaEquipos } = useLocalSearchParams();
@@ -90,6 +91,7 @@ export default function Equipos() {
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Registros
         </Text>
+        <ScreenCard>
         <FlatList
           data={pool.registro}
           keyExtractor={(item) => item.id.toString()}
@@ -107,6 +109,7 @@ export default function Equipos() {
           )}
           style={{ width: '100%' }}
         />
+        </ScreenCard>
       </Screen>
     </ScrollView>
   );

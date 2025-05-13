@@ -124,3 +124,15 @@ export const PersonIcon = (props: any) => (
 export const TagIcon = (props: any) => (
   <MaterialIcons name="local-offer" size={24} color="#000" {...props} />
 );
+
+export const MonitorIcon = (props: any) => (
+  <MaterialIcons name="desktop-windows" size={24} color="#000" {...props} />
+);
+
+export const CalendarIcon = (props: any) => (
+  <MaterialIcons name="calendar-month" size={24} color="#000" {...props} />
+);
+
+export const BuildIcon = (props: any) => (
+  <MaterialIcons name="build" size={24} color="#000" {...props} />
+);

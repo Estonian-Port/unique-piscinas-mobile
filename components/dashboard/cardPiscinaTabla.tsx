@@ -3,6 +3,7 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { ConfigurationIcon, EyeIcon, LoginIcon, PersonIcon, TagIcon, TintIcon } from '@/assets/icons';
+import { piscinasMock } from '@/data/mock/piscinaMock';
 
 // Componente para mostrar el estado del pH con color contextual
 const PhIndicator = ({ value }: { value: number }) => {

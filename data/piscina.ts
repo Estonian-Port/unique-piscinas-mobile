@@ -44,13 +44,15 @@ type Calefaccion = {
 };
 
 type Registro = {
-  id: number;
-  fecha: string;
-  dispositivo: string;
-  accion: string;
-  descripcion: string;
-  tecnico: string;
-};
+  id: number
+  fecha: string
+  hora?: string
+  dispositivo: string
+  accion: string
+  descripcion: string
+  tecnico: string
+  tipoAccion?: "mantenimiento" | "reparacion" | "instalacion" | "configuracion" | "otro"
+}
 
 type waterInletsType = 'background' | 'skimmer' | 'bottomSweeper';
 

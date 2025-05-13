@@ -18,11 +18,9 @@ const Pools = () => {
 
   useEffect(() => {
     if (pools.length === 1) {
-      router.replace(`/${pools[0].id}`);
+      router.replace(`/(tabs)/${pools[0].id}`);
     }
   }, [pools, router]);
-
-  const prueba = usuarioConMultiplesPiscinas().toString();
 
   return (
     <View className="flex-1 bg-white items-center h-full">
