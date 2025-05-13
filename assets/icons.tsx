@@ -93,7 +93,12 @@ export const HelpIcon = (props: any) => (
 );
 
 export const ChevronDownIcon = (props: any) => (
-  <MaterialIcons name="keyboard-arrow-down" size={24} color="black" {...props} />
+  <MaterialIcons
+    name="keyboard-arrow-down"
+    size={24}
+    color="black"
+    {...props}
+  />
 );
 
 export const ChevronUpIcon = (props: any) => (
@@ -105,9 +110,17 @@ export const CalculatorIcon = (props: any) => (
 );
 
 export const ThunderIcon = (props: any) => (
-  <MaterialIcons name='bolt' size={24} color="black" {...props} />
+  <MaterialIcons name="bolt" size={24} color="black" {...props} />
 );
 
 export const ThermostatIcon = (props: any) => (
-  <MaterialIcons name='thermostat' size={24} color="black" {...props} />
+  <MaterialIcons name="thermostat" size={24} color="black" {...props} />
+);
+
+export const PersonIcon = (props: any) => (
+  <MaterialIcons name="person" size={24} color="#000" {...props} />
+);
+
+export const TagIcon = (props: any) => (
+  <MaterialIcons name="local-offer" size={24} color="#000" {...props} />
 );

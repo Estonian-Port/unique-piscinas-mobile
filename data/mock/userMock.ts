@@ -5,7 +5,7 @@ const leo : User = {
     name: 'Leo',
     lastname: 'Rodriguez',
     email: 'leo@unique.com',
-    piscinas: piscinasMock,
+    piscinas: [piscinaPrincipal, piscinaSecundaria],
     isAdmin: true,
 };
 
