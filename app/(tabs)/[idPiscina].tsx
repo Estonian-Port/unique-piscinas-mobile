@@ -1,5 +1,5 @@
 import { ScrollView, Text, View, Image, Pressable } from 'react-native';
-import Ph from '@/components/detalles/ph';
+import Ph from '@/components/detalles/phClimaCard';
 import Clima from '@/components/detalles/clima';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { piscinasMock } from '@/data/mock/piscinaMock';
@@ -9,13 +9,16 @@ import { ChangeIcon } from '@/assets/icons';
 import Indicadores from '@/components/detalles/indicadores';
 import ControlFiltro from '@/components/detalles/controlFiltro';
 import BotonCambio from '@/components/utiles/botonCambio';
+import PhClimaCard from '@/components/detalles/phClimaCard';
 
 export default function ParamsPiscina() {
   const { idPiscina } = useLocalSearchParams();
   const user = leo;
 
   const searchPool = (id: number) => {
-    return piscinasMock.filter((piscina) => piscina.id === Number(idPiscina))[0];
+    return piscinasMock.filter(
+      (piscina) => piscina.id === Number(idPiscina)
+    )[0];
   };
 
   const pool = searchPool(Number(idPiscina));
@@ -40,14 +43,11 @@ export default function ParamsPiscina() {
             </Text>
           </View>
 
-          {(user.piscinas.length > 1 && !user.isAdmin) && (
-            <BotonCambio />
-          )}
-
+          {user.piscinas.length > 1 && !user.isAdmin && <BotonCambio />}
         </View>
 
-        <Ph data={5.5} />
-        <Clima
+        <PhClimaCard
+          ph={5.5}
           temperature={28}
           weatherIcon={'sunny'}
           colorIcon={'#F19E39'}
@@ -56,8 +56,9 @@ export default function ParamsPiscina() {
           humidity={45}
           wind={12}
         />
-        <ControlFiltro waterEntryFilter={['filter']}/>
-        <Indicadores/>
+
+        <ControlFiltro waterEntryFilter={['filter']} />
+        <Indicadores />
       </ScreenTabs>
     </ScrollView>
   );
