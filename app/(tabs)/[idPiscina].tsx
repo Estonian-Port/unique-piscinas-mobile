@@ -1,6 +1,5 @@
-import { ScrollView, Text, View, Image, Pressable } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import Ph from '@/components/detalles/phClimaCard';
-import Clima from '@/components/detalles/clima';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import { gabi, leo } from '@/data/mock/userMock';
