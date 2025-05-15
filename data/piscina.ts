@@ -59,3 +59,17 @@ type waterInletsType = 'background' | 'skimmer' | 'bottomSweeper';
 type ligthsType = 'manual' | 'programmed';
 
 type EntryFilter = 'filter' | 'backwash' | 'rinse' | 'drain' | 'recirculate';
+
+interface PiscinaDashboard {
+  id: number;
+  nombre: string;
+  propietario: string; // Nombre del propietario como string
+  tipo: string; // Tipo de piscina (por ejemplo, "Skimmer")
+  ph: number; // Nivel de pH
+  equipos: EquipoDashboard[]; // Lista de equipos con su estado
+}
+
+type EquipoDashboard = {
+  tipo: string; // Tipo de equipo (por ejemplo, "Uv", "Ionizador")
+  estado: string; // Estado del equipo (por ejemplo, "Operativo", "Inactivo")
+};

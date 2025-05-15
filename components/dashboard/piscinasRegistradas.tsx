@@ -5,38 +5,13 @@ import TablaPiscinas from './tablaPiscinas';
 import { Link } from 'expo-router';
 import CardPiscinaTabla from './cardPiscinaTabla';
 import PoolTableCard from './cardPiscinaTabla';
+import { piscinasDashboardMock } from '@/data/mock/piscinaMock';
 
 const PiscinasRegistradas = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   // Datos de ejemplo
-  const pools = [
-    {
-      id: 1,
-      nombre: "Piscina Principal",
-      propietario: "Jose Luis Perez",
-      tipo: "Skimmer",
-      ph: 7.4,
-      equipos: [
-        { tipo: "Uv", estado: "Operativo" },
-        { tipo: "Ionizador", estado: "Inactivo" },
-        { tipo: "Trasductor", estado: "Operativo" },
-        { tipo: "Calentador", estado: "Alerta" },
-      ],
-    },
-    {
-      id: 2,
-      nombre: "Piscina Infantil",
-      propietario: "Maria Rodriguez",
-      tipo: "Desborde",
-      ph: 6.8,
-      equipos: [
-        { tipo: "Uv", estado: "Operativo" },
-        { tipo: "Ionizador", estado: "Atención urgente" },
-        { tipo: "Trasductor", estado: "Inactivo" },
-      ],
-    },
-  ]
+  const pools = piscinasDashboardMock;
 
   // Filtrar piscinas según la búsqueda
   const filteredPools = pools.filter(

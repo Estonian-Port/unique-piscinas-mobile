@@ -101,12 +101,12 @@ const registro3: Registro = {
 const registro4: Registro = {
   id: 4,
   fecha: '2023-07-01',
-  dispositivo: 'Panel de control',
-  accion: 'Actualización de firmware',
+  dispositivo: 'Sistema de filtrado',
+  accion: 'Reemplazo de filtros',
   descripcion:
-    'Actualización del software de control a la versión 2.5.3. Se mejora la eficiencia energética y se corrigen errores.',
+    'Se realizó el cambio completo de los filtros del sistema de filtrado para garantizar la calidad del agua.',
   tecnico: 'Laura Gómez',
-  tipoAccion: 'configuracion',
+  tipoAccion: 'mantenimiento',
 };
 
 // 10 piscinas, distribuidas entre gabi, seba y diego
@@ -231,3 +231,124 @@ seba.piscinas = piscinas.filter((p) => p.propietario === seba);
 diego.piscinas = piscinas.filter((p) => p.propietario === diego);
 
 export const piscinasMock: Piscina[] = piscinas;
+
+const piscinasDashboard: PiscinaDashboard[] = [
+  {
+    id: 1,
+    nombre: 'Piscina Av. San Martín 123',
+    propietario: 'Gabriel Tarquini',
+    tipo: 'Skimmer',
+    ph: 7.4,
+    equipos: [
+      { tipo: 'Uv', estado: 'Operativo' },
+      { tipo: 'Calentador', estado: 'Operativo' },
+    ],
+  },
+  {
+    id: 2,
+    nombre: 'Piscina Roca 452',
+    propietario: 'Gabriel Tarquini',
+    tipo: 'Skimmer',
+    ph: 7.2,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Inactivo' },
+      { tipo: 'Calentador', estado: 'Operativo' },
+    ],
+  },
+  {
+    id: 3,
+    nombre: 'Piscina Rodriguez Peña 4545',
+    propietario: 'Gabriel Tarquini',
+    tipo: 'Skimmer',
+    ph: 7.5,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Trasductor', estado: 'Alerta' },
+    ],
+  },
+  {
+    id: 4,
+    nombre: 'Piscina Belgrano 333',
+    propietario: 'Sebastian Rodriguez',
+    tipo: 'Skimmer',
+    ph: 7.3,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Trasductor', estado: 'Atención urgente' },
+      { tipo: 'Uv', estado: 'Operativo' },
+      { tipo: 'Calentador', estado: 'Inactivo' },
+    ],
+  },
+  {
+    id: 5,
+    nombre: 'Piscina Av. La Plata 321',
+    propietario: 'Sebastian Rodriguez',
+    tipo: 'Skimmer',
+    ph: 7.1,
+    equipos: [
+      { tipo: 'Uv', estado: 'Atención urgente' },
+      { tipo: 'Trasductor', estado: 'Operativo' },
+    ],
+  },
+  {
+    id: 6,
+    nombre: 'Piscina 9 de julio 6545',
+    propietario: 'Sebastian Rodriguez',
+    tipo: 'Skimmer',
+    ph: 7.6,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Trasductor', estado: 'Alerta' },
+      { tipo: 'Uv', estado: 'Atención urgente' },
+      { tipo: 'Calentador', estado: 'Inactivo' },
+    ],
+  },
+  {
+    id: 7,
+    nombre: 'Piscina Principal - Hornos 564',
+    propietario: 'Diego Maradona',
+    tipo: 'Skimmer',
+    ph: 7.4,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Uv', estado: 'Operativo' },
+      { tipo: 'Calentador', estado: 'Inactivo' },
+    ],
+  },
+  {
+    id: 8,
+    nombre: 'Piscina Secundaria - Hornos 564',
+    propietario: 'Diego Maradona',
+    tipo: 'Skimmer',
+    ph: 7.2,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Calentador', estado: 'Inactivo' },
+    ],
+  },
+  {
+    id: 9,
+    nombre: 'Piscina Urquiza 852',
+    propietario: 'Diego Maradona',
+    tipo: 'Skimmer',
+    ph: 7.3,
+    equipos: [
+      { tipo: 'Ionizador', estado: 'Operativo' },
+      { tipo: 'Trasductor', estado: 'Inactivo' },
+      { tipo: 'Uv', estado: 'Operativo' },
+    ],
+  },
+  {
+    id: 10,
+    nombre: 'Piscina Rosas 258',
+    propietario: 'Diego Maradona',
+    tipo: 'Skimmer',
+    ph: 7.5,
+    equipos: [
+      { tipo: 'Uv', estado: 'Atención urgente' },
+      { tipo: 'Calentador', estado: 'Inactivo' },
+    ],
+  },
+];
+
+export const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;
