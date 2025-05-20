@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ type ModalProgramacionProps = {
 };
 
 const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
+  const [daysSelected, setDaysSelected] = useState<Day[]>([]);
+  
   const daysOfWeek: Day[] = [
     Day.LUNES,
     Day.MARTES,
@@ -30,6 +32,18 @@ const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
   const save = (): void => {
     onClose();
   };
+
+  const toggleDay = (day: Day): void => {
+    if (daysSelected.includes(day)) {
+      setDaysSelected(daysSelected.filter((d) => d !== day));
+    } else {
+      setDaysSelected([...daysSelected, day]);
+    }
+  };
+
+  const isDaySelected = (day: Day): boolean => {
+    return daysSelected.includes(day);
+  }
 
   return (
     <Modal
@@ -48,9 +62,10 @@ const ModalProgramacion = ({ visible, onClose }: ModalProgramacionProps) => {
               {daysOfWeek.map((day) => (
                 <Pressable
                   key={day}
-                  className="items-center justify-center rounded-full p-1 px-2.5 border bg-white"
+                  className={`items-center justify-center rounded-full p-1 px-2.5 border ${isDaySelected(day) ? 'bg-black' : 'bg-white'}`}
+                  onPress={() => toggleDay(day)}
                 >
-                  <Text className="font-geist-semi-bold text-lg text-black">
+                  <Text className={`font-geist-semi-bold text-lg ${isDaySelected(day) ? 'text-white' : 'text-black'}`}>
                     {day}
                   </Text>
                 </Pressable>
