@@ -1,9 +1,17 @@
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import { users } from '@/data/mock/userMock';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { users } from '@/data/mock/userMock';
+import { Link } from 'expo-router';
+import PasosFormulario from './pasosFormulario';
 
-const InformacionBasica = () => {
+const InformacionBasica = ({
+  onCancel,
+  onNext,
+}: {
+  onCancel: () => void;
+  onNext: () => void;
+}) => {
   const usuarios = users.filter((user) => user.isAdmin === false);
 
   const [nombrePiscina, setNombrePiscina] = useState('');
@@ -21,10 +29,13 @@ const InformacionBasica = () => {
   );
 
   return (
-    <View className="py-5 border-b border-gray-200">
-      <Text className="font-geist-semi-bold text-text text-xl">
-        Información Básica
-      </Text>
+    <View className="py-5">
+      <View className="flex-row items-center justify-between">
+        <Text className="font-geist-semi-bold text-text text-xl">
+          Información Básica
+        </Text>
+        <PasosFormulario paso={1} />
+      </View>
       <Text className="font-geist text-text text-base mt-3">
         Nombre de la piscina
       </Text>
@@ -72,6 +83,23 @@ const InformacionBasica = () => {
         numberOfLines={6}
         textAlignVertical="top"
       ></TextInput>
+
+      <View className="flex-row items-center justify-center gap-1 mt-5">
+        <Link asChild href="/dashboard">
+          <Pressable
+            onPress={onCancel}
+            className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
+          >
+            <Text className="text-text font-geist text-base">Cancelar</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          onPress={onNext}
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-blue-500 w-1/3"
+        >
+          <Text className="text-white text-base font-geist">Siguiente</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };

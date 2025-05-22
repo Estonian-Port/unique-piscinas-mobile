@@ -36,4 +36,6 @@ const diego: User = {
 
 export { leo, gabi, seba, diego };
 
+export const users: User[] = [leo, gabi, seba, diego];
+
 // Las piscinas y la asignación cruzada se hace en piscinaMock.ts

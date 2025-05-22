@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Switch } from 'react-native';
+import { View, Text, TextInput, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import {
@@ -8,6 +8,8 @@ import {
   WavesIcon,
 } from '@/assets/icons';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { Link } from 'expo-router';
+import PasosFormulario from './pasosFormulario';
 
 type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
 type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
@@ -40,7 +42,15 @@ const modelosFiltro = [
   { id: 4, name: 'Otro' },
 ];
 
-const EquiposNuevaPiscina = () => {
+const EquiposNuevaPiscina = ({
+  onCancel,
+  onBack,
+  onSave,
+}: {
+  onCancel: () => void;
+  onBack: () => void;
+  onSave: () => void;
+}) => {
   const [tipoBomba, setTipoBomba] = useState<TipoBomba>('Bomba única');
   const [tipoFiltro, setTipoFiltro] = useState<TipoFiltro>('Arena');
   const [cloradorSalino, setCloradorSalino] = useState(false);
@@ -66,10 +76,13 @@ const EquiposNuevaPiscina = () => {
   const [arena, setArena] = useState('');
 
   return (
-    <View className="py-5 border-b border-gray-200">
-      <Text className="font-geist-semi-bold text-text text-xl">
-        Equipamiento
-      </Text>
+    <View className="py-5">
+      <View className="flex-row items-center justify-between">
+        <Text className="font-geist-semi-bold text-text text-xl">
+          Equipamiento
+        </Text>
+        <PasosFormulario paso={3} />
+      </View>
       <Text className="font-geist-semi-bold text-text text-lg mt-2">
         Bombas
       </Text>
@@ -232,7 +245,7 @@ const EquiposNuevaPiscina = () => {
           </Text>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={cloradorSalino ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setCloradorSalino(!cloradorSalino)}
             value={cloradorSalino}
@@ -244,7 +257,7 @@ const EquiposNuevaPiscina = () => {
           </Text>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={controlPh ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setControlPh(!controlPh)}
             value={controlPh}
@@ -254,7 +267,7 @@ const EquiposNuevaPiscina = () => {
           <Text className="text-text text-base font-geist">Control de ORP</Text>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={controlOrp ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setControlOrp(!controlOrp)}
             value={controlOrp}
@@ -274,7 +287,7 @@ const EquiposNuevaPiscina = () => {
           </View>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={uv ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setUv(!uv)}
             value={uv}
@@ -289,7 +302,7 @@ const EquiposNuevaPiscina = () => {
           </View>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={ionizador ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setIonizador(!ionizador)}
             value={ionizador}
@@ -304,7 +317,7 @@ const EquiposNuevaPiscina = () => {
           </View>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={trasductor ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setTrasductor(!trasductor)}
             value={trasductor}
@@ -324,12 +337,34 @@ const EquiposNuevaPiscina = () => {
           </View>
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor="#fcdb99"
+            thumbColor={calefaccion ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setCalefaccion(!calefaccion)}
             value={calefaccion}
           />
         </View>
+      </View>
+      <View className="flex-row items-center justify-center gap-1 mt-5">
+        <Link asChild href="/dashboard">
+          <Pressable
+            onPress={onCancel}
+            className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
+          >
+            <Text className="text-text font-geist text-base">Cancelar</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          onPress={onBack}
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-blue-500 w-1/3"
+        >
+          <Text className="text-white text-base font-geist">Atrás</Text>
+        </Pressable>
+        <Pressable
+          onPress={onSave}
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-green-600 w-1/3"
+        >
+          <Text className="text-white text-base font-geist">Guardar</Text>
+        </Pressable>
       </View>
     </View>
   );

@@ -2,8 +2,18 @@ import { View, Text, Pressable, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import Checkbox from 'expo-checkbox';
 import { CalculatorIcon } from '@/assets/icons';
+import { Link } from 'expo-router';
+import PasosFormulario from './pasosFormulario';
 
-const ConfiguracionPiscina = () => {
+const ConfiguracionPiscina = ({
+  onCancel,
+  onBack,
+  onNext,
+}: {
+  onCancel: () => void;
+  onBack: () => void;
+  onNext: () => void;
+}) => {
   const [desbordante, setDesbordante] = useState(false);
   const [largo, setLargo] = useState('');
   const [ancho, setAncho] = useState('');
@@ -22,10 +32,13 @@ const ConfiguracionPiscina = () => {
   };
 
   return (
-    <View className="py-5 border-b border-gray-200">
-      <Text className="font-geist-semi-bold text-text text-xl">
-        Configuracion de la Piscina
-      </Text>
+    <View className="py-5">
+      <View className="flex-row items-center justify-between">
+        <Text className="font-geist-semi-bold text-text text-xl">
+          Configuración de la piscina
+        </Text>
+        <PasosFormulario paso={2} />
+      </View>
       <Pressable
         onPress={() => setDesbordante(!desbordante)}
         className="flex-row items-center mt-3"
@@ -102,6 +115,29 @@ const ConfiguracionPiscina = () => {
           ></TextInput>
         </>
       )}
+
+      <View className="flex-row items-center justify-center gap-1 mt-5">
+        <Link asChild href="/dashboard">
+          <Pressable
+            onPress={onCancel}
+            className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
+          >
+            <Text className="text-text font-geist text-base">Cancelar</Text>
+          </Pressable>
+        </Link>
+        <Pressable
+          onPress={onBack}
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-black w-1/3"
+        >
+          <Text className="text-white text-base font-geist">Atrás</Text>
+        </Pressable>
+        <Pressable
+          onPress={onNext}
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-blue-500 w-1/3"
+        >
+          <Text className="text-white text-base font-geist">Siguiente</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };

@@ -11,7 +11,7 @@ const PiscinasRegistradas = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   // Datos de ejemplo
-  const pools = piscinasDashboardMock;
+  const pools = piscinasDashboardMock || [];
 
   // Filtrar piscinas según la búsqueda
   const filteredPools = pools.filter(
