@@ -8,13 +8,36 @@ import { ciclosLucesMock } from '@/data/mock/cicloLucesMock';
 import ModalProgramacion from './modalProgramacion';
 
 const ProgramacionLuces = () => {
-  const ciclosProgramados: Cicle[] = ciclosLucesMock;
-  const [isManual, setIsActive] = useState(false);
+  const [ciclos, setCiclos] = useState<Cicle[]>(ciclosLucesMock);
+  const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const hasCicles = ciclosProgramados.length > 0;
+  const cicloVacioDeLuces: Cicle = {
+    id: 0,
+    startTime: new Date(),
+    endTime: new Date(),
+    activeDays: [],
+    mode: null,
+    isActive: false,
+    isFilterCicle: true,
+  };
 
-  const addSchedule = () => null;
+  const hasCicles = ciclos.length > 0;
+
+  const handleAddCicle = (nuevoCiclo: Cicle) => {
+    ciclos.push(nuevoCiclo);
+  };
+
+  const handleEditCicle = (cicloEditado: Cicle) => {
+    setCiclos((prev) =>
+      prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
+    );
+  };
+
+  const handleDeleteCicle = (cicloId: number) => {
+    setCiclos((prev) => prev.filter((c) => c.id !== cicloId));
+  };
+
 
   return (
     <ScreenCard>
@@ -34,9 +57,9 @@ const ProgramacionLuces = () => {
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor='#fcdb99'
+          thumbColor={isManual ? '#fcdb99' : '#ffffff'}
           ios_backgroundColor="#d3d3d3"
-          onValueChange={() => setIsActive(!isManual)}
+          onValueChange={() => setIsManual(!isManual)}
           value={isManual}
         />
       </View>
@@ -58,21 +81,22 @@ const ProgramacionLuces = () => {
           <ModalProgramacion
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
-            onSave={addSchedule}
-            cicle={ciclosProgramados[0] ?? null}
+            onSave={handleAddCicle}
+            cicle={cicloVacioDeLuces}
             hasCicleMode={false}
           />
         )}
       </View>
 
-      <View
-        className={`${isManual ? 'opacity-50' : ''}`}
-        pointerEvents={isManual ? 'none' : 'auto'}
-      >
         {hasCicles ? (
           <View className="items-center justify-between gap-2">
-            {ciclosProgramados.map((ciclo) => (
-              <Schedule cicle={ciclo} key={ciclo.id} editCicle={addSchedule}></Schedule>
+            {ciclos.map((ciclo) => (
+              <Schedule
+                cicle={ciclo}
+                key={ciclo.id}
+                editCicle={handleEditCicle}
+                deleteCicle={handleDeleteCicle}
+              ></Schedule>
             ))}
           </View>
         ) : (
@@ -82,7 +106,6 @@ const ProgramacionLuces = () => {
             </Text>
           </View>
         )}
-      </View>
     </ScreenCard>
   );
 };

@@ -24,7 +24,7 @@ const ProgramacionFiltrado = () => {
 
   const hasCicles = ciclos.length > 0;
 
-  const addSchedule = (nuevoCiclo: Cicle) => {
+  const handleAddCicle = (nuevoCiclo: Cicle) => {
     ciclosFiltradoMock.push(nuevoCiclo);
   };
 
@@ -32,6 +32,10 @@ const ProgramacionFiltrado = () => {
     setCiclos((prev) =>
       prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
     );
+  };
+
+  const handleDeleteCicle = (cicloId: number) => {
+    setCiclos((prev) => prev.filter((c) => c.id !== cicloId));
   };
 
   return (
@@ -60,7 +64,7 @@ const ProgramacionFiltrado = () => {
           <ModalProgramacion
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
-            onSave={addSchedule}
+            onSave={handleAddCicle}
             hasCicleMode={true}
             cicle={cicloVacioDeFiltrado}
           />
@@ -73,6 +77,7 @@ const ProgramacionFiltrado = () => {
             <Schedule
               cicle={ciclo}
               editCicle={handleEditCicle}
+              deleteCicle={handleDeleteCicle}
               key={ciclo.id}
             ></Schedule>
           ))}

@@ -3,13 +3,16 @@ import React, { useState } from 'react';
 import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
 import { Cicle, Day } from '@/data/cicloFiltrado';
 import ModalProgramacion from './modalProgramacion';
+import ModalEliminarProgramacion from './modalEliminarProgramacion';
 
 const Schedule = ({
   cicle,
   editCicle,
+  deleteCicle,
 }: {
   cicle: Cicle;
   editCicle: (cicloEditado: Cicle) => void;
+  deleteCicle: (cicloId: number) => void;
 }) => {
   const daysOfWeek: Day[] = [
     Day.LUNES,
@@ -22,12 +25,15 @@ const Schedule = ({
   ];
   const [isActive, setIsActive] = useState(cicle.isActive);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const isActiveDay = (day: Day) => {
     return cicle.activeDays.includes(day);
   };
 
-  const deleteSchedule = () => null;
+  const deleteSchedule = () => {
+    deleteCicle(cicle.id);
+  };
 
   return (
     <View className="w-full rounded-md bg-white p-2 border border-gray-200">
@@ -93,13 +99,20 @@ const Schedule = ({
               visible={openModalEdit}
               onClose={() => setOpenModalEdit(false)}
               onSave={editCicle}
-              hasCicleMode={true}
+              hasCicleMode={cicle.isFilterCicle}
               cicle={cicle}
             />
           )}
-          <Pressable onPress={deleteSchedule()}>
+          <Pressable onPress={()=> setOpenModalDelete(true)}>
             <DeleteIcon color="red" />
           </Pressable>
+          {openModalDelete && (
+            <ModalEliminarProgramacion
+              visible={openModalDelete}
+              onClose={() => setOpenModalDelete(false)}
+              onDelete={deleteSchedule}
+            />
+          )}
         </View>
       </View>
     </View>

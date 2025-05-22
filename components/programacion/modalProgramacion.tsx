@@ -52,14 +52,25 @@ const ModalProgramacion = ({
   ];
 
   const save = (): void => {
-    const cicloActualizado: Cicle = {
-      ...cicle,
-      activeDays: daysSelected,
-      mode: selectedCicleMode,
-      startTime,
-      endTime,
-    };
-    onSave(cicloActualizado);
+    if (hasCicleMode) {
+      const cicloActualizado: Cicle = {
+        ...cicle,
+        activeDays: daysSelected,
+        mode: selectedCicleMode,
+        startTime,
+        endTime,
+      };
+      onSave(cicloActualizado);
+    } else {
+      const cicloActualizado: Cicle = {
+        ...cicle,
+        activeDays: daysSelected,
+        isFilterCicle: false,
+        startTime,
+        endTime,
+      };
+      onSave(cicloActualizado);
+    }
     onClose();
   };
 
