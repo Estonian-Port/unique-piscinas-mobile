@@ -58,6 +58,9 @@ const ProgramacionLuces = () => {
           <ModalProgramacion
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
+            onSave={addSchedule}
+            cicle={ciclosProgramados[0] ?? null}
+            hasCicleMode={false}
           />
         )}
       </View>
@@ -69,7 +72,7 @@ const ProgramacionLuces = () => {
         {hasCicles ? (
           <View className="items-center justify-between gap-2">
             {ciclosProgramados.map((ciclo) => (
-              <Schedule cicle={ciclo} key={ciclo.id}></Schedule>
+              <Schedule cicle={ciclo} key={ciclo.id} editCicle={addSchedule}></Schedule>
             ))}
           </View>
         ) : (

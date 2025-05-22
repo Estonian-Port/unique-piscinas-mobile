@@ -1,9 +1,16 @@
-import { View, Text, Pressable, Switch } from 'react-native';
+import { View, Text, Pressable, Switch, Modal } from 'react-native';
 import React, { useState } from 'react';
 import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
 import { Cicle, Day } from '@/data/cicloFiltrado';
+import ModalProgramacion from './modalProgramacion';
 
-const Schedule = ({ cicle }: { cicle: Cicle }) => {
+const Schedule = ({
+  cicle,
+  editCicle,
+}: {
+  cicle: Cicle;
+  editCicle: (cicloEditado: Cicle) => void;
+}) => {
   const daysOfWeek: Day[] = [
     Day.LUNES,
     Day.MARTES,
@@ -14,12 +21,12 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
     Day.DOMINGO,
   ];
   const [isActive, setIsActive] = useState(cicle.isActive);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
 
   const isActiveDay = (day: Day) => {
     return cicle.activeDays.includes(day);
   };
 
-  const editSchedule = () => null;
   const deleteSchedule = () => null;
 
   return (
@@ -28,7 +35,18 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
         <View className="flex-row items-center">
           <ClockIcon size={14} color="black" />
           <Text className="font-geist text-text text-sm mx-2">
-            {cicle.startTime} - {cicle.endTime} horas
+            {cicle.startTime.toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false,
+            })}{' '}
+            -{' '}
+            {cicle.endTime.toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false,
+            })}{' '}
+            horas
           </Text>
         </View>
         {cicle.isFilterCicle && (
@@ -47,7 +65,7 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
               key={day}
               className={`flex-row items-center flex-1 justify-center rounded-full mx-0.5 p-0.5 border ${
                 isActiveDay(day) ? 'bg-black' : 'bg-white'
-              }`}
+              } ${isActive ? '' : 'opacity-50'}`}
             >
               <Text
                 className={`font-geist-semi-bold text-base ${
@@ -62,14 +80,23 @@ const Schedule = ({ cicle }: { cicle: Cicle }) => {
         <View className="flex-row items-center justify-around gap-3">
           <Switch
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
-            thumbColor='#fcdb99'
+            thumbColor={isActive ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
             onValueChange={() => setIsActive(!isActive)}
             value={isActive}
           />
-          <Pressable onPress={editSchedule()}>
+          <Pressable onPress={() => setOpenModalEdit(!openModalEdit)}>
             <EditIcon color="black" />
           </Pressable>
+          {openModalEdit && (
+            <ModalProgramacion
+              visible={openModalEdit}
+              onClose={() => setOpenModalEdit(false)}
+              onSave={editCicle}
+              hasCicleMode={true}
+              cicle={cicle}
+            />
+          )}
           <Pressable onPress={deleteSchedule()}>
             <DeleteIcon color="red" />
           </Pressable>

@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const TimeInput = ({title} : {title:string}) => {
-  const [time, setTime] = useState(new Date());
+const TimeInput = ({title, timeSchedule, onChange} : {title:string, timeSchedule:Date, onChange: (date: Date) => void}) => {
+  const [time, setTime] = useState(timeSchedule);
   const [isPickerVisible, setPickerVisible] = useState(false);
 
   const handleConfirm = (selectedTime: Date) => {
     setPickerVisible(false); // Oculta el picker
-    setTime(selectedTime); // Actualiza la hora seleccionada
+    setTime(selectedTime); // Actualiza la hora seleccionada visualmente
+    onChange(selectedTime); // Llama a la función onChange con la nueva hora
   };
 
   return (

@@ -6,14 +6,33 @@ import Schedule from './schedule';
 import { Cicle } from '@/data/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
+import { cicloLuzVacio } from '@/data/mock/cicloLucesMock';
 
 const ProgramacionFiltrado = () => {
-  const ciclosProgramados: Cicle[] = ciclosFiltradoMock;
+  const [ciclos, setCiclos] = useState<Cicle[]>(ciclosFiltradoMock);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const hasCicles = ciclosProgramados.length > 0;
+  const cicloVacioDeFiltrado: Cicle = {
+    id: 0,
+    startTime: new Date(),
+    endTime: new Date(),
+    activeDays: [],
+    mode: null,
+    isActive: false,
+    isFilterCicle: true,
+  };
 
-  const addSchedule = () => null;
+  const hasCicles = ciclos.length > 0;
+
+  const addSchedule = (nuevoCiclo: Cicle) => {
+    ciclosFiltradoMock.push(nuevoCiclo);
+  };
+
+  const handleEditCicle = (cicloEditado: Cicle) => {
+    setCiclos((prev) =>
+      prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
+    );
+  };
 
   return (
     <ScreenCard>
@@ -41,14 +60,21 @@ const ProgramacionFiltrado = () => {
           <ModalProgramacion
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
+            onSave={addSchedule}
+            hasCicleMode={true}
+            cicle={cicloVacioDeFiltrado}
           />
         )}
       </View>
 
       {hasCicles ? (
         <View className="items-center justify-between gap-2">
-          {ciclosProgramados.map((ciclo) => (
-            <Schedule cicle={ciclo} key={ciclo.id}></Schedule>
+          {ciclos.map((ciclo) => (
+            <Schedule
+              cicle={ciclo}
+              editCicle={handleEditCicle}
+              key={ciclo.id}
+            ></Schedule>
           ))}
         </View>
       ) : (

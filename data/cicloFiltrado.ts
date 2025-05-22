@@ -1,16 +1,19 @@
 export interface Cicle {
   id: number;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   activeDays: Day[];
-  mode: ModeCicle;
+  mode: ModeCicle | null;
   isActive: boolean;
   isFilterCicle: boolean;
 }
 
 export enum ModeCicle {
   FILTRAR = 'Filtrar',
-  RETROLAVAR = 'Retrolavar'
+  RETROLAVAR = 'Retrolavar',
+  DESAGOTAR = 'Desagotar',
+  RECIRCULAR = 'Recircular',
+  ENJUAGAR = 'Enjuagar'
 }
 
 export enum Day {
