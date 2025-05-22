@@ -5,6 +5,7 @@ import { Link } from 'expo-router';
 import {
   ConfigurationIcon,
   EyeIcon,
+  HistorialIcon,
   LoginIcon,
   PersonIcon,
   TagIcon,
@@ -126,6 +127,15 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
           <Text className="text-gray-500 font-geist text-sm mr-2">pH:</Text>
           <PhIndicator value={pool.ph} />
         </View>
+
+        <Link asChild href={`/readings/${pool.id}`}>
+          <Pressable className="flex-row items-center justify-center border-gray-300 p-3 rounded-lg bg-black">
+            <HistorialIcon size={16} color="#fff" className="mr-2" />
+            <Text className="text-white font-geist text-sm">
+              Historial de Lecturas
+            </Text>
+          </Pressable>
+        </Link>
       </View>
 
       {/* Equipos */}

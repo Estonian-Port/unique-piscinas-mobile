@@ -136,3 +136,11 @@ export const CalendarIcon = (props: any) => (
 export const BuildIcon = (props: any) => (
   <MaterialIcons name="build" size={24} color="#000" {...props} />
 );
+
+export const HistorialIcon = (props: any) => (
+  <MaterialIcons name="history" size={24} color="#000" {...props} />
+);
+
+export const SearchIcon = (props: any) => (
+  <MaterialIcons name="search" size={24} color="#000" {...props} />
+);

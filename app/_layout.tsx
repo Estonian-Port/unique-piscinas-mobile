@@ -30,7 +30,7 @@ export default function RootLayout() {
       {/* Configuración global del StatusBar */}
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
 
-      <SafeAreaView style={{ flex: 1 }} className='bg-white'>
+      <SafeAreaView style={{ flex: 1 }} className="bg-white">
         <Stack
           screenOptions={{
             headerLeft: () => <Header />,
@@ -40,11 +40,30 @@ export default function RootLayout() {
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerBackVisible: false }} />
-          <Stack.Screen name="profile" options={{ headerRight: () => <BotonHome /> }} />
-          <Stack.Screen name="changePass" options={{ headerRight: () => null }} />
-          <Stack.Screen name="(tabs-adm)" options={{ headerRight: () => null }} />
-          <Stack.Screen name="nuevaPiscina" options={{ headerRight: () => null }} />
-          <Stack.Screen name="[idPiscinaEquipos]" options={{ headerRight: () => null }} />
+          <Stack.Screen
+            name="profile"
+            options={{ headerRight: () => <BotonHome /> }}
+          />
+          <Stack.Screen
+            name="changePass"
+            options={{ headerRight: () => null }}
+          />
+          <Stack.Screen
+            name="(tabs-adm)"
+            options={{ headerRight: () => null }}
+          />
+          <Stack.Screen
+            name="nuevaPiscina"
+            options={{ headerRight: () => null }}
+          />
+          <Stack.Screen
+            name="[idPiscinaEquipos]"
+            options={{ headerRight: () => null }}
+          />
+          <Stack.Screen
+            name="readings/[idPiscinaReadings]"
+            options={{ headerRight: () => null }}
+          />
         </Stack>
       </SafeAreaView>
     </>
