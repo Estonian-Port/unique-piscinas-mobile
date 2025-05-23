@@ -6,13 +6,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Image,
   StatusBar,
 } from 'react-native';
 import React, { useState } from 'react';
 import ModalError from '@/components/utiles/modalError';
 import { useRouter } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
+import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
 
 type rolType = 'admin' | 'user';
 
@@ -45,19 +45,15 @@ const Index = () => {
   return (
     <>
       {/* Configuración específica del StatusBar para el login */}
-      <StatusBar backgroundColor="#0054ae" barStyle="light-content" />
+      <StatusBar backgroundColor="#222247" barStyle="light-content" />
 
       <ScrollView contentContainerStyle={{ flexGrow: 1, height: '100%' }}>
-        <View className="flex-1 items-center justify-center bg-[#0054ae] h-full w-full">
+        <View className="flex-1 items-center justify-center bg-navy-unique h-full w-full">
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <View className="mb-4 items-center">
-              <Image
-                source={require('../assets/images/logo-unique.png')}
-                resizeMode="contain"
-                style={{ width: 250, height: 220 }}
-              />
+              <LogoUnique width={250} height={220} />
             </View>
             <View className="border border-gray-300 rounded-md mb-4 h-10">
               <TextInput
@@ -82,7 +78,7 @@ const Index = () => {
             </View>
             <TouchableOpacity
               onPress={() => handleLogin(username, password)}
-              className="bg-[#A38E63] rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
+              className="bg-gold-unique rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
             >
               <LoginIcon />
               <Text className="font-geist-semi-bold text-white ml-2">
