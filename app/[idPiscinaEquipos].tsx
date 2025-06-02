@@ -1,4 +1,4 @@
-import { ScrollView, Text, FlatList, View } from 'react-native';
+import { ScrollView, Text, FlatList, View, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import { gabi, leo } from '@/data/mock/userMock';
@@ -9,6 +9,7 @@ import GermicidaCard from '@/components/dashboard/germicidaCard';
 import ValvulaCard from '@/components/dashboard/valvulaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
 import { ScreenCard } from '@/components/utiles/ScreenCard';
+import { RegisterIcon } from '@/assets/icons';
 
 export default function Equipos() {
   const { idPiscinaEquipos } = useLocalSearchParams();
@@ -28,26 +29,26 @@ export default function Equipos() {
         <Text className="self-start p-5 text-text font-geist-semi-bold text-2xl">
           Editar Equipamiento - {pool.name}
         </Text>
-          <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
-            Bombas de filtración
-          </Text>
-          <FlatList
-            data={pool.bombas}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <BombaCard
-                bomba={{
-                  id: item.id,
-                  nombre: item.nombre,
-                  marca: item.marca,
-                  modelo: item.modelo,
-                  activa: item.activa,
-                  potencia: item.potencia,
-                }}
-              />
-            )}
-            style={{ width: '100%' }}
-          />
+        <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
+          Bombas de filtración
+        </Text>
+        <FlatList
+          data={pool.bombas}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <BombaCard
+              bomba={{
+                id: item.id,
+                nombre: item.nombre,
+                marca: item.marca,
+                modelo: item.modelo,
+                activa: item.activa,
+                potencia: item.potencia,
+              }}
+            />
+          )}
+          style={{ width: '100%' }}
+        />
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Sistemas germicidas
         </Text>
@@ -88,27 +89,37 @@ export default function Equipos() {
           Calefacción
         </Text>
         <CalefaccionCard calefaccion={pool.calefaccion} />
-        <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
-          Registros
-        </Text>
+
+        <View className="flex-row items-center justify-between mb-4 w-11/12 self-center">
+          <Text className="text-text font-geist-semi-bold text-xl">
+            Registros
+          </Text>
+          <Pressable className="bg-grayish-unique rounded-lg py-3 px-2 flex-row items-center justify-center">
+            <RegisterIcon size={16} className="mr-2" />
+            <Text className="text-black font-geist-semi-bold text-sm">
+              Nuevo Registro
+            </Text>
+          </Pressable>
+        </View>
+
         <ScreenCard>
-        <FlatList
-          data={pool.registro}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <RegistroCard
-              registro={{
-                id: item.id,
-                fecha: item.fecha,
-                dispositivo: item.dispositivo,
-                accion: item.accion,
-                descripcion: item.descripcion,
-                tecnico: item.tecnico,
-              }}
-            />
-          )}
-          style={{ width: '100%' }}
-        />
+          <FlatList
+            data={pool.registro}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <RegistroCard
+                registro={{
+                  id: item.id,
+                  fecha: item.fecha,
+                  dispositivo: item.dispositivo,
+                  accion: item.accion,
+                  descripcion: item.descripcion,
+                  tecnico: item.tecnico,
+                }}
+              />
+            )}
+            style={{ width: '100%' }}
+          />
         </ScreenCard>
       </Screen>
     </ScrollView>

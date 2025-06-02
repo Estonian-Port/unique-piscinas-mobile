@@ -7,7 +7,7 @@ const RegistroCard = ({ registro }: { registro: Registro }) => {
   return (
     <View className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 mb-4">
       {/* Encabezado con la acción */}
-      <View className="bg-[#607D8B] px-4 py-3 border-b border-gray-100">
+      <View className="bg-purple-unique px-4 py-3 border-b border-gray-100">
         <Text className="text-white font-geist-semi-bold text-base">{registro.accion}</Text>
       </View>
 

@@ -3,6 +3,7 @@ import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import {
+  BookIcon,
   ConfigurationIcon,
   EyeIcon,
   HistorialIcon,
@@ -128,14 +129,32 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
           <PhIndicator value={pool.ph} />
         </View>
 
+                <View className="flex-row items-center">
+          <BookIcon size={16} color="#666" className="mr-2" />
+          <Text className="text-gray-500 font-geist text-sm mr-2">Lecturas</Text>
+        </View>
+
+
+              <View className="flex-row justify-between mt-2">
         <Link asChild href={`/readings/${pool.id}`}>
-          <Pressable className="flex-row items-center justify-center border-gray-300 p-3 rounded-lg bg-black">
-            <HistorialIcon size={16} color="#fff" className="mr-2" />
-            <Text className="text-white font-geist text-sm">
-              Historial de Lecturas
+          <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
+            <HistorialIcon size={16} className="mr-2" />
+            <Text className="text-black font-geist-semi-bold text-sm">
+              Nueva lectura
             </Text>
           </Pressable>
         </Link>
+        <Link asChild href={`/readings/${pool.id}`}>
+          <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center">
+            <HistorialIcon size={16} className="mr-2" />
+            <Text className="text-black font-geist-semi-bold text-sm">
+              Ver historial
+            </Text>
+          </Pressable>
+        </Link>
+      </View>
+
+
       </View>
 
       {/* Equipos */}

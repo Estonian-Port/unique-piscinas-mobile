@@ -144,3 +144,11 @@ export const HistorialIcon = (props: any) => (
 export const SearchIcon = (props: any) => (
   <MaterialIcons name="search" size={24} color="#000" {...props} />
 );
+
+export const BookIcon = (props: any) => (
+  <MaterialIcons name="book" size={24} color="#000" {...props} />
+);
+
+export const RegisterIcon = (props: any) => (
+  <MaterialIcons name="assignment" size={24} color="#000" {...props} />
+);
