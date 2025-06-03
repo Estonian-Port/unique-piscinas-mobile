@@ -6,29 +6,21 @@ import {
   Platform,
   Pressable,
 } from 'react-native';
-import React, { useState } from 'react';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import DropDownPicker from 'react-native-dropdown-picker';
+import React from 'react';
 
-type ModalAñadirPiscinaProps = {
+type ModalEliminarUsuarioProps = {
   visible: boolean;
   onClose: () => void;
   nombreUsuario: string;
   apellidoUsuario: string;
 };
 
-const ModalAñadirPiscina = ({
+const ModalEliminarUsuario = ({
   visible,
   onClose,
   nombreUsuario,
   apellidoUsuario,
-}: ModalAñadirPiscinaProps) => {
-  const [open, setOpen] = useState(false);
-  const [piscinaSeleccionada, setPisicinaSeleccionada] = useState(null);
-
-  const poolsDisponibles = piscinasMock.filter(
-    (pool) => pool.propietario == null
-  );
+}: ModalEliminarUsuarioProps) => {
 
   const save = (): void => {
     onClose();
@@ -47,25 +39,12 @@ const ModalAñadirPiscina = ({
       >
         <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
-          <Text className="text-text text-lg font-geist-semi-bold mb-5">
-            Añadir Piscina a {nombreUsuario + ' ' + apellidoUsuario}
+          <Text className="text-text text-xl font-geist-bold mb-2 text-center">
+            ¿Esta seguro que quiere eliminar a {nombreUsuario + ' ' + apellidoUsuario}?
           </Text>
-          <DropDownPicker
-            open={open}
-            value={piscinaSeleccionada}
-            items={poolsDisponibles.map((pool) => ({
-              label: pool.name,
-              value: pool.id,
-            }))}
-            setOpen={setOpen}
-            setValue={setPisicinaSeleccionada}
-            placeholder="Seleccione una piscina"
-            style={{ borderColor: '#e5e7eb' }}
-            dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-            ListEmptyComponent={() => (
-              <Text style={{ padding: 10, color: '#888' }}>No hay piscinas disponibles</Text>
-            )}
-          />
+          <Text className='text-text text-sm font-geist'>
+            Esta acción no se puede deshacer y eliminará al usuario y todas sus asociaciones con piscinas.
+          </Text>
           <View className="flex-row justify-between gap-3 mt-5">
             <Pressable
               onPress={onClose}
@@ -77,11 +56,11 @@ const ModalAñadirPiscina = ({
             </Pressable>
             <Pressable
               onPress={save}
-              className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+              className="bg-red-alert rounded-lg flex-1 items-center justify-center h-12"
             >
               <View className="flex-row items-center justify-center">
                 <Text className="text-white text-center font-geist-semi-bold ml-2">
-                  Añadir Piscina
+                  Eliminar
                 </Text>
               </View>
             </Pressable>
@@ -93,4 +72,4 @@ const ModalAñadirPiscina = ({
   );
 };
 
-export default ModalAñadirPiscina;
+export default ModalEliminarUsuario;

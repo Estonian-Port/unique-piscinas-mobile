@@ -138,7 +138,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
               <View className="flex-row justify-between mt-2">
         <Link asChild href={`/readings/${pool.id}`}>
           <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-            <HistorialIcon size={16} className="mr-2" />
+            <BookIcon size={16} className="mr-2" />
             <Text className="text-black font-geist-semi-bold text-sm">
               Nueva lectura
             </Text>

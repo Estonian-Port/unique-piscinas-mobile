@@ -18,6 +18,7 @@ module.exports = {
         'purple-unique': '#4e4965',
         'navy-unique': '#222247',
         'grayish-unique': '#ceccd9',
+        'red-alert': '#ff4d4f',
       },
     },
   },

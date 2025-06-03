@@ -7,6 +7,8 @@ import {
 import { Pressable, View, Text } from 'react-native';
 import ModalAñadirPiscina from './modalAñadirPiscina';
 import { useState } from 'react';
+import ModalDesvincularPiscina from './modalDesvincularPiscina';
+import ModalEliminarUsuario from './modalEliminarUsuario';
 
 const UserItem = ({
   user,
@@ -17,7 +19,9 @@ const UserItem = ({
   isExpanded: boolean;
   onToggleExpand: () => void;
 }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalNuevaPiscina, setModalNuevaPiscina] = useState(false);
+  const [modalEliminarUsuario, setModalEliminarUsuario] = useState(false);
+  const [modalDesvincularPiscina, setModalDesvincularPiscina] = useState(false);
 
   return (
     <View className="border-b border-gray-200 py-5">
@@ -37,9 +41,17 @@ const UserItem = ({
               Activo
             </Text>
           </View>
-          <Pressable>
+          <Pressable onPress={() => setModalEliminarUsuario(true)}>
             <DeleteIcon size={26} color={'red'}></DeleteIcon>
           </Pressable>
+          {modalEliminarUsuario && (
+            <ModalEliminarUsuario
+              visible={modalEliminarUsuario}
+              onClose={() => setModalEliminarUsuario(false)}
+              nombreUsuario={user.name}
+              apellidoUsuario={user.lastname}
+            />
+          )}
           {isExpanded ? (
             <ChevronUpIcon size={20} color="#333" />
           ) : (
@@ -56,14 +68,14 @@ const UserItem = ({
             </Text>
             <Pressable
               className="border border-gray-300 rounded-md p-2 flex-row items-center justify-center"
-              onPress={() => setModalVisible(true)}
+              onPress={() => setModalNuevaPiscina(true)}
             >
               <Text> + Añadir Piscina</Text>
             </Pressable>
-            {modalVisible && (
+            {modalNuevaPiscina && (
               <ModalAñadirPiscina
-                visible={modalVisible}
-                onClose={() => setModalVisible(false)}
+                visible={modalNuevaPiscina}
+                onClose={() => setModalNuevaPiscina(false)}
                 nombreUsuario={user.name}
                 apellidoUsuario={user.lastname}
               />
@@ -90,9 +102,15 @@ const UserItem = ({
                 <Pressable>
                   <EyeIcon size={26}></EyeIcon>
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={() => setModalDesvincularPiscina(true)}>
                   <DeleteIcon size={26} color={'red'}></DeleteIcon>
                 </Pressable>
+                {modalDesvincularPiscina && (
+                  <ModalDesvincularPiscina
+                    visible={modalDesvincularPiscina}
+                    onClose={() => setModalDesvincularPiscina(false)}
+                  />
+                )}
               </View>
             </View>
           ))}

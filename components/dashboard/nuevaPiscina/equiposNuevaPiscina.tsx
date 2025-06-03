@@ -355,13 +355,13 @@ const EquiposNuevaPiscina = ({
         </Link>
         <Pressable
           onPress={onBack}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-blue-500 w-1/3"
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-grayish-unique w-1/3"
         >
-          <Text className="text-white text-base font-geist">Atrás</Text>
+          <Text className="text-text text-base font-geist">Atrás</Text>
         </Pressable>
         <Pressable
           onPress={onSave}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-green-600 w-1/3"
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-gold-unique w-1/3"
         >
           <Text className="text-white text-base font-geist">Guardar</Text>
         </Pressable>

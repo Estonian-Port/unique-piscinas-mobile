@@ -6,7 +6,7 @@ const PasosFormulario = ({ paso }: { paso: number }) => {
     <View className="flex-row items-center gap-1">
       <View
         className={`w-7 h-7 p-1 rounded-full ${
-          paso === 1 ? 'bg-blue-500' : 'bg-gray-300'
+          paso === 1 ? 'bg-purple-unique' : 'bg-gray-300'
         }`}
       >
         <Text className="text-white text-sm font-geist-semi-bold text-center">
@@ -15,7 +15,7 @@ const PasosFormulario = ({ paso }: { paso: number }) => {
       </View>
       <View
         className={`w-7 h-7 p-1 rounded-full ${
-          paso === 2 ? 'bg-blue-500' : 'bg-gray-300'
+          paso === 2 ? 'bg-purple-unique' : 'bg-gray-300'
         }`}
       >
         <Text className="text-white text-sm font-geist-semi-bold text-center">
@@ -24,7 +24,7 @@ const PasosFormulario = ({ paso }: { paso: number }) => {
       </View>
       <View
         className={`w-7 h-7 p-1 rounded-full ${
-          paso === 3 ? 'bg-blue-500' : 'bg-gray-300'
+          paso === 3 ? 'bg-purple-unique' : 'bg-gray-300'
         }`}
       >
         <Text className="text-white text-sm font-geist-semi-bold text-center">

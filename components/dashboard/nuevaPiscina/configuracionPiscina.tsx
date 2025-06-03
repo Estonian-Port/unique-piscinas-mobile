@@ -127,13 +127,13 @@ const ConfiguracionPiscina = ({
         </Link>
         <Pressable
           onPress={onBack}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-black w-1/3"
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-grayish-unique w-1/3"
         >
-          <Text className="text-white text-base font-geist">Atrás</Text>
+          <Text className="text-text text-base font-geist">Atrás</Text>
         </Pressable>
         <Pressable
           onPress={onNext}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-blue-500 w-1/3"
+          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-purple-unique w-1/3"
         >
           <Text className="text-white text-base font-geist">Siguiente</Text>
         </Pressable>
