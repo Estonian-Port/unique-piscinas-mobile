@@ -27,9 +27,9 @@ const PiscinasRegistradas = () => {
           Piscinas Registradas
         </Text>
         <Link asChild href="/nuevaPiscina">
-          <Pressable className="border rounded-lg bg-black p-2">
-            <Text className="text-white font-geist-semi-bold text-sm">
-              + Nueva Piscina
+          <Pressable className="border rounded-full bg-black w-12 h-12 items-center justify-center">
+            <Text className="text-white font-geist-bold text-xl text-center">
+              +
             </Text>
           </Pressable>
         </Link>
@@ -41,7 +41,7 @@ const PiscinasRegistradas = () => {
         value={searchQuery}
         autoCapitalize="none"
       />
-      <ScrollView className="flex-1 px-4">
+      <ScrollView className="flex-1 px-2">
         {filteredPools.map((pool) => (
           <PoolTableCard key={pool.id} pool={pool} />
         ))}
