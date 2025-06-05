@@ -40,7 +40,6 @@ const ModalEliminarProgramacion = ({visible, onClose, onDelete} : ModalEliminarP
                 className="bg-red-500 rounded-lg flex-1 items-center justify-center h-12"
               >
                 <View className="flex-row items-center justify-center">
-                  <DeleteIcon color="white" />
                   <Text className="text-white text-center font-geist-semi-bold ml-2">
                     Eliminar
                   </Text>

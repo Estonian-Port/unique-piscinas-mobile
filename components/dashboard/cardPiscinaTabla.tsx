@@ -4,6 +4,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import {
   BookIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   ConfigurationIcon,
   DeleteIcon,
   EyeIcon,
@@ -93,132 +95,152 @@ const EquipmentItem = ({
 
 const PoolTableCard = ({ pool }: { pool: any }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <View className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 mb-4">
       {/* Encabezado con nombre y tipo */}
-      <Text
-        className="font-geist-semi-bold text-text text-2xl"
-        numberOfLines={2}
-        ellipsizeMode="tail"
+      <Pressable
+        className="flex-row justify-between items-center"
+        onPress={() => setIsExpanded(!isExpanded)}
       >
-        {pool.nombre}
-      </Text>
+        <Text
+          className="font-geist-semi-bold text-text text-lg"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        >
+          {pool.nombre}
+        </Text>
+        {isExpanded ? (
+          <ChevronUpIcon size={20} color="#333" />
+        ) : (
+          <ChevronDownIcon size={20} color="#333" />
+        )}
+      </Pressable>
 
-      {/* Información principal */}
-      <View className="border-b border-gray-200 pb-4 mb-4 mt-2 gap-2">
-        <View className="flex-row items-center">
-          <PersonIcon size={16} color="#666" className="mr-2" />
-          <Text className="text-gray-500 font-geist text-sm mr-2">
-            Propietario:
-          </Text>
-          <Text className="text-text font-geist-semi-bold text-sm">
-            {pool.propietario}
-          </Text>
-        </View>
-
-        <View className="flex-row items-center">
-          <TagIcon size={16} color="#666" className="mr-2" />
-          <Text className="text-gray-500 font-geist text-sm mr-2">Tipo:</Text>
-          <View className="bg-gray-900 rounded-full px-3 py-1">
-            <Text className="font-geist-semi-bold text-white text-xs">
-              {pool.tipo}
-            </Text>
-          </View>
-        </View>
-
-        <View className="flex-row items-center">
-          <TintIcon size={16} color="#666" className="mr-2" />
-          <Text className="text-gray-500 font-geist text-sm mr-2">pH:</Text>
-          <PhIndicator value={pool.ph} />
-        </View>
-
-        <View className="flex-row items-center">
-          <BookIcon size={16} color="#666" className="mr-2" />
-          <Text className="text-gray-500 font-geist text-sm mr-2">
-            Lecturas
-          </Text>
-        </View>
-
-        <View className="flex-row justify-between mt-2">
-          <Link asChild href={`/readings/${pool.id}`}>
-            <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-              <BookIcon size={16} className="mr-2" />
-              <Text className="text-black font-geist-semi-bold text-sm">
-                Nueva lectura
+      {isExpanded && (
+        <>
+          {/* Información principal */}
+          <View className="border-b border-gray-200 pb-4 mb-4 mt-2 gap-2">
+            <View className="flex-row items-center">
+              <PersonIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-gray-500 font-geist text-sm mr-2">
+                Propietario:
               </Text>
-            </Pressable>
-          </Link>
-          <Link asChild href={`/readings/${pool.id}`}>
-            <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center">
-              <HistorialIcon size={16} className="mr-2" />
-              <Text className="text-black font-geist-semi-bold text-sm">
-                Ver historial
+              <Text className="text-text font-geist-semi-bold text-sm">
+                {pool.propietario}
               </Text>
-            </Pressable>
-          </Link>
-        </View>
-      </View>
-
-      {/* Equipos */}
-      <Text className="text-gray-700 font-geist-semi-bold text-sm mb-3">
-        Equipos:
-      </Text>
-      <View className="flex-row flex-wrap justify-between mb-4 ">
-        {pool.equipos.map(
-          (
-            equipo: { tipo: string; estado: string },
-            index: React.Key | null | undefined
-          ) => (
-            <View key={index} className="w-[48%] mb-2">
-              <EquipmentItem
-                tipo={equipo.tipo}
-                estado={
-                  equipo.estado as
-                    | 'Operativo'
-                    | 'Inactivo'
-                    | 'Atención urgente'
-                    | 'Alerta'
-                }
-              />
             </View>
-          )
-        )}
-      </View>
 
-      {/* Acciones */}
-      <View>
-        <View className="flex-row justify-between mt-2">
-          <Link asChild href={`/(tabs)/${pool.id}`}>
-            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-              <EyeIcon size={16} color="#fff" />
-              <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                Panel
+            <View className="flex-row items-center">
+              <TagIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-gray-500 font-geist text-sm mr-2">
+                Tipo:
               </Text>
-            </Pressable>
-          </Link>
-          <Link asChild href={`/${pool.id}`}>
-            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center">
-              <ConfigurationIcon size={16} color="#fff" />
-              <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                Equipos
+              <View className="bg-gray-900 rounded-full px-3 py-1">
+                <Text className="font-geist-semi-bold text-white text-xs">
+                  {pool.tipo}
+                </Text>
+              </View>
+            </View>
+
+            <View className="flex-row items-center">
+              <TintIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-gray-500 font-geist text-sm mr-2">pH:</Text>
+              <PhIndicator value={pool.ph} />
+            </View>
+
+            <View className="flex-row items-center">
+              <BookIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-gray-500 font-geist text-sm mr-2">
+                Lecturas
               </Text>
-            </Pressable>
-          </Link>
-        </View>
-        <Pressable className="bg-red-alert rounded-lg py-3 flex-1 flex-row items-center justify-center mt-2" onPress={() => setModalVisible(true)}>
-          <DeleteIcon size={16} color="#fff" />
-          <Text className="text-white font-geist-semi-bold text-sm ml-2">
-            Eliminar Piscina
+            </View>
+
+            <View className="flex-row justify-between mt-2">
+              <Link asChild href={`/readings/${pool.id}`}>
+                <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
+                  <BookIcon size={16} className="mr-2" />
+                  <Text className="text-black font-geist-semi-bold text-sm">
+                    Nueva lectura
+                  </Text>
+                </Pressable>
+              </Link>
+              <Link asChild href={`/readings/${pool.id}`}>
+                <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center">
+                  <HistorialIcon size={16} className="mr-2" />
+                  <Text className="text-black font-geist-semi-bold text-sm">
+                    Ver historial
+                  </Text>
+                </Pressable>
+              </Link>
+            </View>
+          </View>
+
+          {/* Equipos */}
+          <Text className="text-gray-700 font-geist-semi-bold text-sm mb-3">
+            Equipos:
           </Text>
-        </Pressable>
-        {modalVisible && (
-          <ModalEliminarPiscina
-            visible={modalVisible}
-            onClose={() => setModalVisible(false)}
-          />
-        )}
-      </View>
+          <View className="flex-row flex-wrap justify-between mb-4 ">
+            {pool.equipos.map(
+              (
+                equipo: { tipo: string; estado: string },
+                index: React.Key | null | undefined
+              ) => (
+                <View key={index} className="w-[48%] mb-2">
+                  <EquipmentItem
+                    tipo={equipo.tipo}
+                    estado={
+                      equipo.estado as
+                        | 'Operativo'
+                        | 'Inactivo'
+                        | 'Atención urgente'
+                        | 'Alerta'
+                    }
+                  />
+                </View>
+              )
+            )}
+          </View>
+
+          {/* Acciones */}
+          <View>
+            <View className="flex-row justify-between mt-2">
+              <Link asChild href={`/(tabs)/${pool.id}`}>
+                <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
+                  <EyeIcon size={16} color="#fff" />
+                  <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                    Panel
+                  </Text>
+                </Pressable>
+              </Link>
+              <Link asChild href={`/${pool.id}`}>
+                <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center">
+                  <ConfigurationIcon size={16} color="#fff" />
+                  <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                    Equipos
+                  </Text>
+                </Pressable>
+              </Link>
+            </View>
+            <Pressable
+              className="bg-red-alert rounded-lg py-3 flex-1 flex-row items-center justify-center mt-2"
+              onPress={() => setModalVisible(true)}
+            >
+              <DeleteIcon size={16} color="#fff" />
+              <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                Eliminar Piscina
+              </Text>
+            </Pressable>
+            {modalVisible && (
+              <ModalEliminarPiscina
+                visible={modalVisible}
+                onClose={() => setModalVisible(false)}
+              />
+            )}
+          </View>
+        </>
+      )}
     </View>
   );
 };

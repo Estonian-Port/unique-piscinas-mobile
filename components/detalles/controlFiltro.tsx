@@ -36,19 +36,19 @@ export default function ControlFiltro({
 
       {/*ENTRADAS DE AGUA */}
       <View className="flex-row justify-between gap-2">
-        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+        <View className="border border-grayish-unique rounded-md items-center p-2 flex-1">
           <TintIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Fondo
           </Text>
         </View>
-        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+        <View className="border border-grayish-unique rounded-md items-center p-2 flex-1">
           <BubbleIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Barrefondo
           </Text>
         </View>
-        <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
+        <View className="border border-grayish-unique rounded-md items-center p-2 flex-1">
           <EyeIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Skimmer

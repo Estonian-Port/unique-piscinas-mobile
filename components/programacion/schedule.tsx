@@ -69,8 +69,8 @@ const Schedule = ({
           {daysOfWeek.map((day) => (
             <View
               key={day}
-              className={`flex-row items-center flex-1 justify-center rounded-full mx-0.5 p-0.5 border ${
-                isActiveDay(day) ? 'bg-black' : 'bg-white'
+              className={`flex-row items-center flex-1 justify-center rounded-sm mx-0.5 p-0.5 border border-purple-unique ${
+                isActiveDay(day) ? 'bg-purple-unique' : 'bg-white'
               } ${isActive ? '' : 'opacity-50'}`}
             >
               <Text

@@ -152,3 +152,7 @@ export const BookIcon = (props: any) => (
 export const RegisterIcon = (props: any) => (
   <MaterialIcons name="assignment" size={24} color="#000" {...props} />
 );
+
+export const RemoveIcon = (props: any) => (
+  <MaterialIcons name="remove-circle-outline" size={24} color="#000" {...props} />
+);

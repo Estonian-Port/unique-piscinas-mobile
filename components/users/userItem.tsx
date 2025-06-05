@@ -3,12 +3,14 @@ import {
   ChevronUpIcon,
   DeleteIcon,
   EyeIcon,
+  RemoveIcon,
 } from '@/assets/icons';
 import { Pressable, View, Text } from 'react-native';
 import ModalAñadirPiscina from './modalAñadirPiscina';
 import { useState } from 'react';
 import ModalDesvincularPiscina from './modalDesvincularPiscina';
 import ModalEliminarUsuario from './modalEliminarUsuario';
+import { Link } from 'expo-router';
 
 const UserItem = ({
   user,
@@ -98,12 +100,17 @@ const UserItem = ({
                   {piscina.volume} m3
                 </Text>
               </View>
-              <View className="flex-row items-center justify-between gap-5">
-                <Pressable>
-                  <EyeIcon size={26}></EyeIcon>
-                </Pressable>
-                <Pressable onPress={() => setModalDesvincularPiscina(true)}>
-                  <DeleteIcon size={26} color={'red'}></DeleteIcon>
+              <View className="flex-row items-center justify-between gap-3">
+                <Link asChild href={`/(tabs)/${piscina.id}`}>
+                  <Pressable className="justify-center items-center h-12 w-12">
+                    <EyeIcon size={22}></EyeIcon>
+                  </Pressable>
+                </Link>
+                <Pressable
+                  className="justify-center items-center h-12 w-12"
+                  onPress={() => setModalDesvincularPiscina(true)}
+                >
+                  <RemoveIcon size={20}></RemoveIcon>
                 </Pressable>
                 {modalDesvincularPiscina && (
                   <ModalDesvincularPiscina

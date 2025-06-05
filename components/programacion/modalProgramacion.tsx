@@ -103,8 +103,8 @@ const ModalProgramacion = ({
               {daysOfWeek.map((day) => (
                 <Pressable
                   key={day}
-                  className={`items-center justify-center rounded-full p-1 px-2.5 border ${
-                    isDaySelected(day) ? 'bg-black' : 'bg-white'
+                  className={`items-center justify-center rounded-sm p-1 px-2.5 border border-purple-unique ${
+                    isDaySelected(day) ? 'bg-purple-unique' : 'bg-white'
                   }`}
                   onPress={() => toggleDay(day)}
                 >
@@ -166,10 +166,9 @@ const ModalProgramacion = ({
               </Pressable>
               <Pressable
                 onPress={save}
-                className="bg-blue-500 rounded-lg flex-1 items-center justify-center h-12"
+                className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
               >
                 <View className="flex-row items-center justify-center">
-                  <SaveIcon color="white" />
                   <Text className="text-white text-center font-geist-semi-bold ml-2">
                     Guardar
                   </Text>

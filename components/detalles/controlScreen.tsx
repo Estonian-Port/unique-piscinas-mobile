@@ -2,10 +2,6 @@ import { useState } from "react"
 import { View, Text, SafeAreaView } from "react-native"
 import CircularControl from "./funcionFiltro"
 
-const StyledView = View
-const StyledText = Text
-const StyledSafeAreaView = SafeAreaView
-
 const ControlScreen = () => {
   const [isPowerOn, setIsPowerOn] = useState(false)
 
@@ -34,9 +30,9 @@ const ControlScreen = () => {
   }
 
   return (
-    <StyledSafeAreaView className="flex-1 bg-white">
-      <StyledView className="flex-1 items-center justify-center p-4">
-        <StyledText className="text-2xl font-bold mb-8 text-gray-800">Control de Sistema</StyledText>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="flex-1 items-center justify-center p-4">
+        <Text className="text-2xl mb-8 text-text font-geist-semi-bold">Control de Sistema</Text>
 
         <CircularControl
           onFilter={handleFilter}
@@ -47,8 +43,8 @@ const ControlScreen = () => {
           onPower={handlePower}
           isPowerOn={isPowerOn}
         />
-      </StyledView>
-    </StyledSafeAreaView>
+      </View>
+    </SafeAreaView>
   )
 }
 

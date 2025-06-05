@@ -2,10 +2,6 @@ import type React from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { Filter, RefreshCw, Trash2, Droplet, RotateCcw, Power } from "react-native-feather"
 
-const StyledView = View
-const StyledText = Text
-const StyledTouchableOpacity = TouchableOpacity
-
 interface ControlButtonProps {
   icon: React.ReactNode
   label: string
@@ -23,18 +19,18 @@ const ControlButton = ({ icon, label, onPress, position }: ControlButtonProps) =
   }[position]
 
   return (
-    <StyledView className={`${positionStyles}`}>
-      <StyledTouchableOpacity
+    <View className={`${positionStyles}`}>
+      <TouchableOpacity
         onPress={onPress}
-        className="items-center justify-center w-20 h-20 rounded-full bg-yellow-50 border border-yellow-200"
+        className="items-center justify-center w-20 h-20 rounded-full bg-grayish-unique border border-gray-400"
         activeOpacity={0.7}
       >
-        <StyledView className="items-center justify-center">
+        <View className="items-center justify-center">
           {icon}
-          <StyledText className="text-gray-500 text-xs mt-1">{label}</StyledText>
-        </StyledView>
-      </StyledTouchableOpacity>
-    </StyledView>
+          <Text className="text-text font-geist text-xs mt-1">{label}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 
@@ -58,54 +54,54 @@ const CircularControl = ({
   isPowerOn = false,
 }: CircularControlProps) => {
   return (
-    <StyledView className="flex-1 items-center justify-center w-full mt-5">
-      <StyledView className="relative w-64 h-64">
+    <View className="flex-1 items-center justify-center w-full mt-5">
+      <View className="relative w-64 h-64">
         {/* Central power button */}
-        <StyledTouchableOpacity
+        <TouchableOpacity
           onPress={onPower}
-          className={`absolute top-1/2 left-1/2 -mt-16 -ml-16 w-32 h-32 rounded-full items-center justify-center ${isPowerOn ? "bg-yellow-400" : "bg-yellow-100"} border-2 border-yellow-300`}
+          className={`absolute top-1/2 left-1/2 -mt-16 -ml-16 w-32 h-32 rounded-full items-center justify-center ${isPowerOn ? "bg-purple-unique" : "bg-grayish-unique"}`}
           activeOpacity={0.7}
         >
-          <Power stroke={isPowerOn ? "#FFF" : "#D97706"} width={32} height={32} />
-        </StyledTouchableOpacity>
+          <Power stroke={isPowerOn ? "#FFF" : "#4e4965"} width={32} height={32} />
+        </TouchableOpacity>
 
         {/* Surrounding buttons */}
         <ControlButton
-          icon={<Filter stroke="#D97706" width={24} height={24} />}
+          icon={<Filter stroke="#4e4965" width={24} height={24} />}
           label="Filtrar"
           onPress={onFilter}
           position="top"
         />
 
         <ControlButton
-          icon={<RefreshCw stroke="#D97706" width={24} height={24} />}
+          icon={<RefreshCw stroke="#4e4965" width={24} height={24} />}
           label="Retrolavar"
           onPress={onBackwash}
           position="right"
         />
 
         <ControlButton
-          icon={<Droplet stroke="#D97706" width={24} height={24} />}
+          icon={<Droplet stroke="#4e4965" width={24} height={24} />}
           label="Enjuagar"
           onPress={onRinse}
           position="bottom-right"
         />
 
         <ControlButton
-          icon={<Trash2 stroke="#D97706" width={24} height={24} />}
+          icon={<Trash2 stroke="#4e4965" width={24} height={24} />}
           label="Desagotar"
           onPress={onDrain}
           position="bottom-left"
         />
 
         <ControlButton
-          icon={<RotateCcw stroke="#D97706" width={24} height={24} />}
+          icon={<RotateCcw stroke="#4e4965" width={24} height={24} />}
           label="Recircular"
           onPress={onRecirculate}
           position="left"
         />
-      </StyledView>
-    </StyledView>
+      </View>
+    </View>
   )
 }
 

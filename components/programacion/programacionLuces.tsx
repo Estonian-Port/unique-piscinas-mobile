@@ -100,9 +100,10 @@ const ProgramacionLuces = () => {
             ))}
           </View>
         ) : (
-          <View className="flex-row items-center justify-between mt-4 mb-4">
-            <Text className="font-geist-semi-bold text-text text-base">
-              No hay ciclos programados
+          <View className="flex-row items-center justify-center mt-4 mb-4">
+            <Text className="font-geist-semi-bold text-text text-base text-center">
+              No hay horarios programados.{'\n'}
+              Presione el botón +Añadir para agregar uno.
             </Text>
           </View>
         )}

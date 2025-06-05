@@ -8,8 +8,12 @@ import EquiposNuevaPiscina from '@/components/dashboard/nuevaPiscina/equiposNuev
 const NuevaPiscina = () => {
   const [step, setStep] = useState(1);
 
-  const handleCancel = () => {null};
-  const handleSave = () => {null};
+  const handleCancel = () => {
+    null;
+  };
+  const handleSave = () => {
+    null;
+  };
 
   return (
     <ScrollView className="flex-1 bg-white">
@@ -21,28 +25,27 @@ const NuevaPiscina = () => {
           <Text className="font-geist-light text-text text-sm">
             Complete la información para registrar una nueva piscina
           </Text>
-      {step === 1 && (
-        <InformacionBasica
-          onCancel={handleCancel}
-          onNext={() => setStep(2)}
-        />
-      )}
-      {step === 2 && (
-        <ConfiguracionPiscina
-          onCancel={handleCancel}
-          onBack={() => setStep(1)}
-          onNext={() => setStep(3)}
-        />
-      )}
-      {step === 3 && (
-        <EquiposNuevaPiscina
-          onCancel={handleCancel}
-          onBack={() => setStep(2)}
-          onSave={handleSave}
-        />
-      )}
+          {step === 1 && (
+            <InformacionBasica
+              onCancel={handleCancel}
+              onNext={() => setStep(2)}
+            />
+          )}
+          {step === 2 && (
+            <ConfiguracionPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(1)}
+              onNext={() => setStep(3)}
+            />
+          )}
+          {step === 3 && (
+            <EquiposNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(2)}
+              onSave={handleSave}
+            />
+          )}
         </View>
-
       </Screen>
     </ScrollView>
   );

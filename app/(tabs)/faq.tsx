@@ -1,8 +1,6 @@
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import React from 'react';
-import { Link } from 'expo-router';
-import { ChangeIcon } from '@/assets/icons';
-import { Screen, ScreenTabs } from '@/components/utiles/Screen';
+import { ScreenTabs } from '@/components/utiles/Screen';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
 import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
