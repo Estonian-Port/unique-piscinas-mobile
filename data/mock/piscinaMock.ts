@@ -70,7 +70,7 @@ const calefaccion: Calefaccion = {
 
 const registro1: Registro = {
   id: 1,
-  fecha: '2023-07-15',
+  fecha: '12-02-2025',
   dispositivo: 'Bomba principal',
   accion: 'Mantenimiento preventivo',
   descripcion:
@@ -80,7 +80,7 @@ const registro1: Registro = {
 };
 const registro2: Registro = {
   id: 2,
-  fecha: '2023-07-10',
+  fecha: '10-05-2024',
   dispositivo: 'Sistema UV',
   accion: 'Reparación',
   descripcion:
@@ -90,7 +90,7 @@ const registro2: Registro = {
 };
 const registro3: Registro = {
   id: 3,
-  fecha: '2023-07-05',
+  fecha: '05-01-2025',
   dispositivo: 'Ionizador',
   accion: 'Instalación',
   descripcion:
@@ -100,7 +100,7 @@ const registro3: Registro = {
 };
 const registro4: Registro = {
   id: 4,
-  fecha: '2023-07-01',
+  fecha: '01-04-2025',
   dispositivo: 'Sistema de filtrado',
   accion: 'Reemplazo de filtros',
   descripcion:

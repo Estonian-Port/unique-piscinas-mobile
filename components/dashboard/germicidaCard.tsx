@@ -29,7 +29,7 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
             isActive ? 'bg-green-500' : 'bg-gray-500'
           }`}
         >
-          <Text className="font-geist-semi-bold text-white text-base">
+          <Text className="font-geist-semi-bold text-white text-sm">
             {isActive ? 'Activa' : 'Inactiva'}
           </Text>
         </View>

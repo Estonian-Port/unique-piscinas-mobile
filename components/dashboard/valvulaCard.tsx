@@ -22,7 +22,7 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
               : 'bg-red-500'
           }`}
         >
-          <Text className="font-geist-semi-bold text-white text-base">
+          <Text className="font-geist-semi-bold text-white text-sm">
             {valvula.estado}
           </Text>
         </View>

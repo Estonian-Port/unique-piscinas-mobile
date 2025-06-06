@@ -56,7 +56,7 @@ const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {
             isActive ? 'bg-green-500' : 'bg-gray-500'
           }`}
         >
-          <Text className="font-geist-semi-bold text-white text-base">
+          <Text className="font-geist-semi-bold text-white text-sm">
             {isActive ? 'Activo' : 'Inactivo'}
           </Text>
         </View>

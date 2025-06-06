@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {
+  BuildIcon,
+  CalendarIcon,
+  ConfigurationIcon,
+  InfoIcon,
+} from '@/assets/icons';
 
 type ModalNuevoRegistroProps = {
   visible: boolean;
@@ -39,11 +45,18 @@ const ModalNuevoRegistro = ({ visible, onClose }: ModalNuevoRegistroProps) => {
             <Text className="text-text text-xl font-geist-bold mb-2 text-center">
               Nuevo Registro
             </Text>
-
-            <Text className='text-text text-base font-geist mb-1'>Fecha</Text>
-
-            <Pressable onPress={() => setShowPicker(true)}>
-              <Text className='text-text text-base font-geist-semi-bold'>{date.toLocaleDateString()}</Text>
+            <View className="flex-row items-center mb-1">
+              <CalendarIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-text text-base font-geist">Fecha</Text>
+            </View>
+            <Pressable
+              onPress={() => setShowPicker(true)}
+              className="border border-grayish-unique rounded-lg p-2 mb-3 bg-gray-100 active:bg-gray-200"
+              style={{ alignItems: 'center' }}
+            >
+              <Text className="text-text text-base font-geist-semi-bold">
+                {date.toLocaleDateString()}
+              </Text>
             </Pressable>
             {showDatePicker && (
               <DateTimePicker
@@ -59,22 +72,41 @@ const ModalNuevoRegistro = ({ visible, onClose }: ModalNuevoRegistroProps) => {
               />
             )}
 
-            <Text className='text-text text-base font-geist mb-1'>Dispositivo</Text>
-            <TextInput className='border border-grayish-unique rounded-lg p-2' placeholder='Ej: Bomba principal' />
+            <View className="flex-row items-center mb-1">
+              <ConfigurationIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-text text-base font-geist">
+                Dispositivo
+              </Text>
+            </View>
 
-            <Text className='text-text text-base font-geist mb-1'>Descripción</Text>
             <TextInput
-                className='border border-grayish-unique rounded-lg p-2 h-28'
-                multiline
-                numberOfLines={4}
-                maxLength={500}
-                textAlignVertical="top"
-                placeholder="Breve descripción"
+              className="border border-grayish-unique rounded-lg p-2 mb-3"
+              placeholder="Ej: Bomba principal"
             />
 
-            <Text className='text-text text-base font-geist mb-1'>Técnico</Text>
-            <TextInput className='border border-grayish-unique rounded-lg p-2' placeholder='Nombre y apellido del técnico' />
+            <View className="flex-row items-center mb-1">
+              <InfoIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-text text-base font-geist">
+                Descripción
+              </Text>
+            </View>
+            <TextInput
+              className="border border-grayish-unique rounded-lg p-2 h-28 mb-3"
+              multiline
+              numberOfLines={4}
+              maxLength={500}
+              textAlignVertical="top"
+              placeholder="Breve descripción"
+            />
 
+            <View className="flex-row items-center mb-1">
+              <BuildIcon size={16} color="#666" className="mr-2" />
+              <Text className="text-text text-base font-geist">Técnico</Text>
+            </View>
+            <TextInput
+              className="border border-grayish-unique rounded-lg p-2 mb-3"
+              placeholder="Nombre y apellido del técnico"
+            />
 
             <View className="flex-row justify-between gap-3 mt-5">
               <Pressable
