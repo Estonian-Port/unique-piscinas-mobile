@@ -22,7 +22,7 @@ const Equipment = () => {
   const pool = searchPool(Number(idPiscina));
 
   return (
-    <ScrollView className="flex-1">
+    <ScrollView className="flex-1 bg-white">
       <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">

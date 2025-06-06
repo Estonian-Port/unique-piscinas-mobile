@@ -10,8 +10,11 @@ import ValvulaCard from '@/components/dashboard/valvulaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
 import { ScreenCard } from '@/components/utiles/ScreenCard';
 import { RegisterIcon } from '@/assets/icons';
+import { useState } from 'react';
+import ModalNuevoRegistro from '@/components/dashboard/modalNuevoRegistro';
 
 export default function Equipos() {
+  const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
   const { idPiscinaEquipos } = useLocalSearchParams();
   const user = leo;
 
@@ -32,59 +35,47 @@ export default function Equipos() {
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Bombas de filtración
         </Text>
-        <FlatList
-          data={pool.bombas}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <BombaCard
-              bomba={{
-                id: item.id,
-                nombre: item.nombre,
-                marca: item.marca,
-                modelo: item.modelo,
-                activa: item.activa,
-                potencia: item.potencia,
-              }}
-            />
-          )}
-          style={{ width: '100%' }}
-        />
+        {pool.bombas.map((item) => (
+          <BombaCard
+            key={item.id}
+            bomba={{
+              id: item.id,
+              nombre: item.nombre,
+              marca: item.marca,
+              modelo: item.modelo,
+              activa: item.activa,
+              potencia: item.potencia,
+            }}
+          />
+        ))}
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Sistemas germicidas
         </Text>
-        <FlatList
-          data={pool.germicidas}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <GermicidaCard
-              germicida={{
-                id: item.id,
-                nombre: item.nombre,
-                vida: item.vida,
-                activa: item.activa,
-              }}
-            />
-          )}
-          style={{ width: '100%' }}
-        />
+        {pool.germicidas.map((item) => (
+          <GermicidaCard
+            key={item.id}
+            germicida={{
+              id: item.id,
+              nombre: item.nombre,
+              vida: item.vida,
+              activa: item.activa,
+            }}
+          />
+        ))}
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Válvulas
         </Text>
-        <FlatList
-          data={pool.valvulas}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <ValvulaCard
-              valvula={{
-                id: item.id,
-                nombre: item.nombre,
-                tipo: item.tipo,
-                estado: item.estado,
-              }}
-            />
-          )}
-          style={{ width: '100%' }}
-        />
+        {pool.valvulas.map((item) => (
+          <ValvulaCard
+            key={item.id}
+            valvula={{
+              id: item.id,
+              nombre: item.nombre,
+              tipo: item.tipo,
+              estado: item.estado,
+            }}
+          />
+        ))}
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Calefacción
         </Text>
@@ -94,32 +85,37 @@ export default function Equipos() {
           <Text className="text-text font-geist-semi-bold text-xl">
             Registros
           </Text>
-          <Pressable className="bg-grayish-unique rounded-lg py-3 px-2 flex-row items-center justify-center">
+          <Pressable
+            onPress={() => setModalNuevoRegistro(true)}
+            className="bg-white border border-grayish-unique rounded-lg py-3 px-2 flex-row items-center justify-center"
+          >
             <RegisterIcon size={16} className="mr-2" />
             <Text className="text-black font-geist-semi-bold text-sm">
               Nuevo Registro
             </Text>
           </Pressable>
+          {modalNuevoRegistro && (
+            <ModalNuevoRegistro
+              visible={modalNuevoRegistro}
+              onClose={() => setModalNuevoRegistro(false)}
+            />
+          )}
         </View>
 
         <ScreenCard>
-          <FlatList
-            data={pool.registro}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <RegistroCard
-                registro={{
-                  id: item.id,
-                  fecha: item.fecha,
-                  dispositivo: item.dispositivo,
-                  accion: item.accion,
-                  descripcion: item.descripcion,
-                  tecnico: item.tecnico,
-                }}
-              />
-            )}
-            style={{ width: '100%' }}
-          />
+          {pool.registro.map((item) => (
+            <RegistroCard
+              key={item.id}
+              registro={{
+                id: item.id,
+                fecha: item.fecha,
+                dispositivo: item.dispositivo,
+                accion: item.accion,
+                descripcion: item.descripcion,
+                tecnico: item.tecnico,
+              }}
+            />
+          ))}
         </ScreenCard>
       </Screen>
     </ScrollView>

@@ -2,6 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { AirIcon, TintIcon } from '@/assets/icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ScreenCard } from '../utiles/ScreenCard';
 
 type PhClimaProps = {
   ph: number;
@@ -41,8 +42,9 @@ const PhClimaCard = ({
   };
 
   return (
-    <View className="flex-row self-center bg-white shadow-xl rounded-lg p-2 mb-4 w-11/12 border-gray-200">
-      <View className="bg-white p-4 border-r-gray-200 flex-1">
+    <ScreenCard>
+    <View className="flex-row">
+      <View className="bg-white p-2 border-r-gray-200 flex-1">
         <Text className="font-geist-semi-bold text-text text-lg mb-3">pH</Text>
         <Text className="font-geist-semi-bold text-text text-3xl">{ph}</Text>
         <Text className="font-geist-light text-text text-">
@@ -65,7 +67,7 @@ const PhClimaCard = ({
         </View>
       </View>
 
-      <View className="bg-white p-4 flex-1">
+      <View className="bg-white p-2 flex-1">
         <Text className="font-geist-semi-bold text-text text-lg mb-2">
           Clima Local
         </Text>
@@ -91,6 +93,7 @@ const PhClimaCard = ({
         </View>
       </View>
     </View>
+    </ScreenCard>
   );
 };
 

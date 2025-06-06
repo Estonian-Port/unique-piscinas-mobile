@@ -15,7 +15,7 @@ const EquipamientoConfigurado = () => {
       </View>
 
       <View className="flex-row items-center self-start my-2">
-        <PowerIcon />
+        <PowerIcon size={18} color={'#60C3FF'} />
         <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Bombas
         </Text>
@@ -23,7 +23,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Bomba Principal
           </Text>
         </View>
@@ -36,7 +36,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Bomba Auxiliar
           </Text>
         </View>
@@ -48,7 +48,7 @@ const EquipamientoConfigurado = () => {
       </View>
 
       <View className="flex-row items-center self-start my-2">
-      <FilterIcon size={18} color={'blue'}/>
+      <FilterIcon size={18} color={'#60C3FF'}/>
         <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Filtro
         </Text>
@@ -56,7 +56,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Filtro Principal
           </Text>
         </View>
@@ -68,7 +68,7 @@ const EquipamientoConfigurado = () => {
       </View>
 
       <View className="flex-row items-center self-start my-2">
-        <TintIcon size={18} color={'blue'}/>
+        <TintIcon size={18} color={'#60C3FF'}/>
         <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Válvulas
         </Text>
@@ -76,7 +76,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Válvula Selectora
           </Text>
         </View>
@@ -89,7 +89,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Válvula Skimmer
           </Text>
         </View>
@@ -105,7 +105,7 @@ const EquipamientoConfigurado = () => {
     <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Lámpara UV
           </Text>
         </View>
@@ -122,7 +122,7 @@ const EquipamientoConfigurado = () => {
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
-          <Text className="font-geist text-text text-lg ml-2">
+          <Text className="font-geist text-text text-base ml-2">
             Ionizador de Cobre
           </Text>
         </View>

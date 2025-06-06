@@ -30,28 +30,28 @@ const Profile = () => {
         <View className="w-11/12 items-center justify-between">
           <Text className="mt-4 font-geist text-text text-base">Nombre</Text>
           <TextInput
-            className="border w-3/5 h-10 rounded-lg mt-2 px-2"
+            className="border w-3/5 h-12 rounded-lg mt-2 px-2"
             value={user.name}
             placeholder='Ingrese su nombre'
             placeholderTextColor="#9ca3af"
           />
           <Text className="mt-4 font-geist text-text text-base">Apellido</Text>
           <TextInput
-            className="border w-3/5 h-10 rounded-lg mt-2 px-2"
+            className="border w-3/5 h-12 rounded-lg mt-2 px-2"
             value={user.lastname}
             placeholder='Ingrese su apellido'
             placeholderTextColor="#9ca3af"
           />
           <Text className="mt-4 font-geist text-text text-base">Email</Text>
           <TextInput
-            className="border w-3/5 h-10 rounded-lg mt-2 px-2"
+            className="border w-3/5 h-12 rounded-lg mt-2 px-2"
             value={user.email}
             placeholder='Ingrese su email'
             placeholderTextColor="#9ca3af"
           />
           <Link asChild href={'/changePass'}>
-            <Pressable className="mt-6 rounded-lg bg-red-400 p-4 w-3/5">
-              <Text className="font-geist-semi-bold text-text text-lg text-center">
+            <Pressable className="mt-6 rounded-lg bg-red-alert p-4 w-3/5">
+              <Text className="font-geist-semi-bold text-white text-lg text-center">
                 Cambiar contraseña
               </Text>
             </Pressable>

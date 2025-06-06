@@ -22,17 +22,14 @@ const UsuarioRegistrados = () => {
           Gestion de usuarios y sus piscinas
         </Text>
       </View>
-      <FlatList
-        data={users}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <UserItem 
-            user={item} 
-            isExpanded={expandedUserId === item.id}
-            onToggleExpand={() => handleToggleExpand(item.id)}
-          />
-        )}
-      />
+      {users.map((user) => (
+        <UserItem 
+          key={user.id}
+          user={user}
+          isExpanded={expandedUserId === user.id}
+          onToggleExpand={() => handleToggleExpand(user.id)}
+        />
+      ))}
     </ScreenCard>
   );
 };

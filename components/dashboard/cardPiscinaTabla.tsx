@@ -204,25 +204,26 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
           </View>
 
           {/* Acciones */}
-          <View>
-            <View className="flex-row justify-between mt-2">
-              <Link asChild href={`/(tabs)/${pool.id}`}>
-                <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-                  <EyeIcon size={16} color="#fff" />
-                  <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                    Panel
-                  </Text>
-                </Pressable>
-              </Link>
-              <Link asChild href={`/${pool.id}`}>
-                <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center">
-                  <ConfigurationIcon size={16} color="#fff" />
-                  <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                    Equipos
-                  </Text>
-                </Pressable>
-              </Link>
-            </View>
+
+          <View className="flex-row justify-between mt-2">
+            <Link asChild href={`/(tabs)/${pool.id}`}>
+              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
+                <EyeIcon size={16} color="#fff" />
+                <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                  Panel
+                </Text>
+              </Pressable>
+            </Link>
+            <Link asChild href={`/${pool.id}`}>
+              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center">
+                <ConfigurationIcon size={16} color="#fff" />
+                <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                  Equipos
+                </Text>
+              </Pressable>
+            </Link>
+          </View>
+          {/*
             <Pressable
               className="bg-red-alert rounded-lg py-3 flex-1 flex-row items-center justify-center mt-2"
               onPress={() => setModalVisible(true)}
@@ -238,7 +239,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
                 onClose={() => setModalVisible(false)}
               />
             )}
-          </View>
+          */}
         </>
       )}
     </View>

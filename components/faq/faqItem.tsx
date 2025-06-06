@@ -12,7 +12,7 @@ const FAQItem = ({ faq }: {faq:FAQ}) => {
           className="flex-row justify-between items-center" 
           onPress={() => setIsExpanded(!isExpanded)}
         >
-          <Text className="font-geist-semi-bold text-text text-base flex-1 pr-2">
+          <Text className="font-geist-semi-bold text-gold-unique text-lg flex-1 pr-2">
             {faq.question}
           </Text>
           {isExpanded ? 
@@ -22,8 +22,8 @@ const FAQItem = ({ faq }: {faq:FAQ}) => {
         </Pressable>
         
         {isExpanded && (
-          <View className="mt-2 pl-2">
-            <Text className="font-geist text-text text-sm">
+          <View className="my-2 pl-2">
+            <Text className="font-geist text-text text-base">
               {faq.answer}
             </Text>
           </View>
