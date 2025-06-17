@@ -13,6 +13,7 @@ import PasosFormulario from './pasosFormulario';
 
 type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
 type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
 const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -65,6 +66,10 @@ const EquiposNuevaPiscina = ({
   const [modeloBomba, setModeloBomba] = useState(null);
   const [marcaFiltro, setMarcaFiltro] = useState(null);
   const [modeloFiltro, setModeloFiltro] = useState(null);
+  const [tipoCalefaccion, setTipoCalefaccion] = useState<TipoCalefaccion>('Bomba de calor');
+  const [marcaCalefaccion, setMarcaCalefaccion] = useState('');
+  const [modeloCalefaccion, setModeloCalefaccion] = useState('');
+  const [potenciaCalefaccion, setPotenciaCalefaccion] = useState('');
 
   const [openMarcaBomba, setOpenMarcaBomba] = useState(false);
   const [openModeloBomba, setOpenModeloBomba] = useState(false);
@@ -343,6 +348,51 @@ const EquiposNuevaPiscina = ({
             value={calefaccion}
           />
         </View>
+        {calefaccion && (
+          <View className="mx-2">
+            <Text className="text-text text-base font-geist">Tipo:</Text>
+            <RadioButton
+              value={'Bomba de calor'}
+              label={'Bomba de calor'}
+              selected={tipoCalefaccion == 'Bomba de calor'}
+              onPress={(value) => setTipoCalefaccion(value)}
+            />
+
+            <RadioButton
+              value={'Bomba a gas'}
+              label={'Bomba a gas'}
+              selected={tipoCalefaccion == 'Bomba a gas'}
+              onPress={(value) => setTipoCalefaccion(value)}
+            />
+
+            <Text className="font-geist text-text text-base mt-3">Marca</Text>
+            <TextInput
+              className="border border-gray-200 rounded-md py-4 px-3"
+              value={marcaCalefaccion}
+              onChangeText={(marca) => setMarcaCalefaccion(marca)}
+              placeholder="Ej: Hayward"
+            ></TextInput>
+
+            <Text className="font-geist text-text text-base mt-3">Modelo</Text>
+            <TextInput
+              className="border border-gray-200 rounded-md py-4 px-3"
+              value={modeloCalefaccion}
+              onChangeText={(modelo) => setModeloCalefaccion(modelo)}
+              placeholder="Ej: EnergyLine Pro"
+            ></TextInput>
+
+            <Text className="font-geist text-text text-base mt-3">
+              Potencia (Kw)
+            </Text>
+            <TextInput
+              className="border border-gray-200 rounded-md py-4 px-3"
+              value={potenciaCalefaccion}
+              onChangeText={(number) => setPotenciaCalefaccion(number)}
+              keyboardType="numeric"
+              placeholder="Ej: 13.5"
+            ></TextInput>
+          </View>
+        )}
       </View>
       <View className="flex-row items-center justify-center gap-1 mt-5">
         <Link asChild href="/dashboard">
