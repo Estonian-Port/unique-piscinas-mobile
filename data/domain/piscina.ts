@@ -1,13 +1,17 @@
-interface Piscina {
-  id: number;
-  propietario?: User;
-  name: string;
-  volume: number;
-  bombas: Bomba[];
-  germicidas: Germicida[];
-  valvulas: Valvula[];
-  calefaccion: Calefaccion;
-  registro: Registro[];
+import { User } from "./user";
+
+export class Piscina {
+  constructor(
+  id: number,
+  propietario?: User,
+  name: string,
+  volume: number,
+  bombas: Bomba[],
+  germicidas: Germicida[],
+  valvulas: Valvula[],
+  calefaccion: Calefaccion,
+  registro: Registro[],
+  ) {}
 }
 
 type Bomba = {

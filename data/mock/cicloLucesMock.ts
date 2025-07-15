@@ -1,4 +1,4 @@
-import { Cicle, Day, ModeCicle } from "../cicloFiltrado";
+import { Cicle, Day, ModeCicle } from "../domain/cicloFiltrado";
 
 const cicloLuz1: Cicle = {
   id: 1,

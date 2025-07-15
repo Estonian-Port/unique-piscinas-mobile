@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, FilterIcon } from '@/assets/icons';
 import Schedule from './schedule';
-import { Cicle } from '@/data/cicloFiltrado';
+import { Cicle } from '@/data/domain/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
 import { cicloLuzVacio } from '@/data/mock/cicloLucesMock';

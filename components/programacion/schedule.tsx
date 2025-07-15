@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Switch, Modal } from 'react-native';
 import React, { useState } from 'react';
 import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
-import { Cicle, Day } from '@/data/cicloFiltrado';
+import { Cicle, Day } from '@/data/domain/cicloFiltrado';
 import ModalProgramacion from './modalProgramacion';
 import ModalEliminarProgramacion from './modalEliminarProgramacion';
 

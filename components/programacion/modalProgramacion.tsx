@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { SaveIcon } from '@/assets/icons';
-import { Cicle, Day, ModeCicle } from '@/data/cicloFiltrado';
+import { Cicle, Day, ModeCicle } from '@/data/domain/cicloFiltrado';
 import TimeInput from '../utiles/timeInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 
