@@ -1,17 +1,57 @@
 import { User } from "./user";
 
+export interface PiscinaListItem {
+  id: number;
+  nombre: string;
+  direccion: string;
+}
+
+export interface PiscinaResume {
+  id: number;
+  nombre: string;
+  direccion: string;
+  volumen: string;
+  ph: string;
+  diferenciaPh: string;
+  clima: string;
+  entradaAgua: entradaAgua[];
+  funcionActiva: funcionFiltro[];
+  sistemasGermicidas: sistemaGermicida[];
+  calefaccion: boolean;
+}
+
 export class Piscina {
+  id: number;
+  propietario?: User;
+  name: string;
+  volume: number;
+  bombas: Bomba[];
+  germicidas: Germicida[];
+  valvulas: Valvula[];
+  calefaccion: Calefaccion;
+  registro: Registro[];
+
   constructor(
-  id: number,
-  propietario?: User,
-  name: string,
-  volume: number,
-  bombas: Bomba[],
-  germicidas: Germicida[],
-  valvulas: Valvula[],
-  calefaccion: Calefaccion,
-  registro: Registro[],
-  ) {}
+    id: number,
+    propietario: User | undefined,
+    name: string,
+    volume: number,
+    bombas: Bomba[],
+    germicidas: Germicida[],
+    valvulas: Valvula[],
+    calefaccion: Calefaccion,
+    registro: Registro[],
+  ) {
+    this.id = id;
+    this.propietario = propietario;
+    this.name = name;
+    this.volume = volume;
+    this.bombas = bombas;
+    this.germicidas = germicidas;
+    this.valvulas = valvulas;
+    this.calefaccion = calefaccion;
+    this.registro = registro;
+  }
 }
 
 type Bomba = {
@@ -58,11 +98,13 @@ type Registro = {
   tipoAccion?: "mantenimiento" | "reparacion" | "instalacion" | "configuracion" | "otro"
 }
 
-type waterInletsType = 'background' | 'skimmer' | 'bottomSweeper';
+export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';
 
-type ligthsType = 'manual' | 'programmed';
+export type ligthsType = 'manual' | 'programmed';
 
-type EntryFilter = 'filter' | 'backwash' | 'rinse' | 'drain' | 'recirculate';
+export type funcionFiltro = 'filter' | 'backwash' | 'rinse' | 'drain' | 'recirculate';
+
+export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
 
 interface PiscinaDashboard {
   id: number;
