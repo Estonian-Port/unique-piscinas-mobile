@@ -1,9 +1,9 @@
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { ScreenTabs } from '@/components/utiles/Screen';
-import Indicadores from '@/components/detalles/indicadores';
-import ControlFiltro from '@/components/detalles/controlFiltro';
+import Indicadores from '@/components/resume/indicadores';
+import ControlFiltro from '@/components/resume/controlFiltro';
 import BotonCambio from '@/components/utiles/botonCambio';
-import PhClimaCard from '@/components/detalles/phClimaCard';
+import PhClimaCard from '@/components/resume/phClimaCard';
 import { usePool } from '@/context/piscinaContext';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';

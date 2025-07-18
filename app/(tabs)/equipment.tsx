@@ -1,27 +1,25 @@
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import { leo } from '@/data/mock/userMock';
-import { Link } from 'expo-router';
 import { ScreenTabs } from '@/components/utiles/Screen';
-import { ChangeIcon } from '@/assets/icons';
 import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
 import EstadoSistema from '@/components/equipamiento/estadoSistema';
 import BotonCambio from '@/components/utiles/botonCambio';
 import { usePool } from '@/context/piscinaContext';
 import { useAuth } from '@/context/authContext';
+import { piscinaService } from '@/services/piscina.service';
+import { PiscinaEquipamiento } from '@/data/domain/piscina';
 
 const Equipment = () => {
   const { selectedPoolId } = usePool();
   const { user } = useAuth();
 
-  const [pool, setPool] = useState<Piscina | null>(null);
+  const [pool, setPool] = useState<PiscinaEquipamiento | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPool = async () => {
       try {
-        const data = await piscinaService.getPiscinaResumeById(selectedPoolId!);
+        const data = await piscinaService.getPiscinaEquipamientoById(selectedPoolId!);
         setPool(data);
       } catch (error) {
         console.error('Error cargando la piscina:', error);
@@ -46,7 +44,7 @@ const Equipment = () => {
       <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
-            Hola, {user.name} bienvenido!
+            Hola, {user?.nombre} bienvenido!
           </Text>
         </View>
 
@@ -54,18 +52,18 @@ const Equipment = () => {
           {/* Contenedor del texto */}
           <View className="flex-1 pr-4">
             <Text className="font-geist-semi-bold text-xl text-text">
-              {pool.name}
+              {pool.nombre}
             </Text>
             <Text className="font-geist text-base text-text">
-              Volumen de la piscina: {pool.volume} m3
+              Volumen de la piscina: {pool.volumen} m3
             </Text>
           </View>
 
-          {user.piscinas.length > 1 && !user.isAdmin && <BotonCambio />}
+          {user!.idPiscinas.length > 1 && !user!.isAdmin && <BotonCambio />}
         </View>
 
-        <EstadoSistema />
-        <EquipamientoConfigurado />
+        <EstadoSistema pool={pool} />
+        <EquipamientoConfigurado pool={pool} />
       </ScreenTabs>
     </ScrollView>
   );

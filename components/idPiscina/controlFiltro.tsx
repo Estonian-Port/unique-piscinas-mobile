@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
-import ControlScreen from '../detalles/controlScreen';
+import ControlScreen from '../resume/controlScreen';
 
 interface ControlFiltroProps {
   waterEntryFilter: EntryFilter[];

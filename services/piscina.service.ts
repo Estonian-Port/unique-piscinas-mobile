@@ -1,4 +1,4 @@
-import { PiscinaListItem, PiscinaResume } from '@/data/domain/piscina';
+import { PiscinaEquipamiento, PiscinaListItem, PiscinaResume } from '@/data/domain/piscina';
 import api from './api';
 
 class PiscinaService {
@@ -10,6 +10,11 @@ class PiscinaService {
 
   getPiscinaResumeById = async (id: number): Promise<PiscinaResume> => {
     const response = await api.get(`/piscina/resumen/${id}`);
+    return response.data;
+  };
+
+  getPiscinaEquipamientoById = async (id: number): Promise<PiscinaEquipamiento> => {
+    const response = await api.get(`/piscina/equipamiento/${id}`);
     return response.data;
   };
 }

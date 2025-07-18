@@ -1,4 +1,21 @@
-import { User } from "./user";
+import { User } from './user';
+
+export interface PiscinaEquipamiento {
+  id: number;
+  nombre: string;
+  direccion: string;
+  volumen: string;
+  estadoFiltro: boolean;
+  entradaAgua: entradaAgua[];
+  funcionActiva: funcionFiltro[];
+  presion: number;
+  ultimaActividad: string;
+  proximoCiclo: string;
+  bombas: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemasGermicidas: sistemaGermicida[];
+}
 
 export interface PiscinaListItem {
   id: number;
@@ -40,7 +57,7 @@ export class Piscina {
     germicidas: Germicida[],
     valvulas: Valvula[],
     calefaccion: Calefaccion,
-    registro: Registro[],
+    registro: Registro[]
   ) {
     this.id = id;
     this.propietario = propietario;
@@ -54,7 +71,14 @@ export class Piscina {
   }
 }
 
-type Bomba = {
+type Filtro = {
+  marca: string;
+  modelo: string;
+  diametro: number;
+  estado: string;
+};
+
+export type Bomba = {
   id: number;
   nombre: string;
   marca: string;
@@ -88,21 +112,31 @@ type Calefaccion = {
 };
 
 type Registro = {
-  id: number
-  fecha: string
-  hora?: string
-  dispositivo: string
-  accion: string
-  descripcion: string
-  tecnico: string
-  tipoAccion?: "mantenimiento" | "reparacion" | "instalacion" | "configuracion" | "otro"
-}
+  id: number;
+  fecha: string;
+  hora?: string;
+  dispositivo: string;
+  accion: string;
+  descripcion: string;
+  tecnico: string;
+  tipoAccion?:
+    | 'mantenimiento'
+    | 'reparacion'
+    | 'instalacion'
+    | 'configuracion'
+    | 'otro';
+};
 
 export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';
 
 export type ligthsType = 'manual' | 'programmed';
 
-export type funcionFiltro = 'filter' | 'backwash' | 'rinse' | 'drain' | 'recirculate';
+export type funcionFiltro =
+  | 'filter'
+  | 'backwash'
+  | 'rinse'
+  | 'drain'
+  | 'recirculate';
 
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
 
