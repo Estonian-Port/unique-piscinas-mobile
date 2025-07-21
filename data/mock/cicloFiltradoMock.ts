@@ -1,33 +1,33 @@
-import { Cicle, Day, ModeCicle } from "../domain/cicloFiltrado";
+import { Programacion, Day, ModeCicle } from "../domain/cicloFiltrado";
 
-const ciclo1: Cicle = {
+const ciclo1: Programacion = {
   id: 1,
-  startTime: new Date('1970-01-01T08:00:00'),
-  endTime: new Date('1970-01-01T10:00:00'),
-  activeDays: [Day.LUNES, Day.MIERCOLES, Day.VIERNES],
+  horaInicio: new Date('1970-01-01T08:00:00'),
+  horaFin: new Date('1970-01-01T10:00:00'),
+  dias: [Day.LUNES, Day.MIERCOLES, Day.VIERNES],
   mode: ModeCicle.FILTRAR,
-  isActive: true,
-  isFilterCicle: true,
+  estaActivo: true,
+  esProgramacionFiltro: true,
 };
 
-const ciclo2: Cicle = {
+const ciclo2: Programacion = {
   id: 2,
-  startTime: new Date('1970-01-01T14:00:00'),
-  endTime: new Date('1970-01-01T16:00:00'),
-  activeDays: [Day.MARTES, Day.JUEVES, Day.VIERNES, Day.SABADO],
+  horaInicio: new Date('1970-01-01T14:00:00'),
+  horaFin: new Date('1970-01-01T16:00:00'),
+  dias: [Day.MARTES, Day.JUEVES, Day.VIERNES, Day.SABADO],
   mode: ModeCicle.FILTRAR,
-  isActive: false,
-  isFilterCicle: true,
+  estaActivo: false,
+  esProgramacionFiltro: true,
 };
 
-const ciclo3: Cicle = {
+const ciclo3: Programacion = {
   id: 3,
-  startTime: new Date('1970-01-01T18:00:00'),
-  endTime: new Date('1970-01-01T20:00:00'),
-  activeDays: [Day.DOMINGO],
+  horaInicio: new Date('1970-01-01T18:00:00'),
+  horaFin: new Date('1970-01-01T20:00:00'),
+  dias: [Day.DOMINGO],
   mode: ModeCicle.RETROLAVAR,
-  isActive: true,
-  isFilterCicle: true,
+  estaActivo: true,
+  esProgramacionFiltro: true,
 };
 
-export const ciclosFiltradoMock: Cicle[] = [ciclo1, ciclo2, ciclo3];
+export const ciclosFiltradoMock: Programacion[] = [ciclo1, ciclo2, ciclo3];

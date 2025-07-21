@@ -8,9 +8,11 @@ import {
   PowerIcon,
   TintIcon,
 } from '@/assets/icons';
-import IndicadorEstado from './indicadorEstado';
 import { PiscinaEquipamiento } from '@/data/domain/piscina';
-import BombaCard from './bombaCard';
+import BombaCard from './bombaEquipamiento';
+import FiltroCard from './filtroEquipamiento';
+import ValvulaCard from './valvulaEquipamiento';
+import GermicidaEquipamiento from './germicidaEquipamiento';
 
 const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
   return (
@@ -31,24 +33,14 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
       {pool.bombas.map((bomba) => (
         <BombaCard key={bomba.id} bomba={bomba} />
       ))}
-      
+
       <View className="flex-row items-center self-start my-2">
         <FilterIcon size={18} color={'#60C3FF'} />
         <Text className="font-geist-semi-bold text-text text-lg ml-2">
           Filtro
         </Text>
       </View>
-      <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center self-start">
-          <IndicadorEstado />
-          <Text className="font-geist text-text text-base ml-2">
-            Filtro Principal
-          </Text>
-        </View>
-        <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-          <Text className="font-geist text-text text-sm mx-1">Activa</Text>
-        </View>
-      </View>
+      <FiltroCard filtro={pool.filtro} />
 
       <View className="flex-row items-center self-start my-2">
         <TintIcon size={18} color={'#60C3FF'} />
@@ -56,62 +48,15 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
           Válvulas
         </Text>
       </View>
-      <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center self-start">
-          <IndicadorEstado />
-          <Text className="font-geist text-text text-base ml-2">
-            Válvula Selectora
-          </Text>
-        </View>
-        <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-          <Text className="font-geist text-text text-sm mx-1">Activa</Text>
-        </View>
-      </View>
-      <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center self-start">
-          <IndicadorEstado />
-          <Text className="font-geist text-text text-base ml-2">
-            Válvula Skimmer
-          </Text>
-        </View>
-        <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-          <Text className="font-geist text-text text-sm mx-1">Atención</Text>
-        </View>
-      </View>
+      {pool.valvulas.map((valvula) => (
+        <ValvulaCard key={valvula.id} valvula={valvula} />
+      ))}
 
       <View className="w-full h-0.5 bg-gray-200 my-3" />
 
-      <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center self-start">
-          <IndicadorEstado />
-          <Text className="font-geist text-text text-base ml-2">
-            Lámpara UV
-          </Text>
-        </View>
-        <Text className="font-geist-light text-text text-base mx-1">
-          1.5 horas
-        </Text>
-        <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-          <Text className="font-geist text-text text-sm mx-1">
-            Reemplazo próximo
-          </Text>
-        </View>
-      </View>
-
-      <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center self-start">
-          <IndicadorEstado />
-          <Text className="font-geist text-text text-base ml-2">
-            Ionizador de Cobre
-          </Text>
-        </View>
-        <Text className="font-geist-light text-text text-base mx-1">
-          35% desgaste
-        </Text>
-        <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-          <Text className="font-geist text-text text-sm mx-1">Atención</Text>
-        </View>
-      </View>
+      {pool.sistemasGermicidas.map((germicida) => (
+        <GermicidaEquipamiento key={germicida.id} germicida={germicida} />
+      ))}
 
       <View className="flex-row w-full items-center rounded-md bg-yellow-100 p-2 mt-3 gap-2">
         <InfoIcon color={'orange'} />

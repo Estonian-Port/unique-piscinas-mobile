@@ -1,4 +1,14 @@
+import { Programacion } from './cicloFiltrado';
 import { User } from './user';
+
+export interface PiscinaProgramacion {
+  id: number;
+  nombre: string;
+  direccion: string;
+  volumen: string;
+  programacionLuces: Programacion[];
+  programacionFiltrado: Programacion[];
+}
 
 export interface PiscinaEquipamiento {
   id: number;
@@ -14,7 +24,7 @@ export interface PiscinaEquipamiento {
   bombas: Bomba[];
   filtro: Filtro;
   valvulas: Valvula[];
-  sistemasGermicidas: sistemaGermicida[];
+  sistemasGermicidas: Germicida[];
 }
 
 export interface PiscinaListItem {
@@ -71,7 +81,7 @@ export class Piscina {
   }
 }
 
-type Filtro = {
+export type Filtro = {
   marca: string;
   modelo: string;
   diametro: number;
@@ -87,21 +97,21 @@ export type Bomba = {
   activa: boolean;
 };
 
-type Germicida = {
+export type Germicida = {
   id: number;
   nombre: string;
   vida: number;
   activa: boolean;
 };
 
-type Valvula = {
+export type Valvula = {
   id: number;
   nombre: string;
   tipo: string;
   estado: string;
 };
 
-type Calefaccion = {
+export type Calefaccion = {
   id: number;
   nombre: string;
   tipo: string;

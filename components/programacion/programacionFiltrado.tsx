@@ -3,39 +3,42 @@ import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, FilterIcon } from '@/assets/icons';
 import Schedule from './schedule';
-import { Cicle } from '@/data/domain/cicloFiltrado';
+import { Programacion } from '@/data/domain/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
 import { cicloLuzVacio } from '@/data/mock/cicloLucesMock';
 
-const ProgramacionFiltrado = () => {
-  const [ciclos, setCiclos] = useState<Cicle[]>(ciclosFiltradoMock);
+const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) => {
+  const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const cicloVacioDeFiltrado: Cicle = {
+  const programacionVacia: Programacion = {
     id: 0,
-    startTime: new Date(),
-    endTime: new Date(),
-    activeDays: [],
+    horaInicio: new Date(),
+    horaFin: new Date(),
+    dias: [],
     mode: null,
-    isActive: false,
-    isFilterCicle: true,
+    estaActivo: false,
+    esProgramacionFiltro: true,
   };
 
-  const hasCicles = ciclos.length > 0;
+  const hasCicles = programaciones.length > 0;
 
-  const handleAddCicle = (nuevoCiclo: Cicle) => {
+  const handleAddCicle = (nuevoCiclo: Programacion) => {
+    //actualizar el back
     ciclosFiltradoMock.push(nuevoCiclo);
   };
 
-  const handleEditCicle = (cicloEditado: Cicle) => {
-    setCiclos((prev) =>
+  const handleEditCicle = (cicloEditado: Programacion) => {
+    //actualizar el back
+    setProgramaciones((prev) =>
       prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
     );
   };
 
   const handleDeleteCicle = (cicloId: number) => {
-    setCiclos((prev) => prev.filter((c) => c.id !== cicloId));
+    //actualizar el back
+    setProgramaciones((prev) => prev.filter((c) => c.id !== cicloId));
   };
 
   return (
@@ -66,14 +69,14 @@ const ProgramacionFiltrado = () => {
             onClose={() => setModalVisible(false)}
             onSave={handleAddCicle}
             hasCicleMode={true}
-            cicle={cicloVacioDeFiltrado}
+            cicle={programacionVacia}
           />
         )}
       </View>
 
       {hasCicles ? (
         <View className="items-center justify-between gap-2">
-          {ciclos.map((ciclo) => (
+          {programaciones.map((ciclo) => (
             <Schedule
               cicle={ciclo}
               editCicle={handleEditCicle}
