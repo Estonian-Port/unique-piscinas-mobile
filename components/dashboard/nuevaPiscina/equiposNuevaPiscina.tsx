@@ -47,10 +47,12 @@ const EquiposNuevaPiscina = ({
   onCancel,
   onBack,
   onSave,
+  nuevaPiscina
 }: {
   onCancel: () => void;
   onBack: () => void;
   onSave: () => void;
+  nuevaPiscina: any;
 }) => {
   const [tipoBomba, setTipoBomba] = useState<TipoBomba>('Bomba única');
   const [tipoFiltro, setTipoFiltro] = useState<TipoFiltro>('Arena');

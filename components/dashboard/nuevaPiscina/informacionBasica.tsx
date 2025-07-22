@@ -4,13 +4,16 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { users } from '@/data/mock/userMock';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
+import { PiscinaNueva } from '@/data/domain/piscina';
 
 const InformacionBasica = ({
   onCancel,
   onNext,
+  nuevaPiscina
 }: {
   onCancel: () => void;
   onNext: () => void;
+  nuevaPiscina: PiscinaNueva;
 }) => {
   const usuarios = users.filter((user) => user.isAdmin === false);
 

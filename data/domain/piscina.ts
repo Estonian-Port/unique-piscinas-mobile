@@ -1,6 +1,40 @@
 import { Programacion } from './cicloFiltrado';
 import { User } from './user';
 
+export interface PiscinaNueva {
+  id: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC?: number;
+  bomba: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemaGermicida: Germicida[];
+  calefaccion?: Calefaccion;
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
+  administradorId?: number;
+}
+
+
+export interface PiscinaDashboard {
+  id: number;
+  nombre: string;
+  direccion: string;
+  volumen: string;
+  esDesbordante: boolean;
+  administradorNombre: string;
+  ph: number;
+  sistemasGermicidas: Germicida[];
+  calefaccion: Calefaccion;
+}
+
 export interface PiscinaProgramacion {
   id: number;
   nombre: string;
@@ -99,9 +133,10 @@ export type Bomba = {
 
 export type Germicida = {
   id: number;
-  nombre: string;
-  vida: number;
+  tipo: string;
+  vidaRestante: number;
   activa: boolean;
+  //estado
 };
 
 export type Valvula = {
@@ -149,17 +184,3 @@ export type funcionFiltro =
   | 'recirculate';
 
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
-
-interface PiscinaDashboard {
-  id: number;
-  nombre: string;
-  propietario: string; // Nombre del propietario como string
-  tipo: string; // Tipo de piscina (por ejemplo, "Skimmer")
-  ph: number; // Nivel de pH
-  equipos: EquipoDashboard[]; // Lista de equipos con su estado
-}
-
-type EquipoDashboard = {
-  tipo: string; // Tipo de equipo (por ejemplo, "Uv", "Ionizador")
-  estado: string; // Estado del equipo (por ejemplo, "Operativo", "Inactivo")
-};

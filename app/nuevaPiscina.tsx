@@ -4,9 +4,34 @@ import { Screen } from '@/components/utiles/Screen';
 import InformacionBasica from '@/components/dashboard/nuevaPiscina/informacionBasica';
 import ConfiguracionPiscina from '@/components/dashboard/nuevaPiscina/configuracionPiscina';
 import EquiposNuevaPiscina from '@/components/dashboard/nuevaPiscina/equiposNuevaPiscina';
+import { PiscinaNueva } from '@/data/domain/piscina';
+
+const piscinaNuevaInicial: PiscinaNueva = {
+  id: 0,
+  nombre: '',
+  direccion: '',
+  ciudad: '',
+  largo: 0,
+  ancho: 0,
+  profundidad: 0,
+  volumen: 0,
+  bomba: [],
+  filtro: {
+    marca: '',
+    modelo: '',
+    diametro: 0,
+    estado: ''
+  },
+  valvulas: [],
+  sistemaGermicida: [],
+  cloroSalino: false,
+  controlAutomaticoPH: false,
+  orp: false
+};
 
 const NuevaPiscina = () => {
   const [step, setStep] = useState(1);
+  const [nuevaPiscina, setNuevaPiscina] = useState<PiscinaNueva>(piscinaNuevaInicial);
 
   const handleCancel = () => {
     null;
@@ -29,6 +54,7 @@ const NuevaPiscina = () => {
             <InformacionBasica
               onCancel={handleCancel}
               onNext={() => setStep(2)}
+              nuevaPiscina={nuevaPiscina}
             />
           )}
           {step === 2 && (
@@ -36,6 +62,7 @@ const NuevaPiscina = () => {
               onCancel={handleCancel}
               onBack={() => setStep(1)}
               onNext={() => setStep(3)}
+              nuevaPiscina={nuevaPiscina}
             />
           )}
           {step === 3 && (
@@ -43,6 +70,7 @@ const NuevaPiscina = () => {
               onCancel={handleCancel}
               onBack={() => setStep(2)}
               onSave={handleSave}
+              nuevaPiscina={nuevaPiscina}
             />
           )}
         </View>

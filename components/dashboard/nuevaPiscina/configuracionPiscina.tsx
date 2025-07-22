@@ -9,10 +9,12 @@ const ConfiguracionPiscina = ({
   onCancel,
   onBack,
   onNext,
+  nuevaPiscina
 }: {
   onCancel: () => void;
   onBack: () => void;
   onNext: () => void;
+  nuevaPiscina: any;
 }) => {
   const [desbordante, setDesbordante] = useState(false);
   const [largo, setLargo] = useState('');
