@@ -1,5 +1,28 @@
 import { User } from "./user";
 
+export interface PiscinaNueva {
+  id: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  desbordante: boolean;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC?: number;
+  bomba: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemaGermicida: Germicida[];
+  calefaccion?: Calefaccion;
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
+  administradorId?: number;
+  notas?: string;
+}
+
 export class Piscina {
   constructor(
   id: number,
@@ -14,13 +37,23 @@ export class Piscina {
   ) {}
 }
 
-type Bomba = {
+export type Bomba = {
   id: number;
   nombre: string;
   marca: string;
   modelo: string;
   potencia: number;
   activa: boolean;
+};
+
+export type Filtro = {
+  id: number;
+  tipo: string;
+  marca: string;
+  modelo: string;
+  diametro: number;
+  datoExtra?: number;
+  estado?: string;
 };
 
 type Germicida = {
@@ -77,3 +110,4 @@ type EquipoDashboard = {
   tipo: string; // Tipo de equipo (por ejemplo, "Uv", "Ionizador")
   estado: string; // Estado del equipo (por ejemplo, "Operativo", "Inactivo")
 };
+
