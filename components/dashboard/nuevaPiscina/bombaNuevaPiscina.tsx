@@ -205,13 +205,12 @@ const BombaNuevaPiscina = ({
               value={values.marcaBombaPrimaria}
               items={marcasBomba.map((item) => ({
                 label: item.name,
-                value: item.id.toString(),
+                value: item.name,
               }))}
               setOpen={setOpenMarcaBomba}
               setValue={(callback) => {
                 const val = callback(values.marcaBombaPrimaria);
                 setFieldValue('marcaBombaPrimaria', val);
-                setFieldTouched('marcaBombaPrimaria', true);
               }}
               placeholder="Seleccione una marca"
               style={{ borderColor: '#e5e7eb' }}
@@ -231,13 +230,12 @@ const BombaNuevaPiscina = ({
               value={values.modeloBombaPrimaria}
               items={modelosBomba.map((item) => ({
                 label: item.name,
-                value: item.id.toString(),
+                value: item.name,
               }))}
               setOpen={setOpenModeloBomba}
               setValue={(callback) => {
                 const val = callback(values.modeloBombaPrimaria);
                 setFieldValue('modeloBombaPrimaria', val);
-                setFieldTouched('modeloBombaPrimaria', true);
               }}
               placeholder="Seleccione un modelo"
               style={{ borderColor: '#e5e7eb' }}
@@ -324,13 +322,12 @@ const BombaNuevaPiscina = ({
                   value={values.marcaBombaSecundaria}
                   items={marcasBomba.map((item) => ({
                     label: item.name,
-                    value: item.id.toString(),
+                    value: item.name,
                   }))}
                   setOpen={setOpenMarcaBomba}
                   setValue={(callback) => {
                     const val = callback(values.marcaBombaSecundaria);
                     setFieldValue('marcaBombaSecundaria', val);
-                    setFieldTouched('marcaBombaSecundaria', true);
                   }}
                   placeholder="Seleccione una marca"
                   style={{ borderColor: '#e5e7eb' }}
@@ -353,13 +350,12 @@ const BombaNuevaPiscina = ({
                   value={values.modeloBombaSecundaria}
                   items={modelosBomba.map((item) => ({
                     label: item.name,
-                    value: item.id.toString(),
+                    value: item.name,
                   }))}
                   setOpen={setOpenModeloBomba}
                   setValue={(callback) => {
                     const val = callback(values.modeloBombaSecundaria);
                     setFieldValue('modeloBombaSecundaria', val);
-                    setFieldTouched('modeloBombaSecundaria', true);
                   }}
                   placeholder="Seleccione un modelo"
                   style={{ borderColor: '#e5e7eb' }}

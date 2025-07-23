@@ -56,12 +56,30 @@ export type Filtro = {
   estado?: string;
 };
 
-type Germicida = {
+export type GermicidaBase = {
   id: number;
-  nombre: string;
+  tipo: 'uv' | 'trasductor' | 'ionizador';
+  marca: string;
   vida: number;
   activa: boolean;
 };
+
+export type GermicidaUV = GermicidaBase & {
+  tipo: 'uv';
+  potencia: number;
+};
+
+export type GermicidaTrasductor = GermicidaBase & {
+  tipo: 'trasductor';
+  potencia: number;
+};
+
+export type GermicidaIonizador = GermicidaBase & {
+  tipo: 'ionizador';
+  electrodos: number;
+};
+
+export type Germicida = GermicidaUV | GermicidaTrasductor | GermicidaIonizador;
 
 type Valvula = {
   id: number;
@@ -70,7 +88,7 @@ type Valvula = {
   estado: string;
 };
 
-type Calefaccion = {
+export type Calefaccion = {
   id: number;
   nombre: string;
   tipo: string;

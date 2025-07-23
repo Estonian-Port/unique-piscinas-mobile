@@ -7,6 +7,9 @@ import EquiposNuevaPiscina from '@/components/dashboard/nuevaPiscina/equiposNuev
 import { PiscinaNueva } from '@/data/domain/piscina';
 import { router } from 'expo-router';
 import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPiscina';
+import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
+import TratamientoNuevaPiscina from '@/components/dashboard/nuevaPiscina/tratamientoNuevaPiscina';
+import CalefaccionNuevaPiscina from '@/components/dashboard/nuevaPiscina/calefaccionNuevaPiscina';
 
 const piscinaNuevaInicial: PiscinaNueva = {
   id: 0,
@@ -24,6 +27,8 @@ const piscinaNuevaInicial: PiscinaNueva = {
     modelo: '',
     diametro: 0,
     estado: '',
+    id: 0,
+    tipo: ''
   },
   valvulas: [],
   sistemaGermicida: [],
@@ -34,12 +39,13 @@ const piscinaNuevaInicial: PiscinaNueva = {
 
 const NuevaPiscina = () => {
   const [step, setStep] = useState(1);
-  const [nuevaPiscina, setNuevaPiscina] = useState<PiscinaNueva>(piscinaNuevaInicial);
+  const [nuevaPiscina, setNuevaPiscina] =
+    useState<PiscinaNueva>(piscinaNuevaInicial);
 
-const handleCancel = () => {
-  setNuevaPiscina(piscinaNuevaInicial);
-  router.replace('/(tabs-adm)/dashboard');
-};
+  const handleCancel = () => {
+    setNuevaPiscina(piscinaNuevaInicial);
+    router.replace('/(tabs-adm)/dashboard');
+  };
   const handleSave = () => {
     null;
   };
@@ -81,10 +87,28 @@ const handleCancel = () => {
             />
           )}
           {step === 4 && (
-            <EquiposNuevaPiscina
+            <FiltroNuevaPiscina
               onCancel={handleCancel}
-              onBack={() => setStep(2)}
-              onSave={() => setStep(4)}
+              onBack={() => setStep(3)}
+              onNext={() => setStep(5)}
+              nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
+            />
+          )}
+          {step === 5 && (
+            <TratamientoNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(4)}
+              onNext={() => setStep(6)}
+              nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
+            />
+          )}
+          {step === 6 && (
+            <CalefaccionNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(5)}
+              onSave={handleSave}
               nuevaPiscina={nuevaPiscina}
               setNuevaPiscina={setNuevaPiscina}
             />
