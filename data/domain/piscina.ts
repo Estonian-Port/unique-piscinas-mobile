@@ -39,7 +39,7 @@ export class Piscina {
 
 export type Bomba = {
   id: number;
-  nombre: string;
+  esVelocidadVariable: boolean;
   marca: string;
   modelo: string;
   potencia: number;

@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
@@ -8,12 +8,6 @@ import { Bomba, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
-
-export type TipoBomba =
-  | 'Bomba principal'
-  | 'Bomba secundaria'
-  | 'Doble bomba'
-  | 'Bomba de velocidad variable';
 
 export const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -30,7 +24,6 @@ export const modelosBomba = [
 ];
 
 const validationSchema = Yup.object().shape({
-  tipoBombaPrimaria: Yup.string().required('Seleccione un tipo de bomba'),
   marcaBombaPrimaria: Yup.string().required('Seleccione una marca de bomba'),
   modeloBombaPrimaria: Yup.string().required('Seleccione un modelo de bomba'),
   potenciaCVPrimaria: Yup.number()
@@ -39,22 +32,17 @@ const validationSchema = Yup.object().shape({
     .min(1, 'La potencia debe ser mayor que 0'),
 
   // Validación condicional para la segunda bomba
-  tipoBombaSecundaria: Yup.string().when('$tieneDobleBomba', {
-    is: true,
-    then: (schema) => schema.required('Seleccione un tipo de bomba'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  marcaBombaSecundaria: Yup.string().when('$tieneDobleBomba', {
+  marcaBombaSecundaria: Yup.string().when('tieneDobleBomba', {
     is: true,
     then: (schema) => schema.required('Seleccione una marca de bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  modeloBombaSecundaria: Yup.string().when('$tieneDobleBomba', {
+  modeloBombaSecundaria: Yup.string().when('tieneDobleBomba', {
     is: true,
     then: (schema) => schema.required('Seleccione un modelo de bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  potenciaCVSecundaria: Yup.number().when('$tieneDobleBomba', {
+  potenciaCVSecundaria: Yup.number().when('tieneDobleBomba', {
     is: true,
     then: (schema) =>
       schema
@@ -63,25 +51,8 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
+  tieneDobleBomba: Yup.boolean(),
 });
-
-const nuevaBombaPrimaria: Bomba = {
-  id: 0,
-  nombre: 'Bomba principal',
-  marca: '',
-  modelo: '',
-  potencia: 0,
-  activa: true,
-};
-
-const nuevaBombaSecundaria: Bomba = {
-  id: 1,
-  nombre: 'Bomba secundaria',
-  marca: '',
-  modelo: '',
-  potencia: 0,
-  activa: true,
-};
 
 const BombaNuevaPiscina = ({
   onCancel,
@@ -96,61 +67,80 @@ const BombaNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const [openMarcaBomba, setOpenMarcaBomba] = useState(false);
-  const [openModeloBomba, setOpenModeloBomba] = useState(false);
-  const [tipoBombaPrimaria, setTipoBombaPrimaria] =
-    useState<TipoBomba>('Bomba principal');
-  const [tipoBombaSecundaria, setTipoBombaSecundaria] =
-    useState<TipoBomba>('Bomba secundaria');
-  const [tieneDobleBomba, setTieneDobleBomba] = useState(false);
+  // Estados separados para cada dropdown
+  const [openMarcaBombaPrimaria, setOpenMarcaBombaPrimaria] = useState(false);
+  const [openModeloBombaPrimaria, setOpenModeloBombaPrimaria] = useState(false);
+  const [openMarcaBombaSecundaria, setOpenMarcaBombaSecundaria] =
+    useState(false);
+  const [openModeloBombaSecundaria, setOpenModeloBombaSecundaria] =
+    useState(false);
+
   const formikRef = useRef<any>(null);
+
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    const bombaPrimaria = nuevaPiscina.bomba?.[0];
+    const bombaSecundaria = nuevaPiscina.bomba?.[1];
+    const tieneDobleBomba = nuevaPiscina.bomba?.length === 2;
+
+    return {
+      velocidadVariablePrimaria: bombaPrimaria?.esVelocidadVariable ?? false,
+      marcaBombaPrimaria: bombaPrimaria?.marca ?? '',
+      modeloBombaPrimaria: bombaPrimaria?.modelo ?? '',
+      potenciaCVPrimaria: bombaPrimaria?.potencia
+        ? bombaPrimaria.potencia.toString()
+        : '',
+
+      velocidadVariableSecundaria:
+        bombaSecundaria?.esVelocidadVariable ?? false,
+      marcaBombaSecundaria: bombaSecundaria?.marca ?? '',
+      modeloBombaSecundaria: bombaSecundaria?.modelo ?? '',
+      potenciaCVSecundaria: bombaSecundaria?.potencia
+        ? bombaSecundaria.potencia.toString()
+        : '',
+
+      tieneDobleBomba: tieneDobleBomba,
+    };
+  };
+
+  const initialValues = getInitialValues();
 
   return (
     <Formik
-      initialValues={{
-        tipoBombaPrimaria: nuevaBombaPrimaria.nombre ?? '',
-        marcaBombaPrimaria: nuevaBombaPrimaria.marca ?? '',
-        modeloBombaPrimaria: nuevaBombaPrimaria.modelo ?? '',
-        potenciaCVPrimaria:
-          nuevaBombaPrimaria.potencia === 0
-            ? ''
-            : nuevaBombaPrimaria.potencia.toString(),
-        tipoBombaSecundaria: nuevaBombaSecundaria.nombre ?? '',
-        marcaBombaSecundaria: nuevaBombaSecundaria.marca ?? '',
-        modeloBombaSecundaria: nuevaBombaSecundaria.modelo ?? '',
-        potenciaCVSecundaria:
-          nuevaBombaSecundaria.potencia === 0
-            ? ''
-            : nuevaBombaSecundaria.potencia.toString(),
-      }}
+      ref={formikRef}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         const bombaPrimaria: Bomba = {
-          ...nuevaBombaPrimaria,
-          nombre: tipoBombaPrimaria,
-          marca: values.marcaBombaPrimaria ?? '',
+          id: 0,
+          esVelocidadVariable: values.velocidadVariablePrimaria,
+          marca: values.marcaBombaPrimaria,
           modelo: values.modeloBombaPrimaria,
           potencia: parseFloat(values.potenciaCVPrimaria),
+          activa: true,
         };
 
-        const bombaSecundaria: Bomba = {
-          ...nuevaBombaSecundaria,
-          nombre: tipoBombaSecundaria,
-          marca: values.marcaBombaSecundaria ?? '',
-          modelo: values.modeloBombaSecundaria,
-          potencia: parseFloat(values.potenciaCVSecundaria),
-        };
+        const bombas: Bomba[] = [bombaPrimaria];
+
+        if (values.tieneDobleBomba) {
+          const bombaSecundaria: Bomba = {
+            id: 1,
+            esVelocidadVariable: values.velocidadVariableSecundaria,
+            marca: values.marcaBombaSecundaria,
+            modelo: values.modeloBombaSecundaria,
+            potencia: parseFloat(values.potenciaCVSecundaria),
+            activa: true,
+          };
+          bombas.push(bombaSecundaria);
+        }
 
         setNuevaPiscina({
           ...nuevaPiscina,
-          bomba: tieneDobleBomba
-            ? [bombaPrimaria, bombaSecundaria]
-            : [bombaPrimaria],
+          bomba: bombas,
         });
         onNext();
       }}
-      enableReinitialize={true}
-      validationContext={{ tieneDobleBomba }}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
     >
       {({
         handleChange,
@@ -160,8 +150,13 @@ const BombaNuevaPiscina = ({
         errors,
         touched,
         setFieldValue,
-        setFieldTouched,
+        validateForm,
       }) => {
+        // Efecto para revalidar cuando cambia tieneDobleBomba
+        useEffect(() => {
+          validateForm();
+        }, [values.tieneDobleBomba, validateForm]);
+
         return (
           <View className="py-5">
             <View className="flex-row items-center justify-between">
@@ -179,35 +174,39 @@ const BombaNuevaPiscina = ({
             <Text className="font-geist-semi-bold text-text text-sm mt-3">
               Bomba principal
             </Text>
-            <RadioButton
-              value={'Bomba principal'}
-              label={'Bomba principal'}
-              selected={tipoBombaPrimaria == 'Bomba principal'}
-              onPress={(value) => {
-                setTipoBombaPrimaria(value);
-                setFieldValue('tipoBombaPrimaria', value);
-                setFieldTouched('tipoBombaPrimaria', true);
-              }}
-            />
-            <RadioButton
-              value={'Bomba de velocidad variable'}
-              label={'Bomba de velocidad variable'}
-              selected={tipoBombaPrimaria == 'Bomba de velocidad variable'}
-              onPress={(value) => {
-                setTipoBombaPrimaria(value);
-                setFieldValue('tipoBombaPrimaria', value);
-                setFieldTouched('tipoBombaPrimaria', true);
-              }}
-            />
+
+            <View className="flex-row items-center mt-4">
+              <Checkbox
+                value={values.velocidadVariablePrimaria}
+                onValueChange={(value) => {
+                  setFieldValue('velocidadVariablePrimaria', value);
+                }}
+                color={values.velocidadVariablePrimaria ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() =>
+                  setFieldValue(
+                    'velocidadVariablePrimaria',
+                    !values.velocidadVariablePrimaria
+                  )
+                }
+                className="ml-2"
+              >
+                <Text className="font-geist text-text text-base">
+                  Es velocidad variable
+                </Text>
+              </Pressable>
+            </View>
+
             <Text className="font-geist text-text text-base mt-3">Marca</Text>
             <DropDownPicker
-              open={openMarcaBomba}
+              open={openMarcaBombaPrimaria}
               value={values.marcaBombaPrimaria}
               items={marcasBomba.map((item) => ({
                 label: item.name,
                 value: item.name,
               }))}
-              setOpen={setOpenMarcaBomba}
+              setOpen={setOpenMarcaBombaPrimaria}
               setValue={(callback) => {
                 const val = callback(values.marcaBombaPrimaria);
                 setFieldValue('marcaBombaPrimaria', val);
@@ -215,7 +214,7 @@ const BombaNuevaPiscina = ({
               placeholder="Seleccione una marca"
               style={{ borderColor: '#e5e7eb' }}
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-              zIndex={3000}
+              zIndex={4000}
               zIndexInverse={1000}
             />
             {touched.marcaBombaPrimaria && errors.marcaBombaPrimaria && (
@@ -226,13 +225,13 @@ const BombaNuevaPiscina = ({
 
             <Text className="font-geist text-text text-base mt-3">Modelo</Text>
             <DropDownPicker
-              open={openModeloBomba}
+              open={openModeloBombaPrimaria}
               value={values.modeloBombaPrimaria}
               items={modelosBomba.map((item) => ({
                 label: item.name,
                 value: item.name,
               }))}
-              setOpen={setOpenModeloBomba}
+              setOpen={setOpenModeloBombaPrimaria}
               setValue={(callback) => {
                 const val = callback(values.modeloBombaPrimaria);
                 setFieldValue('modeloBombaPrimaria', val);
@@ -240,7 +239,7 @@ const BombaNuevaPiscina = ({
               placeholder="Seleccione un modelo"
               style={{ borderColor: '#e5e7eb' }}
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-              zIndex={2000}
+              zIndex={3000}
               zIndexInverse={2000}
             />
             {touched.modeloBombaPrimaria && errors.modeloBombaPrimaria && (
@@ -259,7 +258,7 @@ const BombaNuevaPiscina = ({
               onBlur={handleBlur('potenciaCVPrimaria')}
               keyboardType="numeric"
               placeholder="Ej: 15"
-            ></TextInput>
+            />
             {touched.potenciaCVPrimaria && errors.potenciaCVPrimaria && (
               <Text className="text-red-500 mt-2">
                 {errors.potenciaCVPrimaria}
@@ -268,17 +267,16 @@ const BombaNuevaPiscina = ({
 
             <View className="flex-row items-center mt-4">
               <Checkbox
-                value={tieneDobleBomba}
-                onValueChange={() => {
-                  setTieneDobleBomba(!tieneDobleBomba);
-                  setTimeout(() => {
-                    formikRef.current?.validateForm();
-                  }, 0);
+                value={values.tieneDobleBomba}
+                onValueChange={(value) => {
+                  setFieldValue('tieneDobleBomba', value);
                 }}
-                color={tieneDobleBomba ? '#0F0D23' : undefined}
+                color={values.tieneDobleBomba ? '#0F0D23' : undefined}
               />
               <Pressable
-                onPress={() => setTieneDobleBomba(!tieneDobleBomba)}
+                onPress={() =>
+                  setFieldValue('tieneDobleBomba', !values.tieneDobleBomba)
+                }
                 className="ml-2"
               >
                 <Text className="font-geist text-text text-base">
@@ -287,44 +285,47 @@ const BombaNuevaPiscina = ({
               </Pressable>
             </View>
 
-            {tieneDobleBomba && (
+            {values.tieneDobleBomba && (
               <>
                 <Text className="font-geist-semi-bold text-text text-sm mt-3">
                   Bomba secundaria
                 </Text>
-                <RadioButton
-                  value={'Bomba secundaria'}
-                  label={'Bomba secundaria'}
-                  selected={tipoBombaSecundaria == 'Bomba secundaria'}
-                  onPress={(value) => {
-                    setTipoBombaSecundaria(value);
-                    setFieldValue('tipoBombaSecundaria', value);
-                    setFieldTouched('tipoBombaSecundaria', true);
-                  }}
-                />
-                <RadioButton
-                  value={'Bomba de velocidad variable'}
-                  label={'Bomba de velocidad variable'}
-                  selected={
-                    tipoBombaSecundaria == 'Bomba de velocidad variable'
-                  }
-                  onPress={(value) => {
-                    setTipoBombaSecundaria(value);
-                    setFieldValue('tipoBombaSecundaria', value);
-                    setFieldTouched('tipoBombaSecundaria', true);
-                  }}
-                />
+                <View className="flex-row items-center mt-4">
+                  <Checkbox
+                    value={values.velocidadVariableSecundaria}
+                    onValueChange={(value) => {
+                      setFieldValue('velocidadVariableSecundaria', value);
+                    }}
+                    color={
+                      values.velocidadVariableSecundaria ? '#0F0D23' : undefined
+                    }
+                  />
+                  <Pressable
+                    onPress={() =>
+                      setFieldValue(
+                        'velocidadVariableSecundaria',
+                        !values.velocidadVariableSecundaria
+                      )
+                    }
+                    className="ml-2"
+                  >
+                    <Text className="font-geist text-text text-base">
+                      Es velocidad variable
+                    </Text>
+                  </Pressable>
+                </View>
+
                 <Text className="font-geist text-text text-base mt-3">
                   Marca
                 </Text>
                 <DropDownPicker
-                  open={openMarcaBomba}
+                  open={openMarcaBombaSecundaria}
                   value={values.marcaBombaSecundaria}
                   items={marcasBomba.map((item) => ({
                     label: item.name,
                     value: item.name,
                   }))}
-                  setOpen={setOpenMarcaBomba}
+                  setOpen={setOpenMarcaBombaSecundaria}
                   setValue={(callback) => {
                     const val = callback(values.marcaBombaSecundaria);
                     setFieldValue('marcaBombaSecundaria', val);
@@ -332,8 +333,8 @@ const BombaNuevaPiscina = ({
                   placeholder="Seleccione una marca"
                   style={{ borderColor: '#e5e7eb' }}
                   dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-                  zIndex={3000}
-                  zIndexInverse={1000}
+                  zIndex={2000}
+                  zIndexInverse={3000}
                 />
                 {touched.marcaBombaSecundaria &&
                   errors.marcaBombaSecundaria && (
@@ -346,13 +347,13 @@ const BombaNuevaPiscina = ({
                   Modelo
                 </Text>
                 <DropDownPicker
-                  open={openModeloBomba}
+                  open={openModeloBombaSecundaria}
                   value={values.modeloBombaSecundaria}
                   items={modelosBomba.map((item) => ({
                     label: item.name,
                     value: item.name,
                   }))}
-                  setOpen={setOpenModeloBomba}
+                  setOpen={setOpenModeloBombaSecundaria}
                   setValue={(callback) => {
                     const val = callback(values.modeloBombaSecundaria);
                     setFieldValue('modeloBombaSecundaria', val);
@@ -360,8 +361,8 @@ const BombaNuevaPiscina = ({
                   placeholder="Seleccione un modelo"
                   style={{ borderColor: '#e5e7eb' }}
                   dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-                  zIndex={2000}
-                  zIndexInverse={2000}
+                  zIndex={1000}
+                  zIndexInverse={4000}
                 />
                 {touched.modeloBombaSecundaria &&
                   errors.modeloBombaSecundaria && (
@@ -380,7 +381,7 @@ const BombaNuevaPiscina = ({
                   onBlur={handleBlur('potenciaCVSecundaria')}
                   keyboardType="numeric"
                   placeholder="Ej: 15"
-                ></TextInput>
+                />
                 {touched.potenciaCVSecundaria &&
                   errors.potenciaCVSecundaria && (
                     <Text className="text-red-500 mt-2">
