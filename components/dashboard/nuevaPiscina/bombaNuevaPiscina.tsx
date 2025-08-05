@@ -107,7 +107,7 @@ const BombaNuevaPiscina = ({
 
   return (
     <Formik
-      ref={formikRef}
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
@@ -216,6 +216,7 @@ const BombaNuevaPiscina = ({
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={4000}
               zIndexInverse={1000}
+              listMode='SCROLLVIEW'
             />
             {touched.marcaBombaPrimaria && errors.marcaBombaPrimaria && (
               <Text className="text-red-500 mt-2">
@@ -241,6 +242,7 @@ const BombaNuevaPiscina = ({
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={3000}
               zIndexInverse={2000}
+              listMode='SCROLLVIEW'
             />
             {touched.modeloBombaPrimaria && errors.modeloBombaPrimaria && (
               <Text className="text-red-500 mt-2">
