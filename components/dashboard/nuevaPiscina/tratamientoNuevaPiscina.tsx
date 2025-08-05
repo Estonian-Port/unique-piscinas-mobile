@@ -101,9 +101,15 @@ const TratamientoNuevaPiscina = ({
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const sistemaGermicida = nuevaPiscina.sistemaGermicida || [];
-    const uvExistente = sistemaGermicida.find(s => s.tipo === 'uv') as GermicidaUV;
-    const ionizadorExistente = sistemaGermicida.find(s => s.tipo === 'ionizador') as GermicidaIonizador;
-    const trasductorExistente = sistemaGermicida.find(s => s.tipo === 'trasductor') as GermicidaTrasductor;
+    const uvExistente = sistemaGermicida.find(
+      (s) => s.tipo === 'uv'
+    ) as GermicidaUV;
+    const ionizadorExistente = sistemaGermicida.find(
+      (s) => s.tipo === 'ionizador'
+    ) as GermicidaIonizador;
+    const trasductorExistente = sistemaGermicida.find(
+      (s) => s.tipo === 'trasductor'
+    ) as GermicidaTrasductor;
 
     return {
       cloradorSalino: nuevaPiscina.cloroSalino ?? false,
@@ -114,10 +120,14 @@ const TratamientoNuevaPiscina = ({
       uvPotencia: uvExistente?.potencia ? uvExistente.potencia.toString() : '',
       ionizadorSwitch: !!ionizadorExistente,
       ionizadorMarca: ionizadorExistente?.marca ?? '',
-      ionizadorElectrodos: ionizadorExistente?.electrodos ? ionizadorExistente.electrodos.toString() : '',
+      ionizadorElectrodos: ionizadorExistente?.electrodos
+        ? ionizadorExistente.electrodos.toString()
+        : '',
       trasductorSwitch: !!trasductorExistente,
       trasductorMarca: trasductorExistente?.marca ?? '',
-      trasductorPotencia: trasductorExistente?.potencia ? trasductorExistente.potencia.toString() : '',
+      trasductorPotencia: trasductorExistente?.potencia
+        ? trasductorExistente.potencia.toString()
+        : '',
     };
   };
 
@@ -191,7 +201,12 @@ const TratamientoNuevaPiscina = ({
         // Efecto para revalidar cuando cambian los switches
         useEffect(() => {
           validateForm();
-        }, [values.uvSwitch, values.ionizadorSwitch, values.trasductorSwitch, validateForm]);
+        }, [
+          values.uvSwitch,
+          values.ionizadorSwitch,
+          values.trasductorSwitch,
+          validateForm,
+        ]);
 
         return (
           <View className="py-5">
@@ -216,7 +231,9 @@ const TratamientoNuevaPiscina = ({
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
                   thumbColor={values.cloradorSalino ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={(value) => { setFieldValue('cloradorSalino', value); }}
+                  onValueChange={(value) => {
+                    setFieldValue('cloradorSalino', value);
+                  }}
                   value={values.cloradorSalino}
                 />
               </View>
@@ -228,7 +245,9 @@ const TratamientoNuevaPiscina = ({
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
                   thumbColor={values.controlPh ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={(value) => { setFieldValue('controlPh', value); }}
+                  onValueChange={(value) => {
+                    setFieldValue('controlPh', value);
+                  }}
                   value={values.controlPh}
                 />
               </View>
@@ -240,7 +259,9 @@ const TratamientoNuevaPiscina = ({
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
                   thumbColor={values.controlOrp ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={(value) => { setFieldValue('controlOrp', value); }}
+                  onValueChange={(value) => {
+                    setFieldValue('controlOrp', value);
+                  }}
                   value={values.controlOrp}
                 />
               </View>
@@ -261,12 +282,14 @@ const TratamientoNuevaPiscina = ({
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
                     thumbColor={values.uvSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={(value) => { setFieldValue('uvSwitch', value); }}
+                    onValueChange={(value) => {
+                      setFieldValue('uvSwitch', value);
+                    }}
                     value={values.uvSwitch}
                   />
                 </View>
                 {values.uvSwitch && (
-                  <View className="items-start w-full">
+                  <View className="items-start w-4/5">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
                       open={openMarcaUV}
@@ -282,13 +305,36 @@ const TratamientoNuevaPiscina = ({
                         setFieldTouched('uvMarca', true);
                       }}
                       placeholder="Seleccione una marca"
-                      style={{ borderColor: '#e5e7eb' }}
-                      dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                       zIndex={3000}
                       zIndexInverse={1000}
                       onOpen={() => {
                         setOpenMarcaIonizador(false);
                         setOpenMarcaTrasductor(false);
+                      }}
+                      listMode="SCROLLVIEW"
+                      style={{
+                        borderColor: '#d1d5db', // un violeta más notorio
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#fff',
+                        paddingVertical: 12,
+                        paddingHorizontal: 10,
+                      }}
+                      dropDownContainerStyle={{
+                        borderColor: '#d1d5db',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#f3f4f6',
+                      }}
+                      selectedItemContainerStyle={{
+                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                      }}
+                      selectedItemLabelStyle={{
+                        fontWeight: 'bold',
+                        color: '#7c3aed',
+                      }}
+                      placeholderStyle={{
+                        color: '#333333',
                       }}
                     />
                     {errors.uvMarca && touched.uvMarca && (
@@ -301,7 +347,7 @@ const TratamientoNuevaPiscina = ({
                         Potencia (W)
                       </Text>
                       <TextInput
-                        className="border border-gray-200 rounded-md py-4 px-3 w-full"
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                         value={values.uvPotencia}
                         onChangeText={handleChange('uvPotencia')}
                         onBlur={handleBlur('uvPotencia')}
@@ -329,12 +375,14 @@ const TratamientoNuevaPiscina = ({
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
                     thumbColor={values.ionizadorSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={(value) => { setFieldValue('ionizadorSwitch', value); }}
+                    onValueChange={(value) => {
+                      setFieldValue('ionizadorSwitch', value);
+                    }}
                     value={values.ionizadorSwitch}
                   />
                 </View>
                 {values.ionizadorSwitch && (
-                  <View className="items-start w-full">
+                  <View className="items-start w-4/5">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
                       open={openMarcaIonizador}
@@ -350,13 +398,36 @@ const TratamientoNuevaPiscina = ({
                         setFieldTouched('ionizadorMarca', true);
                       }}
                       placeholder="Seleccione una marca"
-                      style={{ borderColor: '#e5e7eb' }}
-                      dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                       zIndex={2000}
                       zIndexInverse={2000}
                       onOpen={() => {
                         setOpenMarcaUV(false);
                         setOpenMarcaTrasductor(false);
+                      }}
+                      listMode="SCROLLVIEW"
+                      style={{
+                        borderColor: '#d1d5db', // un violeta más notorio
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#fff',
+                        paddingVertical: 12,
+                        paddingHorizontal: 10,
+                      }}
+                      dropDownContainerStyle={{
+                        borderColor: '#d1d5db',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#f3f4f6',
+                      }}
+                      selectedItemContainerStyle={{
+                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                      }}
+                      selectedItemLabelStyle={{
+                        fontWeight: 'bold',
+                        color: '#7c3aed',
+                      }}
+                      placeholderStyle={{
+                        color: '#333333',
                       }}
                     />
                     {errors.ionizadorMarca && touched.ionizadorMarca && (
@@ -369,7 +440,7 @@ const TratamientoNuevaPiscina = ({
                         Electrodos
                       </Text>
                       <TextInput
-                        className="border border-gray-200 rounded-md py-4 px-3 w-full"
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                         value={values.ionizadorElectrodos}
                         onChangeText={handleChange('ionizadorElectrodos')}
                         onBlur={handleBlur('ionizadorElectrodos')}
@@ -398,12 +469,14 @@ const TratamientoNuevaPiscina = ({
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
                     thumbColor={values.trasductorSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={(value) => { setFieldValue('trasductorSwitch', value); }}
+                    onValueChange={(value) => {
+                      setFieldValue('trasductorSwitch', value);
+                    }}
                     value={values.trasductorSwitch}
                   />
                 </View>
                 {values.trasductorSwitch && (
-                  <View className="items-start w-full mt-2">
+                  <View className="items-start w-4/5 my-2">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
                       open={openMarcaTrasductor}
@@ -419,13 +492,36 @@ const TratamientoNuevaPiscina = ({
                         setFieldTouched('trasductorMarca', true);
                       }}
                       placeholder="Seleccione una marca"
-                      style={{ borderColor: '#e5e7eb' }}
-                      dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                       zIndex={1000}
                       zIndexInverse={3000}
                       onOpen={() => {
                         setOpenMarcaUV(false);
                         setOpenMarcaIonizador(false);
+                      }}
+                      listMode="SCROLLVIEW"
+                      style={{
+                        borderColor: '#d1d5db', // un violeta más notorio
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#fff',
+                        paddingVertical: 12,
+                        paddingHorizontal: 10,
+                      }}
+                      dropDownContainerStyle={{
+                        borderColor: '#d1d5db',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        backgroundColor: '#f3f4f6',
+                      }}
+                      selectedItemContainerStyle={{
+                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                      }}
+                      selectedItemLabelStyle={{
+                        fontWeight: 'bold',
+                        color: '#7c3aed',
+                      }}
+                      placeholderStyle={{
+                        color: '#333333',
                       }}
                     />
                     {errors.trasductorMarca && touched.trasductorMarca && (
@@ -438,7 +534,7 @@ const TratamientoNuevaPiscina = ({
                         Potencia (W)
                       </Text>
                       <TextInput
-                        className="border border-gray-200 rounded-md py-4 px-3 w-full"
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                         value={values.trasductorPotencia}
                         onChangeText={handleChange('trasductorPotencia')}
                         onBlur={handleBlur('trasductorPotencia')}

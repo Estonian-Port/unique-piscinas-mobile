@@ -166,12 +166,9 @@ const BombaNuevaPiscina = ({
               <PasosFormulario paso={3} />
             </View>
             <Text className="font-geist-semi-bold text-text text-lg mt-2">
-              Bombas
+              Configuración de Bombas
             </Text>
-            <Text className="font-geist-semi-bold text-text text-base mt-3">
-              Configuración de bombas
-            </Text>
-            <Text className="font-geist-semi-bold text-text text-sm mt-3">
+            <Text className="font-geist-semi-bold text-text text-md mt-3">
               Bomba principal
             </Text>
 
@@ -212,11 +209,33 @@ const BombaNuevaPiscina = ({
                 setFieldValue('marcaBombaPrimaria', val);
               }}
               placeholder="Seleccione una marca"
-              style={{ borderColor: '#e5e7eb' }}
-              dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={4000}
               zIndexInverse={1000}
-              listMode='SCROLLVIEW'
+              listMode="SCROLLVIEW"
+              style={{
+                borderColor: '#d1d5db', // un violeta más notorio
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#fff',
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+              }}
+              dropDownContainerStyle={{
+                borderColor: '#d1d5db',
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#f3f4f6',
+              }}
+              selectedItemContainerStyle={{
+                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+              }}
+              selectedItemLabelStyle={{
+                fontWeight: 'bold',
+                color: '#7c3aed',
+              }}
+              placeholderStyle={{
+                color: '#333333',
+              }}
             />
             {touched.marcaBombaPrimaria && errors.marcaBombaPrimaria && (
               <Text className="text-red-500 mt-2">
@@ -238,11 +257,33 @@ const BombaNuevaPiscina = ({
                 setFieldValue('modeloBombaPrimaria', val);
               }}
               placeholder="Seleccione un modelo"
-              style={{ borderColor: '#e5e7eb' }}
-              dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={3000}
               zIndexInverse={2000}
-              listMode='SCROLLVIEW'
+              listMode="SCROLLVIEW"
+              style={{
+                borderColor: '#d1d5db', // un violeta más notorio
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#fff',
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+              }}
+              dropDownContainerStyle={{
+                borderColor: '#d1d5db',
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#f3f4f6',
+              }}
+              selectedItemContainerStyle={{
+                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+              }}
+              selectedItemLabelStyle={{
+                fontWeight: 'bold',
+                color: '#7c3aed',
+              }}
+              placeholderStyle={{
+                color: '#333333',
+              }}
             />
             {touched.modeloBombaPrimaria && errors.modeloBombaPrimaria && (
               <Text className="text-red-500 mt-2">
@@ -254,7 +295,7 @@ const BombaNuevaPiscina = ({
               Potencia (CV)
             </Text>
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.potenciaCVPrimaria}
               onChangeText={handleChange('potenciaCVPrimaria')}
               onBlur={handleBlur('potenciaCVPrimaria')}
@@ -333,10 +374,32 @@ const BombaNuevaPiscina = ({
                     setFieldValue('marcaBombaSecundaria', val);
                   }}
                   placeholder="Seleccione una marca"
-                  style={{ borderColor: '#e5e7eb' }}
-                  dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                   zIndex={2000}
                   zIndexInverse={3000}
+                  style={{
+                    borderColor: '#d1d5db', // un violeta más notorio
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    backgroundColor: '#fff',
+                    paddingVertical: 12,
+                    paddingHorizontal: 10,
+                  }}
+                  dropDownContainerStyle={{
+                    borderColor: '#d1d5db',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    backgroundColor: '#f3f4f6',
+                  }}
+                  selectedItemContainerStyle={{
+                    backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                  }}
+                  selectedItemLabelStyle={{
+                    fontWeight: 'bold',
+                    color: '#7c3aed',
+                  }}
+                  placeholderStyle={{
+                    color: '#333333',
+                  }}
                 />
                 {touched.marcaBombaSecundaria &&
                   errors.marcaBombaSecundaria && (
@@ -361,10 +424,32 @@ const BombaNuevaPiscina = ({
                     setFieldValue('modeloBombaSecundaria', val);
                   }}
                   placeholder="Seleccione un modelo"
-                  style={{ borderColor: '#e5e7eb' }}
-                  dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                   zIndex={1000}
                   zIndexInverse={4000}
+                  style={{
+                    borderColor: '#d1d5db', // un violeta más notorio
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    backgroundColor: '#fff',
+                    paddingVertical: 12,
+                    paddingHorizontal: 10,
+                  }}
+                  dropDownContainerStyle={{
+                    borderColor: '#d1d5db',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    backgroundColor: '#f3f4f6',
+                  }}
+                  selectedItemContainerStyle={{
+                    backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                  }}
+                  selectedItemLabelStyle={{
+                    fontWeight: 'bold',
+                    color: '#7c3aed',
+                  }}
+                  placeholderStyle={{
+                    color: '#333333',
+                  }}
                 />
                 {touched.modeloBombaSecundaria &&
                   errors.modeloBombaSecundaria && (
@@ -377,7 +462,7 @@ const BombaNuevaPiscina = ({
                   Potencia (CV)
                 </Text>
                 <TextInput
-                  className="border border-gray-200 rounded-md py-4 px-3"
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   value={values.potenciaCVSecundaria}
                   onChangeText={handleChange('potenciaCVSecundaria')}
                   onBlur={handleBlur('potenciaCVSecundaria')}

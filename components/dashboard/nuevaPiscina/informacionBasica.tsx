@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { users } from '@/data/mock/userMock';
 import { Link } from 'expo-router';
@@ -13,6 +13,7 @@ const validationSchema = Yup.object().shape({
   direccion: Yup.string().required('La dirección es obligatoria'),
   ciudad: Yup.string().required('La ciudad es obligatoria'),
   notas: Yup.string().max(100, 'Máximo 100 caracteres'),
+  administradorId: Yup.number().nullable(),
 });
 
 const InformacionBasica = ({
@@ -27,25 +28,34 @@ const InformacionBasica = ({
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
   const usuarios = users.filter((user) => user.isAdmin === false);
+  const formikRef = useRef<any>(null);
 
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Asignar propietario más tarde', value: 0 },
+    { label: 'Asignar propietario más tarde', value: null },
     ...usuarios.map((usuario) => ({
       label: usuario.name + ' ' + usuario.lastname,
       value: usuario.id,
     })),
   ]);
 
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    return {
+      nombre: nuevaPiscina.nombre ?? '',
+      direccion: nuevaPiscina.direccion ?? '',
+      ciudad: nuevaPiscina.ciudad ?? '',
+      notas: nuevaPiscina.notas ?? '',
+      administradorId: nuevaPiscina.administradorId ?? null,
+    };
+  };
+
+  const initialValues = getInitialValues();
+
   return (
     <Formik
-      initialValues={{
-        nombre: nuevaPiscina.nombre,
-        direccion: nuevaPiscina.direccion,
-        ciudad: nuevaPiscina.ciudad,
-        notas: nuevaPiscina.notas ?? '',
-        administradorId: nuevaPiscina.administradorId ?? undefined,
-      }}
+      innerRef={formikRef}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         setNuevaPiscina({
@@ -58,7 +68,7 @@ const InformacionBasica = ({
         });
         onNext();
       }}
-      enableReinitialize={true}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
     >
       {({
         handleChange,
@@ -76,11 +86,12 @@ const InformacionBasica = ({
             </Text>
             <PasosFormulario paso={1} />
           </View>
+
           <Text className="font-geist text-text text-base mt-3">
             Nombre de la piscina
           </Text>
           <TextInput
-            className="border border-gray-200 rounded-md py-4 px-3"
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
             value={values.nombre}
             onChangeText={handleChange('nombre')}
             onBlur={handleBlur('nombre')}
@@ -103,14 +114,39 @@ const InformacionBasica = ({
               setFieldValue('administradorId', val);
             }}
             setItems={setItems}
-            placeholder="Seleccione un propietario"
-            style={{ borderColor: '#e5e7eb' }}
-            dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
+            placeholder="Asignar un propietario más tarde"
+            zIndex={3000}
+            zIndexInverse={1000}
+            listMode="SCROLLVIEW"
+            style={{
+              borderColor: '#d1d5db', // un violeta más notorio
+              borderWidth: 2,
+              borderRadius: 6,
+              backgroundColor: '#fff',
+              paddingVertical: 12,
+              paddingHorizontal: 10,
+            }}
+            dropDownContainerStyle={{
+              borderColor: '#d1d5db',
+              borderWidth: 2,
+              borderRadius: 6,
+              backgroundColor: '#f3f4f6',
+            }}
+            selectedItemContainerStyle={{
+              backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+            }}
+            selectedItemLabelStyle={{
+              fontWeight: 'bold',
+              color: '#7c3aed',
+            }}
+            placeholderStyle={{
+              color: '#333333',
+            }}
           />
 
           <Text className="font-geist text-text text-base mt-3">Dirección</Text>
           <TextInput
-            className="border border-gray-200 rounded-md py-4 px-3"
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
             value={values.direccion}
             onChangeText={handleChange('direccion')}
             onBlur={handleBlur('direccion')}
@@ -122,7 +158,7 @@ const InformacionBasica = ({
 
           <Text className="font-geist text-text text-base mt-3">Ciudad</Text>
           <TextInput
-            className="border border-gray-200 rounded-md py-4 px-3"
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
             value={values.ciudad}
             onChangeText={handleChange('ciudad')}
             onBlur={handleBlur('ciudad')}
@@ -136,7 +172,7 @@ const InformacionBasica = ({
             Notas adicionales
           </Text>
           <TextInput
-            className="border border-gray-200 rounded-md px-3 h-40"
+            className="border-2 bg-white border-gray-300 rounded-md px-3 h-40"
             value={values.notas}
             onChangeText={handleChange('notas')}
             onBlur={handleBlur('notas')}
@@ -146,7 +182,7 @@ const InformacionBasica = ({
             textAlignVertical="top"
           />
           {touched.notas && errors.notas && (
-            <Text className="text-red-500">{errors.notas}</Text>
+            <Text className="text-red-500 mt-2">{errors.notas}</Text>
           )}
 
           <View className="flex-row items-center justify-center gap-1 mt-5">

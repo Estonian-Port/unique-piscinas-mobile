@@ -1,5 +1,5 @@
 import { View, Text, Pressable, TextInput } from 'react-native';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Checkbox from 'expo-checkbox';
 import { CalculatorIcon } from '@/assets/icons';
 import { Link } from 'expo-router';
@@ -11,28 +11,28 @@ import { Formik } from 'formik';
 const validationSchema = Yup.object().shape({
   largo: Yup.number()
     .required('El largo es obligatorio')
-    .typeError('El valor debe ser un numérico')
-    .min(1, 'El largo debe ser mayor que 0'),
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El largo debe ser mayor que 0'),
   ancho: Yup.number()
     .required('El ancho es obligatorio')
-    .typeError('El valor debe ser un numérico')
-    .min(1, 'El ancho debe ser mayor que 0'),
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El ancho debe ser mayor que 0'),
   profundidad: Yup.number()
     .required('La profundidad es obligatoria')
-    .typeError('El valor debe ser un numérico')
-    .min(1, 'La profundidad debe ser mayor que 0'),
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'La profundidad debe ser mayor que 0'),
   volumen: Yup.number()
     .required('El volumen es obligatorio')
-    .typeError('El valor debe ser un numérico')
-    .min(1, 'El volumen debe ser mayor que 0'),
-  desbordante: Yup.boolean().required(),
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El volumen debe ser mayor que 0'),
+  desbordante: Yup.boolean(),
   volumenTC: Yup.number().when('desbordante', {
     is: true,
     then: (schema) =>
       schema
         .required('El volumen T.C. es obligatorio')
-        .typeError('El valor debe ser un numérico')
-        .min(1, 'El volumen T.C. debe ser mayor que 0'),
+        .typeError('El valor debe ser un número')
+        .min(0.1, 'El volumen T.C. debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
 });
@@ -50,23 +50,30 @@ const ConfiguracionPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
+  const formikRef = useRef<any>(null);
+
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    return {
+      largo: nuevaPiscina.largo ? nuevaPiscina.largo.toString() : '',
+      ancho: nuevaPiscina.ancho ? nuevaPiscina.ancho.toString() : '',
+      profundidad: nuevaPiscina.profundidad
+        ? nuevaPiscina.profundidad.toString()
+        : '',
+      volumen: nuevaPiscina.volumen ? nuevaPiscina.volumen.toString() : '',
+      desbordante: nuevaPiscina.desbordante ?? false,
+      volumenTC: nuevaPiscina.volumenTC
+        ? nuevaPiscina.volumenTC.toString()
+        : '',
+    };
+  };
+
+  const initialValues = getInitialValues();
+
   return (
     <Formik
-      initialValues={{
-        largo: nuevaPiscina.largo === 0 ? '' : nuevaPiscina.largo.toString(),
-        ancho: nuevaPiscina.ancho === 0 ? '' : nuevaPiscina.ancho.toString(),
-        profundidad:
-          nuevaPiscina.profundidad === 0
-            ? ''
-            : nuevaPiscina.profundidad.toString(),
-        volumen:
-          nuevaPiscina.volumen === 0 ? '' : nuevaPiscina.volumen.toString(),
-        desbordante: nuevaPiscina.desbordante,
-        volumenTC:
-          nuevaPiscina.volumenTC === 0
-            ? ''
-            : nuevaPiscina.volumenTC?.toString() ?? '',
-      }}
+      innerRef={formikRef}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         setNuevaPiscina({
@@ -80,7 +87,7 @@ const ConfiguracionPiscina = ({
         });
         onNext();
       }}
-      enableReinitialize={true}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
     >
       {({
         handleChange,
@@ -90,57 +97,79 @@ const ConfiguracionPiscina = ({
         errors,
         touched,
         setFieldValue,
+        validateForm,
       }) => {
+        // Efecto para revalidar cuando cambia desbordante
+        useEffect(() => {
+          validateForm();
+        }, [values.desbordante, validateForm]);
+
         const calcularVolumen = () => {
           const { largo, ancho, profundidad } = values;
           if (largo && ancho && profundidad) {
             const largoNum = parseFloat(largo);
             const anchoNum = parseFloat(ancho);
             const profundidadNum = parseFloat(profundidad);
+
             if (
               !isNaN(largoNum) &&
               !isNaN(anchoNum) &&
-              !isNaN(profundidadNum)
+              !isNaN(profundidadNum) &&
+              largoNum > 0 &&
+              anchoNum > 0 &&
+              profundidadNum > 0
             ) {
               const volumenNum = largoNum * anchoNum * profundidadNum;
-              setFieldValue('volumen', volumenNum.toString());
+              setFieldValue('volumen', volumenNum.toFixed(2));
             }
           }
         };
+
         return (
           <View className="py-5">
             <View className="flex-row items-center justify-between">
               <Text className="font-geist-semi-bold text-text text-xl">
-                Configuración de la piscina
+                Dimensiones
               </Text>
               <PasosFormulario paso={2} />
             </View>
-            <Pressable
-              onPress={() => setFieldValue('desbordante', !values.desbordante)}
-              className="flex-row items-center mt-3"
-            >
+
+            <View className="flex-row items-center mt-4">
               <Checkbox
                 value={values.desbordante}
-                onValueChange={() =>
-                  setFieldValue('desbordante', !values.desbordante)
-                }
+                onValueChange={(value) => {
+                  setFieldValue('desbordante', value);
+                  // Limpiar volumenTC si se desmarca desbordante
+                  if (!value) {
+                    setFieldValue('volumenTC', '');
+                  }
+                }}
                 color={values.desbordante ? '#0F0D23' : undefined}
               />
-              <View className="ml-2">
+              <Pressable
+                onPress={() => {
+                  const newValue = !values.desbordante;
+                  setFieldValue('desbordante', newValue);
+                  if (!newValue) {
+                    setFieldValue('volumenTC', '');
+                  }
+                }}
+                className="ml-2 flex-1"
+              >
                 <Text className="font-geist text-text text-base">
                   Piscina desbordante
                 </Text>
                 <Text className="font-geist-light text-text text-sm">
-                  Pisicina de tipo desbordante o infinity
+                  Piscina de tipo desbordante o infinity
                 </Text>
-              </View>
-            </Pressable>
+              </Pressable>
+            </View>
 
             <Text className="font-geist text-text text-base mt-3">
               Largo (m)
             </Text>
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.largo}
               onChangeText={handleChange('largo')}
               onBlur={handleBlur('largo')}
@@ -155,7 +184,7 @@ const ConfiguracionPiscina = ({
               Ancho (m)
             </Text>
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.ancho}
               onChangeText={handleChange('ancho')}
               onBlur={handleBlur('ancho')}
@@ -170,7 +199,7 @@ const ConfiguracionPiscina = ({
               Profundidad (m)
             </Text>
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.profundidad}
               onChangeText={handleChange('profundidad')}
               onBlur={handleBlur('profundidad')}
@@ -186,16 +215,16 @@ const ConfiguracionPiscina = ({
                 Volumen (m³)
               </Text>
               <Pressable
-                className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center"
-                onPress={() => calcularVolumen()}
+                className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center gap-2"
+                onPress={calcularVolumen}
               >
                 <CalculatorIcon />
-                <Text>Calcular</Text>
+                <Text className="font-geist text-text">Calcular</Text>
               </Pressable>
             </View>
 
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.volumen}
               onChangeText={handleChange('volumen')}
               onBlur={handleBlur('volumen')}
@@ -205,13 +234,14 @@ const ConfiguracionPiscina = ({
             {touched.volumen && errors.volumen && (
               <Text className="text-red-500 mt-2">{errors.volumen}</Text>
             )}
+
             {values.desbordante && (
               <>
                 <Text className="font-geist text-text text-base mt-3">
                   Volumen T.C. (m³)
                 </Text>
                 <TextInput
-                  className="border border-gray-200 rounded-md py-4 px-3"
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   value={values.volumenTC}
                   onChangeText={handleChange('volumenTC')}
                   onBlur={handleBlur('volumenTC')}

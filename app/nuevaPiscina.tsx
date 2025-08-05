@@ -36,6 +36,7 @@ const piscinaNuevaInicial: PiscinaNueva = {
   cloroSalino: false,
   controlAutomaticoPH: false,
   orp: false,
+  administradorId: null
 };
 
 const NuevaPiscina = () => {
@@ -52,6 +53,7 @@ const NuevaPiscina = () => {
     //   setNuevaPiscina(piscinaNuevaInicial);
     //   router.replace('/(tabs-adm)/dashboard');
     // });
+    console.log('Nueva piscina guardada:', nuevaPiscina);
     setNuevaPiscina(piscinaNuevaInicial);
     router.replace('/(tabs-adm)/dashboard');
   };

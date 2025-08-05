@@ -19,7 +19,7 @@ export interface PiscinaNueva {
   cloroSalino: boolean;
   controlAutomaticoPH: boolean;
   orp: boolean;
-  administradorId?: number;
+  administradorId: number | null;
   notas?: string;
 }
 
@@ -81,9 +81,8 @@ export type GermicidaIonizador = GermicidaBase & {
 
 export type Germicida = GermicidaUV | GermicidaTrasductor | GermicidaIonizador;
 
-type Valvula = {
+export type Valvula = {
   id: number;
-  nombre: string;
   tipo: string;
   estado: string;
 };

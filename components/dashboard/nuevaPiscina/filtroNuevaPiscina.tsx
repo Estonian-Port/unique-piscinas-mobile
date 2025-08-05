@@ -1,12 +1,13 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Filtro, PiscinaNueva } from '@/data/domain/piscina';
+import { Filtro, PiscinaNueva, Valvula } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import Checkbox from 'expo-checkbox';
 
 export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
 
@@ -31,11 +32,14 @@ const validationSchema = Yup.object().shape({
   diametro: Yup.number()
     .required('Ingrese el diámetro del filtro')
     .typeError('El diámetro debe ser un número')
-    .min(1, 'El diámetro debe ser mayor que 0'),
-  datoExtra: Yup.string().when('tipoFiltro', {
+    .min(0.1, 'El diámetro debe ser mayor que 0'),
+  datoExtra: Yup.number().when('tipoFiltro', {
     is: (tipo: string) => tipo !== 'Diatomeas',
     then: (schema) =>
-      schema.required('Este campo es obligatorio para este tipo de filtro'),
+      schema
+        .required('Este campo es obligatorio para este tipo de filtro')
+        .typeError('El valor debe ser un número')
+        .min(0.1, 'El valor debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
 });
@@ -55,17 +59,31 @@ const FiltroNuevaPiscina = ({
 }) => {
   const [openMarcaFiltro, setOpenMarcaFiltro] = useState(false);
   const [openModeloFiltro, setOpenModeloFiltro] = useState(false);
+  const formikRef = useRef<any>(null);
 
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const filtroExistente = nuevaPiscina.filtro;
+    const valvulasExistentes = nuevaPiscina.valvulas || [];
+
+    // Verificar si ya existen válvulas de cada tipo
+    const tieneSelectora = valvulasExistentes.some(
+      (v) => v.tipo === 'Selectora'
+    );
+    const tieneBola = valvulasExistentes.some((v) => v.tipo === 'Bola');
 
     return {
-      tipoFiltro: filtroExistente?.tipo ?? 'Arena', // Arena es el tipo predeterminado
+      tipoFiltro: filtroExistente?.tipo ?? 'Arena',
       marcaFiltro: filtroExistente?.marca ?? '',
       modeloFiltro: filtroExistente?.modelo ?? '',
-      diametro: filtroExistente?.diametro ? filtroExistente.diametro.toString() : '',
-      datoExtra: filtroExistente?.datoExtra ? filtroExistente.datoExtra.toString() : '',
+      diametro: filtroExistente?.diametro
+        ? filtroExistente.diametro.toString()
+        : '',
+      datoExtra: filtroExistente?.datoExtra
+        ? filtroExistente.datoExtra.toString()
+        : '',
+      tieneSelectora: tieneSelectora,
+      tieneBola: tieneBola,
     };
   };
 
@@ -73,6 +91,7 @@ const FiltroNuevaPiscina = ({
 
   return (
     <Formik
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
@@ -84,13 +103,33 @@ const FiltroNuevaPiscina = ({
           diametro: Number(values.diametro),
           datoExtra: values.datoExtra ? Number(values.datoExtra) : undefined,
         };
+
+        const valvulas: Valvula[] = [];
+
+        if (values.tieneSelectora) {
+          valvulas.push({
+            id: 1,
+            tipo: 'Selectora',
+            estado: 'Activa',
+          });
+        }
+
+        if (values.tieneBola) {
+          valvulas.push({
+            id: valvulas.length + 1,
+            tipo: 'Bola',
+            estado: 'Activa',
+          });
+        }
+
         setNuevaPiscina({
           ...nuevaPiscina,
           filtro: filtroNuevo,
+          valvulas: valvulas,
         });
         onNext();
       }}
-      enableReinitialize={false} // Cambiado a false para mantener el estado
+      enableReinitialize={false}
     >
       {({
         handleChange,
@@ -116,13 +155,14 @@ const FiltroNuevaPiscina = ({
               </Text>
               <PasosFormulario paso={4} />
             </View>
+
             <Text className="font-geist-semi-bold text-text text-lg mt-2">
               Filtro
             </Text>
             <Text className="font-geist-semi-bold text-text text-base mt-3">
               Tipo de filtro
             </Text>
-            
+
             <RadioButton
               value={'Arena'}
               label={'Arena'}
@@ -159,7 +199,7 @@ const FiltroNuevaPiscina = ({
                 setFieldTouched('tipoFiltro', true);
               }}
             />
-            
+
             {touched.tipoFiltro && errors.tipoFiltro && (
               <Text className="text-red-500 text-sm mt-1">
                 {errors.tipoFiltro}
@@ -172,7 +212,7 @@ const FiltroNuevaPiscina = ({
               value={values.marcaFiltro}
               items={marcasFiltro.map((item) => ({
                 label: item.name,
-                value: item.name, // Cambiado de item.id.toString() a item.name para consistencia
+                value: item.name,
               }))}
               setOpen={setOpenMarcaFiltro}
               setValue={(callback) => {
@@ -180,11 +220,34 @@ const FiltroNuevaPiscina = ({
                 setFieldValue('marcaFiltro', val);
               }}
               placeholder="Seleccione una marca"
-              style={{ borderColor: '#e5e7eb' }}
-              dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={3000}
               zIndexInverse={1000}
-              onOpen={() => setOpenModeloFiltro(false)} // Cierra el otro dropdown
+              onOpen={() => setOpenModeloFiltro(false)}
+              listMode="SCROLLVIEW"
+              style={{
+                borderColor: '#d1d5db', // un violeta más notorio
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#fff',
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+              }}
+              dropDownContainerStyle={{
+                borderColor: '#d1d5db',
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#f3f4f6',
+              }}
+              selectedItemContainerStyle={{
+                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+              }}
+              selectedItemLabelStyle={{
+                fontWeight: 'bold',
+                color: '#7c3aed',
+              }}
+              placeholderStyle={{
+                color: '#333333',
+              }}
             />
             {errors.marcaFiltro && touched.marcaFiltro && (
               <Text className="text-red-500 text-sm mt-1">
@@ -198,7 +261,7 @@ const FiltroNuevaPiscina = ({
               value={values.modeloFiltro}
               items={modelosFiltro.map((item) => ({
                 label: item.name,
-                value: item.name, // Cambiado de item.id.toString() a item.name para consistencia
+                value: item.name,
               }))}
               setOpen={setOpenModeloFiltro}
               setValue={(callback) => {
@@ -206,11 +269,34 @@ const FiltroNuevaPiscina = ({
                 setFieldValue('modeloFiltro', val);
               }}
               placeholder="Seleccione un modelo"
-              style={{ borderColor: '#e5e7eb' }}
-              dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={2000}
               zIndexInverse={2000}
-              onOpen={() => setOpenMarcaFiltro(false)} // Cierra el otro dropdown
+              onOpen={() => setOpenMarcaFiltro(false)}
+              listMode="SCROLLVIEW"
+              style={{
+                borderColor: '#d1d5db', // un violeta más notorio
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#fff',
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+              }}
+              dropDownContainerStyle={{
+                borderColor: '#d1d5db',
+                borderWidth: 2,
+                borderRadius: 6,
+                backgroundColor: '#f3f4f6',
+              }}
+              selectedItemContainerStyle={{
+                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+              }}
+              selectedItemLabelStyle={{
+                fontWeight: 'bold',
+                color: '#7c3aed',
+              }}
+              placeholderStyle={{
+                color: '#333333',
+              }}
             />
             {errors.modeloFiltro && touched.modeloFiltro && (
               <Text className="text-red-500 text-sm mt-1">
@@ -219,10 +305,10 @@ const FiltroNuevaPiscina = ({
             )}
 
             <Text className="font-geist text-text text-base mt-3">
-              Diametro (mm)
+              Diámetro (mm)
             </Text>
             <TextInput
-              className="border border-gray-200 rounded-md py-4 px-3"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.diametro}
               onChangeText={handleChange('diametro')}
               onBlur={handleBlur('diametro')}
@@ -245,7 +331,7 @@ const FiltroNuevaPiscina = ({
                     : 'Micras del cartucho'}
                 </Text>
                 <TextInput
-                  className="border border-gray-200 rounded-md py-4 px-3"
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   value={values.datoExtra}
                   onChangeText={handleChange('datoExtra')}
                   onBlur={handleBlur('datoExtra')}
@@ -259,6 +345,51 @@ const FiltroNuevaPiscina = ({
                 )}
               </>
             )}
+
+            <Text className="font-geist-semi-bold text-text text-lg mt-4">
+              Válvulas
+            </Text>
+            <Text className="font-geist text-text text-sm mt-1 mb-3">
+              Seleccione las válvulas que tiene la piscina
+            </Text>
+
+            <View className="flex-row items-center mt-2">
+              <Checkbox
+                value={values.tieneSelectora}
+                onValueChange={(value) => {
+                  setFieldValue('tieneSelectora', value);
+                }}
+                color={values.tieneSelectora ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() =>
+                  setFieldValue('tieneSelectora', !values.tieneSelectora)
+                }
+                className="ml-2 flex-1"
+              >
+                <Text className="font-geist text-text text-base">
+                  Válvula Selectora
+                </Text>
+              </Pressable>
+            </View>
+
+            <View className="flex-row items-center mt-3">
+              <Checkbox
+                value={values.tieneBola}
+                onValueChange={(value) => {
+                  setFieldValue('tieneBola', value);
+                }}
+                color={values.tieneBola ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() => setFieldValue('tieneBola', !values.tieneBola)}
+                className="ml-2 flex-1"
+              >
+                <Text className="font-geist text-text text-base">
+                  Válvula de Bola
+                </Text>
+              </Pressable>
+            </View>
 
             <View className="flex-row items-center justify-center gap-1 mt-5">
               <Link asChild href="/dashboard">

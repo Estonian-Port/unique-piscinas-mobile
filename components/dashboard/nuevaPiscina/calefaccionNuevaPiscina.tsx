@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable, Switch } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
       then: (schema) =>
         schema
           .required('Ingrese la potencia de la calefacción')
-          .min(1, 'La potencia debe ser mayor que 0'),
+          .min(0.1, 'La potencia debe ser mayor que 0'),
       otherwise: (schema) => schema.notRequired(),
     }),
   tieneCalefaccion: Yup.boolean(),
@@ -52,6 +52,8 @@ const CalefaccionNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
+  const formikRef = useRef<any>(null);
+
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const calefaccionExistente = nuevaPiscina.calefaccion;
@@ -69,6 +71,7 @@ const CalefaccionNuevaPiscina = ({
 
   return (
     <Formik
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
@@ -107,11 +110,33 @@ const CalefaccionNuevaPiscina = ({
         setFieldValue,
         setFieldTouched,
         validateForm,
+        setTouched,
       }) => {
         // Efecto para revalidar cuando cambia tieneCalefaccion
         useEffect(() => {
           validateForm();
         }, [values.tieneCalefaccion, validateForm]);
+
+        const handleSwitchChange = (value: boolean) => {
+          setFieldValue('tieneCalefaccion', value);
+          
+          // Si se desactiva la calefacción, limpiar los touched de los campos relacionados
+          if (!value) {
+            setTouched({
+              ...touched,
+              tipoCalefaccion: false,
+              marcaCalefaccion: false,
+              modeloCalefaccion: false,
+              potenciaCalefaccion: false,
+            });
+            
+            // También limpiar los valores para un mejor UX
+            setFieldValue('tipoCalefaccion', 'Bomba de calor');
+            setFieldValue('marcaCalefaccion', '');
+            setFieldValue('modeloCalefaccion', '');
+            setFieldValue('potenciaCalefaccion', '');
+          }
+        };
 
         return (
           <View className="py-5">
@@ -136,7 +161,7 @@ const CalefaccionNuevaPiscina = ({
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
                   thumbColor={values.tieneCalefaccion ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={(value) => { setFieldValue('tieneCalefaccion', value); }}
+                  onValueChange={handleSwitchChange}
                   value={values.tieneCalefaccion}
                 />
               </View>
