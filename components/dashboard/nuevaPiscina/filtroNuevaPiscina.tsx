@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
@@ -40,15 +40,6 @@ const validationSchema = Yup.object().shape({
   }),
 });
 
-const nuevoFiltro: Filtro = {
-  id: 0,
-  tipo: 'Arena',
-  marca: '',
-  modelo: '',
-  diametro: 0,
-  datoExtra: undefined,
-};
-
 const FiltroNuevaPiscina = ({
   onCancel,
   onBack,
@@ -64,25 +55,30 @@ const FiltroNuevaPiscina = ({
 }) => {
   const [openMarcaFiltro, setOpenMarcaFiltro] = useState(false);
   const [openModeloFiltro, setOpenModeloFiltro] = useState(false);
-  const [tipoFiltro, setTipoFiltro] = useState<TipoFiltro>('Arena');
+
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    const filtroExistente = nuevaPiscina.filtro;
+
+    return {
+      tipoFiltro: filtroExistente?.tipo ?? 'Arena', // Arena es el tipo predeterminado
+      marcaFiltro: filtroExistente?.marca ?? '',
+      modeloFiltro: filtroExistente?.modelo ?? '',
+      diametro: filtroExistente?.diametro ? filtroExistente.diametro.toString() : '',
+      datoExtra: filtroExistente?.datoExtra ? filtroExistente.datoExtra.toString() : '',
+    };
+  };
+
+  const initialValues = getInitialValues();
 
   return (
     <Formik
-      initialValues={{
-        tipoFiltro: nuevoFiltro.tipo,
-        marcaFiltro: nuevoFiltro.marca,
-        modeloFiltro: nuevoFiltro.modelo,
-        diametro:
-          nuevoFiltro.diametro === 0 ? '' : nuevoFiltro.diametro.toString(),
-        datoExtra: nuevoFiltro.datoExtra
-          ? nuevoFiltro.datoExtra.toString()
-          : '',
-      }}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
         const filtroNuevo: Filtro = {
-          ...nuevoFiltro,
-          tipo: values.tipoFiltro,
+          id: 0,
+          tipo: values.tipoFiltro as TipoFiltro,
           marca: values.marcaFiltro,
           modelo: values.modeloFiltro,
           diametro: Number(values.diametro),
@@ -94,7 +90,7 @@ const FiltroNuevaPiscina = ({
         });
         onNext();
       }}
-      enableReinitialize={true}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
     >
       {({
         handleChange,
@@ -105,7 +101,13 @@ const FiltroNuevaPiscina = ({
         touched,
         setFieldValue,
         setFieldTouched,
+        validateForm,
       }) => {
+        // Efecto para revalidar cuando cambia el tipo de filtro
+        useEffect(() => {
+          validateForm();
+        }, [values.tipoFiltro, validateForm]);
+
         return (
           <View className="py-5">
             <View className="flex-row items-center justify-between">
@@ -120,12 +122,12 @@ const FiltroNuevaPiscina = ({
             <Text className="font-geist-semi-bold text-text text-base mt-3">
               Tipo de filtro
             </Text>
+            
             <RadioButton
               value={'Arena'}
               label={'Arena'}
-              selected={tipoFiltro == 'Arena'}
+              selected={values.tipoFiltro === 'Arena'}
               onPress={(value) => {
-                setTipoFiltro(value);
                 setFieldValue('tipoFiltro', value);
                 setFieldTouched('tipoFiltro', true);
               }}
@@ -133,15 +135,17 @@ const FiltroNuevaPiscina = ({
             <RadioButton
               value={'Vidrio'}
               label={'Vidrio'}
-              selected={tipoFiltro == 'Vidrio'}
-              onPress={(value) => setTipoFiltro(value)}
+              selected={values.tipoFiltro === 'Vidrio'}
+              onPress={(value) => {
+                setFieldValue('tipoFiltro', value);
+                setFieldTouched('tipoFiltro', true);
+              }}
             />
             <RadioButton
               value={'Cartucho'}
               label={'Cartucho'}
-              selected={tipoFiltro == 'Cartucho'}
+              selected={values.tipoFiltro === 'Cartucho'}
               onPress={(value) => {
-                setTipoFiltro(value);
                 setFieldValue('tipoFiltro', value);
                 setFieldTouched('tipoFiltro', true);
               }}
@@ -149,20 +153,26 @@ const FiltroNuevaPiscina = ({
             <RadioButton
               value={'Diatomeas'}
               label={'Diatomeas'}
-              selected={tipoFiltro == 'Diatomeas'}
+              selected={values.tipoFiltro === 'Diatomeas'}
               onPress={(value) => {
-                setTipoFiltro(value);
                 setFieldValue('tipoFiltro', value);
                 setFieldTouched('tipoFiltro', true);
               }}
             />
+            
+            {touched.tipoFiltro && errors.tipoFiltro && (
+              <Text className="text-red-500 text-sm mt-1">
+                {errors.tipoFiltro}
+              </Text>
+            )}
+
             <Text className="font-geist text-text text-base mt-3">Marca</Text>
             <DropDownPicker
               open={openMarcaFiltro}
               value={values.marcaFiltro}
               items={marcasFiltro.map((item) => ({
                 label: item.name,
-                value: item.id.toString(),
+                value: item.name, // Cambiado de item.id.toString() a item.name para consistencia
               }))}
               setOpen={setOpenMarcaFiltro}
               setValue={(callback) => {
@@ -174,6 +184,7 @@ const FiltroNuevaPiscina = ({
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={3000}
               zIndexInverse={1000}
+              onOpen={() => setOpenModeloFiltro(false)} // Cierra el otro dropdown
             />
             {errors.marcaFiltro && touched.marcaFiltro && (
               <Text className="text-red-500 text-sm mt-1">
@@ -187,7 +198,7 @@ const FiltroNuevaPiscina = ({
               value={values.modeloFiltro}
               items={modelosFiltro.map((item) => ({
                 label: item.name,
-                value: item.id.toString(),
+                value: item.name, // Cambiado de item.id.toString() a item.name para consistencia
               }))}
               setOpen={setOpenModeloFiltro}
               setValue={(callback) => {
@@ -199,6 +210,7 @@ const FiltroNuevaPiscina = ({
               dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
               zIndex={2000}
               zIndexInverse={2000}
+              onOpen={() => setOpenMarcaFiltro(false)} // Cierra el otro dropdown
             />
             {errors.modeloFiltro && touched.modeloFiltro && (
               <Text className="text-red-500 text-sm mt-1">
@@ -216,19 +228,19 @@ const FiltroNuevaPiscina = ({
               onBlur={handleBlur('diametro')}
               keyboardType="numeric"
               placeholder="Ej: 500"
-            ></TextInput>
+            />
             {errors.diametro && touched.diametro && (
               <Text className="text-red-500 text-sm mt-1">
                 {errors.diametro}
               </Text>
             )}
 
-            {tipoFiltro !== 'Diatomeas' && (
+            {values.tipoFiltro !== 'Diatomeas' && (
               <>
                 <Text className="font-geist text-text text-base mt-3">
-                  {tipoFiltro === 'Arena'
+                  {values.tipoFiltro === 'Arena'
                     ? 'Cantidad de arena (kg)'
-                    : tipoFiltro === 'Vidrio'
+                    : values.tipoFiltro === 'Vidrio'
                     ? 'Cantidad de vidrio (kg)'
                     : 'Micras del cartucho'}
                 </Text>

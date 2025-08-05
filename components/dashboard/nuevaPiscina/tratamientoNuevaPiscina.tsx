@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable, Switch } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
@@ -29,40 +29,13 @@ export const marcasTrasductor = [
   { id: 2, name: 'Otra' },
 ];
 
-const uv: GermicidaUV = {
-  id: 0,
-  tipo: 'uv',
-  marca: '',
-  vida: 100,
-  activa: false,
-  potencia: 0,
-};
-
-const ionizador: GermicidaIonizador = {
-  id: 1,
-  tipo: 'ionizador',
-  marca: '',
-  vida: 100,
-  activa: false,
-  electrodos: 0,
-};
-
-const trasductor: GermicidaTrasductor = {
-  id: 2,
-  tipo: 'trasductor',
-  marca: '',
-  vida: 100,
-  activa: false,
-  potencia: 0,
-};
-
 const validationSchema = Yup.object().shape({
-  marcaUV: Yup.string().when('$uvSwitch', {
+  uvMarca: Yup.string().when('uvSwitch', {
     is: true,
     then: (schema) => schema.required('Seleccione una marca de lámpara UV'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  potenciaUV: Yup.number().when('$uvSwitch', {
+  uvPotencia: Yup.number().when('uvSwitch', {
     is: true,
     then: (schema) =>
       schema
@@ -71,12 +44,12 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  marcaIonizador: Yup.string().when('$ionizadorSwitch', {
+  ionizadorMarca: Yup.string().when('ionizadorSwitch', {
     is: true,
     then: (schema) => schema.required('Seleccione una marca de ionizador'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  electrodosIonizador: Yup.number().when('$ionizadorSwitch', {
+  ionizadorElectrodos: Yup.number().when('ionizadorSwitch', {
     is: true,
     then: (schema) =>
       schema
@@ -85,12 +58,12 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La cantidad de electrodos debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  marcaTrasductor: Yup.string().when('$trasductorSwitch', {
+  trasductorMarca: Yup.string().when('trasductorSwitch', {
     is: true,
     then: (schema) => schema.required('Seleccione una marca del trasductor'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  potenciaTrasductor: Yup.number().when('$trasductorSwitch', {
+  trasductorPotencia: Yup.number().when('trasductorSwitch', {
     is: true,
     then: (schema) =>
       schema
@@ -99,6 +72,13 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
+  // Campos para los switches
+  cloradorSalino: Yup.boolean(),
+  controlPh: Yup.boolean(),
+  controlOrp: Yup.boolean(),
+  uvSwitch: Yup.boolean(),
+  ionizadorSwitch: Yup.boolean(),
+  trasductorSwitch: Yup.boolean(),
 });
 
 const TratamientoNuevaPiscina = ({
@@ -114,50 +94,88 @@ const TratamientoNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const [cloradorSalino, setCloradorSalino] = useState(false);
-  const [controlPh, setControlPh] = useState(false);
-  const [controlOrp, setControlOrp] = useState(false);
-  const [uvSwitch, setUvSwitch] = useState(false);
-  const [ionizadorSwitch, setIonizadorSwitch] = useState(false);
-  const [trasductorSwitch, setTrasductorSwitch] = useState(false);
   const [openMarcaUV, setOpenMarcaUV] = useState(false);
   const [openMarcaIonizador, setOpenMarcaIonizador] = useState(false);
   const [openMarcaTrasductor, setOpenMarcaTrasductor] = useState(false);
 
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    const sistemaGermicida = nuevaPiscina.sistemaGermicida || [];
+    const uvExistente = sistemaGermicida.find(s => s.tipo === 'uv') as GermicidaUV;
+    const ionizadorExistente = sistemaGermicida.find(s => s.tipo === 'ionizador') as GermicidaIonizador;
+    const trasductorExistente = sistemaGermicida.find(s => s.tipo === 'trasductor') as GermicidaTrasductor;
+
+    return {
+      cloradorSalino: nuevaPiscina.cloroSalino ?? false,
+      controlPh: nuevaPiscina.controlAutomaticoPH ?? false,
+      controlOrp: nuevaPiscina.orp ?? false,
+      uvSwitch: !!uvExistente,
+      uvMarca: uvExistente?.marca ?? '',
+      uvPotencia: uvExistente?.potencia ? uvExistente.potencia.toString() : '',
+      ionizadorSwitch: !!ionizadorExistente,
+      ionizadorMarca: ionizadorExistente?.marca ?? '',
+      ionizadorElectrodos: ionizadorExistente?.electrodos ? ionizadorExistente.electrodos.toString() : '',
+      trasductorSwitch: !!trasductorExistente,
+      trasductorMarca: trasductorExistente?.marca ?? '',
+      trasductorPotencia: trasductorExistente?.potencia ? trasductorExistente.potencia.toString() : '',
+    };
+  };
+
+  const initialValues = getInitialValues();
+
   return (
     <Formik
-      initialValues={{
-        cloradorSalino: nuevaPiscina.cloroSalino,
-        controlPh: nuevaPiscina.controlAutomaticoPH,
-        controlOrp: nuevaPiscina.orp,
-        uvMarca: uv.marca,
-        uvPotencia: uv.potencia === 0 ? '' : uv.potencia.toString(),
-        ionizadorMarca: ionizador.marca,
-        ionizadorElectrodos: ionizador.electrodos === 0 ? '' : ionizador.electrodos.toString(),
-        trasductorMarca: trasductor.marca,
-        trasductorPotencia: trasductor.potencia === 0 ? '' : trasductor.potencia.toString(),
-      }}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
+        const sistemaGermicida = [];
+
+        if (values.uvSwitch) {
+          const uv: GermicidaUV = {
+            id: 0,
+            tipo: 'uv',
+            marca: values.uvMarca,
+            vida: 100,
+            activa: true,
+            potencia: parseFloat(values.uvPotencia),
+          };
+          sistemaGermicida.push(uv);
+        }
+
+        if (values.ionizadorSwitch) {
+          const ionizador: GermicidaIonizador = {
+            id: 1,
+            tipo: 'ionizador',
+            marca: values.ionizadorMarca,
+            vida: 100,
+            activa: true,
+            electrodos: parseInt(values.ionizadorElectrodos),
+          };
+          sistemaGermicida.push(ionizador);
+        }
+
+        if (values.trasductorSwitch) {
+          const trasductor: GermicidaTrasductor = {
+            id: 2,
+            tipo: 'trasductor',
+            marca: values.trasductorMarca,
+            vida: 100,
+            activa: true,
+            potencia: parseFloat(values.trasductorPotencia),
+          };
+          sistemaGermicida.push(trasductor);
+        }
+
         setNuevaPiscina({
           ...nuevaPiscina,
           cloroSalino: values.cloradorSalino,
           controlAutomaticoPH: values.controlPh,
           orp: values.controlOrp,
-          sistemaGermicida: [
-            ...(uvSwitch ? [uv] : []),
-            ...(ionizadorSwitch ? [ionizador] : []),
-            ...(trasductorSwitch ? [trasductor] : []),
-          ],
+          sistemaGermicida: sistemaGermicida,
         });
         onNext();
       }}
-      enableReinitialize={true}
-      validationContext={{
-        uvSwitch,
-        ionizadorSwitch,
-        trasductorSwitch,
-      }}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
     >
       {({
         handleChange,
@@ -168,7 +186,13 @@ const TratamientoNuevaPiscina = ({
         touched,
         setFieldValue,
         setFieldTouched,
+        validateForm,
       }) => {
+        // Efecto para revalidar cuando cambian los switches
+        useEffect(() => {
+          validateForm();
+        }, [values.uvSwitch, values.ionizadorSwitch, values.trasductorSwitch, validateForm]);
+
         return (
           <View className="py-5">
             <View className="flex-row items-center justify-between">
@@ -190,10 +214,10 @@ const TratamientoNuevaPiscina = ({
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor={cloradorSalino ? '#fcdb99' : '#ffffff'}
+                  thumbColor={values.cloradorSalino ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={() => setCloradorSalino(!cloradorSalino)}
-                  value={cloradorSalino}
+                  onValueChange={(value) => { setFieldValue('cloradorSalino', value); }}
+                  value={values.cloradorSalino}
                 />
               </View>
               <View className="flex-row items-center justify-between">
@@ -202,10 +226,10 @@ const TratamientoNuevaPiscina = ({
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor={controlPh ? '#fcdb99' : '#ffffff'}
+                  thumbColor={values.controlPh ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={() => setControlPh(!controlPh)}
-                  value={controlPh}
+                  onValueChange={(value) => { setFieldValue('controlPh', value); }}
+                  value={values.controlPh}
                 />
               </View>
               <View className="flex-row items-center justify-between">
@@ -214,10 +238,10 @@ const TratamientoNuevaPiscina = ({
                 </Text>
                 <Switch
                   trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                  thumbColor={controlOrp ? '#fcdb99' : '#ffffff'}
+                  thumbColor={values.controlOrp ? '#fcdb99' : '#ffffff'}
                   ios_backgroundColor="#d3d3d3"
-                  onValueChange={() => setControlOrp(!controlOrp)}
-                  value={controlOrp}
+                  onValueChange={(value) => { setFieldValue('controlOrp', value); }}
+                  value={values.controlOrp}
                 />
               </View>
             </View>
@@ -235,13 +259,13 @@ const TratamientoNuevaPiscina = ({
                   </View>
                   <Switch
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                    thumbColor={uvSwitch ? '#fcdb99' : '#ffffff'}
+                    thumbColor={values.uvSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={() => setUvSwitch(!uvSwitch)}
-                    value={uvSwitch}
+                    onValueChange={(value) => { setFieldValue('uvSwitch', value); }}
+                    value={values.uvSwitch}
                   />
                 </View>
-                {uvSwitch && (
+                {values.uvSwitch && (
                   <View className="items-start w-full">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
@@ -249,7 +273,7 @@ const TratamientoNuevaPiscina = ({
                       value={values.uvMarca}
                       items={marcasUV.map((item) => ({
                         label: item.name,
-                        value: item.id.toString(),
+                        value: item.name, // Cambiado para consistencia
                       }))}
                       setOpen={setOpenMarcaUV}
                       setValue={(callback) => {
@@ -262,6 +286,10 @@ const TratamientoNuevaPiscina = ({
                       dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
                       zIndex={3000}
                       zIndexInverse={1000}
+                      onOpen={() => {
+                        setOpenMarcaIonizador(false);
+                        setOpenMarcaTrasductor(false);
+                      }}
                     />
                     {errors.uvMarca && touched.uvMarca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -279,7 +307,7 @@ const TratamientoNuevaPiscina = ({
                         onBlur={handleBlur('uvPotencia')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
-                      ></TextInput>
+                      />
                       {errors.uvPotencia && touched.uvPotencia && (
                         <Text className="text-red-500 text-xs mt-1">
                           {errors.uvPotencia}
@@ -299,13 +327,13 @@ const TratamientoNuevaPiscina = ({
                   </View>
                   <Switch
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                    thumbColor={ionizadorSwitch ? '#fcdb99' : '#ffffff'}
+                    thumbColor={values.ionizadorSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={() => setIonizadorSwitch(!ionizadorSwitch)}
-                    value={ionizadorSwitch}
+                    onValueChange={(value) => { setFieldValue('ionizadorSwitch', value); }}
+                    value={values.ionizadorSwitch}
                   />
                 </View>
-                {ionizadorSwitch && (
+                {values.ionizadorSwitch && (
                   <View className="items-start w-full">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
@@ -313,7 +341,7 @@ const TratamientoNuevaPiscina = ({
                       value={values.ionizadorMarca}
                       items={marcasIonizador.map((item) => ({
                         label: item.name,
-                        value: item.id.toString(),
+                        value: item.name, // Cambiado para consistencia
                       }))}
                       setOpen={setOpenMarcaIonizador}
                       setValue={(callback) => {
@@ -324,8 +352,12 @@ const TratamientoNuevaPiscina = ({
                       placeholder="Seleccione una marca"
                       style={{ borderColor: '#e5e7eb' }}
                       dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-                      zIndex={3000}
-                      zIndexInverse={1000}
+                      zIndex={2000}
+                      zIndexInverse={2000}
+                      onOpen={() => {
+                        setOpenMarcaUV(false);
+                        setOpenMarcaTrasductor(false);
+                      }}
                     />
                     {errors.ionizadorMarca && touched.ionizadorMarca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -343,7 +375,7 @@ const TratamientoNuevaPiscina = ({
                         onBlur={handleBlur('ionizadorElectrodos')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
-                      ></TextInput>
+                      />
                       {errors.ionizadorElectrodos &&
                         touched.ionizadorElectrodos && (
                           <Text className="text-red-500 text-xs mt-1">
@@ -364,13 +396,13 @@ const TratamientoNuevaPiscina = ({
                   </View>
                   <Switch
                     trackColor={{ false: '#d3d3d3', true: '#000000' }}
-                    thumbColor={trasductorSwitch ? '#fcdb99' : '#ffffff'}
+                    thumbColor={values.trasductorSwitch ? '#fcdb99' : '#ffffff'}
                     ios_backgroundColor="#d3d3d3"
-                    onValueChange={() => setTrasductorSwitch(!trasductorSwitch)}
-                    value={trasductorSwitch}
+                    onValueChange={(value) => { setFieldValue('trasductorSwitch', value); }}
+                    value={values.trasductorSwitch}
                   />
                 </View>
-                {trasductorSwitch && (
+                {values.trasductorSwitch && (
                   <View className="items-start w-full mt-2">
                     <Text className="text-text text-sm font-geist">Marca</Text>
                     <DropDownPicker
@@ -378,7 +410,7 @@ const TratamientoNuevaPiscina = ({
                       value={values.trasductorMarca}
                       items={marcasTrasductor.map((item) => ({
                         label: item.name,
-                        value: item.id.toString(),
+                        value: item.name, // Cambiado para consistencia
                       }))}
                       setOpen={setOpenMarcaTrasductor}
                       setValue={(callback) => {
@@ -389,8 +421,12 @@ const TratamientoNuevaPiscina = ({
                       placeholder="Seleccione una marca"
                       style={{ borderColor: '#e5e7eb' }}
                       dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-                      zIndex={3000}
-                      zIndexInverse={1000}
+                      zIndex={1000}
+                      zIndexInverse={3000}
+                      onOpen={() => {
+                        setOpenMarcaUV(false);
+                        setOpenMarcaIonizador(false);
+                      }}
                     />
                     {errors.trasductorMarca && touched.trasductorMarca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -408,7 +444,7 @@ const TratamientoNuevaPiscina = ({
                         onBlur={handleBlur('trasductorPotencia')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
-                      ></TextInput>
+                      />
                       {errors.trasductorPotencia &&
                         touched.trasductorPotencia && (
                           <Text className="text-red-500 text-xs mt-1">

@@ -28,7 +28,7 @@ const piscinaNuevaInicial: PiscinaNueva = {
     diametro: 0,
     estado: '',
     id: 0,
-    tipo: ''
+    tipo: 'Arena'
   },
   valvulas: [],
   sistemaGermicida: [],
