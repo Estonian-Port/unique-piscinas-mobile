@@ -10,6 +10,7 @@ import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPis
 import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
 import TratamientoNuevaPiscina from '@/components/dashboard/nuevaPiscina/tratamientoNuevaPiscina';
 import CalefaccionNuevaPiscina from '@/components/dashboard/nuevaPiscina/calefaccionNuevaPiscina';
+import { piscinaService } from '@/data/services/piscina.service';
 
 const piscinaNuevaInicial: PiscinaNueva = {
   id: 0,
@@ -47,7 +48,12 @@ const NuevaPiscina = () => {
     router.replace('/(tabs-adm)/dashboard');
   };
   const handleSave = () => {
-    null;
+    // piscinaService.create(nuevaPiscina).then(() => {
+    //   setNuevaPiscina(piscinaNuevaInicial);
+    //   router.replace('/(tabs-adm)/dashboard');
+    // });
+    setNuevaPiscina(piscinaNuevaInicial);
+    router.replace('/(tabs-adm)/dashboard');
   };
 
   return (
