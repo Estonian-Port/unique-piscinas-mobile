@@ -351,4 +351,4 @@ const piscinasDashboard: PiscinaDashboard[] = [
   },
 ];
 
-export const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;
+const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;

@@ -1,25 +1,26 @@
-import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { ScreenTabs } from '@/components/utiles/Screen';
-import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
-import EstadoSistema from '@/components/equipamiento/estadoSistema';
+import Indicadores from '@/components/resume/indicadores';
+import ControlFiltro from '@/components/resume/controlFiltro';
 import BotonCambio from '@/components/utiles/botonCambio';
+import PhClimaCard from '@/components/resume/phClimaCard';
 import { usePool } from '@/context/piscinaContext';
 import { useAuth } from '@/context/authContext';
+import { useEffect, useState } from 'react';
 import { piscinaService } from '@/services/piscina.service';
-import { PiscinaEquipamiento } from '@/data/domain/piscina';
+import { PiscinaResume } from '@/data/domain/piscina';
 
-const Equipment = () => {
+export default function Resume() {
   const { selectedPoolId } = usePool();
   const { user } = useAuth();
 
-  const [pool, setPool] = useState<PiscinaEquipamiento | null>(null);
+  const [pool, setPool] = useState<PiscinaResume | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPool = async () => {
       try {
-        const data = await piscinaService.getPiscinaEquipamientoById(selectedPoolId!);
+        const data = await piscinaService.getPiscinaResumeById(selectedPoolId!);
         setPool(data);
       } catch (error) {
         console.error('Error cargando la piscina:', error);
@@ -38,13 +39,13 @@ const Equipment = () => {
       </View>
     );
   }
-
+  
   return (
     <ScrollView className="flex-1 bg-white">
       <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
-            Hola, {user?.nombre} bienvenido!
+            Hola, {user!.nombre} bienvenido!
           </Text>
         </View>
 
@@ -62,11 +63,20 @@ const Equipment = () => {
           {user!.idPiscinas.length > 1 && !user!.isAdmin && <BotonCambio />}
         </View>
 
-        <EstadoSistema pool={pool} />
-        <EquipamientoConfigurado pool={pool} />
+        <PhClimaCard
+          ph={5.5}
+          temperature={28}
+          weatherIcon={'sunny'}
+          colorIcon={'#F19E39'}
+          location={'Buenos Aires, Argentina'}
+          weatherStatus={'Soleado'}
+          humidity={45}
+          wind={12}
+        />
+
+        <ControlFiltro entradaAgua={pool.entradaAgua} funcionFiltro={pool.funcionActiva} />
+        <Indicadores />
       </ScreenTabs>
     </ScrollView>
   );
-};
-
-export default Equipment;
+}

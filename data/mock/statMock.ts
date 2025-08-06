@@ -1,4 +1,6 @@
-const statMock1 : Stat = {
+import { StatDashboard } from "../domain/stat";
+
+const statMock1 : StatDashboard = {
   id: 1,
     title: 'Usuarios',
     value: 4,
@@ -6,7 +8,7 @@ const statMock1 : Stat = {
     icon: 'people',
 };
 
-const statMock2 : Stat = {
+const statMock2 : StatDashboard = {
     id: 2,
       title: 'Piscinas',
       value: 7,
@@ -14,7 +16,7 @@ const statMock2 : Stat = {
       icon: 'water-drop',
   };
 
-const statMock3 : Stat = {
+const statMock3 : StatDashboard = {
     id: 3,
     title: 'Volumen Total',
     value: 440,
@@ -23,7 +25,7 @@ const statMock3 : Stat = {
     unity: 'm³',
 };
 
-export const statsMocks: Stat[] = [
+export const statsMocks: StatDashboard[] = [
     statMock1,
     statMock2,
     statMock3,

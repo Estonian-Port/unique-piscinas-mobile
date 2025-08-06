@@ -8,16 +8,16 @@ import {
   Platform,
 } from 'react-native';
 import { SaveIcon } from '@/assets/icons';
-import { Cicle, Day, ModeCicle } from '@/data/domain/cicloFiltrado';
+import { Programacion, Day, ModeCicle } from '@/data/domain/cicloFiltrado';
 import TimeInput from '../utiles/timeInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 type ModalProgramacionProps = {
   visible: boolean;
   onClose: () => void;
-  onSave: (cicle: Cicle) => void;
+  onSave: (cicle: Programacion) => void;
   hasCicleMode: boolean;
-  cicle: Cicle;
+  cicle: Programacion;
 };
 
 const actionsMode = [
@@ -35,9 +35,9 @@ const ModalProgramacion = ({
   hasCicleMode,
   cicle,
 }: ModalProgramacionProps) => {
-  const [daysSelected, setDaysSelected] = useState<Day[]>(cicle.activeDays);
-  const [startTime, setStartTime] = useState(cicle.startTime);
-  const [endTime, setEndTime] = useState(cicle.endTime);
+  const [daysSelected, setDaysSelected] = useState<Day[]>(cicle.dias);
+  const [startTime, setStartTime] = useState(cicle.horaInicio);
+  const [endTime, setEndTime] = useState(cicle.horaFin);
   const [selectedCicleMode, setSelectedCicleMode] = useState(cicle.mode);
   const [openAction, setOpenAction] = useState(false);
 
@@ -53,21 +53,21 @@ const ModalProgramacion = ({
 
   const save = (): void => {
     if (hasCicleMode) {
-      const cicloActualizado: Cicle = {
+      const cicloActualizado: Programacion = {
         ...cicle,
-        activeDays: daysSelected,
+        dias: daysSelected,
         mode: selectedCicleMode,
-        startTime,
-        endTime,
+        horaInicio: startTime,
+        horaFin: endTime,
       };
       onSave(cicloActualizado);
     } else {
-      const cicloActualizado: Cicle = {
+      const cicloActualizado: Programacion = {
         ...cicle,
-        activeDays: daysSelected,
-        isFilterCicle: false,
-        startTime,
-        endTime,
+        dias: daysSelected,
+        esProgramacionFiltro: false,
+        horaInicio: startTime,
+        horaFin: endTime,
       };
       onSave(cicloActualizado);
     }

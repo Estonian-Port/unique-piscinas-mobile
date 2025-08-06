@@ -1,11 +1,11 @@
-export interface Cicle {
+export interface Programacion {
   id: number;
-  startTime: Date;
-  endTime: Date;
-  activeDays: Day[];
-  mode: ModeCicle | null;
-  isActive: boolean;
-  isFilterCicle: boolean;
+  horaInicio: Date;
+  horaFin: Date;
+  dias: Day[];
+  mode: ModeCicle | null; // esto falta en back
+  estaActivo: boolean;
+  esProgramacionFiltro: boolean;
 }
 
 export enum ModeCicle {
