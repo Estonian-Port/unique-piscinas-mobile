@@ -31,6 +31,33 @@ const PasosFormulario = ({ paso }: { paso: number }) => {
           3
         </Text>
       </View>
+            <View
+        className={`w-7 h-7 p-1 rounded-full ${
+          paso === 4 ? 'bg-purple-unique' : 'bg-gray-300'
+        }`}
+      >
+        <Text className="text-white text-sm font-geist-semi-bold text-center">
+          4
+        </Text>
+      </View>
+            <View
+        className={`w-7 h-7 p-1 rounded-full ${
+          paso === 5 ? 'bg-purple-unique' : 'bg-gray-300'
+        }`}
+      >
+        <Text className="text-white text-sm font-geist-semi-bold text-center">
+          5
+        </Text>
+      </View>
+            <View
+        className={`w-7 h-7 p-1 rounded-full ${
+          paso === 6 ? 'bg-purple-unique' : 'bg-gray-300'
+        }`}
+      >
+        <Text className="text-white text-sm font-geist-semi-bold text-center">
+          6
+        </Text>
+      </View>
     </View>
   );
 };

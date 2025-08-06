@@ -10,33 +10,34 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
+import { PiscinaNueva } from '@/data/domain/piscina';
 
-type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
-type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
-type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
+export type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
+export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
-const marcasBomba = [
+export const marcasBomba = [
   { id: 1, name: 'Astral' },
   { id: 2, name: 'Hayward' },
   { id: 3, name: 'Pentair' },
   { id: 4, name: 'Otra' },
 ];
 
-const modelosBomba = [
+export const modelosBomba = [
   { id: 1, name: 'Victoria Plus' },
   { id: 2, name: 'Sena' },
   { id: 3, name: 'Glass Plus' },
   { id: 4, name: 'Otro' },
 ];
 
-const marcasFiltro = [
+export const marcasFiltro = [
   { id: 1, name: 'Astral' },
   { id: 2, name: 'Hayward' },
   { id: 3, name: 'Pentair' },
   { id: 4, name: 'Otra' },
 ];
 
-const modelosFiltro = [
+export const modelosFiltro = [
   { id: 1, name: 'Aster' },
   { id: 2, name: 'Cantabric' },
   { id: 3, name: 'Berlin' },
@@ -47,12 +48,14 @@ const EquiposNuevaPiscina = ({
   onCancel,
   onBack,
   onSave,
-  nuevaPiscina
+  nuevaPiscina,
+  setNuevaPiscina
 }: {
   onCancel: () => void;
   onBack: () => void;
   onSave: () => void;
-  nuevaPiscina: any;
+  nuevaPiscina: PiscinaNueva;
+  setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
   const [tipoBomba, setTipoBomba] = useState<TipoBomba>('Bomba única');
   const [tipoFiltro, setTipoFiltro] = useState<TipoFiltro>('Arena');
@@ -88,7 +91,7 @@ const EquiposNuevaPiscina = ({
         <Text className="font-geist-semi-bold text-text text-xl">
           Equipamiento
         </Text>
-        <PasosFormulario paso={3} />
+        <PasosFormulario paso={4} />
       </View>
       <Text className="font-geist-semi-bold text-text text-lg mt-2">
         Bombas

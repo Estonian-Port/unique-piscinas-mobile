@@ -5,11 +5,18 @@ import InformacionBasica from '@/components/dashboard/nuevaPiscina/informacionBa
 import ConfiguracionPiscina from '@/components/dashboard/nuevaPiscina/configuracionPiscina';
 import EquiposNuevaPiscina from '@/components/dashboard/nuevaPiscina/equiposNuevaPiscina';
 import { PiscinaNueva } from '@/data/domain/piscina';
+import { router } from 'expo-router';
+import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPiscina';
+import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
+import TratamientoNuevaPiscina from '@/components/dashboard/nuevaPiscina/tratamientoNuevaPiscina';
+import CalefaccionNuevaPiscina from '@/components/dashboard/nuevaPiscina/calefaccionNuevaPiscina';
+import { piscinaService } from '@/data/services/piscina.service';
 
 const piscinaNuevaInicial: PiscinaNueva = {
   id: 0,
   nombre: '',
   direccion: '',
+  desbordante: false,
   ciudad: '',
   largo: 0,
   ancho: 0,
@@ -20,24 +27,35 @@ const piscinaNuevaInicial: PiscinaNueva = {
     marca: '',
     modelo: '',
     diametro: 0,
-    estado: ''
+    estado: '',
+    id: 0,
+    tipo: 'Arena'
   },
   valvulas: [],
   sistemaGermicida: [],
   cloroSalino: false,
   controlAutomaticoPH: false,
-  orp: false
+  orp: false,
+  administradorId: null
 };
 
 const NuevaPiscina = () => {
   const [step, setStep] = useState(1);
-  const [nuevaPiscina, setNuevaPiscina] = useState<PiscinaNueva>(piscinaNuevaInicial);
+  const [nuevaPiscina, setNuevaPiscina] =
+    useState<PiscinaNueva>(piscinaNuevaInicial);
 
   const handleCancel = () => {
-    null;
+    setNuevaPiscina(piscinaNuevaInicial);
+    router.replace('/(tabs-adm)/dashboard');
   };
   const handleSave = () => {
-    null;
+    // piscinaService.create(nuevaPiscina).then(() => {
+    //   setNuevaPiscina(piscinaNuevaInicial);
+    //   router.replace('/(tabs-adm)/dashboard');
+    // });
+    console.log('Nueva piscina guardada:', nuevaPiscina);
+    setNuevaPiscina(piscinaNuevaInicial);
+    router.replace('/(tabs-adm)/dashboard');
   };
 
   return (
@@ -55,6 +73,7 @@ const NuevaPiscina = () => {
               onCancel={handleCancel}
               onNext={() => setStep(2)}
               nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
             />
           )}
           {step === 2 && (
@@ -63,14 +82,43 @@ const NuevaPiscina = () => {
               onBack={() => setStep(1)}
               onNext={() => setStep(3)}
               nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
             />
           )}
           {step === 3 && (
-            <EquiposNuevaPiscina
+            <BombaNuevaPiscina
               onCancel={handleCancel}
               onBack={() => setStep(2)}
+              onNext={() => setStep(4)}
+              nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
+            />
+          )}
+          {step === 4 && (
+            <FiltroNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(3)}
+              onNext={() => setStep(5)}
+              nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
+            />
+          )}
+          {step === 5 && (
+            <TratamientoNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(4)}
+              onNext={() => setStep(6)}
+              nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
+            />
+          )}
+          {step === 6 && (
+            <CalefaccionNuevaPiscina
+              onCancel={handleCancel}
+              onBack={() => setStep(5)}
               onSave={handleSave}
               nuevaPiscina={nuevaPiscina}
+              setNuevaPiscina={setNuevaPiscina}
             />
           )}
         </View>

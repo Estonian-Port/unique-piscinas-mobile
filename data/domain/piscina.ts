@@ -81,6 +81,29 @@ export interface PiscinaResume {
   calefaccion: boolean;
 }
 
+export interface PiscinaNueva {
+  id: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  desbordante: boolean;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC?: number;
+  bomba: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemaGermicida: Germicida[];
+  calefaccion?: Calefaccion;
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
+  administradorId: number | null;
+  notas?: string;
+}
+
 export class Piscina {
   id: number;
   propietario?: User;
@@ -115,7 +138,8 @@ export class Piscina {
   }
 }
 
-export type Filtro = {
+
+export type Filtro1 = {
   marca: string;
   modelo: string;
   diametro: number;
@@ -124,24 +148,57 @@ export type Filtro = {
 
 export type Bomba = {
   id: number;
-  nombre: string;
+  esVelocidadVariable: boolean;
   marca: string;
   modelo: string;
   potencia: number;
   activa: boolean;
 };
 
+
 export type Germicida = {
   id: number;
   tipo: string;
   vidaRestante: number;
+
+export type Filtro = {
+  id: number;
+  tipo: string;
+  marca: string;
+  modelo: string;
+  diametro: number;
+  datoExtra?: number;
+  estado?: string;
+};
+
+export type GermicidaBase = {
+  id: number;
+  tipo: 'uv' | 'trasductor' | 'ionizador';
+  marca: string;
+  vida: number;
   activa: boolean;
   //estado
 };
 
+export type GermicidaUV = GermicidaBase & {
+  tipo: 'uv';
+  potencia: number;
+};
+
+export type GermicidaTrasductor = GermicidaBase & {
+  tipo: 'trasductor';
+  potencia: number;
+};
+
+export type GermicidaIonizador = GermicidaBase & {
+  tipo: 'ionizador';
+  electrodos: number;
+};
+
+export type Germicida = GermicidaUV | GermicidaTrasductor | GermicidaIonizador;
+
 export type Valvula = {
   id: number;
-  nombre: string;
   tipo: string;
   estado: string;
 };
@@ -183,4 +240,10 @@ export type funcionFiltro =
   | 'drain'
   | 'recirculate';
 
+
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
+
+type EquipoDashboard = {
+  tipo: string; // Tipo de equipo (por ejemplo, "Uv", "Ionizador")
+  estado: string; // Estado del equipo (por ejemplo, "Operativo", "Inactivo")
+};
