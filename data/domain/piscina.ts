@@ -1,28 +1,6 @@
 import { Programacion } from './cicloFiltrado';
 import { User } from './user';
 
-export interface PiscinaNueva {
-  id: number;
-  nombre: string;
-  direccion: string;
-  ciudad: string;
-  largo: number;
-  ancho: number;
-  profundidad: number;
-  volumen: number;
-  volumenTC?: number;
-  bomba: Bomba[];
-  filtro: Filtro;
-  valvulas: Valvula[];
-  sistemaGermicida: Germicida[];
-  calefaccion?: Calefaccion;
-  cloroSalino: boolean;
-  controlAutomaticoPH: boolean;
-  orp: boolean;
-  administradorId?: number;
-}
-
-
 export interface PiscinaDashboard {
   id: number;
   nombre: string;
