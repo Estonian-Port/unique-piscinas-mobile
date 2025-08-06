@@ -1,144 +1,289 @@
 import { View, Text, Pressable, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Checkbox from 'expo-checkbox';
 import { CalculatorIcon } from '@/assets/icons';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
+import { PiscinaNueva } from '@/data/domain/piscina';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+
+const validationSchema = Yup.object().shape({
+  largo: Yup.number()
+    .required('El largo es obligatorio')
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El largo debe ser mayor que 0'),
+  ancho: Yup.number()
+    .required('El ancho es obligatorio')
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El ancho debe ser mayor que 0'),
+  profundidad: Yup.number()
+    .required('La profundidad es obligatoria')
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'La profundidad debe ser mayor que 0'),
+  volumen: Yup.number()
+    .required('El volumen es obligatorio')
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El volumen debe ser mayor que 0'),
+  desbordante: Yup.boolean(),
+  volumenTC: Yup.number().when('desbordante', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('El volumen T.C. es obligatorio')
+        .typeError('El valor debe ser un número')
+        .min(0.1, 'El volumen T.C. debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+});
 
 const ConfiguracionPiscina = ({
   onCancel,
   onBack,
   onNext,
+  nuevaPiscina,
+  setNuevaPiscina,
 }: {
   onCancel: () => void;
   onBack: () => void;
   onNext: () => void;
+  nuevaPiscina: PiscinaNueva;
+  setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const [desbordante, setDesbordante] = useState(false);
-  const [largo, setLargo] = useState('');
-  const [ancho, setAncho] = useState('');
-  const [profundidad, setProfundidad] = useState('');
-  const [volumen, setVolumen] = useState('');
-  const [volumenTC, setVolumenTC] = useState('');
+  const formikRef = useRef<any>(null);
 
-  const calcularVolumen = () => {
-    if (largo && ancho && profundidad) {
-      const largoNum = parseFloat(largo);
-      const anchoNum = parseFloat(ancho);
-      const profundidadNum = parseFloat(profundidad);
-      const volumenNum = largoNum * anchoNum * profundidadNum;
-      setVolumen(volumenNum.toString());
-    }
+  // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
+  const getInitialValues = () => {
+    return {
+      largo: nuevaPiscina.largo ? nuevaPiscina.largo.toString() : '',
+      ancho: nuevaPiscina.ancho ? nuevaPiscina.ancho.toString() : '',
+      profundidad: nuevaPiscina.profundidad
+        ? nuevaPiscina.profundidad.toString()
+        : '',
+      volumen: nuevaPiscina.volumen ? nuevaPiscina.volumen.toString() : '',
+      desbordante: nuevaPiscina.desbordante ?? false,
+      volumenTC: nuevaPiscina.volumenTC
+        ? nuevaPiscina.volumenTC.toString()
+        : '',
+    };
   };
 
+  const initialValues = getInitialValues();
+
   return (
-    <View className="py-5">
-      <View className="flex-row items-center justify-between">
-        <Text className="font-geist-semi-bold text-text text-xl">
-          Configuración de la piscina
-        </Text>
-        <PasosFormulario paso={2} />
-      </View>
-      <Pressable
-        onPress={() => setDesbordante(!desbordante)}
-        className="flex-row items-center mt-3"
-      >
-        <Checkbox
-          value={desbordante}
-          onValueChange={() => setDesbordante(!desbordante)}
-          color={desbordante ? '#0F0D23' : undefined}
-        />
-        <View className="ml-2">
-          <Text className="font-geist text-text text-base">
-            Piscina desbordante
-          </Text>
-          <Text className="font-geist-light text-text text-sm">
-            Pisicina de tipo desbordante o infinity
-          </Text>
-        </View>
-      </Pressable>
+    <Formik
+      innerRef={formikRef}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={(values) => {
+        setNuevaPiscina({
+          ...nuevaPiscina,
+          largo: parseFloat(values.largo),
+          ancho: parseFloat(values.ancho),
+          profundidad: parseFloat(values.profundidad),
+          volumen: parseFloat(values.volumen),
+          desbordante: values.desbordante,
+          volumenTC: values.desbordante ? parseFloat(values.volumenTC) : 0,
+        });
+        onNext();
+      }}
+      enableReinitialize={false} // Cambiado a false para mantener el estado
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        setFieldValue,
+        validateForm,
+      }) => {
+        // Efecto para revalidar cuando cambia desbordante
+        useEffect(() => {
+          validateForm();
+        }, [values.desbordante, validateForm]);
 
-      <Text className="font-geist text-text text-base mt-3">Largo (m)</Text>
-      <TextInput
-        className="border border-gray-200 rounded-md py-4 px-3"
-        value={largo}
-        onChangeText={(number) => setLargo(number)}
-        keyboardType="numeric"
-        placeholder="Ej: 10"
-      ></TextInput>
-      <Text className="font-geist text-text text-base mt-3">Ancho (m)</Text>
-      <TextInput
-        className="border border-gray-200 rounded-md py-4 px-3"
-        value={ancho}
-        onChangeText={(number) => setAncho(number)}
-        keyboardType="numeric"
-        placeholder="Ej: 5"
-      ></TextInput>
-      <Text className="font-geist text-text text-base mt-3">
-        Profundidad (m)
-      </Text>
-      <TextInput
-        className="border border-gray-200 rounded-md py-4 px-3"
-        value={profundidad}
-        onChangeText={(number) => setProfundidad(number)}
-        keyboardType="numeric"
-        placeholder="Ej: 1.5"
-      ></TextInput>
-      <View className="flex-row items-center justify-between mt-3 mb-1.5">
-        <Text className="font-geist text-text text-base">Volumen (m³)</Text>
-        <Pressable
-          className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center"
-          onPress={() => calcularVolumen()}
-        >
-          <CalculatorIcon />
-          <Text>Calcular</Text>
-        </Pressable>
-      </View>
-      <TextInput
-        className="border border-gray-200 rounded-md py-4 px-3"
-        value={volumen}
-        onChangeText={(number) => setVolumen(number)}
-        keyboardType="numeric"
-        placeholder="Ej: 75"
-      ></TextInput>
-      {desbordante && (
-        <>
-          <Text className="font-geist text-text text-base mt-3">
-            Volumen T.C. (m³)
-          </Text>
-          <TextInput
-            className="border border-gray-200 rounded-md py-4 px-3"
-            value={volumenTC}
-            onChangeText={(number) => setVolumenTC(number)}
-            keyboardType="numeric"
-            placeholder="Ej: 15"
-          ></TextInput>
-        </>
-      )}
+        const calcularVolumen = () => {
+          const { largo, ancho, profundidad } = values;
+          if (largo && ancho && profundidad) {
+            const largoNum = parseFloat(largo);
+            const anchoNum = parseFloat(ancho);
+            const profundidadNum = parseFloat(profundidad);
 
-      <View className="flex-row items-center justify-center gap-1 mt-5">
-        <Link asChild href="/dashboard">
-          <Pressable
-            onPress={onCancel}
-            className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
-          >
-            <Text className="text-text font-geist text-base">Cancelar</Text>
-          </Pressable>
-        </Link>
-        <Pressable
-          onPress={onBack}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-grayish-unique w-1/3"
-        >
-          <Text className="text-text text-base font-geist">Atrás</Text>
-        </Pressable>
-        <Pressable
-          onPress={onNext}
-          className="border border-gray-200 rounded-md p-2 items-center justify-center bg-purple-unique w-1/3"
-        >
-          <Text className="text-white text-base font-geist">Siguiente</Text>
-        </Pressable>
-      </View>
-    </View>
+            if (
+              !isNaN(largoNum) &&
+              !isNaN(anchoNum) &&
+              !isNaN(profundidadNum) &&
+              largoNum > 0 &&
+              anchoNum > 0 &&
+              profundidadNum > 0
+            ) {
+              const volumenNum = largoNum * anchoNum * profundidadNum;
+              setFieldValue('volumen', volumenNum.toFixed(2));
+            }
+          }
+        };
+
+        return (
+          <View className="py-5">
+            <View className="flex-row items-center justify-between">
+              <Text className="font-geist-semi-bold text-text text-xl">
+                Dimensiones
+              </Text>
+              <PasosFormulario paso={2} />
+            </View>
+
+            <View className="flex-row items-center mt-4">
+              <Checkbox
+                value={values.desbordante}
+                onValueChange={(value) => {
+                  setFieldValue('desbordante', value);
+                  // Limpiar volumenTC si se desmarca desbordante
+                  if (!value) {
+                    setFieldValue('volumenTC', '');
+                  }
+                }}
+                color={values.desbordante ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() => {
+                  const newValue = !values.desbordante;
+                  setFieldValue('desbordante', newValue);
+                  if (!newValue) {
+                    setFieldValue('volumenTC', '');
+                  }
+                }}
+                className="ml-2 flex-1"
+              >
+                <Text className="font-geist text-text text-base">
+                  Piscina desbordante
+                </Text>
+                <Text className="font-geist-light text-text text-sm">
+                  Piscina de tipo desbordante o infinity
+                </Text>
+              </Pressable>
+            </View>
+
+            <Text className="font-geist text-text text-base mt-3">
+              Largo (m)
+            </Text>
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.largo}
+              onChangeText={handleChange('largo')}
+              onBlur={handleBlur('largo')}
+              keyboardType="numeric"
+              placeholder="Ej: 10"
+            />
+            {touched.largo && errors.largo && (
+              <Text className="text-red-500 mt-2">{errors.largo}</Text>
+            )}
+
+            <Text className="font-geist text-text text-base mt-3">
+              Ancho (m)
+            </Text>
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.ancho}
+              onChangeText={handleChange('ancho')}
+              onBlur={handleBlur('ancho')}
+              keyboardType="numeric"
+              placeholder="Ej: 5"
+            />
+            {touched.ancho && errors.ancho && (
+              <Text className="text-red-500 mt-2">{errors.ancho}</Text>
+            )}
+
+            <Text className="font-geist text-text text-base mt-3">
+              Profundidad (m)
+            </Text>
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.profundidad}
+              onChangeText={handleChange('profundidad')}
+              onBlur={handleBlur('profundidad')}
+              keyboardType="numeric"
+              placeholder="Ej: 1.5"
+            />
+            {touched.profundidad && errors.profundidad && (
+              <Text className="text-red-500 mt-2">{errors.profundidad}</Text>
+            )}
+
+            <View className="flex-row items-center justify-between mt-3 mb-1.5">
+              <Text className="font-geist text-text text-base">
+                Volumen (m³)
+              </Text>
+              <Pressable
+                className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center gap-2"
+                onPress={calcularVolumen}
+              >
+                <CalculatorIcon />
+                <Text className="font-geist text-text">Calcular</Text>
+              </Pressable>
+            </View>
+
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.volumen}
+              onChangeText={handleChange('volumen')}
+              onBlur={handleBlur('volumen')}
+              keyboardType="numeric"
+              placeholder="Ej: 75"
+            />
+            {touched.volumen && errors.volumen && (
+              <Text className="text-red-500 mt-2">{errors.volumen}</Text>
+            )}
+
+            {values.desbordante && (
+              <>
+                <Text className="font-geist text-text text-base mt-3">
+                  Volumen T.C. (m³)
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.volumenTC}
+                  onChangeText={handleChange('volumenTC')}
+                  onBlur={handleBlur('volumenTC')}
+                  keyboardType="numeric"
+                  placeholder="Ej: 15"
+                />
+                {touched.volumenTC && errors.volumenTC && (
+                  <Text className="text-red-500 mt-2">{errors.volumenTC}</Text>
+                )}
+              </>
+            )}
+
+            <View className="flex-row items-center justify-center gap-1 mt-5">
+              <Link asChild href="/dashboard">
+                <Pressable
+                  onPress={onCancel}
+                  className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
+                >
+                  <Text className="text-text font-geist text-base">
+                    Cancelar
+                  </Text>
+                </Pressable>
+              </Link>
+              <Pressable
+                onPress={onBack}
+                className="border border-gray-200 rounded-md p-2 items-center justify-center bg-grayish-unique w-1/3"
+              >
+                <Text className="text-text text-base font-geist">Atrás</Text>
+              </Pressable>
+              <Pressable
+                onPress={handleSubmit as any}
+                className="border border-gray-200 rounded-md p-2 items-center justify-center bg-purple-unique w-1/3"
+              >
+                <Text className="text-white text-base font-geist">
+                  Siguiente
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        );
+      }}
+    </Formik>
   );
 };
 

@@ -1,5 +1,28 @@
 import { User } from "./user";
 
+export interface PiscinaNueva {
+  id: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  desbordante: boolean;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC?: number;
+  bomba: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemaGermicida: Germicida[];
+  calefaccion?: Calefaccion;
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
+  administradorId: number | null;
+  notas?: string;
+}
+
 export class Piscina {
   constructor(
   id: number,
@@ -14,30 +37,57 @@ export class Piscina {
   ) {}
 }
 
-type Bomba = {
+export type Bomba = {
   id: number;
-  nombre: string;
+  esVelocidadVariable: boolean;
   marca: string;
   modelo: string;
   potencia: number;
   activa: boolean;
 };
 
-type Germicida = {
+export type Filtro = {
   id: number;
-  nombre: string;
+  tipo: string;
+  marca: string;
+  modelo: string;
+  diametro: number;
+  datoExtra?: number;
+  estado?: string;
+};
+
+export type GermicidaBase = {
+  id: number;
+  tipo: 'uv' | 'trasductor' | 'ionizador';
+  marca: string;
   vida: number;
   activa: boolean;
 };
 
-type Valvula = {
+export type GermicidaUV = GermicidaBase & {
+  tipo: 'uv';
+  potencia: number;
+};
+
+export type GermicidaTrasductor = GermicidaBase & {
+  tipo: 'trasductor';
+  potencia: number;
+};
+
+export type GermicidaIonizador = GermicidaBase & {
+  tipo: 'ionizador';
+  electrodos: number;
+};
+
+export type Germicida = GermicidaUV | GermicidaTrasductor | GermicidaIonizador;
+
+export type Valvula = {
   id: number;
-  nombre: string;
   tipo: string;
   estado: string;
 };
 
-type Calefaccion = {
+export type Calefaccion = {
   id: number;
   nombre: string;
   tipo: string;
@@ -77,3 +127,4 @@ type EquipoDashboard = {
   tipo: string; // Tipo de equipo (por ejemplo, "Uv", "Ionizador")
   estado: string; // Estado del equipo (por ejemplo, "Operativo", "Inactivo")
 };
+
