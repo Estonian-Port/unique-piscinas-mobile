@@ -1,26 +1,26 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, TintIcon } from '@/assets/icons';
-import { Bomba } from '@/data/domain/piscina';
-import ModalEditarBomba from './modalEditarBomba';
+import { EditIcon, FilterIcon } from '@/assets/icons';
+import { Filtro } from '@/data/domain/piscina';
+import ModalEditarFiltro from './modalEditarFiltro';
 
-const BombaCard = ({ bomba }: { bomba: Bomba }) => {
-  const [isActive, setIsActive] = useState(bomba.activa);
+const FiltroCard = ({ filtro }: { filtro: Filtro }) => {
+  const [isActive, setIsActive] = useState(true);
   const [modalEditOpen, setModalEditOpen] = useState(false);
 
-  const handleSaveBomba = async (bombaEditada: Bomba) => {
-    null;
+  const handleSaveFiltro = async (filtroEditado: Filtro) => {
+    console.log('Filtro editado:', filtroEditado);
   };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center">
-          <TintIcon color={'cyan'} />
+          <FilterIcon color={'cyan'} />
           <View className="mx-2">
             <Text className="text-base font-geist-semi-bold text-text">
-              Bomba de filtración
+              Filtro de {filtro.tipo}
             </Text>
           </View>
           <Pressable onPress={() => setModalEditOpen(true)}>
@@ -38,21 +38,36 @@ const BombaCard = ({ bomba }: { bomba: Bomba }) => {
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Marca:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
-          {bomba.marca}
+          {filtro.marca}
         </Text>
       </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Modelo:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
-          {bomba.modelo}
+          {filtro.modelo}
         </Text>
       </View>
       <View className="flex-row items-center justify-between mb-1">
-        <Text className="text-text font-geist text-base">Potencia:</Text>
+        <Text className="text-text font-geist text-base">Diámetro:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
-          {bomba.potencia}
+          {filtro.diametro}
         </Text>
       </View>
+      {filtro.tipo !== 'Diatomeas' && (
+        <View className="flex-row items-center justify-between mb-1">
+          <Text className="font-geist text-text text-base">
+            {filtro.tipo === 'Arena'
+              ? 'Cantidad de arena (kg)'
+              : filtro.tipo === 'Vidrio'
+              ? 'Cantidad de vidrio (kg)'
+              : 'Micras del cartucho'}
+          </Text>
+          <Text className="font-geist-semi-bold tex-text text-base">
+            {filtro.datoExtra}
+          </Text>
+        </View>
+      )}
+
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
@@ -66,15 +81,15 @@ const BombaCard = ({ bomba }: { bomba: Bomba }) => {
         </View>
       </View>
       {modalEditOpen && (
-        <ModalEditarBomba
+        <ModalEditarFiltro
           visible={modalEditOpen}
-          bomba={bomba}
+          filtro={filtro}
           onClose={() => setModalEditOpen(false)}
-          onSave={handleSaveBomba}
+          onSave={handleSaveFiltro}
         />
       )}
     </ScreenCard>
   );
 };
 
-export default BombaCard;
+export default FiltroCard;

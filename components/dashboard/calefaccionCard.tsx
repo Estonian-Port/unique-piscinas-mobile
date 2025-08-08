@@ -1,7 +1,8 @@
-import { View, Text, Switch } from 'react-native';
+import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { ThermostatIcon } from '@/assets/icons';
+import { EditIcon, ThermostatIcon } from '@/assets/icons';
+import { Calefaccion } from '@/data/domain/piscina';
 
 const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {
   const [isActive, setIsActive] = useState(calefaccion.activa);
@@ -15,11 +16,14 @@ const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {
             <Text className="text-base font-geist-semi-bold text-text">
               {calefaccion.nombre}
             </Text>
+            <Pressable className="ml-2">
+              <EditIcon />
+            </Pressable>
           </View>
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor='#fcdb99'
+          thumbColor="#fcdb99"
           ios_backgroundColor="#d3d3d3"
           onValueChange={() => setIsActive(!isActive)}
           value={isActive}

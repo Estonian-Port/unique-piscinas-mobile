@@ -30,6 +30,7 @@ export class Piscina {
   name: string,
   volume: number,
   bombas: Bomba[],
+  filtro: Filtro,
   germicidas: Germicida[],
   valvulas: Valvula[],
   calefaccion: Calefaccion,

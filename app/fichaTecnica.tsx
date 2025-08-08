@@ -1,0 +1,120 @@
+import { ScrollView, Text, View } from 'react-native';
+import { filtroMock } from '@/data/mock/piscinaMock';
+import { Screen } from '@/components/utiles/Screen';
+import { PiscinaNueva } from '@/data/domain/piscina';
+
+export default function FichaTecnica() {
+  const pool: PiscinaNueva = {
+    id: 1,
+    nombre: 'Piscina Central',
+    direccion: 'Calle Falsa 123',
+    ciudad: 'Ciudad Ejemplo',
+    desbordante: true,
+    largo: 10,
+    ancho: 5,
+    profundidad: 2,
+    volumen: 100,
+    volumenTC: 95,
+    bomba: [],
+    filtro: filtroMock,
+    valvulas: [],
+    sistemaGermicida: [],
+    cloroSalino: true,
+    controlAutomaticoPH: false,
+    orp: true,
+    administradorId: 101,
+    notas: 'Piscina principal del complejo',
+  };
+
+  const InfoRow = ({ label, value, isLast = false }: { 
+    label: string; 
+    value: string; 
+    isLast?: boolean;
+  }) => (
+    <View className={`py-3 px-4 ${!isLast ? 'border-b border-gray-100' : ''}`}>
+      <View className="flex-row justify-between items-center">
+        <Text className="text-gray-600 font-geist text-sm flex-1">
+          {label}
+        </Text>
+        <Text className="font-geist-semi-bold text-gray-900 text-sm flex-1 text-right">
+          {value}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const SectionCard = ({ title, children }: { 
+    title: string; 
+    children: React.ReactNode;
+  }) => (
+    <View className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
+      <View className="px-4 py-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
+        <Text className="font-geist-semi-bold text-gray-800 text-base">
+          {title}
+        </Text>
+      </View>
+      {children}
+    </View>
+  );
+
+
+  return (
+    <ScrollView className="flex-1 bg-gray-50">
+      <Screen>
+        <View className="p-5 w-11/12">
+          {/* Header */}
+          <View className="mb-6">
+            <Text className="font-geist-semi-bold text-2xl text-gray-900 mb-1">
+              {pool.nombre}
+            </Text>
+            <Text className="font-geist text-gray-600 text-sm">
+              Ficha Técnica
+            </Text>
+          </View>
+
+          {/* Información General */}
+          <SectionCard title="Información General">
+            <InfoRow label="Dirección" value={pool.direccion} />
+            <InfoRow label="Ciudad" value={pool.ciudad} />
+            <InfoRow 
+              label="Tipo de Piscina" 
+              value={pool.desbordante ? 'Desborde' : 'Skimmer'} 
+              isLast
+            />
+          </SectionCard>
+
+          {/* Dimensiones */}
+          <SectionCard title="Dimensiones y Capacidad">
+            <InfoRow label="Largo" value={`${pool.largo} m`} />
+            <InfoRow label="Ancho" value={`${pool.ancho} m`} />
+            <InfoRow label="Profundidad" value={`${pool.profundidad} m`} />
+            <InfoRow label="Volumen" value={`${pool.volumen} m³`} />
+            {pool.desbordante && (
+              <InfoRow 
+                label="Volumen T.C." 
+                value={`${pool.volumenTC} m³`} 
+                isLast
+              />
+            )}
+            {!pool.desbordante && (
+              <View className="h-3" /> // Spacer cuando no hay volumenTC
+            )}
+          </SectionCard>
+
+
+          {/* Notas */}
+          {pool.notas && (
+            <SectionCard title="Notas Adicionales">
+              <View className="p-4">
+                <Text className="font-geist text-gray-700 text-sm leading-5">
+                  {pool.notas}
+                </Text>
+              </View>
+            </SectionCard>
+          )}
+
+        </View>
+      </Screen>
+    </ScrollView>
+  );
+}
