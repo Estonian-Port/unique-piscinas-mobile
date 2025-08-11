@@ -1,7 +1,8 @@
-import { ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { filtroMock } from '@/data/mock/piscinaMock';
 import { Screen } from '@/components/utiles/Screen';
 import { PiscinaNueva } from '@/data/domain/piscina';
+import { EditIcon } from '@/assets/icons';
 
 export default function FichaTecnica() {
   const pool: PiscinaNueva = {
@@ -48,10 +49,13 @@ export default function FichaTecnica() {
     children: React.ReactNode;
   }) => (
     <View className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
-      <View className="px-4 py-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
+      <View className="flex-row justify-between px-4 py-3 border-b border-gray-100 bg-gray-50 rounded-t-xl">
         <Text className="font-geist-semi-bold text-gray-800 text-base">
           {title}
         </Text>
+        <Pressable>
+          <EditIcon />
+        </Pressable>
       </View>
       {children}
     </View>
@@ -75,20 +79,21 @@ export default function FichaTecnica() {
           {/* Información General */}
           <SectionCard title="Información General">
             <InfoRow label="Dirección" value={pool.direccion} />
-            <InfoRow label="Ciudad" value={pool.ciudad} />
+            <InfoRow label="Ciudad" value={pool.ciudad} isLast />
             <InfoRow 
-              label="Tipo de Piscina" 
-              value={pool.desbordante ? 'Desborde' : 'Skimmer'} 
+              label="Usuario administrador" 
+              value={pool.administradorId != null ? pool.administradorId.toString() : 'No asignado'} 
               isLast
             />
           </SectionCard>
 
           {/* Dimensiones */}
           <SectionCard title="Dimensiones y Capacidad">
+            <InfoRow label="Tipo de Piscina" value={pool.desbordante ? 'Desborde' : 'Skimmer'}  />
             <InfoRow label="Largo" value={`${pool.largo} m`} />
             <InfoRow label="Ancho" value={`${pool.ancho} m`} />
             <InfoRow label="Profundidad" value={`${pool.profundidad} m`} />
-            <InfoRow label="Volumen" value={`${pool.volumen} m³`} />
+            <InfoRow label="Volumen" value={`${pool.volumen} m³`} isLast={!pool.desbordante} />
             {pool.desbordante && (
               <InfoRow 
                 label="Volumen T.C." 
@@ -96,22 +101,17 @@ export default function FichaTecnica() {
                 isLast
               />
             )}
-            {!pool.desbordante && (
-              <View className="h-3" /> // Spacer cuando no hay volumenTC
-            )}
           </SectionCard>
 
 
           {/* Notas */}
-          {pool.notas && (
             <SectionCard title="Notas Adicionales">
               <View className="p-4">
                 <Text className="font-geist text-gray-700 text-sm leading-5">
-                  {pool.notas}
+                  {pool.notas != null && pool.notas !== '' ? pool.notas : 'No hay notas adicionales.'}
                 </Text>
               </View>
             </SectionCard>
-          )}
 
         </View>
       </Screen>
