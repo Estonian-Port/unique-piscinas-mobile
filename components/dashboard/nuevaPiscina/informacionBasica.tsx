@@ -172,7 +172,7 @@ const InformacionBasica = ({
             Notas adicionales
           </Text>
           <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md px-3 h-40"
+            className="border-2 bg-white border-gray-300 rounded-md p-2 h-40"
             value={values.notas}
             onChangeText={handleChange('notas')}
             onBlur={handleBlur('notas')}

@@ -105,6 +105,14 @@ export const ChevronUpIcon = (props: any) => (
   <MaterialIcons name="keyboard-arrow-up" size={24} color="black" {...props} />
 );
 
+export const ChevronLeftIcon = (props: any) => (
+  <MaterialIcons name="keyboard-arrow-left" size={24} color="black" {...props} />
+);
+
+export const ChevronRightIcon = (props: any) => (
+  <MaterialIcons name="keyboard-arrow-right" size={24} color="black" {...props} />
+);
+
 export const CalculatorIcon = (props: any) => (
   <MaterialIcons name="calculate" size={24} color="black" {...props} />
 );

@@ -215,7 +215,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
               <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
                 <InfoIcon size={16} color="#fff" />
                 <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                  Ficha técnica
+                  Ficha
                 </Text>
               </Pressable>
             </Link>

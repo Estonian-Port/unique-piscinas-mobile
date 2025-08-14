@@ -111,6 +111,7 @@ const EstadoEquipo = ({
   );
 };
 
+// Componente LecturaCard con tu estilo original
 const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { fecha, hora } = formatearFechaHora(lectura.fecha);
@@ -126,7 +127,7 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
         <View className="flex-row items-center">
           <CalendarIcon size={16} color="#666" className="mr-2" />
           <Text className="font-geist-semi-bold text-lg text-gray-800">
-        {fecha}
+            {fecha}
           </Text>
         </View>
         <View className="flex-row items-center">
