@@ -21,15 +21,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // Cargar datos persistidos al iniciar la app
   useEffect(() => {
     const loadSession = async () => {
-      const storedToken = await AsyncStorage.getItem('token');
+      const storedToken = await AsyncStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
+        authService.setAuthToken(storedToken)
         try {
           const fetchedUser = await authService.getCurrentUser();
           setUser(fetchedUser);
         } catch (e) {
-          console.error('Error al obtener usuario con token guardado', e);
-          logout(); // Token inválido
+          console.error("Error al obtener usuario con token guardado", e);
+          logout();
         }
       }
     };
@@ -39,15 +40,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
+      // Paso 1: pedir el token
       const receivedToken = await authService.login(username, password);
-      await AsyncStorage.setItem('token', receivedToken);
+
+      // Paso 2: guardar token
+      await AsyncStorage.setItem("token", receivedToken);
       setToken(receivedToken);
 
+      // Paso 3: setear el token en axios
+      authService.setAuthToken(receivedToken);
+
+      // Paso 4: traer usuario actual
       const user = await authService.getCurrentUser();
       setUser(user);
     } catch (e) {
-      console.error('Error en login:', e);
-      throw e; // lo atrapás en el componente
+      console.error("Error en login:", e);
+      throw e;
     }
   };
 

@@ -7,16 +7,16 @@ import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
 import BotonCambio from '@/components/utiles/botonCambio';
 
 const FAQ = () => {
-  const idPiscina = 1;
+  const piscinasId = 1;
   const user = leo;
 
   const searchPool = (id: number) => {
     return piscinasMock.filter(
-      (piscina) => piscina.id === Number(idPiscina)
+      (piscina) => piscina.id === Number(piscinasId)
     )[0];
   };
 
-  const pool = searchPool(Number(idPiscina));
+  const pool = searchPool(Number(piscinasId));
 
   return (
     <ScrollView className="flex-1 bg-white">

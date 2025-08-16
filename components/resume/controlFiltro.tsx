@@ -14,7 +14,11 @@ export default function ControlFiltro({
   entradaAgua,
   funcionFiltro,
 }: ControlFiltroProps) {
-  const hayUnaFuncionActiva = funcionFiltro.length > 0 ? true : false;
+
+  var hayUnaFuncionActiva = false
+  if(funcionFiltro != undefined){
+    hayUnaFuncionActiva = funcionFiltro.length > 0 ? true : false;
+  }
 
   return (
     <ScreenCard>

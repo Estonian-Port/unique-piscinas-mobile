@@ -78,16 +78,16 @@ const lecturasEjemplo = [
 const HistorialLecturas = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const { idPiscinaReadings } = useLocalSearchParams();
+  const { piscinasIdReadings } = useLocalSearchParams();
   const user = leo;
 
   const searchPool = (id: number) => {
     return piscinasMock.filter(
-      (piscina) => piscina.id === Number(idPiscinaReadings)
+      (piscina) => piscina.id === Number(piscinasIdReadings)
     )[0];
   };
 
-  const pool = searchPool(Number(idPiscinaReadings));
+  const pool = searchPool(Number(piscinasIdReadings));
 
   // Filtrar lecturas según la búsqueda
   const filteredLecturas = lecturasEjemplo.filter(

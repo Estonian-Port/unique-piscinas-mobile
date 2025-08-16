@@ -60,7 +60,7 @@ export default function Resume() {
             </Text>
           </View>
 
-          {user!.idPiscinas.length > 1 && !user!.isAdmin && <BotonCambio />}
+          {user!.piscinasId.length > 1 && !user!.isAdmin && <BotonCambio />}
         </View>
 
         <PhClimaCard

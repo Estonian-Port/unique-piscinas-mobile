@@ -36,9 +36,9 @@ const Pools = () => {
     );
   }
 
-  if (user!.idPiscinas.length === 1) {
+  if (user!.piscinasId.length === 1) {
     // Si el usuario tiene una sola piscina, redirigir a la pantalla de resumen
-    setSelectedPoolId(user!.idPiscinas[0]);
+    setSelectedPoolId(user!.piscinasId[0]);
     router.replace(`/(tabs)/resume`);
   }
 
@@ -50,14 +50,14 @@ const Pools = () => {
           Hola, {user!.nombre} bienvenido!
         </Text>
       </View>
-      {user!.idPiscinas.length === 0 && (
+      {user!.piscinasId.length === 0 && (
         <View className="w-11/12 justify-start items-center flex-1">
           <Text className="font-geist-bold text-text text-3xl mb-3 text-center">
             No tienes piscinas asignadas, por favor contacta a un administrador.
           </Text>
         </View>
       )}
-      {user!.idPiscinas.length > 1 && (
+      {user!.piscinasId.length > 1 && (
         <>
           <View className="w-11/12 items-start mb-3">
             <Text className="font-geist-semi-bold text-text text-lg">

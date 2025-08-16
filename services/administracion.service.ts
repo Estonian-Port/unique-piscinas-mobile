@@ -11,7 +11,7 @@ class AdministracionService {
 
   getPiscinasRegistradas = async (userId: number): Promise<PiscinaDashboard[]> => {
     const response = await api.get(`/administracion/piscinas-registradas/${userId}`);
-    return response.data;
+    return response.data.data;
   };
 }
 

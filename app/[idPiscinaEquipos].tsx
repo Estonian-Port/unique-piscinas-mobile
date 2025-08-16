@@ -15,16 +15,16 @@ import ModalNuevoRegistro from '@/components/dashboard/modalNuevoRegistro';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
-  const { idPiscinaEquipos } = useLocalSearchParams();
+  const { piscinasIdEquipos } = useLocalSearchParams();
   const user = leo;
 
   const searchPool = (id: number) => {
     return piscinasMock.filter(
-      (piscina) => piscina.id === Number(idPiscinaEquipos)
+      (piscina) => piscina.id === Number(piscinasIdEquipos)
     )[0];
   };
 
-  const pool = searchPool(Number(idPiscinaEquipos));
+  const pool = searchPool(Number(piscinasIdEquipos));
 
   return (
     <ScrollView className="flex-1 bg-white">

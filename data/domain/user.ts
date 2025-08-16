@@ -6,7 +6,7 @@ export interface UserLogin {
   apellido: string;
   email: string;
   isAdmin: boolean;
-  idPiscinas: number[];
+  piscinasId: number[];
 }
 
 export class User {
