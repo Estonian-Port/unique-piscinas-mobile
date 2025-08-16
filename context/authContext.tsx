@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 type AuthContextType = {
   user: UserLogin | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
 };
@@ -37,9 +37,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     loadSession();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (username: string, password: string) => {
     try {
-      const receivedToken = await authService.login(email, password);
+      const receivedToken = await authService.login(username, password);
       await AsyncStorage.setItem('token', receivedToken);
       setToken(receivedToken);
 
