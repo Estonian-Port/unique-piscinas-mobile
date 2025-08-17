@@ -1,4 +1,4 @@
-import FAQ from "@/app/(tabs)/faq"
+import { FAQ } from "../domain/faq";
 
 const faq1: FAQ = {
     question: "¿Cómo funciona el sistema de filtración?",

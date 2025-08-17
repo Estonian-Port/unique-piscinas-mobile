@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const API_BASE_URL = __DEV__
-  ? 'http://localhost:8080'
+  ? 'http://192.168.100.130:8080'
   : 'https://api.miapp.com';   // Producción
 
 const api = axios.create({

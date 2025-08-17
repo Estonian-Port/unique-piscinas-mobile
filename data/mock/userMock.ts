@@ -1,3 +1,5 @@
+import { User } from "../domain/user";
+
 const leo: User = {
   id: 1,
   name: 'Leo',

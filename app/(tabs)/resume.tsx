@@ -9,6 +9,7 @@ import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { piscinaService } from '@/services/piscina.service';
 import { PiscinaResume } from '@/data/domain/piscina';
+import { handleAxiosError } from '@/util/errorHandler';
 
 export default function Resume() {
   const { selectedPoolId } = usePool();
@@ -19,14 +20,28 @@ export default function Resume() {
 
   useEffect(() => {
     const fetchPool = async () => {
+
       try {
-        const data = await piscinaService.getPiscinaResumeById(selectedPoolId!);
-        setPool(data);
+        const data = await piscinaService.getPiscinaResumeById(selectedPoolId!)
+        setPool(data)
       } catch (error) {
-        console.error('Error cargando la piscina:', error);
-      } finally {
-        setLoading(false);
+        // TODO deberiamos tener un cartel de error al cargar la pileta, no deberia pero ponele caso de q se caiga el servidor
+        // igual eso se gestiona con interceptor tambien tipo si devuelve un 403 o 404, que entienda q se cayo el server y borre 
+        // token y desloguee
+        handleAxiosError(error)
       }
+
+
+      try {
+        const ph = await piscinaService.getPiscinaResumePhById(selectedPoolId!)
+        // TODO ver como gestionar el error, para q lo muestre con un toast y 0.0 en caso de lectura con error de ph
+        //setPh(data)
+      } catch (error) {
+        handleAxiosError(error)
+      }
+
+      setLoading(false)
+    
     };
 
     if (selectedPoolId) fetchPool();

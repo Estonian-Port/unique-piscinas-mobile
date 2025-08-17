@@ -1,4 +1,4 @@
-import api from './api';
+import api from '../helper/auth.interceptor';
 import { UserLogin } from '@/data/domain/user';
 
 class AuthService {

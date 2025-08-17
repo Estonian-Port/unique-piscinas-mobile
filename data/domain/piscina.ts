@@ -1,4 +1,5 @@
 import { Programacion } from './cicloFiltrado';
+import { Equipo } from './equipo';
 import { User } from './user';
 
 export interface PiscinaDashboard {
@@ -11,6 +12,9 @@ export interface PiscinaDashboard {
   ph: number;
   sistemasGermicidas: Germicida[];
   calefaccion: Calefaccion;
+  propietario: string;
+  tipo: string;
+  equipos: Equipo[];
 }
 
 export interface PiscinaProgramacion {
@@ -131,13 +135,17 @@ export type Bomba = {
   modelo: string;
   potencia: number;
   activa: boolean;
+  nombre: string;
 };
 
 
 export type Germicida = {
   id: number;
   tipo: string;
-  vidaRestante: number;
+  vida: number;
+  nombre: string;
+  activa: boolean;
+}
 
 export type Filtro = {
   id: number;
@@ -173,12 +181,11 @@ export type GermicidaIonizador = GermicidaBase & {
   electrodos: number;
 };
 
-export type Germicida = GermicidaUV | GermicidaTrasductor | GermicidaIonizador;
-
 export type Valvula = {
   id: number;
   tipo: string;
   estado: string;
+  nombre: string;
 };
 
 export type Calefaccion = {
@@ -199,12 +206,13 @@ type Registro = {
   accion: string;
   descripcion: string;
   tecnico: string;
-  tipoAccion?:
+  tipoAccion: string;
+  /*tipoAccion?:
     | 'mantenimiento'
     | 'reparacion'
     | 'instalacion'
     | 'configuracion'
-    | 'otro';
+    | 'otro';*/
 };
 
 export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';

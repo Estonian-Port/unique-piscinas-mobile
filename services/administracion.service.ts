@@ -1,5 +1,5 @@
 import { PiscinaDashboard } from '@/data/domain/piscina';
-import api from './api';
+import api from '../helper/auth.interceptor';
 import { StatDashboard } from '@/data/domain/stat';
 
 class AdministracionService {
