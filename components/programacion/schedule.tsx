@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Switch, Modal } from 'react-native';
 import React, { useState } from 'react';
 import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
-import { Cicle, Day } from '@/data/domain/cicloFiltrado';
+import { Programacion, Day } from '@/data/domain/cicloFiltrado';
 import ModalProgramacion from './modalProgramacion';
 import ModalEliminarProgramacion from './modalEliminarProgramacion';
 
@@ -10,8 +10,8 @@ const Schedule = ({
   editCicle,
   deleteCicle,
 }: {
-  cicle: Cicle;
-  editCicle: (cicloEditado: Cicle) => void;
+  cicle: Programacion;
+  editCicle: (cicloEditado: Programacion) => void;
   deleteCicle: (cicloId: number) => void;
 }) => {
   const daysOfWeek: Day[] = [
@@ -23,12 +23,12 @@ const Schedule = ({
     Day.SABADO,
     Day.DOMINGO,
   ];
-  const [isActive, setIsActive] = useState(cicle.isActive);
+  const [isActive, setIsActive] = useState(cicle.estaActivo);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const isActiveDay = (day: Day) => {
-    return cicle.activeDays.includes(day);
+    return cicle.dias.includes(day);
   };
 
   const deleteSchedule = () => {
@@ -41,13 +41,13 @@ const Schedule = ({
         <View className="flex-row items-center">
           <ClockIcon size={14} color="black" />
           <Text className="font-geist text-text text-sm mx-2">
-            {cicle.startTime.toLocaleTimeString([], {
+            {cicle.horaInicio.toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
               hour12: false,
             })}{' '}
             -{' '}
-            {cicle.endTime.toLocaleTimeString([], {
+            {cicle.horaFin.toLocaleTimeString([], {
               hour: '2-digit',
               minute: '2-digit',
               hour12: false,
@@ -55,7 +55,7 @@ const Schedule = ({
             horas
           </Text>
         </View>
-        {cicle.isFilterCicle && (
+        {cicle.esProgramacionFiltro && (
           <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
             <Text className="font-geist text-text text-sm mx-1">
               {cicle.mode}
@@ -99,7 +99,7 @@ const Schedule = ({
               visible={openModalEdit}
               onClose={() => setOpenModalEdit(false)}
               onSave={editCicle}
-              hasCicleMode={cicle.isFilterCicle}
+              hasCicleMode={cicle.esProgramacionFiltro}
               cicle={cicle}
             />
           )}

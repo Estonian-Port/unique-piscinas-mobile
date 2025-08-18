@@ -1,23 +1,18 @@
 import { View, Text, Pressable, TextInput, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import TablaPiscinas from './tablaPiscinas';
 import { Link } from 'expo-router';
-import CardPiscinaTabla from './cardPiscinaTabla';
 import PoolTableCard from './cardPiscinaTabla';
-import { piscinasDashboardMock } from '@/data/mock/piscinaMock';
+import { PiscinaDashboard } from '@/data/domain/piscina';
 
-const PiscinasRegistradas = () => {
+const PiscinasRegistradas = ({pools} : {pools: PiscinaDashboard[]}) => {
   const [searchQuery, setSearchQuery] = useState("")
-
-  // Datos de ejemplo
-  const pools = piscinasDashboardMock || [];
 
   // Filtrar piscinas según la búsqueda
   const filteredPools = pools.filter(
     (pool) =>
       pool.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pool.propietario.toLowerCase().includes(searchQuery.toLowerCase()),
+      pool.administradorNombre.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (

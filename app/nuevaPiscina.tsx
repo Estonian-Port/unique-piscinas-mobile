@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import { Screen } from '@/components/utiles/Screen';
 import InformacionBasica from '@/components/dashboard/nuevaPiscina/informacionBasica';
 import ConfiguracionPiscina from '@/components/dashboard/nuevaPiscina/configuracionPiscina';
-import EquiposNuevaPiscina from '@/components/dashboard/nuevaPiscina/equiposNuevaPiscina';
 import { PiscinaNueva } from '@/data/domain/piscina';
 import { router } from 'expo-router';
 import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPiscina';
 import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
 import TratamientoNuevaPiscina from '@/components/dashboard/nuevaPiscina/tratamientoNuevaPiscina';
 import CalefaccionNuevaPiscina from '@/components/dashboard/nuevaPiscina/calefaccionNuevaPiscina';
-import { piscinaService } from '@/data/services/piscina.service';
 
 const piscinaNuevaInicial: PiscinaNueva = {
   id: 0,

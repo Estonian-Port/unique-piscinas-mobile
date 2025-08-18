@@ -1,41 +1,40 @@
 import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { Cicle } from '@/data/domain/cicloFiltrado';
+import { Programacion } from '@/data/domain/cicloFiltrado';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
-import { ciclosLucesMock } from '@/data/mock/cicloLucesMock';
 import ModalProgramacion from './modalProgramacion';
 
-const ProgramacionLuces = () => {
-  const [ciclos, setCiclos] = useState<Cicle[]>(ciclosLucesMock);
+const ProgramacionLuces = ({ programacion }: { programacion: Programacion[] }) => {
+  const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
   const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const cicloVacioDeLuces: Cicle = {
+  const programacionVaciaDeLuces: Programacion = {
     id: 0,
-    startTime: new Date(),
-    endTime: new Date(),
-    activeDays: [],
+    horaInicio: new Date(),
+    horaFin: new Date(),
+    dias: [],
     mode: null,
-    isActive: false,
-    isFilterCicle: true,
+    estaActivo: false,
+    esProgramacionFiltro: true,
   };
 
-  const hasCicles = ciclos.length > 0;
+  const hasCicles = programaciones.length > 0;
 
-  const handleAddCicle = (nuevoCiclo: Cicle) => {
-    ciclos.push(nuevoCiclo);
+  const handleAddCicle = (nuevoCiclo: Programacion) => {
+    programaciones.push(nuevoCiclo);
   };
 
-  const handleEditCicle = (cicloEditado: Cicle) => {
-    setCiclos((prev) =>
+  const handleEditCicle = (cicloEditado: Programacion) => {
+    setProgramaciones((prev) =>
       prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
     );
   };
 
   const handleDeleteCicle = (cicloId: number) => {
-    setCiclos((prev) => prev.filter((c) => c.id !== cicloId));
+    setProgramaciones((prev) => prev.filter((c) => c.id !== cicloId));
   };
 
 
@@ -82,7 +81,7 @@ const ProgramacionLuces = () => {
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
             onSave={handleAddCicle}
-            cicle={cicloVacioDeLuces}
+            cicle={programacionVaciaDeLuces}
             hasCicleMode={false}
           />
         )}
@@ -90,7 +89,7 @@ const ProgramacionLuces = () => {
 
         {hasCicles ? (
           <View className="items-center justify-between gap-2">
-            {ciclos.map((ciclo) => (
+            {programaciones.map((ciclo) => (
               <Schedule
                 cicle={ciclo}
                 key={ciclo.id}

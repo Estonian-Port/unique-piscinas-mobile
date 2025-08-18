@@ -1,4 +1,5 @@
-import { Filtro } from '../domain/piscina';
+import { Bomba, Germicida, Valvula, Calefaccion, Piscina, PiscinaDashboard } from '../domain/piscina';
+import { Registro } from '../domain/registro';
 import { leo, gabi, seba, diego } from './userMock';
 
 // Definición de bombas, germicidas, válvulas, calefacción, registros (puedes expandir si quieres más variedad)
@@ -9,6 +10,7 @@ const bomba1: Bomba = {
   modelo: 'Victoria Plus',
   activa: true,
   potencia: 2,
+  esVelocidadVariable: false
 };
 const bomba2: Bomba = {
   id: 2,
@@ -17,6 +19,7 @@ const bomba2: Bomba = {
   modelo: 'Super Pump',
   activa: false,
   potencia: 1.5,
+  esVelocidadVariable: false
 };
 const bomba3: Bomba = {
   id: 3,
@@ -25,6 +28,7 @@ const bomba3: Bomba = {
   modelo: 'Ultra',
   activa: true,
   potencia: 2.2,
+  esVelocidadVariable: false
 };
 
 const lamparaUv: Germicida = {
@@ -32,18 +36,23 @@ const lamparaUv: Germicida = {
   nombre: 'Lámpara UV',
   vida: 5,
   activa: true,
+  tipo: "GermicidaUV",
 };
 const ionizador: Germicida = {
   id: 2,
   nombre: 'Ionizador de cobre',
   vida: 8,
   activa: false,
+  tipo: "GermicidaIonizador",
+
 };
 const trasductor: Germicida = {
   id: 3,
   nombre: 'Trasductor ultrasónido',
   vida: 60,
   activa: true,
+  tipo: "GermicidaTrasductor",
+
 };
 
 const valvula1: Valvula = {
@@ -263,6 +272,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Operativo' },
       { tipo: 'Calentador', estado: 'Operativo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 2,
@@ -274,6 +297,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Ionizador', estado: 'Inactivo' },
       { tipo: 'Calentador', estado: 'Operativo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 3,
@@ -285,6 +322,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Ionizador', estado: 'Operativo' },
       { tipo: 'Trasductor', estado: 'Alerta' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 4,
@@ -298,6 +349,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Operativo' },
       { tipo: 'Calentador', estado: 'Inactivo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 5,
@@ -309,6 +374,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Atención urgente' },
       { tipo: 'Trasductor', estado: 'Operativo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 6,
@@ -322,6 +401,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Atención urgente' },
       { tipo: 'Calentador', estado: 'Inactivo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 7,
@@ -334,6 +427,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Operativo' },
       { tipo: 'Calentador', estado: 'Inactivo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 8,
@@ -345,6 +452,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Ionizador', estado: 'Operativo' },
       { tipo: 'Calentador', estado: 'Inactivo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 9,
@@ -357,6 +478,20 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Trasductor', estado: 'Inactivo' },
       { tipo: 'Uv', estado: 'Operativo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
   {
     id: 10,
@@ -368,7 +503,21 @@ const piscinasDashboard: PiscinaDashboard[] = [
       { tipo: 'Uv', estado: 'Atención urgente' },
       { tipo: 'Calentador', estado: 'Inactivo' },
     ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
   },
 ];
 
-export const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;
+const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;

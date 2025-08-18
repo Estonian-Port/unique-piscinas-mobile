@@ -28,7 +28,7 @@ const _Layout = () => {
       }}
     >
       <Tabs.Screen
-        name="[idPiscina]"
+        name="[piscinasId]"
         options={{
           title: 'Detalles',
           headerShown: false,

@@ -10,37 +10,33 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import ModalError from '@/components/utiles/modalError';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
 import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
-
-type rolType = 'admin' | 'user';
+import { useAuth } from '@/context/authContext';
 
 const Index = () => {
-  const [username, setUsername] = useState('admin');
+  const [email, setEmail] = useState('admin@example.com');
   const [password, setPassword] = useState('12345');
-  const [rol, setRol] = useState<rolType>('admin');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const router = useRouter();
 
-  const handleLogin = (username: String, password: String) => {
-    if (!username || !password) {
-      setModalMessage('Por favor, completa todos los campos.');
-      setModalVisible(true);
-      return;
+  const { login, user } = useAuth();
+
+const handleLogin = async (email: string, password: string) => {
+  try {
+    await login(email, password);
+
+    if (user?.isAdmin) {
+      router.replace('/dashboard');
+    } else {
+      router.replace('/pools');
     }
-    if (username !== 'admin' || password !== '12345') {
-      setModalMessage('Usuario o contraseña incorrectos.');
-      setModalVisible(true);
-      return;
-    }
-    if (rol === 'admin') {
-      router.replace('./dashboard');
-      return;
-    }
-    router.replace('./pools');
-  };
+  } catch (err: any) {
+    setModalMessage(err.message);
+    setModalVisible(true);
+  }
+};
 
   return (
     <>
@@ -61,8 +57,8 @@ const Index = () => {
                 placeholderTextColor="#888888"
                 style={{ backgroundColor: '#fff', borderRadius: 5 }}
                 className="h-full w-full text-center p-2"
-                value={username}
-                onChangeText={setUsername}
+                value={email}
+                onChangeText={setEmail}
               />
             </View>
             <View className="border border-gray-300 rounded-md mb-2 h-10">
@@ -77,7 +73,7 @@ const Index = () => {
               />
             </View>
             <TouchableOpacity
-              onPress={() => handleLogin(username, password)}
+              onPress={() => handleLogin(email, password)}
               className="bg-gold-unique rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
             >
               <LoginIcon />

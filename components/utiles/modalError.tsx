@@ -13,17 +13,17 @@ const ModalError = ({ visible, message, onClose }: CustomModalProps) => {
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}
-    >
+      onRequestClose={onClose}>
       <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-white p-6 rounded-lg w-4/5">
           <Text className="text-lg font-geist-bold text-center mb-4">{message}</Text>
+          
           <TouchableOpacity
             onPress={onClose}
-            className="bg-danger py-2 px-4 rounded-lg"
-          >
-            <Text className="text-white text-center font-geist-semi-bold">Cerrar</Text>
+            className="bg-danger py-2 px-4 rounded-lg">
+            <Text className="text-black text-center font-geist-semi-bold">Cerrar</Text>
           </TouchableOpacity>
+
         </View>
       </View>
     </Modal>
