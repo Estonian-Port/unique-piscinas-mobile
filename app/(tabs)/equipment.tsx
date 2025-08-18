@@ -19,8 +19,10 @@ const Equipment = () => {
   useEffect(() => {
     const fetchPool = async () => {
       try {
-        const data = await piscinaService.getPiscinaEquipamientoById(selectedPoolId!);
-        setPool(data);
+        if (selectedPoolId !== null) {
+          const data = await piscinaService.getPiscinaEquipamientoById(selectedPoolId);
+          setPool(data);
+        }
       } catch (error) {
         console.error('Error cargando la piscina:', error);
       } finally {
@@ -44,7 +46,7 @@ const Equipment = () => {
       <ScreenTabs>
         <View className="w-11/12 my-3">
           <Text className="font-geist-bold text-2xl text-text">
-            Hola, {user?.nombre} bienvenido!
+            Hola {user?.nombre}, bienvenido!
           </Text>
         </View>
 
@@ -55,7 +57,7 @@ const Equipment = () => {
               {pool.nombre}
             </Text>
             <Text className="font-geist text-base text-text">
-              Volumen de la piscina: {pool.volumen} m3
+              Volumen de la piscina: {pool.volumen} m³
             </Text>
           </View>
 

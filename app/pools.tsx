@@ -47,7 +47,7 @@ const Pools = () => {
       {/* Texto de bienvenida */}
       <View className="w-11/12 my-3">
         <Text className="font-geist-semi-bold text-2xl text-text mb-3">
-          Hola, {user!.nombre} bienvenido!
+          Hola {user!.nombre}, bienvenido!
         </Text>
       </View>
       {user!.piscinasId.length === 0 && (

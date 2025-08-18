@@ -16,8 +16,8 @@ import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
 import { useAuth } from '@/context/authContext';
 
 const Index = () => {
-  const [email, setEmail] = useState('admin@example.com');
-  const [password, setPassword] = useState('12345');
+  const [email, setEmail] = useState('seba@unique.com'); //LUEGO SACARLO POR '' AL IGUAL QUE EL PASSWORD
+  const [password, setPassword] = useState('asd');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
@@ -53,7 +53,7 @@ const handleLogin = async (email: string, password: string) => {
             </View>
             <View className="border border-gray-300 rounded-md mb-4 h-10">
               <TextInput
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor="#888888"
                 style={{ backgroundColor: '#fff', borderRadius: 5 }}
                 className="h-full w-full text-center p-2"

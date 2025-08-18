@@ -62,8 +62,8 @@ export default function Equipos() {
             germicida={{
               id: item.id,
               nombre: item.nombre,
-              vida: item.vida,
-              activa: item.activa,
+              vidaRestante: item.vidaRestante,
+              estado: item.estado,
             }}
           />
         ))}

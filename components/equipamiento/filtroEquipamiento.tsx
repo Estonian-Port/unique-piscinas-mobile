@@ -13,7 +13,7 @@ const FiltroCard = ({ filtro }: { filtro: Filtro }) => {
         </Text>
       </View>
       <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
-        <Text className="font-geist text-text text-sm mx-1">Activa</Text>
+        <Text className="font-geist text-text text-sm mx-1">{filtro.activo ? 'Activo' : 'Inactivo'}</Text>
       </View>
     </View>
   );

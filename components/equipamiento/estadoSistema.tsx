@@ -17,7 +17,7 @@ const EstadoSistema = ({ pool }: { pool: PiscinaEquipamiento }) => {
         </Text>
         <View className="bg-gray-200 rounded-full p-2">
           <Text className="font-geist-semi-bold text-sm text-text">
-            {pool.filtro.estado}
+            {pool.filtro.activo ? 'Activo' : 'Inactivo'}
           </Text>
         </View>
       </View>

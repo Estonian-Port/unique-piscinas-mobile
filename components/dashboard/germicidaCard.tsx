@@ -5,7 +5,7 @@ import { AutorenewIcon, EditIcon } from '@/assets/icons';
 import { Germicida } from '@/data/domain/piscina';
 
 const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
-  const [isActive, setIsActive] = useState(germicida.activa);
+  const [isActive, setIsActive] = useState(germicida.estado);
 
   return (
     <ScreenCard>
@@ -41,7 +41,7 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Vida restante:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
-          {germicida.vida} %
+          {germicida.vidaRestante} %
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">

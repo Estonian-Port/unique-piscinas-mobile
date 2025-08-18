@@ -9,15 +9,15 @@ const GermicidaEquipamiento = ({germicida} : {germicida:Germicida}) => {
         <View className="flex-row items-center self-start">
           <IndicadorEstado />
           <Text className="font-geist text-text text-base ml-2">
-            Lámpara UV
+            {germicida.tipo}
           </Text>
         </View>
-        <Text className="font-geist-light text-text text-base mx-1">
-          1.5 horas
+        <Text className="font-geist-light text-text text-sm mx-1">
+          {germicida.vidaRestante} horas restantes
         </Text>
         <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
           <Text className="font-geist text-text text-sm mx-1">
-            Reemplazo próximo
+            {germicida.estado} 
           </Text>
         </View>
       </View>

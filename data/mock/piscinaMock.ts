@@ -34,23 +34,23 @@ const bomba3: Bomba = {
 const lamparaUv: Germicida = {
   id: 1,
   nombre: 'Lámpara UV',
-  vida: 5,
-  activa: true,
+  vidaRestante: 5,
+  estado: true,
   tipo: "GermicidaUV",
 };
 const ionizador: Germicida = {
   id: 2,
   nombre: 'Ionizador de cobre',
-  vida: 8,
-  activa: false,
+  vidaRestante: 8,
+  estado: false,
   tipo: "GermicidaIonizador",
 
 };
 const trasductor: Germicida = {
   id: 3,
   nombre: 'Trasductor ultrasónido',
-  vida: 60,
-  activa: true,
+  vidaRestante: 60,
+  estado: true,
   tipo: "GermicidaTrasductor",
 
 };

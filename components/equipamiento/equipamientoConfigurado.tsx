@@ -31,7 +31,7 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
         </Text>
       </View>
       {pool.bombas.map((bomba) => (
-        <BombaCard key={bomba.id} bomba={bomba} />
+        <BombaCard key={bomba.id} bomba={bomba} esBombaPrincipal={bomba.id === pool.bombas[0].id} />
       ))}
 
       <View className="flex-row items-center self-start my-2">
