@@ -7,8 +7,12 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   ConfigurationIcon,
+  DeleteIcon,
+  EditIcon,
   EyeIcon,
   HistorialIcon,
+  InfoIcon,
+  LoginIcon,
   PersonIcon,
   TagIcon,
   TintIcon,
@@ -99,16 +103,19 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
     <View className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 mb-4">
       {/* Encabezado con nombre y tipo */}
       <Pressable
-        className="flex-row justify-between items-center"
+        className="flex-row items-center"
         onPress={() => setIsExpanded(!isExpanded)}
       >
         <Text
-          className="font-geist-semi-bold text-text text-lg"
+          className="font-geist-semi-bold text-text text-lg flex-1"
           numberOfLines={2}
           ellipsizeMode="tail"
         >
           {pool.nombre}
         </Text>
+        <Pressable className="p-2 ml-auto">
+          <EditIcon size={20} color="#333" />
+        </Pressable>
         {isExpanded ? (
           <ChevronUpIcon size={20} color="#333" />
         ) : (
@@ -204,6 +211,14 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
           {/* Acciones */}
 
           <View className="flex-row justify-between mt-2">
+            <Link asChild href={`/fichaTecnica`}>
+              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
+                <InfoIcon size={16} color="#fff" />
+                <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                  Ficha
+                </Text>
+              </Pressable>
+            </Link>
             <Link asChild href={`/(tabs)/${pool.id}`}>
               <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
                 <EyeIcon size={16} color="#fff" />

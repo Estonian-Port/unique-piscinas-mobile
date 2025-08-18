@@ -119,6 +119,15 @@ const registro4: Registro = {
   tipoAccion: 'mantenimiento',
 };
 
+export const filtroMock: Filtro = {
+  id: 1,
+  tipo: 'Arena',
+  marca: 'Hayward',
+  modelo: 'ProSeries',
+  diametro: 400,
+  datoExtra: 25,
+};
+
 // 10 piscinas, distribuidas entre gabi, seba y diego
 const piscinas: Piscina[] = [
   {
@@ -126,6 +135,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Av. San Martín 123',
     volume: 100,
     bombas: [bomba1],
+    filtro: filtroMock,
     germicidas: [lamparaUv],
     valvulas: [valvula1],
     calefaccion,
@@ -137,6 +147,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Roca 452',
     volume: 120,
     bombas: [bomba2],
+    filtro: filtroMock,
     germicidas: [ionizador],
     valvulas: [valvula2],
     calefaccion,
@@ -148,6 +159,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Rodriguez Peña 4545',
     volume: 140,
     bombas: [bomba3],
+    filtro: filtroMock,
     germicidas: [trasductor],
     valvulas: [valvula1],
     calefaccion,
@@ -159,6 +171,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Belgrano 333',
     volume: 200,
     bombas: [bomba1, bomba2],
+    filtro: filtroMock,
     germicidas: [lamparaUv, ionizador],
     valvulas: [valvula1, valvula2],
     calefaccion,
@@ -170,6 +183,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Av. La Plata 321',
     volume: 220,
     bombas: [bomba2],
+    filtro: filtroMock,
     germicidas: [trasductor],
     valvulas: [valvula2],
     calefaccion,
@@ -181,6 +195,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina 9 de julio 654',
     volume: 240,
     bombas: [bomba3],
+    filtro: filtroMock,
     germicidas: [lamparaUv],
     valvulas: [valvula1],
     calefaccion,
@@ -192,6 +207,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Principal - Hornos 564',
     volume: 300,
     bombas: [bomba1],
+    filtro: filtroMock,
     germicidas: [ionizador],
     valvulas: [valvula2],
     calefaccion,
@@ -203,6 +219,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Secundaria - Hornos 564',
     volume: 320,
     bombas: [bomba2, bomba3],
+    filtro: filtroMock,
     germicidas: [trasductor],
     valvulas: [valvula1, valvula2],
     calefaccion,
@@ -214,6 +231,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Urquiza 852',
     volume: 340,
     bombas: [bomba1],
+    filtro: filtroMock,
     germicidas: [lamparaUv, ionizador],
     valvulas: [valvula1],
     calefaccion,
@@ -225,6 +243,7 @@ const piscinas: Piscina[] = [
     name: 'Piscina Rosas 258',
     volume: 360,
     bombas: [bomba3],
+    filtro: filtroMock,
     germicidas: [trasductor],
     valvulas: [valvula2],
     calefaccion,

@@ -1,5 +1,12 @@
 import { Piscina } from "./piscina";
 
+export interface newUser {
+  nombre: string;
+  apellido: string;
+  email: string;
+  celular?: number;
+}
+
 export interface UserLogin {
   id: number;
   nombre: string;

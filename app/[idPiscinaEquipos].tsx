@@ -12,6 +12,7 @@ import { ScreenCard } from '@/components/utiles/ScreenCard';
 import { RegisterIcon } from '@/assets/icons';
 import { useState } from 'react';
 import ModalNuevoRegistro from '@/components/dashboard/modalNuevoRegistro';
+import FiltroCard from '@/components/dashboard/filtroCard';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
@@ -48,6 +49,10 @@ export default function Equipos() {
             }}
           />
         ))}
+                <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
+          Filtro
+        </Text>
+          <FiltroCard filtro={pool.filtro}/>
         <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
           Sistemas germicidas
         </Text>

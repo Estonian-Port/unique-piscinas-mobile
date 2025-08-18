@@ -1,7 +1,8 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
-import { AutorenewIcon } from '@/assets/icons';
+import { AutorenewIcon, EditIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
+import { Valvula } from '@/data/domain/piscina';
 
 const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
   return (
@@ -10,6 +11,9 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
         <Text className="text-base font-geist-semi-bold text-text">
           {valvula.nombre}
         </Text>
+        <Pressable className="ml-2">
+          <EditIcon />
+        </Pressable>
       </View>
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
@@ -28,15 +32,15 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
         </View>
       </View>
       <View className="flex-row items-center justify-between mb-1">
-        <Text className="text-text font-geist text-base">Vida restante:</Text>
+        <Text className="text-text font-geist text-base">Tipo:</Text>
         <Text className="font-geist-semi-bold tex-text text-base">
           {valvula.tipo}
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
-        <AutorenewIcon color={'white'} size={20}/>
+        <AutorenewIcon color={'white'} size={20} />
         <Text className="text-white font-geist text-base ml-2">
-          Resetear contador
+          Marcar como reemplazada
         </Text>
       </Pressable>
     </ScreenCard>
