@@ -6,6 +6,7 @@ import { ScreenCard } from '../utiles/ScreenCard';
 
 type PhClimaProps = {
   ph: number;
+  diferenciaPh: number;
   temperature: number;
   weatherIcon: any;
   colorIcon: string;
@@ -17,6 +18,7 @@ type PhClimaProps = {
 
 const PhClimaCard = ({
   ph,
+  diferenciaPh,
   temperature,
   weatherIcon,
   colorIcon,
@@ -25,21 +27,12 @@ const PhClimaCard = ({
   humidity,
   wind,
 }: PhClimaProps) => {
-  const min = Math.floor(ph) - 2; // Dos puntos hacia atrás
-  const max = Math.ceil(ph) + 2; // Dos puntos hacia adelante
+  const min = 0
+  const max = 14
+  //const min = Math.floor(ph) - 2; // Dos puntos hacia atrás
+  //const max = Math.ceil(ph) + 2; // Dos puntos hacia adelante
 
   const progress = (ph - min) / (max - min); // Calcula el progreso como un valor entre 0 y 1
-
-  const differenceLastData = () => {
-    const lastData = ph - 0.1; // Simulando un valor anterior
-    if (lastData < ph) {
-      return `+${(ph - lastData).toFixed(1)} desde la ultima medición`;
-    }
-    if (lastData > ph) {
-      return `-${(lastData - ph).toFixed(1)}`;
-    }
-    return `0`;
-  };
 
   return (
     <ScreenCard>
@@ -47,8 +40,8 @@ const PhClimaCard = ({
       <View className="bg-white p-2 border-r-gray-200 flex-1">
         <Text className="font-geist-semi-bold text-text text-lg mb-3">pH</Text>
         <Text className="font-geist-semi-bold text-text text-3xl">{ph}</Text>
-        <Text className="font-geist-light text-text text-">
-          {differenceLastData()}
+        <Text className="font-geist-light text-text text-sm">
+          {diferenciaPh} desde la última medición
         </Text>
         <View className="w-full bg-gray-200 h-2 rounded-full mt-4">
           <View

@@ -23,20 +23,20 @@ export default function Resume() {
 
       try {
         const data = await piscinaService.getPiscinaResumeById(selectedPoolId!)
+        try {
+          const dataPh = await piscinaService.getPiscinaResumePhById(selectedPoolId!)
+          // TODO ver como gestionar el error, para q lo muestre con un toast y 0.0 en caso de lectura con error de ph
+          //setPh(data)
+          data.ph = dataPh.ph
+          data.diferenciaPh = dataPh.diferenciaPh
+        } catch (error) {
+          handleAxiosError(error)
+        }
         setPool(data)
       } catch (error) {
         // TODO deberiamos tener un cartel de error al cargar la pileta, no deberia pero ponele caso de q se caiga el servidor
         // igual eso se gestiona con interceptor tambien tipo si devuelve un 403 o 404, que entienda q se cayo el server y borre 
         // token y desloguee
-        handleAxiosError(error)
-      }
-
-
-      try {
-        const ph = await piscinaService.getPiscinaResumePhById(selectedPoolId!)
-        // TODO ver como gestionar el error, para q lo muestre con un toast y 0.0 en caso de lectura con error de ph
-        //setPh(data)
-      } catch (error) {
         handleAxiosError(error)
       }
 
@@ -79,7 +79,8 @@ export default function Resume() {
         </View>
 
         <PhClimaCard
-          ph={5.5}
+          ph={pool!.ph}
+          diferenciaPh={pool!.diferenciaPh}
           temperature={28}
           weatherIcon={'sunny'}
           colorIcon={'#F19E39'}

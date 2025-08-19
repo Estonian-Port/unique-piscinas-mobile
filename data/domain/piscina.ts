@@ -54,9 +54,9 @@ export interface PiscinaResume {
   nombre: string;
   direccion: string;
   volumen: string;
-  ph: string;
-  diferenciaPh: string;
   clima: string;
+  ph: number;
+  diferenciaPh: number;
   entradaAgua: entradaAgua[];
   funcionActiva: funcionFiltro[];
   sistemasGermicidas: sistemaGermicida[];
