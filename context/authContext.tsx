@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await AsyncStorage.removeItem('token');
     setUser(null);
     setToken(null);
-    router.replace('/'); // Volver a la pantalla de login
+    router.replace('/index'); // Volver a la pantalla de login
   };
 
   const refreshUser = async () => {

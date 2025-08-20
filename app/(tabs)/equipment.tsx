@@ -1,4 +1,10 @@
-import { View, Text, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
 import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
@@ -8,6 +14,7 @@ import { usePool } from '@/context/piscinaContext';
 import { useAuth } from '@/context/authContext';
 import { piscinaService } from '@/services/piscina.service';
 import { PiscinaEquipamiento } from '@/data/domain/piscina';
+import PrivateScreen from '@/components/utiles/privateScreen';
 
 const Equipment = () => {
   const { selectedPoolId } = usePool();
@@ -20,7 +27,9 @@ const Equipment = () => {
     const fetchPool = async () => {
       try {
         if (selectedPoolId !== null) {
-          const data = await piscinaService.getPiscinaEquipamientoById(selectedPoolId);
+          const data = await piscinaService.getPiscinaEquipamientoById(
+            selectedPoolId
+          );
           setPool(data);
         }
       } catch (error) {
@@ -42,32 +51,34 @@ const Equipment = () => {
   }
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <ScreenTabs>
-        <View className="w-11/12 my-3">
-          <Text className="font-geist-bold text-2xl text-text">
-            Hola {user?.nombre}, bienvenido!
-          </Text>
-        </View>
-
-        <View className="flex-row w-11/12 justify-between mb-3">
-          {/* Contenedor del texto */}
-          <View className="flex-1 pr-4">
-            <Text className="font-geist-semi-bold text-xl text-text">
-              {pool.nombre}
-            </Text>
-            <Text className="font-geist text-base text-text">
-              Volumen de la piscina: {pool.volumen} m³
+    <PrivateScreen>
+      <ScrollView className="flex-1 bg-white">
+        <ScreenTabs>
+          <View className="w-11/12 my-3">
+            <Text className="font-geist-bold text-2xl text-text">
+              Hola {user?.nombre}, bienvenido!
             </Text>
           </View>
 
-          {user!.piscinasId.length > 1 && !user!.isAdmin && <BotonCambio />}
-        </View>
+          <View className="flex-row w-11/12 justify-between mb-3">
+            {/* Contenedor del texto */}
+            <View className="flex-1 pr-4">
+              <Text className="font-geist-semi-bold text-xl text-text">
+                {pool.nombre}
+              </Text>
+              <Text className="font-geist text-base text-text">
+                Volumen de la piscina: {pool.volumen} m³
+              </Text>
+            </View>
 
-        <EstadoSistema pool={pool} />
-        <EquipamientoConfigurado pool={pool} />
-      </ScreenTabs>
-    </ScrollView>
+            {user!.piscinasId.length > 1 && !user!.isAdmin && <BotonCambio />}
+          </View>
+
+          <EstadoSistema pool={pool} />
+          <EquipamientoConfigurado pool={pool} />
+        </ScreenTabs>
+      </ScrollView>
+    </PrivateScreen>
   );
 };
 

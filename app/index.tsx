@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StatusBar,
 } from 'react-native';
 import React, { useState } from 'react';
 import ModalError from '@/components/utiles/modalError';
@@ -39,10 +38,6 @@ const handleLogin = async (email: string, password: string) => {
 };
 
   return (
-    <>
-      {/* Configuración específica del StatusBar para el login */}
-      <StatusBar backgroundColor="#222247" barStyle="light-content" />
-
       <ScrollView contentContainerStyle={{ flexGrow: 1, height: '100%' }}>
         <View className="flex-1 items-center justify-center bg-navy-unique h-full w-full">
           <KeyboardAvoidingView
@@ -89,7 +84,6 @@ const handleLogin = async (email: string, password: string) => {
           onClose={() => setModalVisible(false)}
         />
       </ScrollView>
-    </>
   );
 };
 

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import ModalEditarInfoGeneral from '@/components/dashboard/modalEditarInfoGeneral';
 import ModalEditarDimensiones from '@/components/dashboard/modalEditarDimensiones';
 import ModalEditarNotas from '@/components/dashboard/modalEditarNotas';
+import PrivateScreen from '@/components/utiles/privateScreen';
 
 export default function FichaTecnica() {
   const [modalEditInfo, setModalEditInfo] = useState(false);
@@ -81,103 +82,104 @@ export default function FichaTecnica() {
   );
 
   return (
-    <ScrollView className="flex-1 bg-gray-50">
-      <Screen>
-        <View className="p-5 w-11/12">
-          {/* Header */}
-          <View className="mb-6">
-            <Text className="font-geist-semi-bold text-2xl text-gray-900 mb-1">
-              {pool.nombre}
-            </Text>
-            <Text className="font-geist text-gray-600 text-sm">
-              Ficha Técnica
-            </Text>
-          </View>
-
-          {/* Información General */}
-          <SectionCard
-            title="Información General"
-            action={() => setModalEditInfo(true)}
-          >
-            <InfoRow label="Dirección" value={pool.direccion} />
-            <InfoRow label="Ciudad" value={pool.ciudad} isLast />
-            <InfoRow
-              label="Usuario administrador"
-              value={
-                pool.administradorId != null
-                  ? pool.administradorId.toString()
-                  : 'No asignado'
-              }
-              isLast
-            />
-          </SectionCard>
-          {modalEditInfo && (
-            <ModalEditarInfoGeneral
-              visible={modalEditInfo}
-              onClose={() => setModalEditInfo(false)}
-              onSave={handleEdit}
-              pool={pool}
-            />
-          )}
-
-          {/* Dimensiones */}
-          <SectionCard
-            title="Dimensiones y Capacidad"
-            action={() => setModalEditDimension(true)}
-          >
-            <InfoRow
-              label="Tipo de Piscina"
-              value={pool.desbordante ? 'Desborde' : 'Skimmer'}
-            />
-            <InfoRow label="Largo" value={`${pool.largo} m`} />
-            <InfoRow label="Ancho" value={`${pool.ancho} m`} />
-            <InfoRow label="Profundidad" value={`${pool.profundidad} m`} />
-            <InfoRow
-              label="Volumen"
-              value={`${pool.volumen} m³`}
-              isLast={!pool.desbordante}
-            />
-            {pool.desbordante && (
-              <InfoRow
-                label="Volumen T.C."
-                value={`${pool.volumenTC} m³`}
-                isLast
-              />
-            )}
-          </SectionCard>
-          {modalEditDimension && (
-            <ModalEditarDimensiones
-              visible={modalEditDimension}
-              onClose={() => setModalEditDimension(false)}
-              onSave={handleEdit}
-              pool={pool}
-            />
-          )}
-
-          {/* Notas */}
-          <SectionCard
-            title="Notas Adicionales"
-            action={() => setModalEditNotas(true)}
-          >
-            <View className="p-4">
-              <Text className="font-geist text-gray-700 text-sm leading-5">
-                {pool.notas != null && pool.notas !== ''
-                  ? pool.notas
-                  : 'No hay notas adicionales.'}
+    <PrivateScreen>
+      <ScrollView className="flex-1 bg-gray-50">
+        <Screen>
+          <View className="p-5 w-11/12">
+            {/* Header */}
+            <View className="mb-6">
+              <Text className="font-geist-semi-bold text-2xl text-gray-900 mb-1">
+                {pool.nombre}
+              </Text>
+              <Text className="font-geist text-gray-600 text-sm">
+                Ficha Técnica
               </Text>
             </View>
-          </SectionCard>
-          {modalEditNotas && (
-            <ModalEditarNotas
-              visible={modalEditNotas}
-              onClose={() => setModalEditNotas(false)}
-              onSave={handleEdit}
-              pool={pool}
-            />
-          )}
 
-        </View>
-      </Screen>
-    </ScrollView>
+            {/* Información General */}
+            <SectionCard
+              title="Información General"
+              action={() => setModalEditInfo(true)}
+            >
+              <InfoRow label="Dirección" value={pool.direccion} />
+              <InfoRow label="Ciudad" value={pool.ciudad} isLast />
+              <InfoRow
+                label="Usuario administrador"
+                value={
+                  pool.administradorId != null
+                    ? pool.administradorId.toString()
+                    : 'No asignado'
+                }
+                isLast
+              />
+            </SectionCard>
+            {modalEditInfo && (
+              <ModalEditarInfoGeneral
+                visible={modalEditInfo}
+                onClose={() => setModalEditInfo(false)}
+                onSave={handleEdit}
+                pool={pool}
+              />
+            )}
+
+            {/* Dimensiones */}
+            <SectionCard
+              title="Dimensiones y Capacidad"
+              action={() => setModalEditDimension(true)}
+            >
+              <InfoRow
+                label="Tipo de Piscina"
+                value={pool.desbordante ? 'Desborde' : 'Skimmer'}
+              />
+              <InfoRow label="Largo" value={`${pool.largo} m`} />
+              <InfoRow label="Ancho" value={`${pool.ancho} m`} />
+              <InfoRow label="Profundidad" value={`${pool.profundidad} m`} />
+              <InfoRow
+                label="Volumen"
+                value={`${pool.volumen} m³`}
+                isLast={!pool.desbordante}
+              />
+              {pool.desbordante && (
+                <InfoRow
+                  label="Volumen T.C."
+                  value={`${pool.volumenTC} m³`}
+                  isLast
+                />
+              )}
+            </SectionCard>
+            {modalEditDimension && (
+              <ModalEditarDimensiones
+                visible={modalEditDimension}
+                onClose={() => setModalEditDimension(false)}
+                onSave={handleEdit}
+                pool={pool}
+              />
+            )}
+
+            {/* Notas */}
+            <SectionCard
+              title="Notas Adicionales"
+              action={() => setModalEditNotas(true)}
+            >
+              <View className="p-4">
+                <Text className="font-geist text-gray-700 text-sm leading-5">
+                  {pool.notas != null && pool.notas !== ''
+                    ? pool.notas
+                    : 'No hay notas adicionales.'}
+                </Text>
+              </View>
+            </SectionCard>
+            {modalEditNotas && (
+              <ModalEditarNotas
+                visible={modalEditNotas}
+                onClose={() => setModalEditNotas(false)}
+                onSave={handleEdit}
+                pool={pool}
+              />
+            )}
+          </View>
+        </Screen>
+      </ScrollView>
+    </PrivateScreen>
   );
 }

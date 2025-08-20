@@ -7,12 +7,15 @@ import { useAuth } from '@/context/authContext';
 import { StatDashboard } from '@/data/domain/stat';
 import { administracionService } from '@/services/administracion.service';
 import { PiscinaDashboard } from '@/data/domain/piscina';
+import PrivateScreen from '@/components/utiles/privateScreen';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const [stats, setStats] = useState<StatDashboard>();
   const [loading, setLoading] = useState(true);
-  const [piscinasRegistradas, setPiscinasRegistradas] = useState<PiscinaDashboard[]>([]);
+  const [piscinasRegistradas, setPiscinasRegistradas] = useState<
+    PiscinaDashboard[]
+  >([]);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -28,7 +31,9 @@ const Dashboard = () => {
 
     const fetchPiscinas = async () => {
       try {
-        const data = await administracionService.getPiscinasRegistradas(user!.id);
+        const data = await administracionService.getPiscinasRegistradas(
+          user!.id
+        );
         setPiscinasRegistradas(data);
       } catch (error) {
         console.error('Error cargando las piscinas registradas:', error);
@@ -50,36 +55,38 @@ const Dashboard = () => {
   }
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <ScreenTabs>
-        <Text className="self-start font-geist-bold text-3xl text-text m-5">
-          Panel de Administración
-        </Text>
-        <StatCard
-          title="Usuarios"
-          value={stats.totalUsuarios}
-          label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
-          icon="people"
-        />
+    <PrivateScreen>
+      <ScrollView className="flex-1 bg-white">
+        <ScreenTabs>
+          <Text className="self-start font-geist-bold text-3xl text-text m-5">
+            Panel de Administración
+          </Text>
+          <StatCard
+            title="Usuarios"
+            value={stats.totalUsuarios}
+            label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
+            icon="people"
+          />
 
-        <StatCard
-          title="Piscinas"
-          value={stats.totalPiscinas}
-          label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
-          icon="water-drop"
-        />
+          <StatCard
+            title="Piscinas"
+            value={stats.totalPiscinas}
+            label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
+            icon="water-drop"
+          />
 
-        <StatCard
-          title="Volumen Total"
-          value={stats.volumenTotal}
-          label={`Promedio: ${stats.volumenPromedio} m³ por piscina`}
-          icon="water"
-          unity="m³"
-        />
+          <StatCard
+            title="Volumen Total"
+            value={stats.volumenTotal}
+            label={`Promedio: ${stats.volumenPromedio} m³ por piscina`}
+            icon="water"
+            unity="m³"
+          />
 
-        <PiscinasRegistradas pools={piscinasRegistradas}/>
-      </ScreenTabs>
-    </ScrollView>
+          <PiscinasRegistradas pools={piscinasRegistradas} />
+        </ScreenTabs>
+      </ScrollView>
+    </PrivateScreen>
   );
 };
 

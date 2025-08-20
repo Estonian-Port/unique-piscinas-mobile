@@ -3,9 +3,9 @@ import './globals.css';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'react-native';
 import { PoolProvider } from '@/context/piscinaContext';
 import { AuthProvider } from '@/context/authContext';
+import NavBar from '@/components/utiles/navBar';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -27,8 +27,8 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <PoolProvider>
-        <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
         <SafeAreaView style={{ flex: 1 }} className="bg-white">
+          <NavBar />
           <Slot />
         </SafeAreaView>
       </PoolProvider>
