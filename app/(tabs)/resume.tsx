@@ -24,13 +24,9 @@ export default function Resume() {
       try {
         const data = await piscinaService.getPiscinaResumeById(selectedPoolId!);
         try {
-          const dataPh = await piscinaService.getPiscinaResumePhById(
-            selectedPoolId!
-          );
-          // TODO ver como gestionar el error, para q lo muestre con un toast y 0.0 en caso de lectura con error de ph
-          //setPh(data)
-          data.ph = dataPh.ph;
-          data.diferenciaPh = dataPh.diferenciaPh;
+          const dataPh = await piscinaService.getPiscinaResumePhById(selectedPoolId!)
+          data.ph = dataPh.ph
+          data.diferenciaPh = dataPh.diferenciaPh
         } catch (error) {
           handleAxiosError(error);
         }

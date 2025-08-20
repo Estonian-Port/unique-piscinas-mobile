@@ -22,7 +22,7 @@ export interface PiscinaProgramacion {
   nombre: string;
   direccion: string;
   volumen: string;
-  programacionLuces: Programacion[];
+  programacionIluminacion: Programacion[];
   programacionFiltrado: Programacion[];
 }
 

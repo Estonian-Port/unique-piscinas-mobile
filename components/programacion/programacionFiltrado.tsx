@@ -17,7 +17,7 @@ const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) =
     horaFin: new Date().toISOString(),
     dias: [],
     funcionFiltro: null,
-    estaActivo: false,
+    activa: false,
     tipo: ProgramacionType.FILTRADO,
   };
 

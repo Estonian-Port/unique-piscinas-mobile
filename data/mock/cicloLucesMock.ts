@@ -6,7 +6,7 @@ const cicloLuz1: Programacion = {
   horaFin: new Date('1970-01-01T10:00:00'),
   dias: [Day.LUNES, Day.MIERCOLES, Day.VIERNES],
   mode: FuncionFiltro.FILTRAR,
-  estaActivo: true,
+  activa: true,
   esProgramacionFiltro: false,
 };
 
@@ -16,7 +16,7 @@ const cicloLuz2: Programacion = {
   horaFin: new Date('1970-01-01T16:00:00'),
   dias: [Day.MARTES, Day.JUEVES, Day.VIERNES, Day.SABADO],
   mode: FuncionFiltro.FILTRAR,
-  estaActivo: false,
+  activa: false,
   esProgramacionFiltro: false,
 };
 
@@ -26,7 +26,7 @@ const cicloLuz3: Programacion = {
   horaFin: new Date('1970-01-01T20:00:00'),
   dias: [Day.DOMINGO],
   mode: FuncionFiltro.RETROLAVAR,
-  estaActivo: true,
+  activa: true,
   esProgramacionFiltro: false,
 };
 
@@ -36,8 +36,8 @@ export const cicloLuzVacio: Programacion = {
   horaFin: new Date('1970-01-01T00:00:00'),
   dias: [],
   mode: null,
-  estaActivo: false,
+  activa: false,
   esProgramacionFiltro: false,
 };
 
-export const ciclosLucesMock: Programacion[] = [cicloLuz1];
+export const ciclosIluminacionMock: Programacion[] = [cicloLuz1];

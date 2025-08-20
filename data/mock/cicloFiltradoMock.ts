@@ -6,7 +6,7 @@ const ciclo1: Programacion = {
   horaFin: new Date('1970-01-01T10:00:00'),
   dias: [Day.LUNES, Day.MIERCOLES, Day.VIERNES],
   mode: FuncionFiltro.FILTRAR,
-  estaActivo: true,
+  activa: true,
   esProgramacionFiltro: true,
 };
 
@@ -16,7 +16,7 @@ const ciclo2: Programacion = {
   horaFin: new Date('1970-01-01T16:00:00'),
   dias: [Day.MARTES, Day.JUEVES, Day.VIERNES, Day.SABADO],
   mode: FuncionFiltro.FILTRAR,
-  estaActivo: false,
+  activa: false,
   esProgramacionFiltro: true,
 };
 
@@ -26,7 +26,7 @@ const ciclo3: Programacion = {
   horaFin: new Date('1970-01-01T20:00:00'),
   dias: [Day.DOMINGO],
   mode: FuncionFiltro.RETROLAVAR,
-  estaActivo: true,
+  activa: true,
   esProgramacionFiltro: true,
 };
 

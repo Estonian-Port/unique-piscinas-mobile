@@ -6,18 +6,18 @@ import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import ModalProgramacion from './modalProgramacion';
 
-const ProgramacionLuces = ({ programacion }: { programacion: Programacion[] }) => {
+const ProgramacionIluminacion = ({ programacion }: { programacion: Programacion[] }) => {
   const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
   const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const programacionVaciaDeLuces: Programacion = {
+  const programacionVaciaDeIluminacion: Programacion = {
     id: 0,
     horaInicio: new Date(),
     horaFin: new Date(),
     dias: [],
     mode: null,
-    estaActivo: false,
+    activa: false,
     esProgramacionFiltro: true,
   };
 
@@ -81,7 +81,7 @@ const ProgramacionLuces = ({ programacion }: { programacion: Programacion[] }) =
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
             onSave={handleAddCicle}
-            cicle={programacionVaciaDeLuces}
+            cicle={programacionVaciaDeIluminacion}
             hasCicleMode={false}
           />
         )}
@@ -110,4 +110,4 @@ const ProgramacionLuces = ({ programacion }: { programacion: Programacion[] }) =
   );
 };
 
-export default ProgramacionLuces;
+export default ProgramacionIluminacion;

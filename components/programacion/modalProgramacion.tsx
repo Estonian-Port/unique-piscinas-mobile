@@ -65,7 +65,7 @@ const ModalProgramacion = ({
       const cicloActualizado: Programacion = {
         ...cicle,
         dias: daysSelected,
-        tipo: ProgramacionType.LUCES,
+        tipo: ProgramacionType.Iluminacion,
         horaInicio: dateToLocalTimeString(startTime),
         horaFin: dateToLocalTimeString(endTime),
       };

@@ -1,6 +1,6 @@
 export enum ProgramacionType {
   FILTRADO = 'Filtrado',
-  LUCES = 'Luces',
+  ILUMINACION = 'Iluminacion',
 }
 
 export interface Programacion {
@@ -9,7 +9,7 @@ export interface Programacion {
   horaFin: string;
   dias: Day[];
   funcionFiltro: FuncionFiltro | null;
-  estaActivo: boolean;
+  activa: boolean;
   tipo: ProgramacionType;
 }
 
@@ -46,7 +46,7 @@ function funcionFiltroFromDto(value: string): FuncionFiltro {
 function tipoFromDto(value: string): ProgramacionType {
   switch (value) {
     case 'FILTRADO': return ProgramacionType.FILTRADO;
-    case 'LUCES': return ProgramacionType.LUCES;
+    case 'ILUMINACION': return ProgramacionType.ILUMINACION;
     default: return value as ProgramacionType;
   }
 }

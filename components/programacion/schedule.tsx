@@ -27,7 +27,7 @@ const Schedule = ({
     Day.SABADO,
     Day.DOMINGO,
   ];
-  const [isActive, setIsActive] = useState(cicle.estaActivo);
+  const [isActive, setIsActive] = useState(cicle.activa);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 

@@ -6,12 +6,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'expo-router';
-import { ChangeIcon } from '@/assets/icons';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import { Screen, ScreenTabs } from '@/components/utiles/Screen';
-import { leo } from '@/data/mock/userMock';
-import ProgramacionLuces from '@/components/programacion/programacionLuces';
+import { ScreenTabs } from '@/components/utiles/Screen';
+import ProgramacionIluminacion from '@/components/programacion/programacionIluminacion';
 import ProgramacionFiltrado from '@/components/programacion/programacionFiltrado';
 import BotonCambio from '@/components/utiles/botonCambio';
 import { piscinaService } from '@/services/piscina.service';
@@ -78,7 +74,7 @@ const Programation = () => {
           </View>
 
           <ProgramacionFiltrado programacion={pool.programacionFiltrado} />
-          <ProgramacionLuces programacion={pool.programacionLuces} />
+          <ProgramacionIluminacion programacion={pool.programacionIluminacion} />
         </ScreenTabs>
       </ScrollView>
     </PrivateScreen>

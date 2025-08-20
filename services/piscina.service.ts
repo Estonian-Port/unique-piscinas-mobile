@@ -30,7 +30,7 @@ class PiscinaService {
 
     return {
       ...piscina,
-      programacionLuces: piscina.programacionLuces.map(programacionFromDto),
+      programacionIluminacion: piscina.programacionIluminacion.map(programacionFromDto),
       programacionFiltrado: piscina.programacionFiltrado.map(programacionFromDto),
     }
   };
