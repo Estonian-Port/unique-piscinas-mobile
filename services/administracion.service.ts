@@ -6,7 +6,7 @@ class AdministracionService {
 
   getEstadisticas = async (userId: number): Promise<StatDashboard> => {
     const response = await api.get(`/administracion/estadisticas/${userId}`);
-    return response.data;
+    return response.data.data;
   };
 
   getPiscinasRegistradas = async (userId: number): Promise<PiscinaDashboard[]> => {
