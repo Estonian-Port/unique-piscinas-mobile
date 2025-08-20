@@ -1,7 +1,11 @@
 import { View, Text, Pressable, Switch, Modal } from 'react-native';
 import React, { useState } from 'react';
 import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
-import { Programacion, Day } from '@/data/domain/cicloFiltrado';
+import {
+  Programacion,
+  Day,
+  ProgramacionType,
+} from '@/data/domain/cicloFiltrado';
 import ModalProgramacion from './modalProgramacion';
 import ModalEliminarProgramacion from './modalEliminarProgramacion';
 
@@ -41,24 +45,13 @@ const Schedule = ({
         <View className="flex-row items-center">
           <ClockIcon size={14} color="black" />
           <Text className="font-geist text-text text-sm mx-2">
-            {cicle.horaInicio.toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: false,
-            })}{' '}
-            -{' '}
-            {cicle.horaFin.toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: false,
-            })}{' '}
-            horas
+            {cicle.horaInicio} - {cicle.horaFin} horas
           </Text>
         </View>
-        {cicle.esProgramacionFiltro && (
+        {cicle.tipo === ProgramacionType.FILTRADO && (
           <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
             <Text className="font-geist text-text text-sm mx-1">
-              {cicle.mode}
+              {cicle.funcionFiltro}
             </Text>
           </View>
         )}
@@ -99,11 +92,11 @@ const Schedule = ({
               visible={openModalEdit}
               onClose={() => setOpenModalEdit(false)}
               onSave={editCicle}
-              hasCicleMode={cicle.esProgramacionFiltro}
+              hasCicleMode={cicle.tipo === ProgramacionType.FILTRADO}
               cicle={cicle}
             />
           )}
-          <Pressable onPress={()=> setOpenModalDelete(true)}>
+          <Pressable onPress={() => setOpenModalDelete(true)}>
             <DeleteIcon color="red" />
           </Pressable>
           {openModalDelete && (

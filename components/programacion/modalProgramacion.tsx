@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { SaveIcon } from '@/assets/icons';
-import { Programacion, Day, ModeCicle } from '@/data/domain/cicloFiltrado';
+import { Programacion, Day, FuncionFiltro, ProgramacionType, localTimeStringToDate, dateToLocalTimeString } from '@/data/domain/cicloFiltrado';
 import TimeInput from '../utiles/timeInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 
@@ -21,11 +21,11 @@ type ModalProgramacionProps = {
 };
 
 const actionsMode = [
-  { id: 1, name: ModeCicle.DESAGOTAR },
-  { id: 2, name: ModeCicle.RETROLAVAR },
-  { id: 3, name: ModeCicle.FILTRAR },
-  { id: 4, name: ModeCicle.RECIRCULAR },
-  { id: 5, name: ModeCicle.ENJUAGAR },
+  { id: 1, name: FuncionFiltro.DESAGOTAR },
+  { id: 2, name: FuncionFiltro.RETROLAVAR },
+  { id: 3, name: FuncionFiltro.FILTRAR },
+  { id: 4, name: FuncionFiltro.RECIRCULAR },
+  { id: 5, name: FuncionFiltro.ENJUAGAR },
 ];
 
 const ModalProgramacion = ({
@@ -36,9 +36,9 @@ const ModalProgramacion = ({
   cicle,
 }: ModalProgramacionProps) => {
   const [daysSelected, setDaysSelected] = useState<Day[]>(cicle.dias);
-  const [startTime, setStartTime] = useState(cicle.horaInicio);
-  const [endTime, setEndTime] = useState(cicle.horaFin);
-  const [selectedCicleMode, setSelectedCicleMode] = useState(cicle.mode);
+  const [startTime, setStartTime] = useState(localTimeStringToDate(cicle.horaInicio));
+  const [endTime, setEndTime] = useState(localTimeStringToDate(cicle.horaFin));
+  const [selectedFuncionFiltro, setSelectedFuncionFiltro] = useState(cicle.funcionFiltro);
   const [openAction, setOpenAction] = useState(false);
 
   const daysOfWeek: Day[] = [
@@ -56,18 +56,18 @@ const ModalProgramacion = ({
       const cicloActualizado: Programacion = {
         ...cicle,
         dias: daysSelected,
-        mode: selectedCicleMode,
-        horaInicio: startTime,
-        horaFin: endTime,
+        funcionFiltro: selectedFuncionFiltro,
+        horaInicio: dateToLocalTimeString(startTime),
+        horaFin: dateToLocalTimeString(endTime),
       };
       onSave(cicloActualizado);
     } else {
       const cicloActualizado: Programacion = {
         ...cicle,
         dias: daysSelected,
-        esProgramacionFiltro: false,
-        horaInicio: startTime,
-        horaFin: endTime,
+        tipo: ProgramacionType.LUCES,
+        horaInicio: dateToLocalTimeString(startTime),
+        horaFin: dateToLocalTimeString(endTime),
       };
       onSave(cicloActualizado);
     }
@@ -138,14 +138,14 @@ const ModalProgramacion = ({
                 </Text>
                 <DropDownPicker
                   open={openAction}
-                  value={selectedCicleMode}
+                  value={selectedFuncionFiltro}
                   items={actionsMode.map((item) => ({
                     id: item.id,
                     label: item.name,
                     value: item.name,
                   }))}
                   setOpen={setOpenAction}
-                  setValue={setSelectedCicleMode}
+                  setValue={setSelectedFuncionFiltro}
                   placeholder="Seleccione el modo"
                   style={{ borderColor: '#e5e7eb' }}
                   dropDownContainerStyle={{ borderColor: '#e5e7eb' }}

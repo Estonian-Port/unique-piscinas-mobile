@@ -1,11 +1,11 @@
-import { Programacion, Day, ModeCicle } from "../domain/cicloFiltrado";
+import { Programacion, Day, FuncionFiltro } from "../domain/cicloFiltrado";
 
 const cicloLuz1: Programacion = {
   id: 1,
   horaInicio: new Date('1970-01-01T08:00:00'),
   horaFin: new Date('1970-01-01T10:00:00'),
   dias: [Day.LUNES, Day.MIERCOLES, Day.VIERNES],
-  mode: ModeCicle.FILTRAR,
+  mode: FuncionFiltro.FILTRAR,
   estaActivo: true,
   esProgramacionFiltro: false,
 };
@@ -15,7 +15,7 @@ const cicloLuz2: Programacion = {
   horaInicio: new Date('1970-01-01T14:00:00'),
   horaFin: new Date('1970-01-01T16:00:00'),
   dias: [Day.MARTES, Day.JUEVES, Day.VIERNES, Day.SABADO],
-  mode: ModeCicle.FILTRAR,
+  mode: FuncionFiltro.FILTRAR,
   estaActivo: false,
   esProgramacionFiltro: false,
 };
@@ -25,7 +25,7 @@ const cicloLuz3: Programacion = {
   horaInicio: new Date('1970-01-01T18:00:00'),
   horaFin: new Date('1970-01-01T20:00:00'),
   dias: [Day.DOMINGO],
-  mode: ModeCicle.RETROLAVAR,
+  mode: FuncionFiltro.RETROLAVAR,
   estaActivo: true,
   esProgramacionFiltro: false,
 };

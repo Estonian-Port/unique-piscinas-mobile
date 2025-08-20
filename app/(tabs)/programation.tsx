@@ -12,6 +12,7 @@ import { piscinaService } from '@/services/piscina.service';
 import { useAuth } from '@/context/authContext';
 import { usePool } from '@/context/piscinaContext';
 import { PiscinaProgramacion } from '@/data/domain/piscina';
+import { Programacion } from '@/data/domain/cicloFiltrado';
 
 const Programation = () => {
   const { selectedPoolId } = usePool();
@@ -25,6 +26,7 @@ const Programation = () => {
       try {
         const data = await piscinaService.getPiscinaProgramacionById(selectedPoolId!);
         setPool(data);
+        console.log('Piscina cargada:', data);
       } catch (error) {
         console.error('Error cargando la piscina:', error);
       } finally {
@@ -42,6 +44,8 @@ const Programation = () => {
       </View>
     );
   }
+
+  const listafalopa : Programacion[] = []
 
   return (
     <ScrollView className="flex-1 bg-white">

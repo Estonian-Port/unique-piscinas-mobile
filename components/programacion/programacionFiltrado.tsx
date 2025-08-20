@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, FilterIcon } from '@/assets/icons';
 import Schedule from './schedule';
-import { Programacion } from '@/data/domain/cicloFiltrado';
+import { Programacion, ProgramacionType } from '@/data/domain/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
-import { cicloLuzVacio } from '@/data/mock/cicloLucesMock';
 
 const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) => {
   const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
@@ -14,12 +13,12 @@ const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) =
 
   const programacionVacia: Programacion = {
     id: 0,
-    horaInicio: new Date(),
-    horaFin: new Date(),
+    horaInicio: new Date().toISOString(),
+    horaFin: new Date().toISOString(),
     dias: [],
-    mode: null,
+    funcionFiltro: null,
     estaActivo: false,
-    esProgramacionFiltro: true,
+    tipo: ProgramacionType.FILTRADO,
   };
 
   const hasCicles = programaciones.length > 0;

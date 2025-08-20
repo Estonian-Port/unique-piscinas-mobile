@@ -1,5 +1,6 @@
 import { PiscinaEquipamiento, PiscinaListItem, PiscinaProgramacion, PiscinaResume } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
+import { programacionFromDto } from '@/data/domain/cicloFiltrado';
 
 class PiscinaService {
 
@@ -25,7 +26,13 @@ class PiscinaService {
 
   getPiscinaProgramacionById = async (id: number): Promise<PiscinaProgramacion> => {
     const response = await api.get(`/piscina/programacion/${id}`);
-    return response.data.data;
+    const piscina = response.data.data;
+
+    return {
+      ...piscina,
+      programacionLuces: piscina.programacionLuces.map(programacionFromDto),
+      programacionFiltrado: piscina.programacionFiltrado.map(programacionFromDto),
+    }
   };
 }
 

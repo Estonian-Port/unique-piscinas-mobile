@@ -10,7 +10,7 @@ import {
   Switch,
 } from 'react-native';
 import { SaveIcon } from '@/assets/icons';
-import { Cicle, Day, ModeCicle } from '@/data/domain/cicloFiltrado';
+import { Cicle, Day, FuncionFiltro } from '@/data/domain/cicloFiltrado';
 import TimeInput from '../utiles/timeInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Bomba } from '@/data/domain/piscina';
