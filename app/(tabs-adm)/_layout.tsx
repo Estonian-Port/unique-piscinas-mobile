@@ -1,10 +1,13 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Stack, Tabs } from 'expo-router';
 import TabIcon from '../../components/utiles/tabIcon';
+import { Platform } from 'react-native';
 
 const _Layout = () => {
   return (
-
+    Platform.OS === "web" ? (
+    <Stack screenOptions={{ headerShown: false }} />
+    ) : (
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
@@ -15,10 +18,6 @@ const _Layout = () => {
           alignItems: 'center',          
         },
         tabBarStyle: {
-          backgroundColor: '#222247',
-          borderRadius: 50,
-          marginHorizontal: 85,
-          marginBottom: 36,
           height: 52,
           position: 'absolute',
           overflow: 'hidden',
@@ -48,7 +47,7 @@ const _Layout = () => {
         }}
       />
     </Tabs>
-  );
+  ));
 };
 
 export default _Layout;

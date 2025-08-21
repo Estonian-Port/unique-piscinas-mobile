@@ -1,47 +1,56 @@
-import { View, Text, ScrollView } from 'react-native';
-import React from 'react';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import { leo } from '@/data/mock/userMock';
 import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
-import BotonCambio from '@/components/utiles/botonCambio';
+import WebTabBar from '@/components/utiles/webTabBar';
+import Header from '@/components/utiles/header';
+import { useAuth } from '@/context/authContext';
+import { piscinaService } from '@/services/piscina.service';
+import { PiscinaProgramacion } from '@/data/domain/piscina';
 
 const FAQ = () => {
-  const piscinasId = 1;
-  const user = leo;
+  
+  const { user, selectedPoolId } = useAuth();
+  const [pool, setPool] = useState<PiscinaProgramacion | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const searchPool = (id: number) => {
-    return piscinasMock.filter(
-      (piscina) => piscina.id === Number(piscinasId)
-    )[0];
-  };
 
-  const pool = searchPool(Number(piscinasId));
+  useEffect(() => {
+    const fetchPool = async () => {
+      try {
+        if (selectedPoolId !== null) {
+          const data = await piscinaService.getPiscinaProgramacionById(
+            selectedPoolId
+          );
+          setPool(data);
+        }
+      } catch (error) {
+        console.error('Error cargando la piscina:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectedPoolId) fetchPool();
+  }, [selectedPoolId]);
+
+  if (loading || !pool) {
+    return (
+      <View className="flex-1 justify-center items-center bg-white">
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView className="flex-1 bg-white">
       <ScreenTabs>
-        <View className="w-11/12 my-3">
-          <Text className="font-geist-bold text-2xl text-text">
-            Hola, {user.name} bienvenido!
-          </Text>
-        </View>
 
-        <View className="flex-row w-11/12 justify-between mb-3">
-          {/* Contenedor del texto */}
-          <View className="flex-1 pr-4">
-            <Text className="font-geist-semi-bold text-xl text-text">
-              {pool.name}
-            </Text>
-            <Text className="font-geist text-base text-text">
-              Volumen de la piscina: {pool.volume} m3
-            </Text>
-          </View>
+          <Header userName={user!.nombre} poolName={pool.nombre} 
+          poolVolumen={pool.volumen} moreThan1Pool={user!.piscinasId.length > 1} isAdmin={user!.isAdmin}  />
 
-          {/* Botón redondo */}
-          {user.piscinas.length > 1 && !user.isAdmin && <BotonCambio />}
+          <WebTabBar />
           
-        </View>
         <PreguntasFrecuentes />
       </ScreenTabs>
     </ScrollView>

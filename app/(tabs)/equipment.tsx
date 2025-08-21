@@ -1,6 +1,5 @@
 import {
   View,
-  Text,
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
@@ -8,15 +7,15 @@ import React, { useEffect, useState } from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
 import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
 import EstadoSistema from '@/components/equipamiento/estadoSistema';
-import BotonCambio from '@/components/utiles/botonCambio';
 import { piscinaService } from '@/services/piscina.service';
 import { PiscinaEquipamiento } from '@/data/domain/piscina';
 import PrivateScreen from '@/components/utiles/privateScreen';
 import { useAuth } from '@/context/authContext';
+import WebTabBar from '@/components/utiles/webTabBar';
+import Header from '@/components/utiles/header';
 
 const Equipment = () => {
   const { user, selectedPoolId } = useAuth();
-
   const [pool, setPool] = useState<PiscinaEquipamiento | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -51,25 +50,11 @@ const Equipment = () => {
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-          <View className="w-11/12 my-3">
-            <Text className="font-geist-bold text-2xl text-text">
-              Hola {user?.nombre}, bienvenido!
-            </Text>
-          </View>
 
-          <View className="flex-row w-11/12 justify-between mb-3">
-            {/* Contenedor del texto */}
-            <View className="flex-1 pr-4">
-              <Text className="font-geist-semi-bold text-xl text-text">
-                {pool.nombre}
-              </Text>
-              <Text className="font-geist text-base text-text">
-                Volumen de la piscina: {pool.volumen} m³
-              </Text>
-            </View>
+          <Header userName={user!.nombre} poolName={pool.nombre} 
+          poolVolumen={pool.volumen} moreThan1Pool={user!.piscinasId.length > 1} isAdmin={user!.isAdmin}  />
 
-            {user!.piscinasId.length > 1 && !user!.isAdmin && <BotonCambio />}
-          </View>
+          <WebTabBar />
 
           <EstadoSistema pool={pool} />
           <EquipamientoConfigurado pool={pool} />
