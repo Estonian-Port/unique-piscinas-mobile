@@ -11,15 +11,12 @@ import ProgramacionIluminacion from '@/components/programacion/programacionIlumi
 import ProgramacionFiltrado from '@/components/programacion/programacionFiltrado';
 import BotonCambio from '@/components/utiles/botonCambio';
 import { piscinaService } from '@/services/piscina.service';
-import { useAuth } from '@/context/authContext';
-import { usePool } from '@/context/piscinaContext';
 import { PiscinaProgramacion } from '@/data/domain/piscina';
-import { Programacion } from '@/data/domain/cicloFiltrado';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import { useAuth } from '@/context/authContext';
 
 const Programation = () => {
-  const { selectedPoolId } = usePool();
-  const { user } = useAuth();
+  const { user, selectedPoolId } = useAuth();
 
   const [pool, setPool] = useState<PiscinaProgramacion | null>(null);
   const [loading, setLoading] = useState(true);

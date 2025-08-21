@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,9 +7,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React, { useEffect } from 'react';
 import { Screen } from '@/components/utiles/Screen';
-import { leo } from '@/data/mock/userMock';
 import { LogoutIcon } from '@/assets/icons';
 import { Link, router } from 'expo-router';
 import { useAuth } from '@/context/authContext';
@@ -18,7 +17,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) {
-      router.replace('/index');
+      router.replace('/');
     }
   }, [user]);
 

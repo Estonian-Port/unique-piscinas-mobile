@@ -4,17 +4,15 @@ import Indicadores from '@/components/resume/indicadores';
 import ControlFiltro from '@/components/resume/controlFiltro';
 import BotonCambio from '@/components/utiles/botonCambio';
 import PhClimaCard from '@/components/resume/phClimaCard';
-import { usePool } from '@/context/piscinaContext';
-import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { piscinaService } from '@/services/piscina.service';
 import { PiscinaResume } from '@/data/domain/piscina';
 import { handleAxiosError } from '@/util/errorHandler';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import { useAuth } from '@/context/authContext';
 
 export default function Resume() {
-  const { selectedPoolId } = usePool();
-  const { user } = useAuth();
+  const { user, selectedPoolId } = useAuth();
 
   const [pool, setPool] = useState<PiscinaResume | null>(null);
   const [loading, setLoading] = useState(true);

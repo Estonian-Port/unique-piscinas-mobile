@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  Pressable,
   ActivityIndicator,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
@@ -10,15 +9,13 @@ import { ScreenTabs } from '@/components/utiles/Screen';
 import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
 import EstadoSistema from '@/components/equipamiento/estadoSistema';
 import BotonCambio from '@/components/utiles/botonCambio';
-import { usePool } from '@/context/piscinaContext';
-import { useAuth } from '@/context/authContext';
 import { piscinaService } from '@/services/piscina.service';
 import { PiscinaEquipamiento } from '@/data/domain/piscina';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import { useAuth } from '@/context/authContext';
 
 const Equipment = () => {
-  const { selectedPoolId } = usePool();
-  const { user } = useAuth();
+  const { user, selectedPoolId } = useAuth();
 
   const [pool, setPool] = useState<PiscinaEquipamiento | null>(null);
   const [loading, setLoading] = useState(true);

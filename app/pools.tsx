@@ -2,15 +2,12 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import PoolCard from '@/components/utiles/poolCard';
 import { useAuth } from '@/context/authContext';
-import { router } from 'expo-router';
-import { usePool } from '@/context/piscinaContext';
 import { PiscinaListItem } from '@/data/domain/piscina';
 import { piscinaService } from '@/services/piscina.service';
 import PrivateScreen from '@/components/utiles/privateScreen';
 
 const Pools = () => {
   const { user } = useAuth();
-  const { setSelectedPoolId } = usePool();
   const [pools, setPools] = useState<PiscinaListItem[] | null>(null);
   const [loading, setLoading] = useState(true);
 

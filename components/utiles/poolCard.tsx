@@ -2,15 +2,15 @@ import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 import { Link, router } from 'expo-router';
 import { PiscinaListItem } from '@/data/domain/piscina';
-import { usePool } from '@/context/piscinaContext';
+import { useAuth } from '@/context/authContext';
 
 const PoolCard = ({ piscina }: { piscina: PiscinaListItem }) => {
-  const { setSelectedPoolId } = usePool();
+  const { seleccionarPiscina } = useAuth();
 
-  const handlePress = () => {
-    setSelectedPoolId(piscina.id);
+  const handlePress = async () => {
+    await seleccionarPiscina(piscina.id);
     router.replace(`/(tabs)/resume`);
-  };
+  }
 
   return (
     <Link asChild href={`/(tabs)/resume`}>
