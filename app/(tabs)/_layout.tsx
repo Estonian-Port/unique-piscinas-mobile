@@ -23,7 +23,7 @@ const _Layout = () => {
           position: 'absolute',
           overflow: 'hidden',
           borderWidth: 1,
-          borderColor: '#222247',
+          borderTopColor: '#222247',
         },
       }}
     >
