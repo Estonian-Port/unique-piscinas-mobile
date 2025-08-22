@@ -14,7 +14,7 @@ const Header = ({ usuario, piscina }: HeaderProps) => {
     <>
       <View className="w-11/12 my-3">
         <Text className="font-geist-bold text-2xl text-text">
-          Hola, {usuario.nombre} bienvenido!
+          Hola, {usuario.nombre}. Bienvenido!
         </Text>
       </View>
       <View className="flex-row w-11/12 justify-between mb-3">

@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from '@/components/utiles/navBar';
 import { AuthProvider } from '@/context/authContext';
+import Toast from 'react-native-toast-message';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -28,6 +29,7 @@ export default function RootLayout() {
         <SafeAreaView style={{ flex: 1 }} className="bg-white">
           <NavBar />
           <Slot />
+          <Toast />
         </SafeAreaView>
     </AuthProvider>
   );

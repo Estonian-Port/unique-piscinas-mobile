@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,15 +11,22 @@ import { Screen } from '@/components/utiles/Screen';
 import { LogoutIcon } from '@/assets/icons';
 import { Link, router } from 'expo-router';
 import { useAuth } from '@/context/authContext';
+import ModalLogout from '@/components/utiles/modalLogout';
 
 const Profile = () => {
   const { usuario: user, logout } = useAuth();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (!user) {
       router.replace('/');
     }
   }, [user]);
+
+  const handleLogout = async () => {
+    setModalVisible(false);
+    logout;
+  };
 
   if (!user) return null;
 
@@ -71,7 +78,7 @@ const Profile = () => {
           </Pressable>
           <Pressable
             className="flex-row items-center justify-center mt-10 rounded-lg p-4 w-3/5"
-            onPress={logout}
+            onPress={() => setModalVisible(true)}
           >
             <LogoutIcon color="#9ca3af" />
             <Text className="ml-2 font-geist-semi-bold text-gray-400 text-lg text-center">
@@ -79,6 +86,11 @@ const Profile = () => {
             </Text>
           </Pressable>
         </View>
+        <ModalLogout
+          visible={modalVisible}
+          message={'¿Desea cerrar sesión?'}
+          onClose={handleLogout}
+        />
       </Screen>
     </ScrollView>
   );

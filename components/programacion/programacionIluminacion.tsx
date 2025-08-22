@@ -5,9 +5,15 @@ import { ScreenCard } from '../utiles/ScreenCard';
 import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import ModalProgramacion from './modalProgramacion';
+import Toast from 'react-native-toast-message';
 
-const ProgramacionIluminacion = ({ programacion }: { programacion: Programacion[] }) => {
-  const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
+const ProgramacionIluminacion = ({
+  programacion,
+}: {
+  programacion: Programacion[];
+}) => {
+  const [programaciones, setProgramaciones] =
+    useState<Programacion[]>(programacion);
   const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -24,19 +30,67 @@ const ProgramacionIluminacion = ({ programacion }: { programacion: Programacion[
   const hasCicles = programaciones.length > 0;
 
   const handleAddCicle = (nuevoCiclo: Programacion) => {
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo añadido',
+      text2: 'El ciclo se ha añadido correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/*
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido añadir correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     programaciones.push(nuevoCiclo);
   };
 
   const handleEditCicle = (cicloEditado: Programacion) => {
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo editado',
+      text2: 'El ciclo se ha editado correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/*
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido editar correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     setProgramaciones((prev) =>
       prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
     );
   };
 
   const handleDeleteCicle = (cicloId: number) => {
+    //actualizar el back
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo eliminado',
+      text2: 'El ciclo se ha eliminado correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/*
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido eliminar correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     setProgramaciones((prev) => prev.filter((c) => c.id !== cicloId));
   };
-
 
   return (
     <ScreenCard>
@@ -87,25 +141,25 @@ const ProgramacionIluminacion = ({ programacion }: { programacion: Programacion[
         )}
       </View>
 
-        {hasCicles ? (
-          <View className="items-center justify-between gap-2">
-            {programaciones.map((ciclo) => (
-              <Schedule
-                cicle={ciclo}
-                key={ciclo.id}
-                editCicle={handleEditCicle}
-                deleteCicle={handleDeleteCicle}
-              ></Schedule>
-            ))}
-          </View>
-        ) : (
-          <View className="flex-row items-center justify-center mt-4 mb-4">
-            <Text className="font-geist-semi-bold text-text text-base text-center">
-              No hay horarios programados.{'\n'}
-              Presione el botón +Añadir para agregar uno.
-            </Text>
-          </View>
-        )}
+      {hasCicles ? (
+        <View className="items-center justify-between gap-2">
+          {programaciones.map((ciclo) => (
+            <Schedule
+              cicle={ciclo}
+              key={ciclo.id}
+              editCicle={handleEditCicle}
+              deleteCicle={handleDeleteCicle}
+            ></Schedule>
+          ))}
+        </View>
+      ) : (
+        <View className="flex-row items-center justify-center mt-4 mb-4">
+          <Text className="font-geist-semi-bold text-text text-base text-center">
+            No hay horarios programados.{'\n'}
+            Presione el botón +Añadir para agregar uno.
+          </Text>
+        </View>
+      )}
     </ScreenCard>
   );
 };

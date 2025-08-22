@@ -7,7 +7,7 @@ type CustomModalProps = {
   onClose: () => void;
 }
 
-const ModalError = ({ visible, message, onClose }: CustomModalProps) => {
+const ModalLogout = ({ visible, message, onClose }: CustomModalProps) => {
   return (
     <Modal
       animationType="fade"
@@ -21,7 +21,7 @@ const ModalError = ({ visible, message, onClose }: CustomModalProps) => {
           <TouchableOpacity
             onPress={onClose}
             className="bg-red-400 p-4 rounded-lg">
-            <Text className="text-white text-center font-geist-semi-bold">Cerrar</Text>
+            <Text className="text-white text-center font-geist-semi-bold">Cerrar sesión</Text>
           </TouchableOpacity>
 
         </View>
@@ -30,4 +30,4 @@ const ModalError = ({ visible, message, onClose }: CustomModalProps) => {
   );
 };
 
-export default ModalError;
+export default ModalLogout;

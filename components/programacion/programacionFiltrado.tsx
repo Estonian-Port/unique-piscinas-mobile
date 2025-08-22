@@ -6,9 +6,15 @@ import Schedule from './schedule';
 import { Programacion, ProgramacionType } from '@/data/domain/cicloFiltrado';
 import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
+import Toast from 'react-native-toast-message';
 
-const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) => {
-  const [programaciones, setProgramaciones] = useState<Programacion[]>(programacion);
+const ProgramacionFiltrado = ({
+  programacion,
+}: {
+  programacion: Programacion[];
+}) => {
+  const [programaciones, setProgramaciones] =
+    useState<Programacion[]>(programacion);
   const [modalVisible, setModalVisible] = useState(false);
 
   const programacionVacia: Programacion = {
@@ -25,11 +31,43 @@ const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) =
 
   const handleAddCicle = (nuevoCiclo: Programacion) => {
     //actualizar el back
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo añadido',
+      text2: 'El ciclo se ha añadido correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/* 
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido añadir correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     ciclosFiltradoMock.push(nuevoCiclo);
   };
 
   const handleEditCicle = (cicloEditado: Programacion) => {
     //actualizar el back
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo editado',
+      text2: 'El ciclo se ha editado correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/* 
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido editar correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     setProgramaciones((prev) =>
       prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
     );
@@ -37,6 +75,22 @@ const ProgramacionFiltrado = ({programacion} : {programacion: Programacion[]}) =
 
   const handleDeleteCicle = (cicloId: number) => {
     //actualizar el back
+    Toast.show({
+      type: 'success',
+      text1: 'Ciclo eliminado',
+      text2: 'El ciclo se ha eliminado correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    {/* 
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'El ciclo no se ha podido eliminar correctamente',
+      position: 'bottom',
+      bottomOffset: 80,
+    });
+    */}
     setProgramaciones((prev) => prev.filter((c) => c.id !== cicloId));
   };
 
