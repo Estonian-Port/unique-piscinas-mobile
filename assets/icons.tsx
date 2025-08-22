@@ -37,7 +37,7 @@ export const AutorenewIcon = (props: any) => (
 );
 
 export const ChangeIcon = (props: any) => (
-  <MaterialIcons name="compare-arrows" size={32} color="white" {...props} />
+  <MaterialIcons name="compare-arrows" size={28} color="white" {...props} />
 );
 
 export const AirIcon = (props: any) => (

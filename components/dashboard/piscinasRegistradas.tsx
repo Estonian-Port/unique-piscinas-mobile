@@ -24,11 +24,11 @@ const PiscinasRegistradas = ({pools} : {pools: PiscinaDashboard[]}) => {
         <Link asChild href="/nuevaPiscina">
 
         {Platform.OS === "web" ? (
-          <Pressable className="border rounded-md bg-black items-center justify-center">
+          <Pressable className="border rounded-md bg-[#222247] items-center justify-center">
               <Text className="text-white font-geist-semi-bold text-center py-2 px-4">+  Nueva Piscina</Text>
           </Pressable>
         ) : (
-          <Pressable className="border rounded-md bg-black w-12 h-12 items-center justify-center">
+          <Pressable className="border rounded-md bg-[#222247] w-12 h-12 items-center justify-center">
               <Text className="text-white font-geist-bold text-xl text-center">+</Text>
           </Pressable>
         )}

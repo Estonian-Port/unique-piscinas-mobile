@@ -4,7 +4,7 @@ import { useRouter, usePathname, Stack } from "expo-router";
 
 const tabsUser = [
   { name: "Resumen", route: "/resume" },
-  { name: "Equip.", route: "/equipment" },
+  { name: "Equipamiento", route: "/equipment" },
   { name: "Programación", route: "/programation" },
   { name: "FAQ", route: "/faq" },
 ];

@@ -29,7 +29,7 @@ const Equipment = () => {
       }
       fetchPool()
     }
-  }, [piscina])
+  }, [selectedPool])
 
   if (loading || !usuario || !selectedPool || !piscina) {
     return (
