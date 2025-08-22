@@ -11,13 +11,14 @@ import { useState } from 'react';
 import ModalDesvincularPiscina from './modalDesvincularPiscina';
 import ModalEliminarUsuario from './modalEliminarUsuario';
 import { Link } from 'expo-router';
+import { Usuario } from '@/data/domain/user';
 
 const UserItem = ({
-  user,
+  usuario: usuario,
   isExpanded,
   onToggleExpand,
 }: {
-  user: User;
+  usuario: Usuario;
   isExpanded: boolean;
   onToggleExpand: () => void;
 }) => {
@@ -33,9 +34,9 @@ const UserItem = ({
       >
         <View>
           <Text className="font-geist-semi-bold text-text text-base">
-            {user.name + ' ' + user.lastname}
+            {usuario.name + ' ' + usuario.lastname}
           </Text>
-          <Text className="font-geist text-text text-base">{user.email}</Text>
+          <Text className="font-geist text-gray-500">{usuario.email}</Text>
         </View>
         <View className="flex-row items-center justify-between gap-3">
           <View className="rounded-full bg-black px-2 py-1">
@@ -50,8 +51,8 @@ const UserItem = ({
             <ModalEliminarUsuario
               visible={modalEliminarUsuario}
               onClose={() => setModalEliminarUsuario(false)}
-              nombreUsuario={user.name}
-              apellidoUsuario={user.lastname}
+              nombreUsuario={usuario.name}
+              apellidoUsuario={usuario.lastname}
             />
           )}
           {isExpanded ? (
@@ -78,13 +79,13 @@ const UserItem = ({
               <ModalAñadirPiscina
                 visible={modalNuevaPiscina}
                 onClose={() => setModalNuevaPiscina(false)}
-                nombreUsuario={user.name}
-                apellidoUsuario={user.lastname}
+                nombreUsuario={usuario.name}
+                apellidoUsuario={usuario.lastname}
               />
             )}
           </View>
 
-          {user.piscinas.map((piscina) => (
+          {usuario.piscinas.map((piscina) => (
             <View
               className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
               key={piscina.id}

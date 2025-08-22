@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import BotonCambio from './botonCambio';
-import { UsuarioLogin, Usuario } from '@/data/domain/usuario';
+import { UsuarioLogin, Usuario } from '@/data/domain/user';
 import { PiscinaListItem } from '@/data/domain/piscina';
 
 type HeaderProps = {

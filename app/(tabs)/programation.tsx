@@ -44,13 +44,15 @@ const Programation = () => {
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-          <Header 
-            usuario={usuario!} 
-            piscina={selectedPool!} 
-          />
-          <WebTabBar />
-          <ProgramacionFiltrado programacion={piscina!.programacionFiltrado} />
-          <ProgramacionIluminacion programacion={piscina!.programacionIluminacion} />
+          <View className='w-11/12'>
+            <Header 
+              usuario={usuario!} 
+              piscina={selectedPool!} 
+            />
+            <WebTabBar />
+            <ProgramacionFiltrado programacion={piscina!.programacionFiltrado} />
+            <ProgramacionIluminacion programacion={piscina!.programacionIluminacion} />
+          </View>
         </ScreenTabs>
       </ScrollView>
     </PrivateScreen>

@@ -25,7 +25,7 @@ const UsuarioRegistrados = () => {
       {users.map((user) => (
         <UserItem 
           key={user.id}
-          user={user}
+          usuario={user}
           isExpanded={expandedUserId === user.id}
           onToggleExpand={() => handleToggleExpand(user.id)}
         />

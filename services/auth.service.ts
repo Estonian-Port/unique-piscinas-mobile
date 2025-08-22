@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../helper/auth.interceptor';
-import { UsuarioLogin } from '@/data/domain/usuario';
+import { UsuarioLogin } from '@/data/domain/user';
 import { STORAGE_KEY_TOKEN } from '@/context/authContext';
 
 class AuthService {

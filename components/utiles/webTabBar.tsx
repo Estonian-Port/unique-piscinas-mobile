@@ -1,28 +1,44 @@
-// components/CustomTabBar.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Pressable, Text, Platform } from "react-native";
 import { useRouter, usePathname, Stack } from "expo-router";
 
-const tabs = [
+const tabsUser = [
   { name: "Resumen", route: "/resume" },
   { name: "Equip.", route: "/equipment" },
   { name: "Programación", route: "/programation" },
   { name: "FAQ", route: "/faq" },
 ];
 
-export default function WebTabBar() {
+const tabsAdmin = [
+  { name: "Dashboard", route: "/dashboard" },
+  { name: "Alta Usuario", route: "/users" },
+];
+
+interface WebTabBarProps {
+  isAdmin?: boolean
+}
+
+export default function WebTabBar({ isAdmin = false }: WebTabBarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const [tabs, setTabs] = useState(tabsUser)
+
+  useEffect(() => {
+    setTabs(isAdmin ? tabsAdmin : tabsUser);
+  }, [isAdmin]);
 
   const handlePress = async (route: string) => {
-    router.replace(`/(tabs)${route}`);
+    if(isAdmin){
+      router.replace(`/(tabs-adm)${route}`);
+    }else{
+      router.replace(`/(tabs)${route}`);
+    }
   }
     
   if (Platform.OS !== "web") return null;
 
-
   return (
-    <View className="flex-row bg-gray-100 rounded-lg p-1 w-11/12 mb-4">
+    <View className="flex-row bg-gray-100 rounded-lg p-1 mb-4 w-full">
       {tabs.map((tab) => {
         const isActive = pathname === tab.route;
         return (

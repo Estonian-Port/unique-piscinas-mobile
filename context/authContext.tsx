@@ -1,4 +1,4 @@
-import { UsuarioLogin } from "@/data/domain/usuario"
+import { UsuarioLogin } from "@/data/domain/user"
 import { createContext, useContext, useEffect, useState, ReactNode } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { authService } from "@/services/auth.service"

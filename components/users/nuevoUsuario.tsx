@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { NuevoUsuario } from '@/data/domain/usuario';
+import { NuevoUsuario } from '@/data/domain/user';
 
 const validationSchema = Yup.object().shape({
   nombre: Yup.string().required('El nombre es obligatorio'),
@@ -97,45 +97,19 @@ const NuevoUsuarioForm = () => {
       }) => (
         <ScreenCard>
           <View>
-            <Text className="font-geist-semi-bold text-text text-3xl">
-              Nuevo Usuario
+            <Text className="font-geist-semi-bold text-text text-2xl">
+              Alta de Nuevo Usuario
             </Text>
             <Text className="font-geist-light text-text text-base">
               Registre un nuevo usuario en el sistema
             </Text>
           </View>
 
-          <Text className="font-geist text-text text-base mt-3">Nombre</Text>
-          <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.nombre}
-            onChangeText={handleChange('nombre')}
-            onBlur={handleBlur('nombre')}
-            placeholder="Ej: Juan"
-            editable={!isSubmitting} // Deshabilitar si está enviando
-          />
-          {touched.nombre && errors.nombre && (
-            <Text className="text-red-500 mt-2">{errors.nombre}</Text>
-          )}
-
-          <Text className="font-geist text-text text-base mt-3">Apellido</Text>
-          <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.apellido}
-            onChangeText={handleChange('apellido')}
-            onBlur={handleBlur('apellido')}
-            placeholder="Ej: Pérez"
-            editable={!isSubmitting}
-          />
-          {touched.apellido && errors.apellido && (
-            <Text className="text-red-500 mt-2">{errors.apellido}</Text>
-          )}
-
           <Text className="font-geist text-text text-base mt-3">
             Correo electrónico
           </Text>
           <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3 my-3 text-gray-500"
             value={values.email}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
@@ -149,34 +123,19 @@ const NuevoUsuarioForm = () => {
             <Text className="text-red-500 mt-2">{errors.email}</Text>
           )}
 
-          <Text className="font-geist text-text text-base mt-3">Celular</Text>
-            <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.celular ? values.celular.toString() : ''}
-            onChangeText={handleChange('celular')}
-            onBlur={handleBlur('celular')}
-            placeholder="Ej: 123456789"
-            keyboardType="phone-pad"
-            editable={!isSubmitting}
-            />
-            {touched.celular && errors.celular && (
-            <Text className="text-red-500 mt-2">{errors.celular}</Text>
-          )}
 
-          <Text className="font-geist-bold text-text text-base text-center mt-2">
-            El password por defecto es "unique". El usuario deberá cambiarlo al
-            iniciar sesión por primera vez.
-          </Text>
+          <Text className="text-sm text-gray-500">Se enviará un enlace de registro al correo electrónico 
+            proporcionado. El usuario deberá completar el formulario para finalizar el registro.</Text>
 
-          <Pressable
-            className={`rounded-md py-3 mt-4 w-1/2 self-end ${
+
+          <Pressable className={`rounded-md py-2 px-4 mt-4 self-end ${
               isSubmitting
-                ? 'bg-gray-400' // Color cuando está cargando
-                : 'bg-black' // Color normal
+                ? 'bg-gray-400'
+                : 'bg-black'
             }`}
             onPress={handleSubmit as any}
             disabled={isSubmitting} // Deshabilitar botón si está enviando
-          >
+            >
             <Text className="font-geist-semi-bold text-sm text-center text-white">
               {isSubmitting ? 'Creando...' : 'Dar de alta usuario'}
             </Text>

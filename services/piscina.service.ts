@@ -4,8 +4,8 @@ import { programacionFromDto } from '@/data/domain/cicloFiltrado';
 
 const PISCINA = '/piscina'
 
-
 class PiscinaService {
+
 
   getPiscinasByUserId = async (userId: number): Promise<PiscinaListItem[]> => {
     const response = await api.get(`${PISCINA}/getAll/${userId}`);
@@ -17,7 +17,7 @@ class PiscinaService {
     return response.data.data;
   };
 
-  getPiscinaResumeById = async (id: number): Promise<PiscinaResume> => {
+  getPiscinaResume = async (id: number): Promise<PiscinaResume> => {
     const response = await api.get(`${PISCINA}/resumen/${id}`);
     return response.data.data;
   };

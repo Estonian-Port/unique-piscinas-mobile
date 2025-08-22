@@ -1,6 +1,6 @@
 import { Programacion } from './cicloFiltrado';
 import { Equipo } from './equipo';
-import { Usuario } from './usuario';
+import { Usuario } from './user';
 
 export interface PiscinaDashboard {
   id: number;
@@ -92,6 +92,7 @@ export class Piscina {
   propietario?: Usuario;
   name: string;
   volume: number;
+  filtro?: Filtro
   bombas: Bomba[];
   germicidas: Germicida[];
   valvulas: Valvula[];

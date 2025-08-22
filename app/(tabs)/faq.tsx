@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import React from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
 import PreguntasFrecuentes from '@/components/faq/preguntasFrecuentes';
@@ -12,15 +12,14 @@ const FAQ = () => {
   return (
     <ScrollView className="flex-1 bg-white">
       <ScreenTabs>
-
-          <Header 
-            usuario={usuario!} 
-            piscina={selectedPool!} 
-          />
-
-          <WebTabBar />
-          
-        <PreguntasFrecuentes />
+          <View className='w-11/12'>
+            <Header 
+              usuario={usuario!} 
+              piscina={selectedPool!} 
+            />
+            <WebTabBar />
+          <PreguntasFrecuentes />
+        </View>
       </ScreenTabs>
     </ScrollView>
   );

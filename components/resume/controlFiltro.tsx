@@ -20,6 +20,8 @@ export default function ControlFiltro({
     hayUnaFuncionActiva = funcionFiltro.length > 0 ? true : false;
   }
 
+  const isSelected = (tipo: entradaAgua) => entradaAgua?.includes(tipo)
+
   return (
     <ScreenCard>
       <View className="flex-row justify-between items-center mb-4">
@@ -43,24 +45,45 @@ export default function ControlFiltro({
 
       {/*ENTRADAS DE AGUA */}
       <View className="flex-row justify-between gap-2">
-        <Pressable className="border border-grayish-unique rounded-md items-center p-2 flex-1">
+        <Pressable
+          className={`rounded-md items-center p-2 flex-1 ${
+            isSelected('Fondo')
+              ? "border-2 border-blue-500 bg-blue-100"
+              : "border border-grayish-unique"
+          }`}
+        >
           <TintIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Fondo
           </Text>
         </Pressable>
-        <Pressable className="border border-grayish-unique rounded-md items-center p-2 flex-1">
+
+        <Pressable
+          className={`rounded-md items-center p-2 flex-1 ${
+            isSelected('Barrefondo')
+              ? "border-2 border-blue-500 bg-blue-100"
+              : "border border-grayish-unique"
+          }`}
+        >
           <BubbleIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Barrefondo
           </Text>
         </Pressable>
-        <Pressable className="border border-grayish-unique rounded-md items-center p-2 flex-1">
+
+        <Pressable
+          className={`rounded-md items-center p-2 flex-1 ${
+            isSelected('Skimmer')
+              ? "border-2 border-blue-500 bg-blue-100"
+              : "border border-grayish-unique"
+          }`}
+        >
           <EyeIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Skimmer
           </Text>
         </Pressable>
+
       </View>
 
       {/*MENSAJE DE ADVERTENCIA */}

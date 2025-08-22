@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, ScrollView, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
 import StatCard from '@/components/dashboard/statCard';
@@ -8,6 +8,7 @@ import { StatDashboard } from '@/data/domain/stat';
 import { administracionService } from '@/services/administracion.service';
 import { PiscinaDashboard } from '@/data/domain/piscina';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import WebTabBar from '@/components/utiles/webTabBar';
 
 const Dashboard = () => {
   const { usuario } = useAuth();
@@ -58,32 +59,61 @@ const Dashboard = () => {
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-          <Text className="self-start font-geist-bold text-3xl text-text m-5">
-            Panel de Administración
-          </Text>
-          <StatCard
-            title="Usuarios"
-            value={stats.totalUsuarios}
-            label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
-            icon="people"
-          />
+          <View className="w-11/12">
+            <Text className="self-start font-geist-bold text-3xl text-text m-5">
+              Panel de Administración
+            </Text>
 
-          <StatCard
-            title="Piscinas"
-            value={stats.totalPiscinas}
-            label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
-            icon="water-drop"
-          />
+            <WebTabBar isAdmin={true} />
 
-          <StatCard
-            title="Volumen Total"
-            value={stats.volumenTotal}
-            label={`Promedio: ${stats.volumenPromedio} m³ por piscina`}
-            icon="water"
-            unity="m³"
-          />
+            {Platform.OS === "web" ? (
+              <View className="grid grid-cols-3 gap-3">
+                <StatCard
+                  title="Usuarios"
+                  value={stats.totalUsuarios}
+                  label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
+                  icon="people"
+                />
+                <StatCard
+                  title="Piscinas"
+                  value={stats.totalPiscinas}
+                  label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
+                  icon="water-drop"
+                />
+                <StatCard
+                  title="Volumen Total"
+                  value={stats.volumenTotal}
+                  label={`Promedio: ${stats.volumenPromedio} m³ por piscina`}
+                  icon="water"
+                  unity="m³"
+                />
+              </View>
+            ) : (
+              <>
+                <StatCard
+                  title="Usuarios"
+                  value={stats.totalUsuarios}
+                  label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
+                  icon="people"
+                />
+                <StatCard
+                  title="Piscinas"
+                  value={stats.totalPiscinas}
+                  label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
+                  icon="water-drop"
+                />
+                <StatCard
+                  title="Volumen Total"
+                  value={stats.volumenTotal}
+                  label={`Promedio: ${stats.volumenPromedio} m³ por piscina`}
+                  icon="water"
+                  unity="m³"
+                />
+              </>
+            )}
 
-          <PiscinasRegistradas pools={piscinasRegistradas} />
+            <PiscinasRegistradas pools={piscinasRegistradas} />
+          </View>
         </ScreenTabs>
       </ScrollView>
     </PrivateScreen>

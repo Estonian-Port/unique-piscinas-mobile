@@ -1,11 +1,10 @@
-import { Bomba, Germicida, Valvula, Calefaccion, Piscina, PiscinaDashboard } from '../domain/piscina';
+import { Bomba, Germicida, Valvula, Calefaccion, Piscina, PiscinaDashboard, Filtro } from '../domain/piscina';
 import { Registro } from '../domain/registro';
 import { leo, gabi, seba, diego } from './userMock';
 
 // Definición de bombas, germicidas, válvulas, calefacción, registros (puedes expandir si quieres más variedad)
 const bomba1: Bomba = {
   id: 1,
-  nombre: 'Bomba Principal',
   marca: 'Astral',
   modelo: 'Victoria Plus',
   activa: true,
@@ -14,7 +13,6 @@ const bomba1: Bomba = {
 };
 const bomba2: Bomba = {
   id: 2,
-  nombre: 'Bomba Secundaria',
   marca: 'Hayward',
   modelo: 'Super Pump',
   activa: false,
@@ -23,7 +21,6 @@ const bomba2: Bomba = {
 };
 const bomba3: Bomba = {
   id: 3,
-  nombre: 'Bomba Extra',
   marca: 'Intex',
   modelo: 'Ultra',
   activa: true,
@@ -33,14 +30,12 @@ const bomba3: Bomba = {
 
 const lamparaUv: Germicida = {
   id: 1,
-  nombre: 'Lámpara UV',
   vidaRestante: 5,
   estado: true,
   tipo: "GermicidaUV",
 };
 const ionizador: Germicida = {
   id: 2,
-  nombre: 'Ionizador de cobre',
   vidaRestante: 8,
   estado: false,
   tipo: "GermicidaIonizador",
@@ -48,7 +43,6 @@ const ionizador: Germicida = {
 };
 const trasductor: Germicida = {
   id: 3,
-  nombre: 'Trasductor ultrasónido',
   vidaRestante: 60,
   estado: true,
   tipo: "GermicidaTrasductor",
@@ -57,13 +51,11 @@ const trasductor: Germicida = {
 
 const valvula1: Valvula = {
   id: 1,
-  nombre: 'Válvula Selectora',
   tipo: 'Selectora',
   estado: 'Operativa',
 };
 const valvula2: Valvula = {
   id: 2,
-  nombre: 'Válvula Skimmer',
   tipo: 'Bola',
   estado: 'Requiere revisión',
 };
@@ -125,6 +117,7 @@ export const filtroMock: Filtro = {
   marca: 'Hayward',
   modelo: 'ProSeries',
   diametro: 400,
+  activo : true,
   datoExtra: 25,
 };
 

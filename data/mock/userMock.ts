@@ -1,4 +1,4 @@
-import { Usuario } from "../domain/usuario";
+import { Usuario } from "../domain/user";
 
 const leo: Usuario = {
   id: 1,

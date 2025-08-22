@@ -43,13 +43,15 @@ const Equipment = () => {
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-          <Header 
-            usuario={usuario!} 
-            piscina={selectedPool!} 
-          />
-          <WebTabBar />
-          <EstadoSistema pool={piscina!} />
-          <EquipamientoConfigurado pool={piscina!} />
+          <View className='w-11/12'>
+            <Header 
+              usuario={usuario!} 
+              piscina={selectedPool!} 
+            />
+            <WebTabBar />
+            <EstadoSistema pool={piscina!} />
+            <EquipamientoConfigurado pool={piscina!} />
+          </View>
         </ScreenTabs>
       </ScrollView>
     </PrivateScreen>

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, TextInput, ScrollView } from 'react-native';
+import { View, Text, Pressable, TextInput, ScrollView, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { Link } from 'expo-router';
@@ -22,21 +22,28 @@ const PiscinasRegistradas = ({pools} : {pools: PiscinaDashboard[]}) => {
           Piscinas Registradas
         </Text>
         <Link asChild href="/nuevaPiscina">
-          <Pressable className="border rounded-full bg-black w-12 h-12 items-center justify-center">
-            <Text className="text-white font-geist-bold text-xl text-center">
-              +
-            </Text>
+
+        {Platform.OS === "web" ? (
+          <Pressable className="border rounded-md bg-black items-center justify-center">
+              <Text className="text-white font-geist-semi-bold text-center py-2 px-4">+  Nueva Piscina</Text>
           </Pressable>
+        ) : (
+          <Pressable className="border rounded-md bg-black w-12 h-12 items-center justify-center">
+              <Text className="text-white font-geist-bold text-xl text-center">+</Text>
+          </Pressable>
+        )}
         </Link>
       </View>
+
       <TextInput
-        className="border rounded-lg p-2 bg-white text-base border-gray-300 mb-5"
+        className="border rounded-lg p-2 bg-white text-base border-gray-300 mb-5 "
         placeholder="Buscar piscina por nombre o propietario"
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
         autoCapitalize="none"
       />
-      <ScrollView className="flex-1 px-2">
+
+      <ScrollView className="flex-1">
         {filteredPools.map((pool) => (
           <PoolTableCard key={pool.id} pool={pool} />
         ))}

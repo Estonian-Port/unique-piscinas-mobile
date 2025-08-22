@@ -1,7 +1,7 @@
 import { ScrollView, Text, FlatList, View, Pressable } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { piscinasMock } from '@/data/mock/piscinaMock';
-import { gabi, leo } from '@/data/mock/userMock';
+import { leo } from '@/data/mock/userMock';
 import { Screen } from '@/components/utiles/Screen';
 import BombaCard from '@/components/dashboard/bombaCard';
 import CalefaccionCard from '@/components/dashboard/calefaccionCard';
@@ -52,10 +52,10 @@ export default function Equipos() {
               key={item.id}
               bomba={{
                 id: item.id,
-                nombre: item.nombre,
                 marca: item.marca,
                 modelo: item.modelo,
                 activa: item.activa,
+                esVelocidadVariable: item.esVelocidadVariable,
                 potencia: item.potencia,
               }}
             />
@@ -63,7 +63,7 @@ export default function Equipos() {
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Filtro
           </Text>
-          <FiltroCard filtro={pool.filtro} />
+          <FiltroCard filtro={pool.filtro!} />
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Sistemas germicidas
           </Text>
@@ -72,7 +72,7 @@ export default function Equipos() {
               key={item.id}
               germicida={{
                 id: item.id,
-                nombre: item.nombre,
+                tipo: item.tipo,
                 vidaRestante: item.vidaRestante,
                 estado: item.estado,
               }}
@@ -86,7 +86,6 @@ export default function Equipos() {
               key={item.id}
               valvula={{
                 id: item.id,
-                nombre: item.nombre,
                 tipo: item.tipo,
                 estado: item.estado,
               }}
