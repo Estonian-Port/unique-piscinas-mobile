@@ -25,7 +25,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     setModalVisible(false);
-    logout;
+    logout();
   };
 
   if (!user) return null;
