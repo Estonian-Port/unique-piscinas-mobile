@@ -11,9 +11,6 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center">
-          <Text className="text-base font-geist-semi-bold text-text">
-            {germicida.nombre}
-          </Text>
           <Pressable className='ml-2'>
             <EditIcon />
           </Pressable>

@@ -5,7 +5,7 @@ import LogoUniqueHeader from './logoUniqueHeader';
 import BotonPerfil from './botonPerfil';
 
 const NavBar = () => {
-  const { user } = useAuth();
+  const { usuario: user } = useAuth();
 
   if (!user) {
     return null;

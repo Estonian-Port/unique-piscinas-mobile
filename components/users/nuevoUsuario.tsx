@@ -1,10 +1,10 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React, { useRef, useCallback, useEffect } from 'react';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { Formik, FormikProps } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { newUser } from '@/data/domain/user';
+import { NuevoUsuario } from '@/data/domain/usuario';
 
 const validationSchema = Yup.object().shape({
   nombre: Yup.string().required('El nombre es obligatorio'),
@@ -17,14 +17,14 @@ const validationSchema = Yup.object().shape({
     .required('El celular es obligatorio'),
 });
 
-const usuarioVacio: newUser = {
+const usuarioVacio: NuevoUsuario = {
   nombre: '',
   apellido: '',
   email: '',
   celular: undefined,
 };
 
-const NuevoUsuario = () => {
+const NuevoUsuarioForm = () => {
   const formikRef = useRef<any>(null);
 
   useFocusEffect(
@@ -36,7 +36,7 @@ const NuevoUsuario = () => {
     }, [])
   );
 
-  const crearUsuario = async (usuario: newUser, formikActions: any) => {
+  const crearUsuario = async (usuario: NuevoUsuario, formikActions: any) => {
     try {
       // Mostrar que está cargando
       formikActions.setSubmitting(true);
@@ -76,13 +76,11 @@ const NuevoUsuario = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, formikActions) => {
-        const usuarioNuevo: newUser = {
+        const usuarioNuevo: NuevoUsuario = {
           nombre: values.nombre,
           apellido: values.apellido,
           email: values.email,
           celular: values.celular,
-          password: 'unique',
-          isAdmin: false,
         };
 
         crearUsuario(usuarioNuevo, formikActions);
@@ -189,4 +187,4 @@ const NuevoUsuario = () => {
   );
 };
 
-export default NuevoUsuario;
+export default NuevoUsuarioForm;

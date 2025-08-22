@@ -7,7 +7,7 @@ import { piscinaService } from '@/services/piscina.service';
 import PrivateScreen from '@/components/utiles/privateScreen';
 
 const Pools = () => {
-  const { user } = useAuth();
+  const { usuario: user } = useAuth();
   const [pools, setPools] = useState<PiscinaListItem[] | null>(null);
   const [loading, setLoading] = useState(true);
 

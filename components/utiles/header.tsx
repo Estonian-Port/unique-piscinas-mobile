@@ -1,33 +1,32 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import BotonCambio from './botonCambio';
+import { UsuarioLogin, Usuario } from '@/data/domain/usuario';
+import { PiscinaListItem } from '@/data/domain/piscina';
 
 type HeaderProps = {
-  userName: string
-  poolName: string
-  poolVolumen : string
-  moreThan1Pool : boolean
-  isAdmin : boolean
+  usuario: UsuarioLogin
+  piscina: PiscinaListItem
 };
 
-const Header = ({ userName, poolName, poolVolumen, moreThan1Pool, isAdmin }: HeaderProps) => {
+const Header = ({ usuario, piscina }: HeaderProps) => {
   return (
     <>
       <View className="w-11/12 my-3">
         <Text className="font-geist-bold text-2xl text-text">
-          Hola, {userName} bienvenido!
+          Hola, {usuario.nombre} bienvenido!
         </Text>
       </View>
       <View className="flex-row w-11/12 justify-between mb-3">
         <View className="flex-1 pr-4">
           <Text className="font-geist-semi-bold text-xl text-text">
-            {poolName}
+            {piscina.nombre}
           </Text>
           <Text className="font-geist text-base text-text">
-            Volumen de la piscina: {poolVolumen} m3
+            Volumen de la piscina: {piscina.volumen} m3
           </Text>
         </View>
-        {moreThan1Pool && !isAdmin && <BotonCambio />}
+        {usuario.piscinasId.length > 1 && !usuario.isAdmin && <BotonCambio />}
       </View>
     </>
   );

@@ -13,7 +13,7 @@ import { Link, router } from 'expo-router';
 import { useAuth } from '@/context/authContext';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { usuario: user, logout } = useAuth();
 
   useEffect(() => {
     if (!user) {

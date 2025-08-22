@@ -1,6 +1,6 @@
 import { Programacion } from './cicloFiltrado';
 import { Equipo } from './equipo';
-import { User } from './user';
+import { Usuario } from './usuario';
 
 export interface PiscinaDashboard {
   id: number;
@@ -47,6 +47,7 @@ export interface PiscinaListItem {
   id: number;
   nombre: string;
   direccion: string;
+  volumen: number;
 }
 
 export interface PiscinaResume {
@@ -88,7 +89,7 @@ export interface PiscinaNueva {
 
 export class Piscina {
   id: number;
-  propietario?: User;
+  propietario?: Usuario;
   name: string;
   volume: number;
   bombas: Bomba[];
@@ -99,7 +100,7 @@ export class Piscina {
 
   constructor(
     id: number,
-    propietario: User | undefined,
+    propietario: Usuario | undefined,
     name: string,
     volume: number,
     bombas: Bomba[],

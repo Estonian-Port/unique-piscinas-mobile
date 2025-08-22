@@ -1,67 +1,59 @@
-import {
-  View,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { ScreenTabs } from '@/components/utiles/Screen';
-import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado';
-import EstadoSistema from '@/components/equipamiento/estadoSistema';
-import { piscinaService } from '@/services/piscina.service';
-import { PiscinaEquipamiento } from '@/data/domain/piscina';
-import PrivateScreen from '@/components/utiles/privateScreen';
-import { useAuth } from '@/context/authContext';
-import WebTabBar from '@/components/utiles/webTabBar';
-import Header from '@/components/utiles/header';
+import { View, ScrollView, ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ScreenTabs } from '@/components/utiles/Screen'
+import EquipamientoConfigurado from '@/components/equipamiento/equipamientoConfigurado'
+import EstadoSistema from '@/components/equipamiento/estadoSistema'
+import { piscinaService } from '@/services/piscina.service'
+import { PiscinaEquipamiento } from '@/data/domain/piscina'
+import PrivateScreen from '@/components/utiles/privateScreen'
+import { useAuth } from '@/context/authContext'
+import WebTabBar from '@/components/utiles/webTabBar'
+import Header from '@/components/utiles/header'
 
 const Equipment = () => {
-  const { user, selectedPoolId } = useAuth();
-  const [pool, setPool] = useState<PiscinaEquipamiento | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { usuario, selectedPool } = useAuth()
+  const [piscina, setPiscina] = useState<PiscinaEquipamiento | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchPool = async () => {
-      try {
-        if (selectedPoolId !== null) {
-          const data = await piscinaService.getPiscinaEquipamientoById(
-            selectedPoolId
-          );
-          setPool(data);
+    if (!piscina) {
+      const fetchPool = async () => {
+        try {
+          const data = await piscinaService.getPiscinaEquipamientoById(selectedPool!.id)
+          setPiscina(data)
+        } catch (error) {
+          console.error("Error al cargar el equipamiento de la piscina:", error)
+        } finally {
+          setLoading(false)
         }
-      } catch (error) {
-        console.error('Error cargando la piscina:', error);
-      } finally {
-        setLoading(false);
       }
-    };
+      fetchPool()
+    }
+  }, [piscina])
 
-    if (selectedPoolId) fetchPool();
-  }, [selectedPoolId]);
-
-  if (loading || !pool) {
+  if (loading || !usuario || !selectedPool || !piscina) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
         <ActivityIndicator size="large" color="#000" />
       </View>
-    );
+    )
   }
-
+  
   return (
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-
-          <Header userName={user!.nombre} poolName={pool.nombre} 
-          poolVolumen={pool.volumen} moreThan1Pool={user!.piscinasId.length > 1} isAdmin={user!.isAdmin}  />
-
+          <Header 
+            usuario={usuario!} 
+            piscina={selectedPool!} 
+          />
           <WebTabBar />
-
-          <EstadoSistema pool={pool} />
-          <EquipamientoConfigurado pool={pool} />
+          <EstadoSistema pool={piscina!} />
+          <EquipamientoConfigurado pool={piscina!} />
         </ScreenTabs>
       </ScrollView>
     </PrivateScreen>
-  );
-};
+  )
+}
 
-export default Equipment;
+export default Equipment

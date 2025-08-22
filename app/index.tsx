@@ -20,17 +20,17 @@ const Index = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const { login, user, loading } = useAuth();
+  const { login, usuario: user } = useAuth();
 
   useEffect(() => {
-    if (!loading && user) {
+    if (user) {
       if (user.isAdmin) {
         router.replace('/dashboard');
       } else {
         router.replace('/pools');
       }
     }
-  }, [user, loading])
+  }, [user])
 
   const handleLogin = async (email: string, password: string) => {
     try {

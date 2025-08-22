@@ -7,7 +7,7 @@ interface PrivateScreenProps {
 }
 
 const PrivateScreen = ({ children }: PrivateScreenProps) => {
-  const { user } = useAuth();
+  const { usuario: user } = useAuth();
 
   useEffect(() => {
     if (!user) {

@@ -10,7 +10,7 @@ import { PiscinaDashboard } from '@/data/domain/piscina';
 import PrivateScreen from '@/components/utiles/privateScreen';
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { usuario } = useAuth();
   const [stats, setStats] = useState<StatDashboard>();
   const [loading, setLoading] = useState(true);
   const [piscinasRegistradas, setPiscinasRegistradas] = useState<
@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const data = await administracionService.getEstadisticas(user!.id);
+        const data = await administracionService.getEstadisticas(usuario!.id);
         setStats(data);
       } catch (error) {
         console.error('Error cargando las estadísticas:', error);
@@ -32,7 +32,7 @@ const Dashboard = () => {
     const fetchPiscinas = async () => {
       try {
         const data = await administracionService.getPiscinasRegistradas(
-          user!.id
+          usuario!.id
         );
         setPiscinasRegistradas(data);
       } catch (error) {
@@ -40,11 +40,11 @@ const Dashboard = () => {
       }
     };
 
-    if (user) {
+    if (usuario) {
       fetchStats();
       fetchPiscinas();
     }
-  }, [user]);
+  }, [usuario]);
 
   if (loading || !stats) {
     return (

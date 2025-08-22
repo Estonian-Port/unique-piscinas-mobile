@@ -1,13 +1,13 @@
 import { Piscina } from "./piscina";
 
-export interface newUser {
+export interface NuevoUsuario {
   nombre: string;
   apellido: string;
   email: string;
   celular?: number;
 }
 
-export interface UserLogin {
+export interface UsuarioLogin {
   id: number;
   nombre: string;
   apellido: string;
@@ -16,7 +16,7 @@ export interface UserLogin {
   piscinasId: number[];
 }
 
-export class User {
+export class Usuario {
   id: number;
   name: string;
   lastname: string;
