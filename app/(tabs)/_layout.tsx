@@ -43,7 +43,7 @@ const _Layout = () => {
           title: 'Equipos',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="build" title="Equipamiento" />
+            <TabIcon focused={focused} icon="tune" title="Equipamiento" />
           ),
         }}
       />
@@ -63,7 +63,7 @@ const _Layout = () => {
           title: 'FAQ',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon="question-answer" title="FAQ" />
+            <TabIcon focused={focused} icon="live-help" title="FAQ" />
           ),
         }}
       />

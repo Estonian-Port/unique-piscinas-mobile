@@ -10,20 +10,25 @@ const PoolCard = ({ piscina }: { piscina: PiscinaListItem }) => {
   const handlePress = async () => {
     await seleccionarPiscina(piscina.id);
     router.replace(`/(tabs)/resume`);
-  }
+  };
 
   return (
     <Link asChild href={`/(tabs)/resume`}>
-      <Pressable className="relative bg-white rounded-sm shadow-sm w-full justify-center items-center" onPress={handlePress}>
-      <Image
-        source={require('../../assets/images/portada-card-piscina.webp')}
-        style={{ width: '100%', height: 120, borderRadius: 3, opacity: 0.3 }}
-      />
-      <View className="absolute inset-0 justify-center items-center">
-        <Text className="font-geist-semi-bold text-text text-lg text-center">
-        {piscina.nombre}
+      <Pressable
+        className="bg-purple-unique rounded-sm shadow-sm w-full flex-row items-center"
+        onPress={handlePress}
+        style={{ overflow: 'visible' }}
+      >
+        <View style={{ marginLeft: -20, marginRight: 16 }}>
+          <Image
+            source={require('../../assets/images/logotipo-unique.png')}
+            resizeMode="contain"
+            style={{ width: 140, height: 140 }}
+          />
+        </View>
+        <Text className="font-geist-semi-bold text-gold-unique text-xl">
+          {piscina.nombre}
         </Text>
-      </View>
       </Pressable>
     </Link>
   );
