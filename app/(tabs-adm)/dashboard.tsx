@@ -6,7 +6,7 @@ import PiscinasRegistradas from '@/components/dashboard/piscinasRegistradas';
 import { useAuth } from '@/context/authContext';
 import { StatDashboard } from '@/data/domain/stat';
 import { administracionService } from '@/services/administracion.service';
-import { PiscinaDashboard } from '@/data/domain/piscina';
+import { PiscinaRegistrada as PiscinaRegistrada } from '@/data/domain/piscina';
 import PrivateScreen from '@/components/utiles/privateScreen';
 import WebTabBar from '@/components/utiles/webTabBar';
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState<StatDashboard>();
   const [loading, setLoading] = useState(true);
   const [piscinasRegistradas, setPiscinasRegistradas] = useState<
-    PiscinaDashboard[]
+    PiscinaRegistrada[]
   >([]);
 
   useEffect(() => {

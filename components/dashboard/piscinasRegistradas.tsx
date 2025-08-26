@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { Link } from 'expo-router';
 import PoolTableCard from './cardPiscinaTabla';
-import { PiscinaDashboard } from '@/data/domain/piscina';
+import { PiscinaRegistrada } from '@/data/domain/piscina';
 
-const PiscinasRegistradas = ({pools} : {pools: PiscinaDashboard[]}) => {
+const PiscinasRegistradas = ({pools} : {pools: PiscinaRegistrada[]}) => {
   const [searchQuery, setSearchQuery] = useState("")
 
   // Filtrar piscinas según la búsqueda
   const filteredPools = pools.filter(
     (pool) =>
-      pool.nombre.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      pool.direccion.toLowerCase().includes(searchQuery.toLowerCase()) ||
       pool.administradorNombre.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 

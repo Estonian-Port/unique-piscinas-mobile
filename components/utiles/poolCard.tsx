@@ -27,7 +27,7 @@ const PoolCard = ({ piscina }: { piscina: PiscinaListItem }) => {
           />
         </View>
         <Text className="font-geist-semi-bold text-gold-unique text-xl">
-          {piscina.nombre}
+          {piscina.direccion}
         </Text>
       </Pressable>
     </Link>

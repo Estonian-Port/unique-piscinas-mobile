@@ -1,43 +1,39 @@
 import { Pressable, ScrollView, Text, View } from 'react-native';
-import { filtroMock } from '@/data/mock/piscinaMock';
 import { Screen } from '@/components/utiles/Screen';
-import { Piscina, PiscinaNueva } from '@/data/domain/piscina';
+import { PiscinaFichaTecnica } from '@/data/domain/piscina';
 import { EditIcon } from '@/assets/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalEditarInfoGeneral from '@/components/dashboard/modalEditarInfoGeneral';
 import ModalEditarDimensiones from '@/components/dashboard/modalEditarDimensiones';
 import ModalEditarNotas from '@/components/dashboard/modalEditarNotas';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import { useAuth } from '@/context/authContext';
+import { administracionService } from '@/services/administracion.service';
+import { useLocalSearchParams } from 'expo-router';
 
 export default function FichaTecnica() {
+  const { poolId } = useLocalSearchParams();
+  const [pool, setPool] = useState<PiscinaFichaTecnica | null>(null);
   const [modalEditInfo, setModalEditInfo] = useState(false);
   const [modalEditDimension, setModalEditDimension] = useState(false);
   const [modalEditNotas, setModalEditNotas] = useState(false);
 
-  const handleEdit = (poolEditada: Piscina) => {
-    null;
-  };
+  useEffect(() => {
+    const fetchPool = async () => {
+      try {
+        const data = await administracionService.getPiscinaFichaTecnicaById(Number(poolId));
+        console.log('Piscina ficha tecnica', data);
+        setPool(data);
+      } catch (error) {
+        console.error('Error fetching pool data:', error);
+      }
+    };
 
-  const pool: PiscinaNueva = {
-    id: 1,
-    nombre: 'Piscina Central',
-    direccion: 'Calle Falsa 123',
-    ciudad: 'Ciudad Ejemplo',
-    desbordante: true,
-    largo: 10,
-    ancho: 5,
-    profundidad: 2,
-    volumen: 100,
-    volumenTC: 95,
-    bomba: [],
-    filtro: filtroMock,
-    valvulas: [],
-    sistemaGermicida: [],
-    cloroSalino: true,
-    controlAutomaticoPH: false,
-    orp: true,
-    administradorId: 101,
-    notas: 'Piscina principal del complejo',
+    fetchPool();
+  }, [poolId]);
+
+  const handleEdit = (poolEditada: PiscinaFichaTecnica) => {
+    null;
   };
 
   const InfoRow = ({
@@ -88,9 +84,6 @@ export default function FichaTecnica() {
           <View className="p-5 w-11/12">
             {/* Header */}
             <View className="mb-6">
-              <Text className="font-geist-semi-bold text-2xl text-gray-900 mb-1">
-                {pool.nombre}
-              </Text>
               <Text className="font-geist text-gray-600 text-sm">
                 Ficha Técnica
               </Text>
@@ -101,19 +94,19 @@ export default function FichaTecnica() {
               title="Información General"
               action={() => setModalEditInfo(true)}
             >
-              <InfoRow label="Dirección" value={pool.direccion} />
-              <InfoRow label="Ciudad" value={pool.ciudad} isLast />
+              <InfoRow label="Dirección" value={pool!.direccion} />
+              <InfoRow label="Ciudad" value={pool!.ciudad} isLast />
               <InfoRow
                 label="Usuario administrador"
                 value={
-                  pool.administradorId != null
-                    ? pool.administradorId.toString()
+                  pool!.nombreAdministrador != null
+                    ? pool!.nombreAdministrador
                     : 'No asignado'
                 }
                 isLast
               />
             </SectionCard>
-            {modalEditInfo && (
+            {modalEditInfo && pool && (
               <ModalEditarInfoGeneral
                 visible={modalEditInfo}
                 onClose={() => setModalEditInfo(false)}
@@ -129,25 +122,25 @@ export default function FichaTecnica() {
             >
               <InfoRow
                 label="Tipo de Piscina"
-                value={pool.desbordante ? 'Desborde' : 'Skimmer'}
+                value={pool!.esDesbordante ? 'Infinity' : 'Skimmer'}
               />
-              <InfoRow label="Largo" value={`${pool.largo} m`} />
-              <InfoRow label="Ancho" value={`${pool.ancho} m`} />
-              <InfoRow label="Profundidad" value={`${pool.profundidad} m`} />
+              <InfoRow label="Largo" value={`${pool!.largo} m`} />
+              <InfoRow label="Ancho" value={`${pool!.ancho} m`} />
+              <InfoRow label="Profundidad" value={`${pool!.profundidad} m`} />
               <InfoRow
                 label="Volumen"
-                value={`${pool.volumen} m³`}
-                isLast={!pool.desbordante}
+                value={`${pool!.volumen} m³`}
+                isLast={!pool!.esDesbordante}
               />
-              {pool.desbordante && (
+              {pool!.esDesbordante && (
                 <InfoRow
                   label="Volumen T.C."
-                  value={`${pool.volumenTC} m³`}
+                  value={`${pool!.volumenTC} m³`}
                   isLast
                 />
               )}
             </SectionCard>
-            {modalEditDimension && (
+            {modalEditDimension && pool && (
               <ModalEditarDimensiones
                 visible={modalEditDimension}
                 onClose={() => setModalEditDimension(false)}
@@ -163,13 +156,13 @@ export default function FichaTecnica() {
             >
               <View className="p-4">
                 <Text className="font-geist text-gray-700 text-sm leading-5">
-                  {pool.notas != null && pool.notas !== ''
-                    ? pool.notas
+                  {pool!.notas != null && pool!.notas !== ''
+                    ? pool!.notas
                     : 'No hay notas adicionales.'}
                 </Text>
               </View>
             </SectionCard>
-            {modalEditNotas && (
+            {modalEditNotas && pool && (
               <ModalEditarNotas
                 visible={modalEditNotas}
                 onClose={() => setModalEditNotas(false)}
@@ -177,6 +170,7 @@ export default function FichaTecnica() {
                 pool={pool}
               />
             )}
+          
           </View>
         </Screen>
       </ScrollView>

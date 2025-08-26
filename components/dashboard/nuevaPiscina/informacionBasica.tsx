@@ -9,10 +9,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  nombre: Yup.string().required('El nombre es obligatorio'),
   direccion: Yup.string().required('La dirección es obligatoria'),
   ciudad: Yup.string().required('La ciudad es obligatoria'),
   notas: Yup.string().max(100, 'Máximo 100 caracteres'),
+  placaId: Yup.number().required('El id de la placa es obligatoria'),
   administradorId: Yup.number().nullable(),
 });
 
@@ -32,7 +32,7 @@ const InformacionBasica = ({
 
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
-    { label: 'Asignar propietario más tarde', value: null },
+    { label: 'Asignar propietario más tarde', value: undefined },
     ...usuarios.map((usuario) => ({
       label: usuario.name + ' ' + usuario.lastname,
       value: usuario.id,
@@ -42,11 +42,11 @@ const InformacionBasica = ({
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     return {
-      nombre: nuevaPiscina.nombre ?? '',
       direccion: nuevaPiscina.direccion ?? '',
       ciudad: nuevaPiscina.ciudad ?? '',
       notas: nuevaPiscina.notas ?? '',
       administradorId: nuevaPiscina.administradorId ?? null,
+      placaId: nuevaPiscina.placaId ?? 0,
     };
   };
 
@@ -60,11 +60,11 @@ const InformacionBasica = ({
       onSubmit={(values) => {
         setNuevaPiscina({
           ...nuevaPiscina,
-          nombre: values.nombre,
           direccion: values.direccion,
           ciudad: values.ciudad,
           notas: values.notas,
           administradorId: values.administradorId,
+          placaId: values.placaId,
         });
         onNext();
       }}
@@ -86,20 +86,6 @@ const InformacionBasica = ({
             </Text>
             <PasosFormulario paso={1} />
           </View>
-
-          <Text className="font-geist text-text text-base mt-3">
-            Nombre de la piscina
-          </Text>
-          <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.nombre}
-            onChangeText={handleChange('nombre')}
-            onBlur={handleBlur('nombre')}
-            placeholder="Ej: Piscina Principal"
-          />
-          {touched.nombre && errors.nombre && (
-            <Text className="text-red-500 mt-2">{errors.nombre}</Text>
-          )}
 
           <Text className="font-geist text-text text-base mt-3">
             Propietario
@@ -166,6 +152,18 @@ const InformacionBasica = ({
           />
           {touched.ciudad && errors.ciudad && (
             <Text className="text-red-500 mt-2">{errors.ciudad}</Text>
+          )}
+
+          <Text className="font-geist text-text text-base mt-3">ID de la placa</Text>
+          <TextInput
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+            value={values.placaId.toString()}
+            onChangeText={handleChange('placaId')}
+            onBlur={handleBlur('placaId')}
+            placeholder="Ej: 123456"
+          />
+          {touched.placaId && errors.placaId && (
+            <Text className="text-red-500 mt-2">{errors.placaId}</Text>
           )}
 
           <Text className="font-geist text-text text-base mt-3">

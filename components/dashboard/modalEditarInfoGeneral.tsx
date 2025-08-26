@@ -8,12 +8,11 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import { Filtro, Piscina, PiscinaNueva } from '@/data/domain/piscina';
+import { PiscinaFichaTecnica } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 const validationSchema = Yup.object().shape({
-  nombre: Yup.string().required('El nombre es obligatorio'),
   direccion: Yup.string().required('La dirección es obligatoria'),
   ciudad: Yup.string().required('La ciudad es obligatoria'),
   administradorId: Yup.number().nullable(),
@@ -27,8 +26,8 @@ const ModalEditarInfoGeneral = ({
 }: {
   visible: boolean;
   onClose: () => void;
-  pool: PiscinaNueva;
-  onSave: (poolEditado: PiscinaNueva) => void;
+  pool: PiscinaFichaTecnica;
+  onSave: (poolEditado: PiscinaFichaTecnica) => void;
 }) => {
 
   return (
@@ -40,7 +39,6 @@ const ModalEditarInfoGeneral = ({
     >
       <Formik
         initialValues={{
-          nombre: pool.nombre,
           direccion: pool.direccion,
           ciudad: pool.ciudad,
         }}
@@ -48,7 +46,6 @@ const ModalEditarInfoGeneral = ({
         onSubmit={(values) => {
           onSave({
             ...pool,
-            nombre: values.nombre,
             direccion: values.direccion,
             ciudad: values.ciudad,
           });
@@ -71,22 +68,6 @@ const ModalEditarInfoGeneral = ({
                 <Text className="text-lg font-geist-semi-bold text-text mb-4">
                   Editar Información General
                 </Text>
-
-                <Text className="font-geist text-text text-base mt-3">
-                  Nombre
-                </Text>
-                <TextInput
-                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-                  value={pool.nombre}
-                  onChangeText={handleChange('nombre')}
-                  onBlur={handleBlur('nombre')}
-                  placeholder="Ej: Piscina Principal"
-                />
-                {errors.nombre && touched.nombre && (
-                  <Text className="text-red-500 text-sm mt-1">
-                    {errors.nombre}
-                  </Text>
-                )}
 
                 <Text className="font-geist text-text text-base mt-3">
                   Dirección

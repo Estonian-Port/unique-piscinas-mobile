@@ -1,4 +1,4 @@
-import { Bomba, Germicida, Valvula, Calefaccion, Piscina, PiscinaDashboard, Filtro } from '../domain/piscina';
+import { Bomba, Germicida, Valvula, Calefaccion, Piscina, PiscinaRegistrada, Filtro } from '../domain/piscina';
 import { Registro } from '../domain/registro';
 import { leo, gabi, seba, diego } from './userMock';
 
@@ -254,7 +254,7 @@ diego.piscinas = piscinas.filter((p) => p.propietario === diego);
 
 export const piscinasMock: Piscina[] = piscinas;
 
-const piscinasDashboard: PiscinaDashboard[] = [
+const piscinasDashboard: PiscinaRegistrada[] = [
   {
     id: 1,
     nombre: 'Piscina Av. San Martín 123',
@@ -513,4 +513,4 @@ const piscinasDashboard: PiscinaDashboard[] = [
   },
 ];
 
-const piscinasDashboardMock: PiscinaDashboard[] = piscinasDashboard;
+const piscinasDashboardMock: PiscinaRegistrada[] = piscinasDashboard;

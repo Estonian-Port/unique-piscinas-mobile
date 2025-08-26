@@ -12,13 +12,11 @@ import {
   EyeIcon,
   HistorialIcon,
   InfoIcon,
-  LoginIcon,
   PersonIcon,
   TagIcon,
   TintIcon,
 } from '@/assets/icons';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import ModalEliminarPiscina from './modalEliminarPiscina';
+import { PiscinaRegistrada as PiscinaRegistrada } from '@/data/domain/piscina';
 
 // Componente para mostrar el estado del pH con color contextual
 const PhIndicator = ({ value }: { value: number }) => {
@@ -95,8 +93,7 @@ const EquipmentItem = ({
   );
 };
 
-const PoolTableCard = ({ pool }: { pool: any }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -111,7 +108,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
           numberOfLines={2}
           ellipsizeMode="tail"
         >
-          {pool.nombre}
+          {pool.direccion}
         </Text>
         <Pressable className="p-2 ml-auto">
           <EditIcon size={20} color="#333" />
@@ -133,7 +130,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
                 Propietario:
               </Text>
               <Text className="text-text font-geist-semi-bold text-sm">
-                {pool.propietario}
+                {pool.administradorNombre}
               </Text>
             </View>
 
@@ -144,7 +141,7 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
               </Text>
               <View className="bg-gray-900 rounded-full px-3 py-1">
                 <Text className="font-geist-semi-bold text-white text-xs">
-                  {pool.tipo}
+                  {pool.esDesbordante ? 'Infinity' : 'Skimmer'}
                 </Text>
               </View>
             </View>
@@ -182,36 +179,34 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
             </View>
           </View>
 
-          {/* Equipos */}
+          {/* Sistemas germicidas */}
           <Text className="text-gray-700 font-geist-semi-bold text-sm mb-3">
-            Equipos:
+            Sistemas germicidas:
           </Text>
           <View className="flex-row flex-wrap justify-between mb-4 ">
-            {pool.equipos.map(
-              (
-                equipo: { tipo: string; estado: string },
-                index: React.Key | null | undefined
-              ) => (
-                <View key={index} className="w-[48%] mb-2">
-                  <EquipmentItem
-                    tipo={equipo.tipo}
-                    estado={
-                      equipo.estado as
-                        | 'Operativo'
-                        | 'Inactivo'
-                        | 'Atención urgente'
-                        | 'Alerta'
-                    }
-                  />
-                </View>
-              )
-            )}
+            {pool.sistemasGermicidas.map((sistema, index) => (
+              <View key={index} className="w-[48%] mb-2">
+                <EquipmentItem
+                  tipo={sistema.tipo}
+                  estado={
+                    sistema.estado as
+                      | 'Operativo'
+                      | 'Inactivo'
+                      | 'Atención urgente'
+                      | 'Alerta'
+                  }
+                />
+              </View>
+            ))}
           </View>
 
           {/* Acciones */}
 
           <View className="flex-row justify-between mt-2">
-            <Link asChild href={`/fichaTecnica`}>
+            <Link
+              asChild
+              href={{ pathname: '/fichaTecnica', params: { poolId: pool.id } }}
+            >
               <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
                 <InfoIcon size={16} color="#fff" />
                 <Text className="text-white font-geist-semi-bold text-sm ml-2">
@@ -236,23 +231,6 @@ const PoolTableCard = ({ pool }: { pool: any }) => {
               </Pressable>
             </Link>
           </View>
-          {/*
-            <Pressable
-              className="bg-red-alert rounded-lg py-3 flex-1 flex-row items-center justify-center mt-2"
-              onPress={() => setModalVisible(true)}
-            >
-              <DeleteIcon size={16} color="#fff" />
-              <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                Eliminar Piscina
-              </Text>
-            </Pressable>
-            {modalVisible && (
-              <ModalEliminarPiscina
-                visible={modalVisible}
-                onClose={() => setModalVisible(false)}
-              />
-            )}
-          */}
         </>
       )}
     </View>

@@ -2,24 +2,32 @@ import { Programacion } from './cicloFiltrado';
 import { Equipo } from './equipo';
 import { Usuario } from './user';
 
-export interface PiscinaDashboard {
+export interface PiscinaRegistrada {
   id: number;
-  nombre: string;
   direccion: string;
-  volumen: string;
   esDesbordante: boolean;
   administradorNombre: string;
   ph: number;
   sistemasGermicidas: Germicida[];
-  calefaccion: Calefaccion;
-  propietario: string;
-  tipo: string;
-  equipos: Equipo[];
+}
+
+export interface PiscinaFichaTecnica {
+  id: number;
+  direccion: string;
+  ciudad: string;
+  nombreAdministrador: string;
+  placaId: number;
+  esDesbordante: boolean;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC: number | null;
+  notas: string;
 }
 
 export interface PiscinaProgramacion {
   id: number;
-  nombre: string;
   direccion: string;
   volumen: string;
   programacionIluminacion: Programacion[];
@@ -28,7 +36,6 @@ export interface PiscinaProgramacion {
 
 export interface PiscinaEquipamiento {
   id: number;
-  nombre: string;
   direccion: string;
   volumen: string;
   estadoFiltro: boolean;
@@ -45,14 +52,12 @@ export interface PiscinaEquipamiento {
 
 export interface PiscinaListItem {
   id: number;
-  nombre: string;
   direccion: string;
   volumen: number;
 }
 
 export interface PiscinaResume {
   id: number;
-  nombre: string;
   direccion: string;
   volumen: string;
   clima: string;
@@ -64,35 +69,11 @@ export interface PiscinaResume {
   calefaccion: boolean;
 }
 
-export interface PiscinaNueva {
-  id: number;
-  nombre: string;
-  direccion: string;
-  ciudad: string;
-  desbordante: boolean;
-  largo: number;
-  ancho: number;
-  profundidad: number;
-  volumen: number;
-  volumenTC?: number;
-  bomba: Bomba[];
-  filtro: Filtro;
-  valvulas: Valvula[];
-  sistemaGermicida: Germicida[];
-  calefaccion?: Calefaccion;
-  cloroSalino: boolean;
-  controlAutomaticoPH: boolean;
-  orp: boolean;
-  administradorId: number | null;
-  notas?: string;
-}
-
 export class Piscina {
   id: number;
   propietario?: Usuario;
-  name: string;
   volume: number;
-  filtro?: Filtro
+  filtro?: Filtro;
   bombas: Bomba[];
   germicidas: Germicida[];
   valvulas: Valvula[];
@@ -122,14 +103,6 @@ export class Piscina {
   }
 }
 
-
-export type Filtro1 = {
-  marca: string;
-  modelo: string;
-  diametro: number;
-  estado: string;
-};
-
 export type Bomba = {
   id: number;
   marca: string;
@@ -139,13 +112,12 @@ export type Bomba = {
   activa: boolean;
 };
 
-
 export type Germicida = {
   id: number;
   tipo: string;
   vidaRestante: number;
-  estado: boolean;
-}
+  estado: string;
+};
 
 export type Filtro = {
   id: number;
@@ -225,7 +197,6 @@ export type funcionFiltro =
   | 'rinse'
   | 'drain'
   | 'recirculate';
-
 
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
 

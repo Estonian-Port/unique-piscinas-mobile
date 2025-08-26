@@ -8,7 +8,7 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import { Filtro, Piscina, PiscinaNueva } from '@/data/domain/piscina';
+import { PiscinaFichaTecnica } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
@@ -24,8 +24,8 @@ const ModalEditarNotas = ({
 }: {
   visible: boolean;
   onClose: () => void;
-  pool: PiscinaNueva;
-  onSave: (poolEditado: PiscinaNueva) => void;
+  pool: PiscinaFichaTecnica;
+  onSave: (poolEditado: PiscinaFichaTecnica) => void;
 }) => {
   return (
     <Modal

@@ -8,7 +8,7 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import { Filtro, Piscina, PiscinaNueva } from '@/data/domain/piscina';
+import { PiscinaFichaTecnica } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
@@ -51,8 +51,8 @@ const ModalEditarDimensiones = ({
 }: {
   visible: boolean;
   onClose: () => void;
-  pool: PiscinaNueva;
-  onSave: (poolEditado: PiscinaNueva) => void;
+  pool: PiscinaFichaTecnica;
+  onSave: (poolEditado: PiscinaFichaTecnica) => void;
 }) => {
   return (
     <Modal
@@ -67,14 +67,14 @@ const ModalEditarDimensiones = ({
           ancho: pool.ancho ? pool.ancho.toString() : '',
           profundidad: pool.profundidad ? pool.profundidad.toString() : '',
           volumen: pool.volumen ? pool.volumen.toString() : '',
-          desbordante: pool.desbordante ?? false,
+          desbordante: pool.esDesbordante ?? false,
           volumenTC: pool.volumenTC ? pool.volumenTC.toString() : '',
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           onSave({
             ...pool,
-            desbordante: values.desbordante,
+            esDesbordante: values.desbordante,
             largo: parseFloat(values.largo),
             ancho: parseFloat(values.ancho),
             profundidad: parseFloat(values.profundidad),
