@@ -6,17 +6,18 @@ export interface PiscinaRegistrada {
   id: number;
   direccion: string;
   esDesbordante: boolean;
-  administradorNombre: string;
+  nombreAdministrador: string;
   ph: number;
   sistemasGermicidas: Germicida[];
 }
 
+//Se usa en la vista ficha tecnica
 export interface PiscinaFichaTecnica {
   id: number;
   direccion: string;
   ciudad: string;
   nombreAdministrador: string;
-  placaId: number;
+  codigoPlaca: number;
   esDesbordante: boolean;
   largo: number;
   ancho: number;
@@ -26,6 +27,18 @@ export interface PiscinaFichaTecnica {
   notas: string;
 }
 
+//Se usa en la vista de admin -> equipos
+export interface PiscinaEquipos {
+  id: number;
+  direccion: string;
+  bombas: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemasGermicidas: Germicida[];
+  calefaccion: Calefaccion | null;
+}
+
+//Se usa en la vista usuario -> programation
 export interface PiscinaProgramacion {
   id: number;
   direccion: string;
@@ -34,6 +47,7 @@ export interface PiscinaProgramacion {
   programacionFiltrado: Programacion[];
 }
 
+//Se usa en la vista usuario -> equipment
 export interface PiscinaEquipamiento {
   id: number;
   direccion: string;

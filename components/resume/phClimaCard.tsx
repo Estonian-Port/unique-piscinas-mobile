@@ -41,7 +41,7 @@ const PhClimaCard = ({
         <Text className="font-geist-semi-bold text-text text-lg mb-3">pH</Text>
         <Text className="font-geist-semi-bold text-text text-3xl">{ph}</Text>
         <Text className="font-geist-light text-text text-sm">
-          {diferenciaPh} desde la última medición
+          {diferenciaPh.toFixed(2)} desde la última medición
         </Text>
         <View className="w-full bg-gray-200 h-2 rounded-full mt-4">
           <View

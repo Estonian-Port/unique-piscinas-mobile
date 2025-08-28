@@ -1,4 +1,4 @@
-import { ScrollView, Text, FlatList, View, Pressable } from 'react-native';
+import { ScrollView, Text, FlatList, View, Pressable, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import { leo } from '@/data/mock/userMock';
@@ -10,44 +10,61 @@ import ValvulaCard from '@/components/dashboard/valvulaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
 import { ScreenCard } from '@/components/utiles/ScreenCard';
 import { RegisterIcon } from '@/assets/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalNuevoRegistro from '@/components/dashboard/modalNuevoRegistro';
 import FiltroCard from '@/components/dashboard/filtroCard';
 import PrivateScreen from '@/components/utiles/privateScreen';
+import { PiscinaEquipamiento, PiscinaEquipos } from '@/data/domain/piscina';
+import { useAuth } from '@/context/authContext';
+import { administracionService } from '@/services/administracion.service';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
-  const { piscinasIdEquipos } = useLocalSearchParams();
-  const user = leo;
+  const { usuario, selectedPool } = useAuth();
+  const [pool, setPool] = useState<PiscinaEquipos | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Agregar estado de loading
 
-  const searchPool = (id: number) => {
-    return piscinasMock.filter(
-      (piscina) => piscina.id === Number(piscinasIdEquipos)
-    )[0];
-  };
+  useEffect(() => {
+    const fetchPool = async () => {
+      if (!selectedPool) return; // Validar que existe selectedPool
+      
+      try {
+        setIsLoading(true); // Iniciar loading
+        const data = await administracionService.getPiscinaEquiposById(usuario!.id, selectedPool.id);
+        setPool(data);
+      } catch (error) {
+        console.error('Error fetching pool data:', error);
+      } finally {
+        setIsLoading(false); // Finalizar loading
+      }
+    };
 
-  const pool = searchPool(Number(piscinasIdEquipos));
+    fetchPool();
+  }, [selectedPool, usuario]);
 
-  if (!pool) {
+  // Mostrar loading mientras carga
+  if (isLoading || !selectedPool || !pool) {
     return (
       <PrivateScreen>
-        <View className="flex-1 items-center justify-center bg-white">
-          <Text className="text-lg text-red-500">Piscina no encontrada</Text>
+        <View className="flex-1 justify-center items-center bg-gray-50">
+          <ActivityIndicator size="large" color="#000" />
+          <Text className="mt-4 text-gray-600 font-geist">Cargando ficha técnica...</Text>
         </View>
       </PrivateScreen>
     );
   }
+
   return (
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <Screen>
           <Text className="self-start p-5 text-text font-geist-semi-bold text-2xl">
-            Editar Equipamiento - {pool.name}
+            Editar Equipamiento - {pool.direccion}
           </Text>
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Bombas de filtración
           </Text>
-          {pool.bombas.map((item) => (
+          {pool!.bombas.map((item) => (
             <BombaCard
               key={item.id}
               bomba={{
@@ -67,7 +84,7 @@ export default function Equipos() {
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Sistemas germicidas
           </Text>
-          {pool.germicidas.map((item) => (
+          {pool.sistemasGermicidas.map((item) => (
             <GermicidaCard
               key={item.id}
               germicida={{
@@ -94,7 +111,9 @@ export default function Equipos() {
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Calefacción
           </Text>
-          <CalefaccionCard calefaccion={pool.calefaccion} />
+          {pool.calefaccion && (
+            <CalefaccionCard calefaccion={pool.calefaccion} />
+          )}
 
           <View className="flex-row items-center justify-between mb-4 w-11/12 self-center">
             <Text className="text-text font-geist-semi-bold text-xl">

@@ -19,6 +19,7 @@ export default function Resume() {
 
   useEffect(() => {
     if (selectedPool) {
+      console.log('Selected pool:', selectedPool);
       setLoading(true)
       const fetchPool = async () => {
         try {

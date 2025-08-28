@@ -15,7 +15,7 @@ import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
 import { useAuth } from '@/context/authContext';
 
 const Index = () => {
-  const [email, setEmail] = useState('seba@unique.com');
+  const [email, setEmail] = useState('leo@unique.com');
   const [password, setPassword] = useState('asd');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');

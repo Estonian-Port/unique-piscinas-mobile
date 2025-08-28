@@ -1,7 +1,7 @@
 import { View, Text, Pressable, Settings } from 'react-native';
 import React, { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import {
   BookIcon,
   ChevronDownIcon,
@@ -17,6 +17,7 @@ import {
   TintIcon,
 } from '@/assets/icons';
 import { PiscinaRegistrada as PiscinaRegistrada } from '@/data/domain/piscina';
+import { useAuth } from '@/context/authContext';
 
 // Componente para mostrar el estado del pH con color contextual
 const PhIndicator = ({ value }: { value: number }) => {
@@ -95,6 +96,35 @@ const EquipmentItem = ({
 
 const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { seleccionarPiscina } = useAuth();
+
+  const handleFicha = async () => {
+    try {
+      await seleccionarPiscina(pool.id);
+      router.push('/fichaTecnica');
+    } catch (error) {
+      console.error('Error seleccionando piscina:', error);
+      // Aquí podrías mostrar un toast de error
+    }
+  };
+
+  const handlePanel = async () => {
+    try {
+      await seleccionarPiscina(pool.id);
+      router.push('/(tabs)/resume');
+    } catch (error) {
+      console.error('Error seleccionando piscina:', error);
+    }
+  };
+
+    const handleEquipos = async () => {
+    try {
+      await seleccionarPiscina(pool.id);
+      router.push('/equipos');
+    } catch (error) {
+      console.error('Error seleccionando piscina:', error);
+    }
+  };
 
   return (
     <View className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 mb-4">
@@ -110,9 +140,6 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
         >
           {pool.direccion}
         </Text>
-        <Pressable className="p-2 ml-auto">
-          <EditIcon size={20} color="#333" />
-        </Pressable>
         {isExpanded ? (
           <ChevronUpIcon size={20} color="#333" />
         ) : (
@@ -130,7 +157,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
                 Propietario:
               </Text>
               <Text className="text-text font-geist-semi-bold text-sm">
-                {pool.administradorNombre}
+                {pool.nombreAdministrador}
               </Text>
             </View>
 
@@ -203,33 +230,24 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
           {/* Acciones */}
 
           <View className="flex-row justify-between mt-2">
-            <Link
-              asChild
-              href={{ pathname: '/fichaTecnica', params: { poolId: pool.id } }}
-            >
-              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-                <InfoIcon size={16} color="#fff" />
-                <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                  Ficha
-                </Text>
-              </Pressable>
-            </Link>
-            <Link asChild href={`/(tabs)/${pool.id}`}>
-              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-                <EyeIcon size={16} color="#fff" />
-                <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                  Panel
-                </Text>
-              </Pressable>
-            </Link>
-            <Link asChild href={`/${pool.id}`}>
-              <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center">
-                <ConfigurationIcon size={16} color="#fff" />
-                <Text className="text-white font-geist-semi-bold text-sm ml-2">
-                  Equipos
-                </Text>
-              </Pressable>
-            </Link>
+            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handleFicha}>
+              <InfoIcon size={16} color="#fff" />
+              <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                Ficha
+              </Text>
+            </Pressable>
+            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handlePanel}>
+              <EyeIcon size={16} color="#fff" />
+              <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                Panel
+              </Text>
+            </Pressable>
+            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center" onPress={handleEquipos}>
+              <ConfigurationIcon size={16} color="#fff" />
+              <Text className="text-white font-geist-semi-bold text-sm ml-2">
+                Equipos
+              </Text>
+            </Pressable>
           </View>
         </>
       )}

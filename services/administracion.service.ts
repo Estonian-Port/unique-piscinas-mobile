@@ -1,4 +1,4 @@
-import { PiscinaRegistrada, PiscinaFichaTecnica } from '@/data/domain/piscina';
+import { PiscinaRegistrada, PiscinaFichaTecnica, PiscinaEquipos } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { StatDashboard } from '@/data/domain/stat';
 
@@ -14,8 +14,13 @@ class AdministracionService {
     return response.data.data;
   };
 
-  getPiscinaFichaTecnicaById = async (piscinaId: number): Promise<PiscinaFichaTecnica | null> => {
-    const response = await api.get(`/administracion/piscina-ficha-tecnica/${piscinaId}`);
+  getPiscinaFichaTecnicaById = async (userId:number, piscinaId: number): Promise<PiscinaFichaTecnica | null> => {
+    const response = await api.get(`/administracion/piscina-ficha-tecnica/${userId}/${piscinaId}`);
+    return response.data.data;
+  };
+
+  getPiscinaEquiposById = async (userId:number, piscinaId: number): Promise<PiscinaEquipos> => {
+    const response = await api.get(`/administracion/piscina-equipos/${userId}/${piscinaId}`);
     return response.data.data;
   };
 }

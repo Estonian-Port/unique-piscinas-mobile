@@ -12,7 +12,7 @@ const PiscinasRegistradas = ({pools} : {pools: PiscinaRegistrada[]}) => {
   const filteredPools = pools.filter(
     (pool) =>
       pool.direccion.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pool.administradorNombre.toLowerCase().includes(searchQuery.toLowerCase()),
+      pool.nombreAdministrador.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
