@@ -96,7 +96,7 @@ const EquipmentItem = ({
 
 const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { seleccionarPiscina } = useAuth();
+  const { seleccionarPiscina, selectedPool } = useAuth();
 
   const handleFicha = async () => {
     try {
@@ -118,7 +118,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
   };
 
     const handleEquipos = async () => {
-    try {
+    try {      
       await seleccionarPiscina(pool.id);
       router.push('/equipos');
     } catch (error) {

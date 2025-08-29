@@ -9,6 +9,7 @@ import {
   MonitorIcon,
   PersonIcon,
 } from '@/assets/icons';
+import { Registro } from '@/data/domain/piscina';
 
 const RegistroCard = ({ registro }: { registro: Registro }) => {
   return (
@@ -64,7 +65,7 @@ const RegistroCard = ({ registro }: { registro: Registro }) => {
           <View className="py-3">
             <Text className="text-gray-500 text-xs mb-1">Técnico</Text>
             <Text className="text-gray-800 font-geist-semi-bold text-sm">
-              {registro.tecnico}
+              {registro.nombreTecnico}
             </Text>
           </View>
         </View>

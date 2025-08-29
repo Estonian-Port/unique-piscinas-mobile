@@ -26,8 +26,11 @@ export default function Equipos() {
 
   useEffect(() => {
     const fetchPool = async () => {
-      if (!selectedPool) return; // Validar que existe selectedPool
-      
+      if (!selectedPool) return;
+
+      console.log('Fetching data for selected pool:', selectedPool);
+      console.log('User:', usuario);
+
       try {
         setIsLoading(true); // Iniciar loading
         const data = await administracionService.getPiscinaEquiposById(usuario!.id, selectedPool.id);
@@ -48,7 +51,7 @@ export default function Equipos() {
       <PrivateScreen>
         <View className="flex-1 justify-center items-center bg-gray-50">
           <ActivityIndicator size="large" color="#000" />
-          <Text className="mt-4 text-gray-600 font-geist">Cargando ficha técnica...</Text>
+          <Text className="mt-4 text-gray-600 font-geist">Cargando equipos...</Text>
         </View>
       </PrivateScreen>
     );
@@ -136,18 +139,20 @@ export default function Equipos() {
             )}
           </View>
 
+          {pool.registros.length === 0 && (
+            <View className="flex-1 justify-center items-center py-4">
+              <Text className="text-gray-500 font-geist">
+                No hay registros cargados.
+              </Text>
+            </View>
+          )}
+
+          
           <ScreenCard>
-            {pool.registro.map((item) => (
+            {pool.registros.map((item) => (
               <RegistroCard
                 key={item.id}
-                registro={{
-                  id: item.id,
-                  fecha: item.fecha,
-                  dispositivo: item.dispositivo,
-                  accion: item.accion,
-                  descripcion: item.descripcion,
-                  tecnico: item.tecnico,
-                }}
+                registro={item}
               />
             ))}
           </ScreenCard>

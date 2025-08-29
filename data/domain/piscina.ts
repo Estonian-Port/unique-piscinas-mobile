@@ -36,6 +36,7 @@ export interface PiscinaEquipos {
   valvulas: Valvula[];
   sistemasGermicidas: Germicida[];
   calefaccion: Calefaccion | null;
+  registros: Registro[];
 }
 
 //Se usa en la vista usuario -> programation
@@ -86,6 +87,7 @@ export interface PiscinaResume {
 export class Piscina {
   id: number;
   propietario?: Usuario;
+  name: string;
   volume: number;
   filtro?: Filtro;
   bombas: Bomba[];
@@ -184,21 +186,13 @@ export type Calefaccion = {
   activa: boolean;
 };
 
-type Registro = {
+export type Registro = {
   id: number;
   fecha: string;
-  hora?: string;
   dispositivo: string;
   accion: string;
   descripcion: string;
-  tecnico: string;
-  tipoAccion: string;
-  /*tipoAccion?:
-    | 'mantenimiento'
-    | 'reparacion'
-    | 'instalacion'
-    | 'configuracion'
-    | 'otro';*/
+  nombreTecnico: string;
 };
 
 export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';
