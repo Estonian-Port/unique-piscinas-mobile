@@ -11,14 +11,14 @@ import { useState } from 'react';
 import ModalDesvincularPiscina from './modalDesvincularPiscina';
 import ModalEliminarUsuario from './modalEliminarUsuario';
 import { Link } from 'expo-router';
-import { Usuario } from '@/data/domain/user';
+import { UsuarioRegistrado } from '@/data/domain/user';
 
 const UserItem = ({
-  usuario: usuario,
+  usuario,
   isExpanded,
   onToggleExpand,
 }: {
-  usuario: Usuario;
+  usuario: UsuarioRegistrado;
   isExpanded: boolean;
   onToggleExpand: () => void;
 }) => {
@@ -34,7 +34,7 @@ const UserItem = ({
       >
         <View>
           <Text className="font-geist-semi-bold text-text text-base">
-            {usuario.name + ' ' + usuario.lastname}
+            {usuario.nombre + ' ' + usuario.apellido}
           </Text>
           <Text className="font-geist text-gray-500">{usuario.email}</Text>
         </View>
@@ -51,8 +51,8 @@ const UserItem = ({
             <ModalEliminarUsuario
               visible={modalEliminarUsuario}
               onClose={() => setModalEliminarUsuario(false)}
-              nombreUsuario={usuario.name}
-              apellidoUsuario={usuario.lastname}
+              nombreUsuario={usuario.nombre}
+              apellidoUsuario={usuario.apellido}
             />
           )}
           {isExpanded ? (
@@ -79,13 +79,13 @@ const UserItem = ({
               <ModalAñadirPiscina
                 visible={modalNuevaPiscina}
                 onClose={() => setModalNuevaPiscina(false)}
-                nombreUsuario={usuario.name}
-                apellidoUsuario={usuario.lastname}
+                nombreUsuario={usuario.nombre}
+                apellidoUsuario={usuario.apellido}
               />
             )}
           </View>
 
-          {usuario.piscinas.map((piscina) => (
+          {usuario.piscinasAsignadas.map((piscina) => (
             <View
               className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
               key={piscina.id}
@@ -95,14 +95,14 @@ const UserItem = ({
                   key={piscina.id}
                   className="font-geist-semi-bold text-text text-sm"
                 >
-                  {piscina.name}
+                  {piscina.direccion}
                 </Text>
                 <Text className="font-geist text-text text-sm">
-                  {piscina.volume} m3
+                  {piscina.volumen} m3
                 </Text>
               </View>
               <View className="flex-row items-center justify-between gap-3">
-                <Link asChild href={`/(tabs)/${piscina.id}`}>
+                <Link asChild href={`/(tabs)/resume`}> {/* HAY QUE SETEAR LA PISCINA ANTES */}
                   <Pressable className="justify-center items-center h-12 w-12">
                     <EyeIcon size={22}></EyeIcon>
                   </Pressable>

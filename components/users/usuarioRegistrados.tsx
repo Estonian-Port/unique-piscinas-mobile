@@ -1,12 +1,29 @@
 import { View, Text, FlatList } from 'react-native';
-import React, { useState } from 'react';  // Añadir useState
+import React, { useEffect, useState } from 'react';  // Añadir useState
 import { diego, gabi, leo, seba } from '@/data/mock/userMock';
 import { ScreenCard } from '../utiles/ScreenCard';
 import UserItem from './userItem';
+import { administracionService } from '@/services/administracion.service';
+import { useAuth } from '@/context/authContext';
+import { UsuarioRegistrado } from '@/data/domain/user';
 
 const UsuarioRegistrados = () => {
-  const users = [gabi, leo, seba, diego];
+  const {usuario} = useAuth();
+  const [users, setUsers] = useState<UsuarioRegistrado[]>([]);
   const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
+
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await administracionService.getUsuariosRegistrados(usuario!.id);
+          setUsers(response);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchData();
+  }, [users]);
 
   const handleToggleExpand = (userId: number) => {
     setExpandedUserId(expandedUserId === userId ? null : userId);

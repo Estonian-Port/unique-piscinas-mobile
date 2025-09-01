@@ -1,4 +1,4 @@
-import { Piscina } from "./piscina";
+import { Piscina, PiscinaListItem } from "./piscina";
 
 export interface NuevoUsuario {
   nombre: string;
@@ -14,6 +14,16 @@ export interface UsuarioLogin {
   email: string;
   isAdmin: boolean;
   piscinasId: number[];
+}
+
+export interface UsuarioRegistrado {
+  id: number;
+  nombre: string;
+  apellido: string;
+  celular: number;
+  email: string;
+  estado: string;
+  piscinasAsignadas: PiscinaListItem[];
 }
 
 export class Usuario {
