@@ -27,6 +27,30 @@ export interface PiscinaFichaTecnica {
   notas: string;
 }
 
+//Se usa en el formulario de nueva piscina
+export interface PiscinaNueva {
+  id: number;
+  nombre: string;
+  direccion: string;
+  ciudad: string;
+  desbordante: boolean;
+  largo: number;
+  ancho: number;
+  profundidad: number;
+  volumen: number;
+  volumenTC?: number;
+  bomba: Bomba[];
+  filtro: Filtro;
+  valvulas: Valvula[];
+  sistemaGermicida: GermicidaBase[];
+  calefaccion?: Calefaccion;
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
+  administradorId: number | null;
+  notas?: string;
+}
+
 //Se usa en la vista de admin -> equipos
 export interface PiscinaEquipos {
   id: number;
@@ -128,13 +152,6 @@ export type Bomba = {
   activa: boolean;
 };
 
-export type Germicida = {
-  id: number;
-  tipo: string;
-  vidaRestante: number;
-  estado: string;
-};
-
 export type Filtro = {
   id: number;
   tipo: string;
@@ -146,6 +163,18 @@ export type Filtro = {
   estado?: string;
 };
 
+//Esto se usa para traer datos del back
+export type Germicida = {
+  id: number;
+  tipo: string;
+  marca: string;
+  vidaRestante: number;
+  activo: boolean;
+  estado: string;
+  datoExtra: number;
+};
+
+//Esto se usa en el formulario de nueva piscina
 export type GermicidaBase = {
   id: number;
   tipo: 'uv' | 'trasductor' | 'ionizador';

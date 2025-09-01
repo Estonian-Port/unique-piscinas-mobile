@@ -5,13 +5,16 @@ import { AutorenewIcon, EditIcon } from '@/assets/icons';
 import { Germicida } from '@/data/domain/piscina';
 
 const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
-  const [isActive, setIsActive] = useState(germicida.estado);
+  const [isActive, setIsActive] = useState(germicida.activo);
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center">
-          <Pressable className='ml-2'>
+          <Text className="text-text font-geist-semi-bold text-lg">
+            {germicida.tipo}
+          </Text>
+          <Pressable className="ml-2">
             <EditIcon />
           </Pressable>
         </View>
@@ -35,9 +38,23 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
           </Text>
         </View>
       </View>
+      <View className="flex-row items-center justify-between my-1">
+        <Text className="text-text font-geist text-base">Marca:</Text>
+        <Text className="font-geist-semi-bold text-text text-base">
+          {germicida.marca}
+        </Text>
+      </View>
+      <View className="flex-row items-center justify-between mb-1">
+        <Text className="text-text font-geist text-base">
+          {germicida.tipo == 'UV' || germicida.tipo == 'Trasductor' ? 'Potencia:' : 'Electrodos:'}
+        </Text>
+        <Text className="font-geist-semi-bold text-text text-base">
+          {germicida.datoExtra} kW
+        </Text>
+      </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Vida restante:</Text>
-        <Text className="font-geist-semi-bold tex-text text-base">
+        <Text className="font-geist-semi-bold text-text text-base">
           {germicida.vidaRestante} %
         </Text>
       </View>

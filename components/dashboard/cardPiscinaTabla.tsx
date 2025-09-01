@@ -49,11 +49,11 @@ const EquipmentItem = ({
 }) => {
   const getIcon = () => {
     switch (tipo) {
-      case 'Uv':
+      case 'UV':
         return 'electric-bolt';
-      case 'Ionizador':
+      case 'Ionizador de cobre':
         return 'lightbulb';
-      case 'Trasductor':
+      case 'Trasductor de ultrasonido':
         return 'waves';
       case 'Calentador':
         return 'thermostat';

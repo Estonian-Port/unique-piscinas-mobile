@@ -28,12 +28,10 @@ export default function Equipos() {
     const fetchPool = async () => {
       if (!selectedPool) return;
 
-      console.log('Fetching data for selected pool:', selectedPool);
-      console.log('User:', usuario);
-
       try {
         setIsLoading(true); // Iniciar loading
         const data = await administracionService.getPiscinaEquiposById(usuario!.id, selectedPool.id);
+        console.log('Fetched pool data:', data);
         setPool(data);
       } catch (error) {
         console.error('Error fetching pool data:', error);
@@ -70,32 +68,20 @@ export default function Equipos() {
           {pool!.bombas.map((item) => (
             <BombaCard
               key={item.id}
-              bomba={{
-                id: item.id,
-                marca: item.marca,
-                modelo: item.modelo,
-                activa: item.activa,
-                esVelocidadVariable: item.esVelocidadVariable,
-                potencia: item.potencia,
-              }}
+              bomba={item}
             />
           ))}
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Filtro
           </Text>
-          <FiltroCard filtro={pool.filtro!} />
+          <FiltroCard filtro={pool.filtro} />
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Sistemas germicidas
           </Text>
           {pool.sistemasGermicidas.map((item) => (
             <GermicidaCard
               key={item.id}
-              germicida={{
-                id: item.id,
-                tipo: item.tipo,
-                vidaRestante: item.vidaRestante,
-                estado: item.estado,
-              }}
+              germicida={item}
             />
           ))}
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
@@ -104,11 +90,7 @@ export default function Equipos() {
           {pool.valvulas.map((item) => (
             <ValvulaCard
               key={item.id}
-              valvula={{
-                id: item.id,
-                tipo: item.tipo,
-                estado: item.estado,
-              }}
+              valvula={item}
             />
           ))}
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
