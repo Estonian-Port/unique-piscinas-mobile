@@ -11,7 +11,7 @@ const tabsUser = [
 
 const tabsAdmin = [
   { name: "Dashboard", route: "/dashboard" },
-  { name: "Alta Usuario", route: "/users" },
+  { name: "Alta Usuario", route: "/altaUsuario" },
 ];
 
 interface WebTabBarProps {

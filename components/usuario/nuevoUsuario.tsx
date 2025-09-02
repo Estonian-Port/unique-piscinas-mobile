@@ -5,6 +5,7 @@ import { ScreenCard } from '../utiles/ScreenCard';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { NuevoUsuario } from '@/data/domain/user';
+import { usuarioService } from '@/services/usuario.service';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,9 +34,10 @@ const NuevoUsuarioForm = () => {
       // Mostrar que está cargando
       formikActions.setSubmitting(true);
 
-      // await userService.createUser(usuario);
+      const response = await usuarioService.altaUsuario(usuario)
+      console.log(response)
       // Por ahora simulo una operación async
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      //await new Promise((resolve) => setTimeout(resolve, 1000));
 
       console.log('Usuario creado exitosamente');
       formikActions.resetForm();

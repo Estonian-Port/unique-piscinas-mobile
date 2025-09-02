@@ -1,12 +1,12 @@
 import React from 'react';
 import { ScreenTabs } from '@/components/utiles/Screen';
 import { Platform, ScrollView, Text, View } from 'react-native';
-import UsuarioRegistrados from '@/components/users/usuarioRegistrados';
+import UsuarioRegistrados from '@/components/usuario/usuarioRegistrados';
 import PrivateScreen from '@/components/utiles/privateScreen';
-import NuevoUsuarioForm from '@/components/users/nuevoUsuario';
+import NuevoUsuarioForm from '@/components/usuario/nuevoUsuario';
 import WebTabBar from '@/components/utiles/webTabBar';
 
-const Users = () => {
+const Usuarios = () => {
   return (
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
@@ -42,4 +42,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Usuarios;

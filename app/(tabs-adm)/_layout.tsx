@@ -37,9 +37,9 @@ const _Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="users"
+        name="altaUsuarios"
         options={{
-          title: 'Usuarios',
+          title: 'altaUsuario',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon focused={focused} icon="people" title="Usuarios" />

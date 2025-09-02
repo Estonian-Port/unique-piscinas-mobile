@@ -24,7 +24,7 @@ const UsuarioRegistrados = () => {
       };
 
       fetchData();
-  }, [users]);
+  }, []);
 
   const handleToggleExpand = (userId: number) => {
     setExpandedUserId(expandedUserId === userId ? null : userId);
