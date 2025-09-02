@@ -22,6 +22,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const data = await administracionService.getEstadisticas(usuario!.id);
+        console.log(data);
         setStats(data);
       } catch (error) {
         console.error('Error cargando las estadísticas:', error);
@@ -71,13 +72,13 @@ const Dashboard = () => {
                 <StatCard
                   title="Usuarios"
                   value={stats.totalUsuarios}
-                  label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
+                  label={`${stats.usuariosActivos} activos, ${stats.usuariosInactivos} inactivos, ${stats.usuariosPendientes} pendientes`}
                   icon="people"
                 />
                 <StatCard
                   title="Piscinas"
                   value={stats.totalPiscinas}
-                  label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
+                  label={`${stats.piscinasSkimmer} skimmer, ${stats.piscinasDesborde} desborde`}
                   icon="water-drop"
                 />
                 <StatCard
@@ -93,13 +94,13 @@ const Dashboard = () => {
                 <StatCard
                   title="Usuarios"
                   value={stats.totalUsuarios}
-                  label={`${stats.usuarioActivos} activos, ${stats.usuarioInactivos} inactivos`}
+                  label={`${stats.usuariosActivos} activos, ${stats.usuariosInactivos} inactivos, ${stats.usuariosPendientes} pendientes`}
                   icon="people"
                 />
                 <StatCard
                   title="Piscinas"
                   value={stats.totalPiscinas}
-                  label={`${stats.piscinaSkimmer} skimmer, ${stats.piscinaDesborde} desborde`}
+                  label={`${stats.piscinasSkimmer} skimmer, ${stats.piscinasDesborde} desborde`}
                   icon="water-drop"
                 />
                 <StatCard

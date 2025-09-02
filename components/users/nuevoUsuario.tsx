@@ -7,21 +7,13 @@ import * as Yup from 'yup';
 import { NuevoUsuario } from '@/data/domain/user';
 
 const validationSchema = Yup.object().shape({
-  nombre: Yup.string().required('El nombre es obligatorio'),
-  apellido: Yup.string().required('El apellido es obligatorio'),
   email: Yup.string()
     .email('El correo electrónico es inválido')
     .required('El correo electrónico es obligatorio'),
-  celular: Yup.number()
-    .typeError('El celular debe ser un número')
-    .required('El celular es obligatorio'),
 });
 
 const usuarioVacio: NuevoUsuario = {
-  nombre: '',
-  apellido: '',
   email: '',
-  celular: undefined,
 };
 
 const NuevoUsuarioForm = () => {
@@ -61,10 +53,7 @@ const NuevoUsuarioForm = () => {
   // Función para obtener los valores iniciales
   const getInitialValues = () => {
     return {
-      nombre: usuarioVacio.nombre,
-      apellido: usuarioVacio.apellido,
       email: usuarioVacio.email,
-      celular: usuarioVacio.celular,
     };
   };
 
@@ -77,10 +66,7 @@ const NuevoUsuarioForm = () => {
       validationSchema={validationSchema}
       onSubmit={(values, formikActions) => {
         const usuarioNuevo: NuevoUsuario = {
-          nombre: values.nombre,
-          apellido: values.apellido,
           email: values.email,
-          celular: values.celular,
         };
 
         crearUsuario(usuarioNuevo, formikActions);
@@ -123,19 +109,19 @@ const NuevoUsuarioForm = () => {
             <Text className="text-red-500 mt-2">{errors.email}</Text>
           )}
 
+          <Text className="text-sm text-gray-500">
+            Se enviará un enlace de registro al correo electrónico
+            proporcionado. El usuario deberá completar el formulario para
+            finalizar el registro.
+          </Text>
 
-          <Text className="text-sm text-gray-500">Se enviará un enlace de registro al correo electrónico 
-            proporcionado. El usuario deberá completar el formulario para finalizar el registro.</Text>
-
-
-          <Pressable className={`rounded-md py-2 px-4 mt-4 self-end ${
-              isSubmitting
-                ? 'bg-gray-400'
-                : 'bg-black'
+          <Pressable
+            className={`rounded-md py-2 px-4 mt-4 self-end ${
+              isSubmitting ? 'bg-gray-400' : 'bg-black'
             }`}
             onPress={handleSubmit as any}
             disabled={isSubmitting} // Deshabilitar botón si está enviando
-            >
+          >
             <Text className="font-geist-semi-bold text-sm text-center text-white">
               {isSubmitting ? 'Creando...' : 'Dar de alta usuario'}
             </Text>

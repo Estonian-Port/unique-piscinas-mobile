@@ -1,10 +1,7 @@
 import { Piscina, PiscinaListItem } from "./piscina";
 
 export interface NuevoUsuario {
-  nombre: string;
-  apellido: string;
   email: string;
-  celular?: number;
 }
 
 export interface UsuarioLogin {

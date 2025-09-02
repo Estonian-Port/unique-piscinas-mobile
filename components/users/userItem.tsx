@@ -10,8 +10,9 @@ import ModalAñadirPiscina from './modalAñadirPiscina';
 import { useState } from 'react';
 import ModalDesvincularPiscina from './modalDesvincularPiscina';
 import ModalEliminarUsuario from './modalEliminarUsuario';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { UsuarioRegistrado } from '@/data/domain/user';
+import { useAuth } from '@/context/authContext';
 
 const UserItem = ({
   usuario,
@@ -22,9 +23,19 @@ const UserItem = ({
   isExpanded: boolean;
   onToggleExpand: () => void;
 }) => {
+  const { seleccionarPiscina } = useAuth();
   const [modalNuevaPiscina, setModalNuevaPiscina] = useState(false);
   const [modalEliminarUsuario, setModalEliminarUsuario] = useState(false);
   const [modalDesvincularPiscina, setModalDesvincularPiscina] = useState(false);
+
+  const handlePanel = async (poolId: number) => {
+    try {
+      await seleccionarPiscina(poolId);
+      router.push('/(tabs)/resume');
+    } catch (error) {
+      console.error('Error seleccionando piscina:', error);
+    }
+  };
 
   return (
     <View className="border-b border-gray-200 py-5">
@@ -39,9 +50,17 @@ const UserItem = ({
           <Text className="font-geist text-gray-500">{usuario.email}</Text>
         </View>
         <View className="flex-row items-center justify-between gap-3">
-          <View className="rounded-full bg-black px-2 py-1">
-            <Text className="font-geist-semi-bold text-white text-sm text-center">
-              Activo
+          <View
+            className={`rounded-full px-2 py-1 ${
+              usuario.estado === 'ACTIVO'
+                ? 'bg-green-400'
+                : usuario.estado === 'INACTIVO'
+                ? 'bg-red-400'
+                : 'bg-gray-300'
+            }`}
+          >
+            <Text className="font-geist-semi-bold text-text text-sm text-center">
+                {usuario.estado.charAt(0).toUpperCase() + usuario.estado.slice(1).toLowerCase()}
             </Text>
           </View>
           <Pressable onPress={() => setModalEliminarUsuario(true)}>
@@ -77,51 +96,54 @@ const UserItem = ({
             </Pressable>
             {modalNuevaPiscina && (
               <ModalAñadirPiscina
-                visible={modalNuevaPiscina}
-                onClose={() => setModalNuevaPiscina(false)}
-                nombreUsuario={usuario.nombre}
-                apellidoUsuario={usuario.apellido}
+          visible={modalNuevaPiscina}
+          onClose={() => setModalNuevaPiscina(false)}
+          nombreUsuario={usuario.nombre}
+          apellidoUsuario={usuario.apellido}
               />
             )}
           </View>
 
-          {usuario.piscinasAsignadas.map((piscina) => (
-            <View
-              className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
-              key={piscina.id}
+          {usuario.piscinasAsignadas.length === 0 ? (
+            <Text className="font-geist text-gray-500 mt-4 text-center">
+              Usuario sin piscinas asignadas
+            </Text>
+          ) : (
+            usuario.piscinasAsignadas.map((piscina) => (
+              <View
+          className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
+          key={piscina.id}
+              >
+          <View>
+            <Text
+              className="font-geist-semi-bold text-text text-sm"
             >
-              <View className="">
-                <Text
-                  key={piscina.id}
-                  className="font-geist-semi-bold text-text text-sm"
-                >
-                  {piscina.direccion}
-                </Text>
-                <Text className="font-geist text-text text-sm">
-                  {piscina.volumen} m3
-                </Text>
+              {piscina.direccion}
+            </Text>
+            <Text className="font-geist text-text text-sm">
+              {Math.round(piscina.volumen)} m³
+            </Text>
+          </View>
+          <View className="flex-row items-center justify-between gap-3">
+            <Pressable className="justify-center items-center h-12 w-12" onPress={() => handlePanel(piscina.id)}>
+              <EyeIcon size={22}></EyeIcon>
+            </Pressable>
+            <Pressable
+              className="justify-center items-center h-12 w-12"
+              onPress={() => setModalDesvincularPiscina(true)}
+            >
+              <RemoveIcon size={20}></RemoveIcon>
+            </Pressable>
+            {modalDesvincularPiscina && (
+              <ModalDesvincularPiscina
+                visible={modalDesvincularPiscina}
+                onClose={() => setModalDesvincularPiscina(false)}
+              />
+            )}
+          </View>
               </View>
-              <View className="flex-row items-center justify-between gap-3">
-                <Link asChild href={`/(tabs)/resume`}> {/* HAY QUE SETEAR LA PISCINA ANTES */}
-                  <Pressable className="justify-center items-center h-12 w-12">
-                    <EyeIcon size={22}></EyeIcon>
-                  </Pressable>
-                </Link>
-                <Pressable
-                  className="justify-center items-center h-12 w-12"
-                  onPress={() => setModalDesvincularPiscina(true)}
-                >
-                  <RemoveIcon size={20}></RemoveIcon>
-                </Pressable>
-                {modalDesvincularPiscina && (
-                  <ModalDesvincularPiscina
-                    visible={modalDesvincularPiscina}
-                    onClose={() => setModalDesvincularPiscina(false)}
-                  />
-                )}
-              </View>
-            </View>
-          ))}
+            ))
+          )}
         </View>
       )}
     </View>

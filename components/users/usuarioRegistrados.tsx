@@ -6,6 +6,7 @@ import UserItem from './userItem';
 import { administracionService } from '@/services/administracion.service';
 import { useAuth } from '@/context/authContext';
 import { UsuarioRegistrado } from '@/data/domain/user';
+import { router } from '@/.expo/types/router';
 
 const UsuarioRegistrados = () => {
   const {usuario} = useAuth();
