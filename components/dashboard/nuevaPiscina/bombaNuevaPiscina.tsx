@@ -4,7 +4,7 @@ import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Bomba, PiscinaNueva } from '@/data/domain/piscina';
+import { Bomba, BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
@@ -111,8 +111,8 @@ const BombaNuevaPiscina = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        const bombaPrimaria: Bomba = {
-          id: 0,
+        const bombaPrimaria: BombaNuevo = {
+          id: null,
           esVelocidadVariable: values.velocidadVariablePrimaria,
           marca: values.marcaBombaPrimaria,
           modelo: values.modeloBombaPrimaria,
@@ -120,11 +120,11 @@ const BombaNuevaPiscina = ({
           activa: true,
         };
 
-        const bombas: Bomba[] = [bombaPrimaria];
+        const bombas: BombaNuevo[] = [bombaPrimaria];
 
         if (values.tieneDobleBomba) {
-          const bombaSecundaria: Bomba = {
-            id: 1,
+          const bombaSecundaria: BombaNuevo = {
+            id: null,
             esVelocidadVariable: values.velocidadVariableSecundaria,
             marca: values.marcaBombaSecundaria,
             modelo: values.modeloBombaSecundaria,

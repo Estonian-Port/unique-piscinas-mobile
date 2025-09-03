@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { users } from '@/data/mock/userMock';
 import { Link } from 'expo-router';
@@ -7,12 +7,17 @@ import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { administracionService } from '@/services/administracion.service';
+import { UsuarioList } from '@/data/domain/user';
+import { useAuth } from '@/context/authContext';
 
 const validationSchema = Yup.object().shape({
   direccion: Yup.string().required('La dirección es obligatoria'),
   ciudad: Yup.string().required('La ciudad es obligatoria'),
   notas: Yup.string().max(100, 'Máximo 100 caracteres'),
-  placaId: Yup.number().required('El id de la placa es obligatoria'),
+  codigoPlaca: Yup.string()
+    .required('El código de la placa es obligatorio')
+    .length(4, 'Debe tener exactamente 4 caracteres'),
   administradorId: Yup.number().nullable(),
 });
 
@@ -27,17 +32,36 @@ const InformacionBasica = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const usuarios = users.filter((user) => user.isAdmin === false);
+  const { usuario } = useAuth();
+  const [usuarios, setUsuarios] = useState<UsuarioList[]>([]);
   const formikRef = useRef<any>(null);
-
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState([
-    { label: 'Asignar propietario más tarde', value: undefined },
-    ...usuarios.map((usuario) => ({
-      label: usuario.name + ' ' + usuario.lastname,
-      value: usuario.id,
-    })),
-  ]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await administracionService.getUsuarios(usuario!.id);
+        setUsuarios(response);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const [items, setItems] = useState<
+    { label: string; value: number | undefined }[]
+  >([{ label: 'Asignar propietario más tarde', value: undefined }]);
+
+  useEffect(() => {
+    setItems([
+      { label: 'Asignar propietario más tarde', value: undefined },
+      ...usuarios.map((usuario) => ({
+        label: usuario.nombre + ' ' + usuario.apellido,
+        value: usuario.id,
+      })),
+    ]);
+  }, [usuarios]);
 
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
@@ -46,7 +70,7 @@ const InformacionBasica = ({
       ciudad: nuevaPiscina.ciudad ?? '',
       notas: nuevaPiscina.notas ?? '',
       administradorId: nuevaPiscina.administradorId ?? null,
-      placaId: nuevaPiscina.placaId ?? 0,
+      codigoPlaca: nuevaPiscina.codigoPlaca,
     };
   };
 
@@ -64,7 +88,7 @@ const InformacionBasica = ({
           ciudad: values.ciudad,
           notas: values.notas,
           administradorId: values.administradorId,
-          placaId: values.placaId,
+          codigoPlaca: values.codigoPlaca,
         });
         onNext();
       }}
@@ -154,16 +178,18 @@ const InformacionBasica = ({
             <Text className="text-red-500 mt-2">{errors.ciudad}</Text>
           )}
 
-          <Text className="font-geist text-text text-base mt-3">ID de la placa</Text>
+          <Text className="font-geist text-text text-base mt-3">
+            ID de la placa
+          </Text>
           <TextInput
             className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.placaId.toString()}
-            onChangeText={handleChange('placaId')}
-            onBlur={handleBlur('placaId')}
-            placeholder="Ej: 123456"
+            value={values.codigoPlaca.toString()}
+            onChangeText={handleChange('codigoPlaca')}
+            onBlur={handleBlur('codigoPlaca')}
+            placeholder="Ej: ASDF"
           />
-          {touched.placaId && errors.placaId && (
-            <Text className="text-red-500 mt-2">{errors.placaId}</Text>
+          {touched.codigoPlaca && errors.codigoPlaca && (
+            <Text className="text-red-500 mt-2">{errors.codigoPlaca}</Text>
           )}
 
           <Text className="font-geist text-text text-base mt-3">

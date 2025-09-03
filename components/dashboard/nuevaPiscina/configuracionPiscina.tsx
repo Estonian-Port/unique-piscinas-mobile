@@ -61,7 +61,7 @@ const ConfiguracionPiscina = ({
         ? nuevaPiscina.profundidad.toString()
         : '',
       volumen: nuevaPiscina.volumen ? nuevaPiscina.volumen.toString() : '',
-      desbordante: nuevaPiscina.desbordante ?? false,
+      desbordante: nuevaPiscina.esDesbordante ?? false,
       volumenTC: nuevaPiscina.volumenTC
         ? nuevaPiscina.volumenTC.toString()
         : '',
@@ -82,7 +82,7 @@ const ConfiguracionPiscina = ({
           ancho: parseFloat(values.ancho),
           profundidad: parseFloat(values.profundidad),
           volumen: parseFloat(values.volumen),
-          desbordante: values.desbordante,
+          esDesbordante: values.desbordante,
           volumenTC: values.desbordante ? parseFloat(values.volumenTC) : 0,
         });
         onNext();

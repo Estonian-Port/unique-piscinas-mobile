@@ -6,7 +6,6 @@ import { Screen } from '@/components/utiles/Screen';
 import BombaCard from '@/components/dashboard/bombaCard';
 import CalefaccionCard from '@/components/dashboard/calefaccionCard';
 import GermicidaCard from '@/components/dashboard/germicidaCard';
-import ValvulaCard from '@/components/dashboard/valvulaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
 import { ScreenCard } from '@/components/utiles/ScreenCard';
 import { RegisterIcon } from '@/assets/icons';
@@ -82,15 +81,6 @@ export default function Equipos() {
             <GermicidaCard
               key={item.id}
               germicida={item}
-            />
-          ))}
-          <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
-            Válvulas
-          </Text>
-          {pool.valvulas.map((item) => (
-            <ValvulaCard
-              key={item.id}
-              valvula={item}
             />
           ))}
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">

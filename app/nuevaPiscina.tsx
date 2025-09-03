@@ -3,40 +3,43 @@ import React, { useState } from 'react';
 import { Screen } from '@/components/utiles/Screen';
 import InformacionBasica from '@/components/dashboard/nuevaPiscina/informacionBasica';
 import ConfiguracionPiscina from '@/components/dashboard/nuevaPiscina/configuracionPiscina';
-import { PiscinaNueva } from '@/data/domain/piscina';
+import { BombaNuevo, CalefaccionNueva, FiltroNuevo, GermicidaNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import { router } from 'expo-router';
 import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPiscina';
 import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
 import TratamientoNuevaPiscina from '@/components/dashboard/nuevaPiscina/tratamientoNuevaPiscina';
 import CalefaccionNuevaPiscina from '@/components/dashboard/nuevaPiscina/calefaccionNuevaPiscina';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
 
 const piscinaNuevaInicial: PiscinaNueva = {
-  id: 0,
-  nombre: '',
+  id: null,
+  administradorId: null,
   direccion: '',
-  desbordante: false,
   ciudad: '',
+  codigoPlaca: '',
+  notas: null,
+  esDesbordante: false,
   largo: 0,
   ancho: 0,
   profundidad: 0,
   volumen: 0,
+  volumenTC: 0,
   bomba: [],
   filtro: {
+    id: null,
     marca: '',
     modelo: '',
     diametro: 0,
-    estado: '',
-    id: 0,
     tipo: 'Arena',
-    activo: false
+    datoExtra: 0,
+    tiempoDeVidaUtil: 0,
   },
-  valvulas: [],
   sistemaGermicida: [],
   cloroSalino: false,
   controlAutomaticoPH: false,
   orp: false,
-  placaId: 0,
-  administradorId: null
+  calefaccion: null,
 };
 
 const NuevaPiscina = () => {
@@ -48,14 +51,21 @@ const NuevaPiscina = () => {
     setNuevaPiscina(piscinaNuevaInicial);
     router.replace('/(tabs-adm)/dashboard');
   };
-  const handleSave = () => {
-    // piscinaService.create(nuevaPiscina).then(() => {
-    //   setNuevaPiscina(piscinaNuevaInicial);
-    //   router.replace('/(tabs-adm)/dashboard');
-    // });
-    console.log('Nueva piscina guardada:', nuevaPiscina);
-    setNuevaPiscina(piscinaNuevaInicial);
-    router.replace('/(tabs-adm)/dashboard');
+
+  const handleSave = async () => {
+    try {
+      console.log('Datos de la nueva piscina a guardar:', nuevaPiscina);
+      const result = await piscinaService.create(nuevaPiscina);
+      setNuevaPiscina(piscinaNuevaInicial);
+      Toast.show({
+        type: 'success',
+        text1: 'Éxito',
+        text2: result.message,
+      });
+      router.replace('/(tabs-adm)/dashboard');
+    } catch (error: any) {
+      console.error('Error al guardar la nueva piscina:', error);
+    }
   };
 
   return (

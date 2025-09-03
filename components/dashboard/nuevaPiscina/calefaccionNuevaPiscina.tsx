@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Calefaccion, PiscinaNueva } from '@/data/domain/piscina';
+import { Calefaccion, CalefaccionNueva, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { ThermostatIcon } from '@/assets/icons';
@@ -76,9 +76,7 @@ const CalefaccionNuevaPiscina = ({
       validationSchema={validationSchema}
       onSubmit={(values) => {
         if (values.tieneCalefaccion) {
-          const calefaccion: Calefaccion = {
-            id: 0,
-            nombre: `${values.tipoCalefaccion} ${values.marcaCalefaccion} ${values.modeloCalefaccion}`,
+          const calefaccion: CalefaccionNueva = {
             tipo: values.tipoCalefaccion,
             marca: values.marcaCalefaccion,
             modelo: values.modeloCalefaccion,
@@ -93,7 +91,7 @@ const CalefaccionNuevaPiscina = ({
         } else {
           setNuevaPiscina({
             ...nuevaPiscina,
-            calefaccion: undefined,
+            calefaccion: null,
           });
         }
         onSave();

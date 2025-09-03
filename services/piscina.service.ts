@@ -1,18 +1,23 @@
-import { PiscinaEquipamiento, PiscinaListItem, PiscinaProgramacion, PiscinaResume } from '@/data/domain/piscina';
+import {
+  PiscinaEquipamiento,
+  PiscinaListItem,
+  PiscinaNueva,
+  PiscinaProgramacion,
+  PiscinaResume,
+} from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { programacionFromDto } from '@/data/domain/cicloFiltrado';
+import { PiscinaPrueba } from '@/app/nuevaPiscina';
 
-const PISCINA = '/piscina'
+const PISCINA = '/piscina';
 
 class PiscinaService {
-
-
   getPiscinasByUserId = async (userId: number): Promise<PiscinaListItem[]> => {
     const response = await api.get(`${PISCINA}/getAll/${userId}`);
     return response.data.data;
   };
 
-   getPiscinaHeaderById = async (id: number): Promise<PiscinaListItem> => {
+  getPiscinaHeaderById = async (id: number): Promise<PiscinaListItem> => {
     const response = await api.get(`${PISCINA}/header/${id}`);
     return response.data.data;
   };
@@ -27,20 +32,33 @@ class PiscinaService {
     return response.data.data;
   };
 
-  getPiscinaEquipamientoById = async (id: number): Promise<PiscinaEquipamiento> => {
+  getPiscinaEquipamientoById = async (
+    id: number
+  ): Promise<PiscinaEquipamiento> => {
     const response = await api.get(`${PISCINA}/equipamiento/${id}`);
     return response.data.data;
   };
 
-  getPiscinaProgramacionById = async (id: number): Promise<PiscinaProgramacion> => {
+  getPiscinaProgramacionById = async (
+    id: number
+  ): Promise<PiscinaProgramacion> => {
     const response = await api.get(`${PISCINA}/programacion/${id}`);
     const piscina = response.data.data;
 
     return {
       ...piscina,
-      programacionIluminacion: piscina.programacionIluminacion.map(programacionFromDto),
-      programacionFiltrado: piscina.programacionFiltrado.map(programacionFromDto),
-    }
+      programacionIluminacion:
+        piscina.programacionIluminacion.map(programacionFromDto),
+      programacionFiltrado:
+        piscina.programacionFiltrado.map(programacionFromDto),
+    };
+  };
+
+  create = async (
+    piscina: PiscinaNueva
+  ): Promise<{ data: PiscinaNueva; message: string }> => {
+    const response = await api.post(`${PISCINA}/alta`, piscina);
+    return { data: response.data.data, message: response.data.message };
   };
 }
 

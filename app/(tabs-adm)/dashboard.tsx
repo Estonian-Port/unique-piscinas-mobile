@@ -22,7 +22,6 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const data = await administracionService.getEstadisticas(usuario!.id);
-        console.log(data);
         setStats(data);
       } catch (error) {
         console.error('Error cargando las estadísticas:', error);

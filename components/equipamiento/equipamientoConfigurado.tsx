@@ -11,7 +11,6 @@ import {
 import { PiscinaEquipamiento } from '@/data/domain/piscina';
 import BombaCard from './bombaEquipamiento';
 import FiltroCard from './filtroEquipamiento';
-import ValvulaCard from './valvulaEquipamiento';
 import GermicidaEquipamiento from './germicidaEquipamiento';
 
 const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
@@ -41,16 +40,6 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
         </Text>
       </View>
       <FiltroCard filtro={pool.filtro} />
-
-      <View className="flex-row items-center self-start my-2">
-        <TintIcon size={18} color={'#60C3FF'} />
-        <Text className="font-geist-semi-bold text-text text-lg ml-2">
-          Válvulas
-        </Text>
-      </View>
-      {pool.valvulas.map((valvula) => (
-        <ValvulaCard key={valvula.id} valvula={valvula} />
-      ))}
 
       <View className="w-full h-0.5 bg-gray-200 my-3" />
 

@@ -1,7 +1,7 @@
 import { PiscinaRegistrada, PiscinaFichaTecnica, PiscinaEquipos } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { StatDashboard } from '@/data/domain/stat';
-import { UsuarioRegistrado } from '@/data/domain/user';
+import { UsuarioList, UsuarioRegistrado } from '@/data/domain/user';
 
 const ADMINISTRACION = '/administracion'
 
@@ -31,6 +31,11 @@ class AdministracionService {
     const response = await api.get(`${ADMINISTRACION}/usuarios-registrados/${userId}`);
     return response.data.data;
   };
+
+  getUsuarios = async (userId: number): Promise<UsuarioList[]> => {
+    const response = await api.get(`${ADMINISTRACION}/usuarios-nueva-piscina/${userId}`);
+    return response.data.data;
+  }
 
 }
 

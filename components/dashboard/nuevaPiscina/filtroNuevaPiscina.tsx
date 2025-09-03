@@ -4,12 +4,15 @@ import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Filtro, PiscinaNueva, Valvula } from '@/data/domain/piscina';
+import {
+  Filtro,
+  FiltroNuevo,
+  PiscinaNueva,
+} from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import Checkbox from 'expo-checkbox';
 
-export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
 
 export const marcasFiltro = [
   { id: 1, name: 'Astral' },
@@ -42,6 +45,10 @@ const validationSchema = Yup.object().shape({
         .min(0.1, 'El valor debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
+  tiempoDeVidaUtil: Yup.number()
+    .required('Ingrese el tiempo de vida útil del filtro')
+    .typeError('El tiempo de vida útil debe ser un número')
+    .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
 });
 
 const FiltroNuevaPiscina = ({
@@ -64,14 +71,6 @@ const FiltroNuevaPiscina = ({
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const filtroExistente = nuevaPiscina.filtro;
-    const valvulasExistentes = nuevaPiscina.valvulas || [];
-
-    // Verificar si ya existen válvulas de cada tipo
-    const tieneSelectora = valvulasExistentes.some(
-      (v) => v.tipo === 'Selectora'
-    );
-    const tieneBola = valvulasExistentes.some((v) => v.tipo === 'Bola');
-
     return {
       tipoFiltro: filtroExistente?.tipo ?? 'Arena',
       marcaFiltro: filtroExistente?.marca ?? '',
@@ -82,8 +81,9 @@ const FiltroNuevaPiscina = ({
       datoExtra: filtroExistente?.datoExtra
         ? filtroExistente.datoExtra.toString()
         : '',
-      tieneSelectora: tieneSelectora,
-      tieneBola: tieneBola,
+      tiempoDeVidaUtil: filtroExistente?.tiempoDeVidaUtil
+        ? filtroExistente.tiempoDeVidaUtil.toString()
+        : '',
     };
   };
 
@@ -95,37 +95,21 @@ const FiltroNuevaPiscina = ({
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        const filtroNuevo: Filtro = {
-          id: 0,
+        const filtroNuevo: FiltroNuevo = {
+          id: null,
           tipo: values.tipoFiltro as TipoFiltro,
           marca: values.marcaFiltro,
           modelo: values.modeloFiltro,
           diametro: Number(values.diametro),
-          datoExtra: values.datoExtra ? Number(values.datoExtra) : undefined,
+          datoExtra: values.datoExtra ? Number(values.datoExtra) : 0,
+          tiempoDeVidaUtil: values.tiempoDeVidaUtil
+            ? Number(values.tiempoDeVidaUtil)
+            : 0,
         };
-
-        const valvulas: Valvula[] = [];
-
-        if (values.tieneSelectora) {
-          valvulas.push({
-            id: 1,
-            tipo: 'Selectora',
-            estado: 'Activa',
-          });
-        }
-
-        if (values.tieneBola) {
-          valvulas.push({
-            id: valvulas.length + 1,
-            tipo: 'Bola',
-            estado: 'Activa',
-          });
-        }
 
         setNuevaPiscina({
           ...nuevaPiscina,
           filtro: filtroNuevo,
-          valvulas: valvulas,
         });
         onNext();
       }}
@@ -185,15 +169,6 @@ const FiltroNuevaPiscina = ({
               value={'Cartucho'}
               label={'Cartucho'}
               selected={values.tipoFiltro === 'Cartucho'}
-              onPress={(value) => {
-                setFieldValue('tipoFiltro', value);
-                setFieldTouched('tipoFiltro', true);
-              }}
-            />
-            <RadioButton
-              value={'Diatomeas'}
-              label={'Diatomeas'}
-              selected={values.tipoFiltro === 'Diatomeas'}
               onPress={(value) => {
                 setFieldValue('tipoFiltro', value);
                 setFieldTouched('tipoFiltro', true);
@@ -321,75 +296,43 @@ const FiltroNuevaPiscina = ({
               </Text>
             )}
 
-            {values.tipoFiltro !== 'Diatomeas' && (
-              <>
-                <Text className="font-geist text-text text-base mt-3">
-                  {values.tipoFiltro === 'Arena'
-                    ? 'Cantidad de arena (kg)'
-                    : values.tipoFiltro === 'Vidrio'
-                    ? 'Cantidad de vidrio (kg)'
-                    : 'Micras del cartucho'}
-                </Text>
-                <TextInput
-                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-                  value={values.datoExtra}
-                  onChangeText={handleChange('datoExtra')}
-                  onBlur={handleBlur('datoExtra')}
-                  keyboardType="numeric"
-                  placeholder="Ej: 75"
-                />
-                {errors.datoExtra && touched.datoExtra && (
-                  <Text className="text-red-500 text-sm mt-1">
-                    {errors.datoExtra}
-                  </Text>
-                )}
-              </>
+            <Text className="font-geist text-text text-base mt-3">
+              {values.tipoFiltro === 'Arena'
+                ? 'Cantidad de arena (kg)'
+                : values.tipoFiltro === 'Vidrio'
+                ? 'Cantidad de vidrio (kg)'
+                : 'Micras del cartucho'}
+            </Text>
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.datoExtra}
+              onChangeText={handleChange('datoExtra')}
+              onBlur={handleBlur('datoExtra')}
+              keyboardType="numeric"
+              placeholder="Ej: 75"
+            />
+            {errors.datoExtra && touched.datoExtra && (
+              <Text className="text-red-500 text-sm mt-1">
+                {errors.datoExtra}
+              </Text>
             )}
 
-            <Text className="font-geist-semi-bold text-text text-lg mt-4">
-              Válvulas
+            <Text className="font-geist text-text text-base mt-3">
+              Tiempo de vida útil aproximado en años
             </Text>
-            <Text className="font-geist text-text text-sm mt-1 mb-3">
-              Seleccione las válvulas que tiene la piscina
-            </Text>
-
-            <View className="flex-row items-center mt-2">
-              <Checkbox
-                value={values.tieneSelectora}
-                onValueChange={(value) => {
-                  setFieldValue('tieneSelectora', value);
-                }}
-                color={values.tieneSelectora ? '#0F0D23' : undefined}
-              />
-              <Pressable
-                onPress={() =>
-                  setFieldValue('tieneSelectora', !values.tieneSelectora)
-                }
-                className="ml-2 flex-1"
-              >
-                <Text className="font-geist text-text text-base">
-                  Válvula Selectora
-                </Text>
-              </Pressable>
-            </View>
-
-            <View className="flex-row items-center mt-3">
-              <Checkbox
-                value={values.tieneBola}
-                onValueChange={(value) => {
-                  setFieldValue('tieneBola', value);
-                }}
-                color={values.tieneBola ? '#0F0D23' : undefined}
-              />
-              <Pressable
-                onPress={() => setFieldValue('tieneBola', !values.tieneBola)}
-                className="ml-2 flex-1"
-              >
-                <Text className="font-geist text-text text-base">
-                  Válvula de Bola
-                </Text>
-              </Pressable>
-            </View>
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+              value={values.tiempoDeVidaUtil}
+              onChangeText={handleChange('tiempoDeVidaUtil')}
+              onBlur={handleBlur('tiempoDeVidaUtil')}
+              keyboardType="numeric"
+              placeholder="Ej: 3"
+            />
+            {errors.tiempoDeVidaUtil && touched.tiempoDeVidaUtil && (
+              <Text className="text-red-500 text-sm mt-1">
+                {errors.tiempoDeVidaUtil}
+              </Text>
+            )}
 
             <View className="flex-row items-center justify-center gap-1 mt-5">
               <Link asChild href="/dashboard">

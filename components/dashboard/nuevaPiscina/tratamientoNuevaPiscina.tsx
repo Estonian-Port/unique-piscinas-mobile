@@ -3,12 +3,7 @@ import React, { useState, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import {
-  GermicidaIonizador,
-  GermicidaTrasductor,
-  GermicidaUV,
-  PiscinaNueva,
-} from '@/data/domain/piscina';
+import { PiscinaNueva, GermicidaNuevo } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
@@ -72,6 +67,33 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
+  trasductorTiempoVidaUtil: Yup.number().when('trasductorSwitch', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('Ingrese el tiempo de vida útil del trasductor')
+        .typeError('El tiempo de vida útil debe ser un número')
+        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  ionizadorTiempoVidaUtil: Yup.number().when('ionizadorSwitch', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('Ingrese el tiempo de vida útil del ionizador')
+        .typeError('El tiempo de vida útil debe ser un número')
+        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  uvTiempoVidaUtil: Yup.number().when('uvSwitch', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('Ingrese el tiempo de vida útil del UV')
+        .typeError('El tiempo de vida útil debe ser un número')
+        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   // Campos para los switches
   cloradorSalino: Yup.boolean(),
   controlPh: Yup.boolean(),
@@ -101,15 +123,13 @@ const TratamientoNuevaPiscina = ({
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const sistemaGermicida = nuevaPiscina.sistemaGermicida || [];
-    const uvExistente = sistemaGermicida.find(
-      (s) => s.tipo === 'uv'
-    ) as GermicidaUV;
+    const uvExistente = sistemaGermicida.find((s) => s.tipo === 'uv');
     const ionizadorExistente = sistemaGermicida.find(
       (s) => s.tipo === 'ionizador'
-    ) as GermicidaIonizador;
+    );
     const trasductorExistente = sistemaGermicida.find(
       (s) => s.tipo === 'trasductor'
-    ) as GermicidaTrasductor;
+    );
 
     return {
       cloradorSalino: nuevaPiscina.cloroSalino ?? false,
@@ -117,17 +137,24 @@ const TratamientoNuevaPiscina = ({
       controlOrp: nuevaPiscina.orp ?? false,
       uvSwitch: !!uvExistente,
       uvMarca: uvExistente?.marca ?? '',
-      uvPotencia: uvExistente?.potencia ? uvExistente.potencia.toString() : '',
+      uvPotencia: uvExistente?.datoExtra
+        ? uvExistente.datoExtra.toString()
+        : '',
+      uvTiempoVidaUtil: uvExistente?.tiempoVidaUtil.toString() ?? '',
       ionizadorSwitch: !!ionizadorExistente,
       ionizadorMarca: ionizadorExistente?.marca ?? '',
-      ionizadorElectrodos: ionizadorExistente?.electrodos
-        ? ionizadorExistente.electrodos.toString()
+      ionizadorElectrodos: ionizadorExistente?.datoExtra
+        ? ionizadorExistente.datoExtra.toString()
         : '',
+      ionizadorTiempoVidaUtil:
+        ionizadorExistente?.tiempoVidaUtil.toString() ?? '',
       trasductorSwitch: !!trasductorExistente,
       trasductorMarca: trasductorExistente?.marca ?? '',
-      trasductorPotencia: trasductorExistente?.potencia
-        ? trasductorExistente.potencia.toString()
+      trasductorPotencia: trasductorExistente?.datoExtra
+        ? trasductorExistente.datoExtra.toString()
         : '',
+      trasductorTiempoVidaUtil:
+        trasductorExistente?.tiempoVidaUtil.toString() ?? '',
     };
   };
 
@@ -141,37 +168,37 @@ const TratamientoNuevaPiscina = ({
         const sistemaGermicida = [];
 
         if (values.uvSwitch) {
-          const uv: GermicidaUV = {
+          const uv: GermicidaNuevo = {
             id: 0,
             tipo: 'uv',
             marca: values.uvMarca,
-            vida: 100,
             activa: true,
-            potencia: parseFloat(values.uvPotencia),
+            datoExtra: parseFloat(values.uvPotencia),
+            tiempoVidaUtil: parseInt(values.uvTiempoVidaUtil),
           };
           sistemaGermicida.push(uv);
         }
 
         if (values.ionizadorSwitch) {
-          const ionizador: GermicidaIonizador = {
+          const ionizador: GermicidaNuevo = {
             id: 1,
             tipo: 'ionizador',
             marca: values.ionizadorMarca,
-            vida: 100,
             activa: true,
-            electrodos: parseInt(values.ionizadorElectrodos),
+            datoExtra: parseInt(values.ionizadorElectrodos),
+            tiempoVidaUtil: parseInt(values.ionizadorTiempoVidaUtil),
           };
           sistemaGermicida.push(ionizador);
         }
 
         if (values.trasductorSwitch) {
-          const trasductor: GermicidaTrasductor = {
+          const trasductor: GermicidaNuevo = {
             id: 2,
             tipo: 'trasductor',
             marca: values.trasductorMarca,
-            vida: 100,
             activa: true,
-            potencia: parseFloat(values.trasductorPotencia),
+            datoExtra: parseFloat(values.trasductorPotencia),
+            tiempoVidaUtil: parseInt(values.trasductorTiempoVidaUtil),
           };
           sistemaGermicida.push(trasductor);
         }
@@ -360,6 +387,24 @@ const TratamientoNuevaPiscina = ({
                         </Text>
                       )}
                     </View>
+                    <View className="items-start w-full mt-2">
+                      <Text className="text-text text-sm font-geist">
+                        Tiempo de vida útil en horas
+                      </Text>
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.uvTiempoVidaUtil}
+                        onChangeText={handleChange('uvTiempoVidaUtil')}
+                        onBlur={handleBlur('uvTiempoVidaUtil')}
+                        keyboardType="numeric"
+                        placeholder="Ej: 150"
+                      />
+                      {errors.uvTiempoVidaUtil && touched.uvTiempoVidaUtil && (
+                        <Text className="text-red-500 text-xs mt-1">
+                          {errors.uvTiempoVidaUtil}
+                        </Text>
+                      )}
+                    </View>
                   </View>
                 )}
               </View>
@@ -454,6 +499,25 @@ const TratamientoNuevaPiscina = ({
                           </Text>
                         )}
                     </View>
+                    <View className="items-start w-full mt-2">
+                      <Text className="text-text text-sm font-geist">
+                        Tiempo de vida útil en horas
+                      </Text>
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.ionizadorTiempoVidaUtil}
+                        onChangeText={handleChange('ionizadorTiempoVidaUtil')}
+                        onBlur={handleBlur('ionizadorTiempoVidaUtil')}
+                        keyboardType="numeric"
+                        placeholder="Ej: 150"
+                      />
+                      {errors.ionizadorTiempoVidaUtil &&
+                        touched.ionizadorTiempoVidaUtil && (
+                          <Text className="text-red-500 text-xs mt-1">
+                            {errors.ionizadorTiempoVidaUtil}
+                          </Text>
+                        )}
+                    </View>
                   </View>
                 )}
               </View>
@@ -545,6 +609,25 @@ const TratamientoNuevaPiscina = ({
                         touched.trasductorPotencia && (
                           <Text className="text-red-500 text-xs mt-1">
                             {errors.trasductorPotencia}
+                          </Text>
+                        )}
+                    </View>
+                    <View className="items-start w-full mt-2">
+                      <Text className="text-text text-sm font-geist">
+                        Tiempo de vida útil en horas
+                      </Text>
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.trasductorTiempoVidaUtil}
+                        onChangeText={handleChange('trasductorTiempoVidaUtil')}
+                        onBlur={handleBlur('trasductorTiempoVidaUtil')}
+                        keyboardType="numeric"
+                        placeholder="Ej: 150"
+                      />
+                      {errors.trasductorTiempoVidaUtil &&
+                        touched.trasductorTiempoVidaUtil && (
+                          <Text className="text-red-500 text-xs mt-1">
+                            {errors.trasductorTiempoVidaUtil}
                           </Text>
                         )}
                     </View>
