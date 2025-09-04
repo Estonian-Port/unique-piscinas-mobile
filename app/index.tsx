@@ -7,7 +7,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import React, { useState, useEffect } from 'react'; // <-- Importa useEffect
+import React, { useState, useEffect } from 'react';
 import ModalError from '@/components/utiles/modalError';
 import { router } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
@@ -20,17 +20,19 @@ const Index = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const { login, usuario: user } = useAuth();
+  const { login, usuario } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      if (user.isAdmin) {
+    if (usuario) {
+      if (usuario.isAdmin) {
         router.replace('/dashboard');
+      } else if (usuario.primerLogin) {
+        router.replace('/registro');
       } else {
         router.replace('/pools');
       }
     }
-  }, [user])
+  }, [usuario])
 
   const handleLogin = async (email: string, password: string) => {
     try {

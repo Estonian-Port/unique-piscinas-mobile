@@ -11,6 +11,7 @@ export interface UsuarioLogin {
   email: string;
   isAdmin: boolean;
   piscinasId: number[];
+  primerLogin: boolean;
 }
 
 export interface UsuarioRegistrado {

@@ -1,22 +1,28 @@
+import { UsuarioAlta } from '@/app/registro';
 import api from '../helper/auth.interceptor';
-import { NuevoUsuario } from '@/data/domain/user';
+import { NuevoUsuario, UsuarioLogin } from '@/data/domain/user';
 
-const USUARIO = '/usuario'
+const USUARIO = '/usuario';
 
 class UsuarioService {
 
+  altaUsuario = async (nuevoUsuario: NuevoUsuario) : Promise<{data: any; message: string}> => {
+    const response = await api.post(`${USUARIO}/altaUsuario`, nuevoUsuario);
+    return {
+      data: response.data.data,
+      message: response.data.message,
+    };
+  };
 
-  altaUsuario = async (nuevoUsuario: NuevoUsuario) => {
-    try {
-      const response = await api.post(`${USUARIO}/altaUsuario`, {
-        email: nuevoUsuario.email,
-      });
-
-      console.log("Respuesta:", response.data);
-    } catch (error) {
-      console.error("Error en la request:", error);
-    }
-  }
+  registro = async (
+    usuarioActualizado: UsuarioAlta
+  ): Promise<{ data: UsuarioLogin; message: string }> => {
+    const response = await api.put(`${USUARIO}/registro`, usuarioActualizado);
+    return {
+      data: response.data.data,
+      message: response.data.message,
+    };
+  };
 }
 
-export const usuarioService = new UsuarioService()
+export const usuarioService = new UsuarioService();

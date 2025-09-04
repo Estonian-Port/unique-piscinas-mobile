@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { NuevoUsuario } from '@/data/domain/user';
 import { usuarioService } from '@/services/usuario.service';
+import Toast from 'react-native-toast-message';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -31,23 +32,24 @@ const NuevoUsuarioForm = () => {
 
   const crearUsuario = async (usuario: NuevoUsuario, formikActions: any) => {
     try {
-      // Mostrar que está cargando
       formikActions.setSubmitting(true);
 
       const response = await usuarioService.altaUsuario(usuario)
-      console.log(response)
-      // Por ahora simulo una operación async
-      //await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      console.log('Usuario creado exitosamente');
+      Toast.show({
+        type: 'success',
+        text1: 'Usuario creado',
+        text2: response.message,
+        position: 'bottom',
+      });
       formikActions.resetForm();
     } catch (error) {
-      console.error('Error al crear usuario:', error);
-
-      // NO resetear si hay error
-      // El usuario mantiene sus datos para poder corregir
+      Toast.show({
+        type: 'error',
+        text1: 'Error al crear usuario',
+        text2: 'Hubo un problema al crear el usuario. Por favor, inténtelo de nuevo.',
+        position: 'bottom',
+      });
     } finally {
-      // Quitar el estado de "cargando" siempre
       formikActions.setSubmitting(false);
     }
   };

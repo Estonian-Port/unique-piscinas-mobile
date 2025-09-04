@@ -7,7 +7,6 @@ import {
 } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { programacionFromDto } from '@/data/domain/cicloFiltrado';
-import { PiscinaPrueba } from '@/app/nuevaPiscina';
 
 const PISCINA = '/piscina';
 

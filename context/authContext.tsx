@@ -7,6 +7,7 @@ import { PiscinaListItem } from "@/data/domain/piscina"
 
 type AuthContextType = {
   usuario: UsuarioLogin | null
+  setUsuario: (usuario: UsuarioLogin | null) => void
   selectedPool: PiscinaListItem | null
   login: (username: string, password: string) => Promise<void>
   logout: () => Promise<void>
@@ -64,6 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const value = {
     usuario,
+    setUsuario,
     selectedPool,
     login,
     logout,
