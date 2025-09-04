@@ -2,8 +2,10 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   DeleteIcon,
+  EmailIcon,
   EyeIcon,
   RemoveIcon,
+  TelephoneIcon,
 } from '@/assets/icons';
 import { Pressable, View, Text } from 'react-native';
 import ModalAñadirPiscina from './modalAñadirPiscina';
@@ -18,10 +20,12 @@ const UserItem = ({
   usuario,
   isExpanded,
   onToggleExpand,
+  onActualizarPiscinasAsignadas
 }: {
   usuario: UsuarioRegistrado;
   isExpanded: boolean;
   onToggleExpand: () => void;
+  onActualizarPiscinasAsignadas: () => void;
 }) => {
   const { seleccionarPiscina } = useAuth();
   const [modalNuevaPiscina, setModalNuevaPiscina] = useState(false);
@@ -47,7 +51,14 @@ const UserItem = ({
           <Text className="font-geist-semi-bold text-text text-base">
             {usuario.nombre + ' ' + usuario.apellido}
           </Text>
-          <Text className="font-geist text-gray-500">{usuario.email}</Text>
+          <View className="flex-row gap-1 items-center">
+            <EmailIcon size={12} />
+            <Text className="font-geist text-gray-500 text-sm">{usuario.email}</Text>
+          </View>
+          <View className="flex-row gap-1 items-center">
+            <TelephoneIcon size={12} />
+            <Text className="font-geist text-gray-500 text-sm">{usuario.celular}</Text>
+          </View>
         </View>
         <View className="flex-row items-center justify-between gap-3">
           <View
@@ -60,7 +71,8 @@ const UserItem = ({
             }`}
           >
             <Text className="font-geist-semi-bold text-text text-sm text-center">
-                {usuario.estado.charAt(0).toUpperCase() + usuario.estado.slice(1).toLowerCase()}
+              {usuario.estado.charAt(0).toUpperCase() +
+                usuario.estado.slice(1).toLowerCase()}
             </Text>
           </View>
           <Pressable onPress={() => setModalEliminarUsuario(true)}>
@@ -96,10 +108,12 @@ const UserItem = ({
             </Pressable>
             {modalNuevaPiscina && (
               <ModalAñadirPiscina
-          visible={modalNuevaPiscina}
-          onClose={() => setModalNuevaPiscina(false)}
-          nombreUsuario={usuario.nombre}
-          apellidoUsuario={usuario.apellido}
+                visible={modalNuevaPiscina}
+                onClose={() => setModalNuevaPiscina(false)}
+                idUsuario={usuario.id}
+                nombreUsuario={usuario.nombre}
+                apellidoUsuario={usuario.apellido}
+                onActualizarPiscinasAsignadas={onActualizarPiscinasAsignadas}
               />
             )}
           </View>
@@ -111,36 +125,40 @@ const UserItem = ({
           ) : (
             usuario.piscinasAsignadas.map((piscina) => (
               <View
-          className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
-          key={piscina.id}
+                className="flex-row justify-between items-center bg-gray-200 rounded-sm mx-1 p-2 mt-3"
+                key={piscina.id}
               >
-          <View>
-            <Text
-              className="font-geist-semi-bold text-text text-sm"
-            >
-              {piscina.direccion}
-            </Text>
-            <Text className="font-geist text-text text-sm">
-              {Math.round(piscina.volumen)} m³
-            </Text>
-          </View>
-          <View className="flex-row items-center justify-between gap-3">
-            <Pressable className="justify-center items-center h-12 w-12" onPress={() => handlePanel(piscina.id)}>
-              <EyeIcon size={22}></EyeIcon>
-            </Pressable>
-            <Pressable
-              className="justify-center items-center h-12 w-12"
-              onPress={() => setModalDesvincularPiscina(true)}
-            >
-              <RemoveIcon size={20}></RemoveIcon>
-            </Pressable>
-            {modalDesvincularPiscina && (
-              <ModalDesvincularPiscina
-                visible={modalDesvincularPiscina}
-                onClose={() => setModalDesvincularPiscina(false)}
-              />
-            )}
-          </View>
+                <View>
+                  <Text className="font-geist-semi-bold text-text text-sm">
+                    {piscina.direccion}
+                  </Text>
+                  <Text className="font-geist text-text text-sm">
+                    {Math.round(piscina.volumen)} m³
+                  </Text>
+                </View>
+                <View className="flex-row items-center justify-between gap-3">
+                  <Pressable
+                    className="justify-center items-center h-12 w-12"
+                    onPress={() => handlePanel(piscina.id)}
+                  >
+                    <EyeIcon size={22}></EyeIcon>
+                  </Pressable>
+                  <Pressable
+                    className="justify-center items-center h-12 w-12"
+                    onPress={() => setModalDesvincularPiscina(true)}
+                  >
+                    <RemoveIcon size={20}></RemoveIcon>
+                  </Pressable>
+                  {modalDesvincularPiscina && (
+                    <ModalDesvincularPiscina
+                      piscinaSeleccionadaId={piscina.id}
+                      idUsuario={usuario.id}
+                      visible={modalDesvincularPiscina}
+                      onClose={() => setModalDesvincularPiscina(false)}
+                      onActualizarPiscinasAsignadas={onActualizarPiscinasAsignadas}
+                    />
+                  )}
+                </View>
               </View>
             ))
           )}

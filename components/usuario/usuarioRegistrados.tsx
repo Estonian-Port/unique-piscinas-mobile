@@ -13,7 +13,6 @@ const UsuarioRegistrados = () => {
   const [users, setUsers] = useState<UsuarioRegistrado[]>([]);
   const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
 
-  useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await administracionService.getUsuariosRegistrados(usuario!.id);
@@ -23,6 +22,7 @@ const UsuarioRegistrados = () => {
         }
       };
 
+  useEffect(() => {
       fetchData();
   }, []);
 
@@ -32,7 +32,7 @@ const UsuarioRegistrados = () => {
 
   return (
     <ScreenCard>
-      <View className="mb-4">
+      <View className="mb-3">
         <Text className="font-geist-semi-bold text-text text-3xl">
           Usuarios Registrados
         </Text>
@@ -46,6 +46,7 @@ const UsuarioRegistrados = () => {
           usuario={user}
           isExpanded={expandedUserId === user.id}
           onToggleExpand={() => handleToggleExpand(user.id)}
+          onActualizarPiscinasAsignadas={fetchData}
         />
       ))}
     </ScreenCard>

@@ -1,7 +1,7 @@
-import { PiscinaRegistrada, PiscinaFichaTecnica, PiscinaEquipos } from '@/data/domain/piscina';
+import { PiscinaRegistrada, PiscinaFichaTecnica, PiscinaEquipos, PiscinaListItem } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { StatDashboard } from '@/data/domain/stat';
-import { UsuarioList, UsuarioRegistrado } from '@/data/domain/user';
+import { UsuarioList, UsuarioPendiente, UsuarioRegistrado } from '@/data/domain/user';
 
 const ADMINISTRACION = '/administracion'
 
@@ -32,9 +32,29 @@ class AdministracionService {
     return response.data.data;
   };
 
+  getUsuariosPendientes = async (userId: number): Promise<UsuarioPendiente[]> => {
+    const response = await api.get(`${ADMINISTRACION}/usuarios-pendientes/${userId}`);
+    return response.data.data;
+  }
+
   getUsuarios = async (userId: number): Promise<UsuarioList[]> => {
     const response = await api.get(`${ADMINISTRACION}/usuarios-nueva-piscina/${userId}`);
     return response.data.data;
+  }
+
+  getPiscinasDisponibles = async () : Promise<PiscinaListItem[]> => {
+    const response = await api.get(`${ADMINISTRACION}/no-asignadas`);
+    return response.data.data;
+  }
+
+  asignarPiscina = async (userId: number, piscinaId: number): Promise<void> => {
+    const response = await api.put(`${ADMINISTRACION}/asignar-piscina/${piscinaId}/${userId}`);
+    return response.data;
+  }
+
+  desvincularPiscina = async (userId: number, piscinaId: number): Promise<void> => {
+    const response = await api.put(`${ADMINISTRACION}/desvincular-piscina/${piscinaId}/${userId}`);
+    return response.data;
   }
 
 }

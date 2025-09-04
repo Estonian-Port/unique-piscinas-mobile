@@ -61,6 +61,7 @@ const NuevaPiscina = () => {
         type: 'success',
         text1: 'Éxito',
         text2: result.message,
+        position: 'bottom',
       });
       router.replace('/(tabs-adm)/dashboard');
     } catch (error: any) {

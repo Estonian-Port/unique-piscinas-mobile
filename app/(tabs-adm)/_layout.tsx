@@ -37,7 +37,7 @@ const _Layout = () => {
         }}
       />
       <Tabs.Screen
-        name="altaUsuarios"
+        name="altaUsuario"
         options={{
           title: 'altaUsuario',
           headerShown: false,

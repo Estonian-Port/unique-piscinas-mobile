@@ -5,6 +5,7 @@ import UsuarioRegistrados from '@/components/usuario/usuarioRegistrados';
 import PrivateScreen from '@/components/utiles/privateScreen';
 import NuevoUsuarioForm from '@/components/usuario/nuevoUsuario';
 import WebTabBar from '@/components/utiles/webTabBar';
+import UsuariosPendientes from '@/components/usuario/usuariosPendientes';
 
 const Usuarios = () => {
   return (
@@ -27,11 +28,13 @@ const Usuarios = () => {
                   <NuevoUsuarioForm />
                 </View>
                 <UsuarioRegistrados />
+                <UsuariosPendientes />
               </View>
             ) : (
               <>
                 <NuevoUsuarioForm />
                 <UsuarioRegistrados />
+                <UsuariosPendientes />
               </>
             )}
 

@@ -164,3 +164,11 @@ export const RegisterIcon = (props: any) => (
 export const RemoveIcon = (props: any) => (
   <MaterialIcons name="remove-circle-outline" size={24} color="#000" {...props} />
 );
+
+export const TelephoneIcon = (props: any) => (
+  <MaterialIcons name="phone" size={24} color="#000" {...props} />
+);
+
+export const EmailIcon = (props: any) => (
+  <MaterialIcons name="email" size={24} color="#000" {...props} />
+);

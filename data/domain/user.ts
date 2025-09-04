@@ -24,6 +24,12 @@ export interface UsuarioRegistrado {
   piscinasAsignadas: PiscinaListItem[];
 }
 
+export interface UsuarioPendiente {
+  id: number;
+  email: string;
+  fechaAlta: string;
+}
+
 export interface UsuarioList {
   id: number;
   nombre: string;

@@ -1,3 +1,4 @@
+import { administracionService } from '@/services/administracion.service';
 import {
   View,
   Text,
@@ -6,18 +7,40 @@ import {
   Platform,
   Pressable,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 type ModalDesvincularPiscinaProps = {
+  piscinaSeleccionadaId: number;
+  idUsuario: number;
   visible: boolean;
   onClose: () => void;
+  onActualizarPiscinasAsignadas: () => void;
 };
 
 const ModalDesvincularPiscina = ({
+  piscinaSeleccionadaId,
+  idUsuario,
   visible,
   onClose,
+  onActualizarPiscinasAsignadas,
 }: ModalDesvincularPiscinaProps) => {
-  const save = (): void => {
-    onClose();
+  const save = async () => {
+    try {
+      await administracionService.desvincularPiscina(
+        idUsuario,
+        piscinaSeleccionadaId
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Piscina desvinculada',
+        text2: 'La piscina ha sido desvinculada correctamente del usuario.',
+        position: 'bottom',
+      });
+      onClose();
+      onActualizarPiscinasAsignadas && onActualizarPiscinasAsignadas();
+    } catch (error) {
+      console.error('Error al desvincular piscina:', error);
+    }
   };
 
   return (
@@ -32,33 +55,34 @@ const ModalDesvincularPiscina = ({
         style={{ flex: 1 }}
       >
         <View className="flex-1 justify-center items-center bg-black/50">
-        <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
-          <Text className="text-text text-xl font-geist-bold mb-2 text-center">
-            ¿Desea desvincular esta piscina de su usuario?
-          </Text>
-          <Text className='text-text text-sm font-geist'>
-            Esta acción no se puede deshacer. La piscina será desvinculada del usuario.
-          </Text>
-          <View className="flex-row justify-between gap-3 mt-5">
-            <Pressable
-              onPress={onClose}
-              className="bg-grayish-unique rounded-lg flex-1 items-center justify-center h-12"
-            >
-              <Text className="text-text text-center font-geist-semi-bold">
-                Cancelar
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={save}
-              className="bg-red-alert rounded-lg flex-1 items-center justify-center h-12"
-            >
-              <View className="flex-row items-center justify-center">
-                <Text className="text-white text-center font-geist-semi-bold ml-2">
-                  Desvincular Piscina
+          <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
+            <Text className="text-text text-xl font-geist-bold mb-2 text-center">
+              ¿Desea desvincular esta piscina de su usuario?
+            </Text>
+            <Text className="text-text text-sm font-geist">
+              Esta acción no se puede deshacer. La piscina será desvinculada del
+              usuario.
+            </Text>
+            <View className="flex-row justify-between gap-3 mt-5">
+              <Pressable
+                onPress={onClose}
+                className="bg-grayish-unique rounded-lg flex-1 items-center justify-center h-12"
+              >
+                <Text className="text-text text-center font-geist-semi-bold">
+                  Cancelar
                 </Text>
-              </View>
-            </Pressable>
-          </View>
+              </Pressable>
+              <Pressable
+                onPress={save}
+                className="bg-red-alert rounded-lg flex-1 items-center justify-center h-12"
+              >
+                <View className="flex-row items-center justify-center">
+                  <Text className="text-white text-center font-geist-semi-bold ml-2">
+                    Desvincular Piscina
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
           </View>
         </View>
       </KeyboardAvoidingView>

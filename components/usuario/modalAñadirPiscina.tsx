@@ -6,32 +6,65 @@ import {
   Platform,
   Pressable,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { piscinasMock } from '@/data/mock/piscinaMock';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { administracionService } from '@/services/administracion.service';
+import { PiscinaListItem } from '@/data/domain/piscina';
+import { useAuth } from '@/context/authContext';
+import Toast from 'react-native-toast-message';
 
 type ModalAñadirPiscinaProps = {
   visible: boolean;
   onClose: () => void;
+  idUsuario: number;
   nombreUsuario: string;
   apellidoUsuario: string;
+  onActualizarPiscinasAsignadas: () => void;
 };
 
 const ModalAñadirPiscina = ({
   visible,
   onClose,
+  idUsuario,
   nombreUsuario,
   apellidoUsuario,
+  onActualizarPiscinasAsignadas
 }: ModalAñadirPiscinaProps) => {
   const [open, setOpen] = useState(false);
-  const [piscinaSeleccionada, setPisicinaSeleccionada] = useState(null);
+  const [piscinaSeleccionadaId, setPiscinaSeleccionadaId] = useState<number | null>(null);
+  const [piscinasDisponibles, setPiscinasDisponibles] = useState<PiscinaListItem[]>([]);
 
-  const poolsDisponibles = piscinasMock.filter(
-    (pool) => pool.propietario == null
-  );
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await administracionService.getPiscinasDisponibles();
+          setPiscinasDisponibles(response);
 
-  const save = (): void => {
-    onClose();
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchData();
+  }, []);
+
+  const save = async () => {
+    if (piscinaSeleccionadaId) {
+      try {
+        await administracionService.asignarPiscina(idUsuario, piscinaSeleccionadaId);
+        Toast.show({
+          type: 'success',
+          text1: 'Piscina asignada',
+          text2: 'La piscina ha sido asignada correctamente al usuario.',
+          position: 'bottom',
+        });
+        onClose();
+        onActualizarPiscinasAsignadas && onActualizarPiscinasAsignadas();
+      } catch (error) {
+        console.error('Error al agregar piscina:', error);
+      }
+    }
   };
 
   return (
@@ -52,13 +85,13 @@ const ModalAñadirPiscina = ({
           </Text>
           <DropDownPicker
             open={open}
-            value={piscinaSeleccionada}
-            items={poolsDisponibles.map((pool) => ({
-              label: pool.name,
+            value={piscinaSeleccionadaId}
+            items={piscinasDisponibles.map((pool) => ({
+              label: pool.direccion,
               value: pool.id,
             }))}
             setOpen={setOpen}
-            setValue={setPisicinaSeleccionada}
+            setValue={setPiscinaSeleccionadaId}
             placeholder="Seleccione una piscina"
             style={{ borderColor: '#e5e7eb' }}
             dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
