@@ -21,7 +21,7 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/logotipo-unique.png",
-      "publicPath": "./",
+      "publicPath": "/",
       "assetUrl": "./assets"
     },
     "plugins": [
