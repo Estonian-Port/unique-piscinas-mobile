@@ -20,8 +20,9 @@
     "web": {
       "bundler": "metro",
       "output": "static",
+      "favicon": "./assets/images/logotipo-unique.png",
       "publicPath": "./",
-      "favicon": "./assets/images/logotipo-unique.png"
+      "assetUrl": "./assets"
     },
     "plugins": [
       "expo-router",
