@@ -2,15 +2,16 @@
   "name": "unique-piscinas-mobile",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "test": "jest --watchAll",
-    "lint": "expo lint",
-    "format": "prettier --write ."
+"scripts": {
+  "start": "expo start",
+  "reset-project": "node ./scripts/reset-project.js",
+  "android": "expo start --android",
+  "ios": "expo start --ios",
+  "web": "expo start --web",
+  "build:web": "expo export --output-dir docs",
+  "test": "jest --watchAll",
+  "lint": "expo lint",
+  "format": "prettier --write ."
   },
   "jest": {
     "preset": "jest-expo"
