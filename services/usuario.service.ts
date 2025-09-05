@@ -23,6 +23,11 @@ class UsuarioService {
       message: response.data.message,
     };
   };
+
+  eliminar = async (userId: number, administradorId: number): Promise<void> => {
+    const response = await api.delete(`${USUARIO}/delete/${userId}/${administradorId}`);
+    return response.data;
+  }
 }
 
 export const usuarioService = new UsuarioService();

@@ -172,3 +172,7 @@ export const TelephoneIcon = (props: any) => (
 export const EmailIcon = (props: any) => (
   <MaterialIcons name="email" size={24} color="#000" {...props} />
 );
+
+export const WarningIcon = (props: any) => (
+  <MaterialIcons name="warning" size={24} color="000" {...props} />
+);

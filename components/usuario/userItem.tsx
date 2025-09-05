@@ -20,7 +20,7 @@ const UserItem = ({
   usuario,
   isExpanded,
   onToggleExpand,
-  onActualizarPiscinasAsignadas
+  onActualizarPiscinasAsignadas,
 }: {
   usuario: UsuarioRegistrado;
   isExpanded: boolean;
@@ -82,8 +82,11 @@ const UserItem = ({
             <ModalEliminarUsuario
               visible={modalEliminarUsuario}
               onClose={() => setModalEliminarUsuario(false)}
+              idUsuario={usuario.id}
               nombreUsuario={usuario.nombre}
               apellidoUsuario={usuario.apellido}
+              piscinasAsignadas={usuario.piscinasAsignadas.length > 0}
+              actualizarUsuariosRegistrados={onActualizarPiscinasAsignadas}
             />
           )}
           {isExpanded ? (
