@@ -19,7 +19,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "server",
       "favicon": "./assets/images/logotipo-unique.png",
       "publicPath": "/",
       "assetUrl": "./assets"
@@ -49,7 +49,7 @@
       ]
     ],
     "experiments": {
-      "baseUrl": "/",
+      "baseUrl": "/expo-gh-pages",
       "typedRoutes": true
     }
   }
