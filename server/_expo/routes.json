@@ -1,0 +1,117 @@
+{
+  "apiRoutes": [],
+  "htmlRoutes": [
+    {
+      "file": "./index.tsx",
+      "page": "/index",
+      "namedRegex": "^/(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs)/faq.tsx",
+      "page": "/(tabs)/faq",
+      "namedRegex": "^(?:/\\(tabs\\))?/faq(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./pools.tsx",
+      "page": "/pools",
+      "namedRegex": "^/pools(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs)/resume.tsx",
+      "page": "/(tabs)/resume",
+      "namedRegex": "^(?:/\\(tabs\\))?/resume(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./profile.tsx",
+      "page": "/profile",
+      "namedRegex": "^/profile(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./equipos.tsx",
+      "page": "/equipos",
+      "namedRegex": "^/equipos(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "expo-router/build/views/Sitemap.js",
+      "page": "/_sitemap",
+      "namedRegex": "^/_sitemap(?:/)?$",
+      "routeKeys": {},
+      "generated": true
+    },
+    {
+      "file": "./registro.tsx",
+      "page": "/registro",
+      "namedRegex": "^/registro(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs-adm)/dashboard.tsx",
+      "page": "/(tabs-adm)/dashboard",
+      "namedRegex": "^(?:/\\(tabs\\-adm\\))?/dashboard(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs)/equipment.tsx",
+      "page": "/(tabs)/equipment",
+      "namedRegex": "^(?:/\\(tabs\\))?/equipment(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./changePass.tsx",
+      "page": "/changePass",
+      "namedRegex": "^/changePass(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs-adm)/altaUsuario.tsx",
+      "page": "/(tabs-adm)/altaUsuario",
+      "namedRegex": "^(?:/\\(tabs\\-adm\\))?/altaUsuario(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./(tabs)/programation.tsx",
+      "page": "/(tabs)/programation",
+      "namedRegex": "^(?:/\\(tabs\\))?/programation(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./nuevaPiscina.tsx",
+      "page": "/nuevaPiscina",
+      "namedRegex": "^/nuevaPiscina(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./fichaTecnica.tsx",
+      "page": "/fichaTecnica",
+      "namedRegex": "^/fichaTecnica(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./readings/[idPiscinaReadings].tsx",
+      "page": "/readings/[idPiscinaReadings]",
+      "namedRegex": "^/readings/(?<idPiscinaReadings>[^/]+?)(?:/)?$",
+      "routeKeys": {
+        "idPiscinaReadings": "idPiscinaReadings"
+      }
+    }
+  ],
+  "notFoundRoutes": [
+    {
+      "file": "expo-router/build/views/Unmatched.js",
+      "page": "/+not-found",
+      "namedRegex": "^(?:/(?<notfound>.+?))?(?:/)?$",
+      "routeKeys": {
+        "notfound": "not-found"
+      },
+      "generated": true
+    }
+  ],
+  "redirects": [],
+  "rewrites": []
+}
