@@ -20,8 +20,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/logotipo-unique.png",
-      "publicPath": "/"
+      "favicon": "./assets/images/logotipo-unique.png"
     },
     "plugins": [
       "expo-router",
@@ -42,10 +41,13 @@
             "./assets/fonts/Geist-Light.ttf",
             "./assets/fonts/Geist-Regular.ttf",
             "./assets/fonts/geist-semi-bold.ttf",
-            "./assets/fonts/Geist-Bold.ttf"        
+            "./assets/fonts/Geist-Bold.ttf"     
           ]
         }
       ]
+    ],
+    "assetBundlePatterns": [
+      "**/*"
     ],
     "experiments": {
       "typedRoutes": true

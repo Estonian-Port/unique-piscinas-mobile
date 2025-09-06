@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import NavBar from '@/components/utiles/navBar';
 import { AuthProvider } from '@/context/authContext';
 import Toast from 'react-native-toast-message';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -14,6 +15,7 @@ export default function RootLayout() {
     'Geist-Regular': require('../assets/fonts/Geist-Regular.ttf'),
     'Geist-Bold': require('../assets/fonts/Geist-Bold.ttf'),
     'Geist-semiBold': require('../assets/fonts/Geist-SemiBold.ttf'),
+    ...MaterialIcons.font,
   });
 
   useEffect(() => {

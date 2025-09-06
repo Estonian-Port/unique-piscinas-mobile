@@ -13,12 +13,13 @@
     "lint": "expo lint",
     "format": "prettier --write .",
     "deploy": "gh-pages --nojekyll -d dist --cname unique.estonianport.com.ar",
-    "predeploy": "npx expo export"
+    "predeploy": "npx expo export && cp dist/index.html dist/404.html"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo-google-fonts/material-icons": "^0.4.0",
     "@expo/vector-icons": "^14.1.0",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-community/datetimepicker": "8.4.1",
