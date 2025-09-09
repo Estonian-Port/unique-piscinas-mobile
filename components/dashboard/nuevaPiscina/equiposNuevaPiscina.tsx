@@ -13,7 +13,7 @@ import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';
 
 export type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
-export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
 export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
 export const marcasBomba = [
@@ -182,12 +182,6 @@ const EquiposNuevaPiscina = ({
         value={'Cartucho'}
         label={'Cartucho'}
         selected={tipoFiltro == 'Cartucho'}
-        onPress={(value) => setTipoFiltro(value)}
-      />
-      <RadioButton
-        value={'Diatomeas'}
-        label={'Diatomeas'}
-        selected={tipoFiltro == 'Diatomeas'}
         onPress={(value) => setTipoFiltro(value)}
       />
       <Text className="font-geist text-text text-base mt-3">Marca</Text>

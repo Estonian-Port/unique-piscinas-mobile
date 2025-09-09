@@ -9,7 +9,6 @@ const bomba1: Bomba = {
   modelo: 'Victoria Plus',
   activa: true,
   potencia: 2,
-  esVelocidadVariable: false
 };
 const bomba2: Bomba = {
   id: 2,
@@ -17,7 +16,6 @@ const bomba2: Bomba = {
   modelo: 'Super Pump',
   activa: false,
   potencia: 1.5,
-  esVelocidadVariable: false
 };
 const bomba3: Bomba = {
   id: 3,
@@ -25,7 +23,6 @@ const bomba3: Bomba = {
   modelo: 'Ultra',
   activa: true,
   potencia: 2.2,
-  esVelocidadVariable: false
 };
 
 const lamparaUv: Germicida = {

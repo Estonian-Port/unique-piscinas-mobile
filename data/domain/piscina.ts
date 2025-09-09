@@ -121,11 +121,8 @@ export type Bomba = {
   marca: string;
   modelo: string;
   potencia: number;
-  esVelocidadVariable: boolean;
   activa: boolean;
 };
-
-
 
 export type Filtro = {
   id: number;
@@ -135,10 +132,8 @@ export type Filtro = {
   diametro: number;
   activo: boolean;
   datoExtra?: number;
-  estado?: string;
+  tiempoVidaUtil?: number;
 };
-
-
 
 //Esto se usa para traer datos del back
 export type Germicida = {
@@ -227,7 +222,6 @@ export type BombaNuevo = {
   marca: string;
   modelo: string;
   potencia: number;
-  esVelocidadVariable: boolean;
   activa: boolean;
 };
 

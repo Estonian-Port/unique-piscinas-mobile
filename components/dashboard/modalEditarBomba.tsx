@@ -9,14 +9,10 @@ import {
   TextInput,
   Switch,
 } from 'react-native';
-import { SaveIcon } from '@/assets/icons';
-import { Cicle, Day, FuncionFiltro } from '@/data/domain/cicloFiltrado';
-import TimeInput from '../utiles/timeInput';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Bomba } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import Checkbox from 'expo-checkbox';
 
 export const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -67,7 +63,6 @@ const ModalEditarBomba = ({
           marcaBomba: bomba.marca,
           modeloBomba: bomba.modelo,
           potenciaCV: bomba.potencia,
-          velocidadVariable: bomba.esVelocidadVariable ?? false,
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
@@ -76,7 +71,6 @@ const ModalEditarBomba = ({
             marca: values.marcaBomba,
             modelo: values.modeloBomba,
             potencia: values.potenciaCV,
-            esVelocidadVariable: values.velocidadVariable,
           });
           onClose();
         }}
@@ -88,6 +82,7 @@ const ModalEditarBomba = ({
           setFieldValue,
           errors,
           touched,
+          dirty,
         }) => (
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -212,43 +207,21 @@ const ModalEditarBomba = ({
                   <Text className="text-red-500">{errors.potenciaCV}</Text>
                 )}
 
-                <View className="flex-row items-center mt-4">
-                  <Checkbox
-                    value={values.velocidadVariable}
-                    onValueChange={(value) => {
-                      setFieldValue('velocidadVariable', value);
-                    }}
-                    color={
-                      values.velocidadVariable ? '#0F0D23' : undefined
-                    }
-                  />
-                  <Pressable
-                    onPress={() =>
-                      setFieldValue(
-                        'velocidadVariable',
-                        !values.velocidadVariable
-                      )
-                    }
-                    className="ml-2"
-                  >
-                    <Text className="font-geist text-text text-base">
-                      Es velocidad variable
-                    </Text>
-                  </Pressable>
-                </View>
-
                 <View className="flex-row justify-between gap-3 mt-3">
                   <Pressable
                     onPress={onClose}
                     className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
                   >
-                    <Text className="text-white text-center font-geist-semi-bold">
+                    <Text className="text-text text-center font-geist-semi-bold">
                       Cancelar
                     </Text>
                   </Pressable>
                   <Pressable
+                    disabled={!dirty}
                     onPress={handleSubmit as any}
-                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                      !dirty ? 'opacity-50' : ''
+                    }`}
                   >
                     <View className="flex-row items-center justify-center">
                       <Text className="text-white text-center font-geist-semi-bold ml-2">

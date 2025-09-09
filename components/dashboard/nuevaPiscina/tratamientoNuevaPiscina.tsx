@@ -169,7 +169,7 @@ const TratamientoNuevaPiscina = ({
 
         if (values.uvSwitch) {
           const uv: GermicidaNuevo = {
-            id: 0,
+            id: null,
             tipo: 'uv',
             marca: values.uvMarca,
             activa: true,
@@ -181,7 +181,7 @@ const TratamientoNuevaPiscina = ({
 
         if (values.ionizadorSwitch) {
           const ionizador: GermicidaNuevo = {
-            id: 1,
+            id: null,
             tipo: 'ionizador',
             marca: values.ionizadorMarca,
             activa: true,
@@ -193,7 +193,7 @@ const TratamientoNuevaPiscina = ({
 
         if (values.trasductorSwitch) {
           const trasductor: GermicidaNuevo = {
-            id: 2,
+            id: null,
             tipo: 'trasductor',
             marca: values.trasductorMarca,
             activa: true,

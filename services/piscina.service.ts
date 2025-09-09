@@ -1,4 +1,6 @@
 import {
+  Bomba,
+  Filtro,
   PiscinaEquipamiento,
   PiscinaListItem,
   PiscinaNueva,
@@ -59,6 +61,23 @@ class PiscinaService {
     const response = await api.post(`${PISCINA}/alta`, piscina);
     return { data: response.data.data, message: response.data.message };
   };
+
+  updateBomba = async (
+    piscinaId: number,
+    bomba: Bomba
+  ): Promise<{ data: Bomba; message: string }> => {
+    const response = await api.put(`${PISCINA}/update-bomba/${piscinaId}`, bomba);
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateFiltro = async (
+    piscinaId: number,
+    filtro: Filtro
+  ): Promise<{ data: Filtro; message: string }> => {
+    const response = await api.put(`${PISCINA}/update-filtro/${piscinaId}`, filtro);
+    return { data: response.data.data, message: response.data.message };
+  }
+
 }
 
 export const piscinaService = new PiscinaService();

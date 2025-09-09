@@ -14,7 +14,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import RadioButton from '../utiles/radioButton';
 
-export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
 
 export const marcasFiltro = [
   { id: 1, name: 'Astral' },
@@ -38,15 +38,10 @@ const validationSchema = Yup.object().shape({
     .required('Ingrese el diámetro del filtro')
     .typeError('El diámetro debe ser un número')
     .min(0.1, 'El diámetro debe ser mayor que 0'),
-  datoExtra: Yup.number().when('tipoFiltro', {
-    is: (tipo: string) => tipo !== 'Diatomeas',
-    then: (schema) =>
-      schema
+  datoExtra: Yup.number()
         .required('Este campo es obligatorio para este tipo de filtro')
         .typeError('El valor debe ser un número')
         .min(0.1, 'El valor debe ser mayor que 0'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
 });
 
 const ModalEditarFiltro = ({
@@ -100,6 +95,7 @@ const ModalEditarFiltro = ({
           setFieldTouched,
           errors,
           touched,
+          dirty,
         }) => (
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -112,7 +108,7 @@ const ModalEditarFiltro = ({
                 </Text>
 
                 <Text className="font-geist text-text text-base mt-3">
-                  Marca
+                  Tipo
                 </Text>
                 <RadioButton
                   value={'Arena'}
@@ -136,15 +132,6 @@ const ModalEditarFiltro = ({
                   value={'Cartucho'}
                   label={'Cartucho'}
                   selected={values.tipoFiltro === 'Cartucho'}
-                  onPress={(value) => {
-                    setFieldValue('tipoFiltro', value);
-                    setFieldTouched('tipoFiltro', true);
-                  }}
-                />
-                <RadioButton
-                  value={'Diatomeas'}
-                  label={'Diatomeas'}
-                  selected={values.tipoFiltro === 'Diatomeas'}
                   onPress={(value) => {
                     setFieldValue('tipoFiltro', value);
                     setFieldTouched('tipoFiltro', true);
@@ -264,7 +251,7 @@ const ModalEditarFiltro = ({
                 </Text>
                 <TextInput
                   className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-                  value={filtro.diametro.toString()}
+                  value={values.diametro.toString()}
                   onChangeText={handleChange('diametro')}
                   onBlur={handleBlur('diametro')}
                   keyboardType="numeric"
@@ -276,34 +263,27 @@ const ModalEditarFiltro = ({
                   </Text>
                 )}
 
-                {values.tipoFiltro !== 'Diatomeas' && (
-                  <>
-                    <Text className="font-geist text-text text-base mt-3">
-                      {values.tipoFiltro === 'Arena'
-                        ? 'Cantidad de arena (kg)'
-                        : values.tipoFiltro === 'Vidrio'
-                        ? 'Cantidad de vidrio (kg)'
-                        : 'Micras del cartucho'}
-                    </Text>
-                    <TextInput
-                      className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-                      value={
-                        filtro.datoExtra !== undefined
-                          ? filtro.datoExtra.toString()
-                          : ''
-                      }
-                      onChangeText={handleChange('datoExtra')}
-                      onBlur={handleBlur('datoExtra')}
-                      keyboardType="numeric"
-                      placeholder="Ej: 75"
-                    />
-                    {errors.datoExtra && touched.datoExtra && (
-                      <Text className="text-red-500 text-sm mt-1">
-                        {errors.datoExtra}
-                      </Text>
-                    )}
-                  </>
+                <Text className="font-geist text-text text-base mt-3">
+                  {values.tipoFiltro === 'Arena'
+                    ? 'Cantidad de arena (kg)'
+                    : values.tipoFiltro === 'Vidrio'
+                    ? 'Cantidad de vidrio (kg)'
+                    : 'Micras del cartucho'}
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.datoExtra ? values.datoExtra.toString() : ''}
+                  onChangeText={handleChange('datoExtra')}
+                  onBlur={handleBlur('datoExtra')}
+                  keyboardType="numeric"
+                  placeholder="Ej: 75"
+                />
+                {errors.datoExtra && touched.datoExtra && (
+                  <Text className="text-red-500 text-sm mt-1">
+                    {errors.datoExtra}
+                  </Text>
                 )}
+
                 <View className="flex-row justify-between gap-3 mt-3">
                   <Pressable
                     onPress={onClose}
@@ -315,7 +295,10 @@ const ModalEditarFiltro = ({
                   </Pressable>
                   <Pressable
                     onPress={handleSubmit as any}
-                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                      !dirty ? 'opacity-50' : ''
+                    }`}
+                    disabled={!dirty}
                   >
                     <View className="flex-row items-center justify-center">
                       <Text className="text-white text-center font-geist-semi-bold ml-2">

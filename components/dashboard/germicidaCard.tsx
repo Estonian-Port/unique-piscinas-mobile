@@ -2,10 +2,26 @@ import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { AutorenewIcon, EditIcon } from '@/assets/icons';
-import { Germicida } from '@/data/domain/piscina';
+import { Germicida, PiscinaEquipos } from '@/data/domain/piscina';
+import ModalEditarGermicida from './modalEditarGermicida';
 
-const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
-  const [isActive, setIsActive] = useState(germicida.activo);
+const GermicidaCard = ({
+  germicida,
+  piscina,
+  actualizarPiscina,
+}: {
+  germicida: Germicida;
+  piscina: PiscinaEquipos;
+  actualizarPiscina: () => void;
+}) => {
+  const [modalEditOpen, setModalEditOpen] = useState(false);
+
+  const handleSaveGermicida = async (germicidaEditado: Germicida) => {
+    // Lógica para guardar los cambios del germicida
+    // Puedes llamar a un servicio o actualizar el estado según sea necesario
+    setModalEditOpen(false);
+    await actualizarPiscina();
+  };
 
   return (
     <ScreenCard>
@@ -14,27 +30,20 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
           <Text className="text-text font-geist-semi-bold text-lg">
             {germicida.tipo}
           </Text>
-          <Pressable className="ml-2">
+          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
             <EditIcon />
           </Pressable>
         </View>
-        <Switch
-          trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor="#fcdb99"
-          ios_backgroundColor="#d3d3d3"
-          onValueChange={() => setIsActive(!isActive)}
-          value={isActive}
-        />
       </View>
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
           className={`rounded-full px-2 ${
-            isActive ? 'bg-green-500' : 'bg-gray-500'
+            germicida.activo ? 'bg-green-500' : 'bg-gray-500'
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-sm">
-            {isActive ? 'Activa' : 'Inactiva'}
+            {germicida.activo ? 'Activa' : 'Inactiva'}
           </Text>
         </View>
       </View>
@@ -46,7 +55,9 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
       </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">
-          {germicida.tipo == 'UV' || germicida.tipo == 'Trasductor' ? 'Potencia:' : 'Electrodos:'}
+          {germicida.tipo == 'UV' || germicida.tipo == 'Trasductor'
+            ? 'Potencia:'
+            : 'Electrodos:'}
         </Text>
         <Text className="font-geist-semi-bold text-text text-base">
           {germicida.datoExtra} kW
@@ -64,6 +75,14 @@ const GermicidaCard = ({ germicida }: { germicida: Germicida }) => {
           Resetear contador
         </Text>
       </Pressable>
+      {modalEditOpen && (
+        <ModalEditarGermicida
+          visible={modalEditOpen}
+          germicida={germicida}
+          onClose={() => setModalEditOpen(false)}
+          onSave={handleSaveGermicida}
+        />
+      )}
     </ScreenCard>
   );
 };
