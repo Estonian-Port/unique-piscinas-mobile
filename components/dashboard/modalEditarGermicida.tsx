@@ -74,40 +74,6 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  trasductorTiempoVidaUtil: Yup.number().when('trasductorSwitch', {
-    is: true,
-    then: (schema) =>
-      schema
-        .required('Ingrese el tiempo de vida útil del trasductor')
-        .typeError('El tiempo de vida útil debe ser un número')
-        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  ionizadorTiempoVidaUtil: Yup.number().when('ionizadorSwitch', {
-    is: true,
-    then: (schema) =>
-      schema
-        .required('Ingrese el tiempo de vida útil del ionizador')
-        .typeError('El tiempo de vida útil debe ser un número')
-        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  uvTiempoVidaUtil: Yup.number().when('uvSwitch', {
-    is: true,
-    then: (schema) =>
-      schema
-        .required('Ingrese el tiempo de vida útil del UV')
-        .typeError('El tiempo de vida útil debe ser un número')
-        .min(1, 'El tiempo de vida útil debe ser mayor que 0'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  // Campos para los switches
-  cloradorSalino: Yup.boolean(),
-  controlPh: Yup.boolean(),
-  controlOrp: Yup.boolean(),
-  uvSwitch: Yup.boolean(),
-  ionizadorSwitch: Yup.boolean(),
-  trasductorSwitch: Yup.boolean(),
 });
 
 const ModalEditarGermicida = ({
@@ -248,24 +214,11 @@ const ModalEditarGermicida = ({
                         </Text>
                       )}
                     </View>
-                    <View className="items-start w-full mt-2">
-                      <Text className="text-text text-sm font-geist">
-                        Tiempo de vida útil en horas
+                    {errors.vidaRestante && touched.vidaRestante && (
+                      <Text className="text-red-500 text-xs mt-1">
+                        {errors.vidaRestante}
                       </Text>
-                      <TextInput
-                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
-                        value={values.vidaRestante.toString()}
-                        onChangeText={handleChange('vidaRestante')}
-                        onBlur={handleBlur('vidaRestante')}
-                        keyboardType="numeric"
-                        placeholder="Ej: 150"
-                      />
-                      {errors.vidaRestante && touched.vidaRestante && (
-                        <Text className="text-red-500 text-xs mt-1">
-                          {errors.vidaRestante}
-                        </Text>
-                      )}
-                    </View>
+                    )}
                   </>
                 )}
 
@@ -341,24 +294,11 @@ const ModalEditarGermicida = ({
                         </Text>
                       )}
                     </View>
-                    <View className="items-start w-full mt-2">
-                      <Text className="text-text text-sm font-geist">
-                        Tiempo de vida útil en horas
+                    {errors.vidaRestante && touched.vidaRestante && (
+                      <Text className="text-red-500 text-xs mt-1">
+                        {errors.vidaRestante}
                       </Text>
-                      <TextInput
-                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
-                        value={values.vidaRestante.toString()}
-                        onChangeText={handleChange('vidaRestante')}
-                        onBlur={handleBlur('vidaRestante')}
-                        keyboardType="numeric"
-                        placeholder="Ej: 150"
-                      />
-                      {errors.vidaRestante && touched.vidaRestante && (
-                        <Text className="text-red-500 text-xs mt-1">
-                          {errors.vidaRestante}
-                        </Text>
-                      )}
-                    </View>
+                    )}
                   </>
                 )}
 
@@ -434,25 +374,12 @@ const ModalEditarGermicida = ({
                         </Text>
                       )}
                     </View>
-                    <View className="items-start w-full mt-2">
-                      <Text className="text-text text-sm font-geist">
-                        Tiempo de vida útil en horas
+                    {errors.vidaRestante && touched.vidaRestante && (
+                      <Text className="text-red-500 text-xs mt-1">
+                        {errors.vidaRestante}
                       </Text>
-                      <TextInput
-                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
-                        value={values.vidaRestante.toString()}
-                        onChangeText={handleChange('vidaRestante')}
-                        onBlur={handleBlur('vidaRestante')}
-                        keyboardType="numeric"
-                        placeholder="Ej: 150"
-                      />
-                      {errors.vidaRestante && touched.vidaRestante && (
-                        <Text className="text-red-500 text-xs mt-1">
-                          {errors.vidaRestante}
-                        </Text>
-                      )}
-                    </View>
-                    </>
+                    )}
+                  </>
                 )}
 
                 <View className="flex-row justify-between gap-3 mt-3">

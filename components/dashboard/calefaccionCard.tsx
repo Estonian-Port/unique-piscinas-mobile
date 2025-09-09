@@ -1,22 +1,89 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, ThermostatIcon } from '@/assets/icons';
-import { Calefaccion } from '@/data/domain/piscina';
+import { DeleteIcon, EditIcon, ThermostatIcon } from '@/assets/icons';
+import { Calefaccion, PiscinaEquipos } from '@/data/domain/piscina';
+import Toast from 'react-native-toast-message';
+import { piscinaService } from '@/services/piscina.service';
+import ModalEditarCalefaccion from './modalEditarCalefaccion';
+import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 
-const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {
+const CalefaccionCard = ({
+  calefaccion,
+  piscina,
+  actualizarPiscina,
+}: {
+  calefaccion: Calefaccion;
+  piscina: PiscinaEquipos;
+  actualizarPiscina: () => Promise<void>;
+}) => {
+  const [modalEditOpen, setModalEditOpen] = useState(false);
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+
+  const handleSaveCalefaccion = async (calefaccionEditada: Calefaccion) => {
+    try {
+      const response = await piscinaService.updateCalefaccion(
+        piscina.id,
+        calefaccionEditada
+      );
+      setModalEditOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Calefacción actualizada',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar el germicida',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
+  };
+
+  const handleDeleteCalefaccion = async () => {
+    try {
+      const response = await piscinaService.deleteCalefaccion(piscina.id);
+      setModalDeleteOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Calefacción eliminada',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al eliminar la calefacción',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
+  };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
-          <ThermostatIcon color={'orange'} />
-          <View className="flex-row mx-2">
-            <Text className="text-base font-geist-semi-bold text-text">
+        <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-center">
+            <ThermostatIcon color={'orange'} />
+            <Text className="text-text font-geist-semi-bold text-lg">
               {calefaccion.tipo}
             </Text>
-            <Pressable className="ml-2">
+          </View>
+          <View className="flex-row items-center">
+            <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
               <EditIcon />
+            </Pressable>
+            <Pressable
+              className="ml-2"
+              onPress={() => setModalDeleteOpen(true)}
+            >
+              <DeleteIcon />
             </Pressable>
           </View>
         </View>
@@ -57,6 +124,22 @@ const CalefaccionCard = ({ calefaccion }: { calefaccion: Calefaccion }) => {
           </Text>
         </View>
       </View>
+      {modalEditOpen && (
+        <ModalEditarCalefaccion
+          visible={modalEditOpen}
+          onClose={() => setModalEditOpen(false)}
+          calefaccion={calefaccion}
+          onSave={handleSaveCalefaccion}
+        />
+      )}
+      {modalDeleteOpen && (
+        <ModalEliminarEquipamiento
+          visible={modalDeleteOpen}
+          equipamiento="Calefacción"
+          onClose={() => setModalDeleteOpen(false)}
+          onDelete={handleDeleteCalefaccion}
+        />
+      )}
     </ScreenCard>
   );
 };

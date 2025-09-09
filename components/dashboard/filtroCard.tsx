@@ -45,14 +45,14 @@ const FiltroCard = ({
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
-          <FilterIcon color={'cyan'} />
-          <View className="mx-2">
-            <Text className="text-base font-geist-semi-bold text-text">
+        <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-center">
+            <FilterIcon color={'cyan'} />
+            <Text className="text-text font-geist-semi-bold text-lg">
               Filtro de {filtro.tipo}
             </Text>
           </View>
-          <Pressable onPress={() => setModalEditOpen(true)}>
+          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
             <EditIcon />
           </Pressable>
         </View>

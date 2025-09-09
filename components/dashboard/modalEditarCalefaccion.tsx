@@ -16,7 +16,6 @@ import RadioButton from '../utiles/radioButton';
 export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
 const validationSchema = Yup.object().shape({
-  tipoCalefaccion: Yup.string().required('Seleccione un tipo de calefacción'),
   marcaCalefaccion: Yup.string().required(
     'Seleccione una marca de calefacción'
   ),
@@ -49,7 +48,7 @@ const ModalEditarCalefaccion = ({
     >
       <Formik
         initialValues={{
-          tipoCalefaccion: calefaccion.tipo ?? 'Bomba de calor',
+          tipoCalefaccion: calefaccion.tipo ?? '',
           marcaCalefaccion: calefaccion.marca ?? '',
           modeloCalefaccion: calefaccion.modelo ?? '',
           potenciaCalefaccion: calefaccion.potencia
@@ -79,6 +78,7 @@ const ModalEditarCalefaccion = ({
           setFieldTouched,
           errors,
           touched,
+          dirty
         }) => (
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -89,35 +89,6 @@ const ModalEditarCalefaccion = ({
                 <Text className="text-lg font-geist-semi-bold text-text mb-4">
                   Editar Calefacción
                 </Text>
-
-                <Text className="font-geist text-text text-base mt-3">
-                  Marca
-                </Text>
-
-                <RadioButton
-                  value={'Bomba de calor'}
-                  label={'Bomba de calor'}
-                  selected={values.tipoCalefaccion === 'Bomba de calor'}
-                  onPress={(value) => {
-                    setFieldValue('tipoCalefaccion', value);
-                    setFieldTouched('tipoCalefaccion', true);
-                  }}
-                />
-                <RadioButton
-                  value={'Bomba a gas'}
-                  label={'Bomba a gas'}
-                  selected={values.tipoCalefaccion === 'Bomba a gas'}
-                  onPress={(value) => {
-                    setFieldValue('tipoCalefaccion', value);
-                    setFieldTouched('tipoCalefaccion', true);
-                  }}
-                />
-                {touched.tipoCalefaccion && errors.tipoCalefaccion && (
-                  <Text className="text-red-500 mt-2">
-                    {errors.tipoCalefaccion}
-                  </Text>
-                )}
-
                 <Text className="font-geist text-text text-base mt-3">
                   Marca
                 </Text>
@@ -183,8 +154,11 @@ const ModalEditarCalefaccion = ({
                     </Text>
                   </Pressable>
                   <Pressable
+                    disabled={!dirty}
                     onPress={handleSubmit as any}
-                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                      !dirty ? 'opacity-50' : ''
+                    }`}
                   >
                     <View className="flex-row items-center justify-center">
                       <Text className="text-white text-center font-geist-semi-bold ml-2">

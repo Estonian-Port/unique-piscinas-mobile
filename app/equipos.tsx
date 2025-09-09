@@ -107,7 +107,7 @@ export default function Equipos() {
             Calefacción
           </Text>
           {pool.calefaccion ? (
-            <CalefaccionCard calefaccion={pool.calefaccion} />
+            <CalefaccionCard calefaccion={pool.calefaccion} piscina={pool} actualizarPiscina={fetchPool} />
           ) : (
             <Pressable className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3">
               <Text className="font-geist-semi-bold text-text">

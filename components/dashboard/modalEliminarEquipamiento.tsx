@@ -8,17 +8,22 @@ import {
 } from 'react-native';
 import React from 'react';
 
-type ModalEliminarPiscinaProps = {
+type ModalEliminarEquipamiento = {
+  equipamiento: string;
   visible: boolean;
+  onDelete: () => void;
   onClose: () => void;
 };
 
-const ModalEliminarPiscina = ({
+const ModalEliminarEquipamiento = ({
+  equipamiento,
   visible,
+  onDelete,
   onClose,
-}: ModalEliminarPiscinaProps) => {
+}: ModalEliminarEquipamiento) => {
 
-  const save = (): void => {
+  const deleteEquipamiento = (): void => {
+    onDelete();
     onClose();
   };
 
@@ -36,10 +41,10 @@ const ModalEliminarPiscina = ({
         <View className="flex-1 justify-center items-center bg-black/50">
         <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
           <Text className="text-text text-xl font-geist-bold mb-2 text-center">
-            ¿Desea eliminar esta piscina?
+            Atención esta por eliminar: {equipamiento}
           </Text>
           <Text className='text-text text-sm font-geist'>
-            Esta acción no se puede deshacer y eliminará la piscina definitavamente.
+            Esta acción no se puede deshacer y eliminará este equipo de la piscina definitavamente.
           </Text>
           <View className="flex-row justify-between gap-3 mt-5">
             <Pressable
@@ -51,12 +56,12 @@ const ModalEliminarPiscina = ({
               </Text>
             </Pressable>
             <Pressable
-              onPress={save}
+              onPress={deleteEquipamiento}
               className="bg-red-alert rounded-lg flex-1 items-center justify-center h-12"
             >
               <View className="flex-row items-center justify-center">
                 <Text className="text-white text-center font-geist-semi-bold ml-2">
-                  Eliminar Piscina
+                  Eliminar
                 </Text>
               </View>
             </Pressable>
@@ -68,4 +73,4 @@ const ModalEliminarPiscina = ({
   );
 };
 
-export default ModalEliminarPiscina;
+export default ModalEliminarEquipamiento;

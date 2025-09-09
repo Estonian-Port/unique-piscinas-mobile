@@ -20,7 +20,10 @@ const BombaCard = ({
 
   const handleSaveBomba = async (bombaEditada: Bomba) => {
     try {
-      const response = await piscinaService.updateBomba(piscina.id, bombaEditada);
+      const response = await piscinaService.updateBomba(
+        piscina.id,
+        bombaEditada
+      );
       setModalEditOpen(false);
       await actualizarPiscina();
       Toast.show({
@@ -42,14 +45,14 @@ const BombaCard = ({
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
-          <TintIcon color={'cyan'} />
-          <View className="mx-2">
-            <Text className="text-base font-geist-semi-bold text-text">
+        <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-center">
+            <TintIcon color={'cyan'} />
+            <Text className="text-text font-geist-semi-bold text-lg">
               Bomba de filtración
             </Text>
           </View>
-          <Pressable onPress={() => setModalEditOpen(true)}>
+          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
             <EditIcon />
           </Pressable>
         </View>

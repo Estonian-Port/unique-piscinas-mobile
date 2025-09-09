@@ -1,9 +1,12 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { AutorenewIcon, EditIcon } from '@/assets/icons';
+import { AutorenewIcon, DeleteIcon, EditIcon } from '@/assets/icons';
 import { Germicida, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarGermicida from './modalEditarGermicida';
+import Toast from 'react-native-toast-message';
+import { piscinaService } from '@/services/piscina.service';
+import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 
 const GermicidaCard = ({
   germicida,
@@ -15,24 +18,71 @@ const GermicidaCard = ({
   actualizarPiscina: () => void;
 }) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
 
   const handleSaveGermicida = async (germicidaEditado: Germicida) => {
-    // Lógica para guardar los cambios del germicida
-    // Puedes llamar a un servicio o actualizar el estado según sea necesario
-    setModalEditOpen(false);
-    await actualizarPiscina();
+    try {
+      const response = await piscinaService.updateGermicida(
+        piscina.id,
+        germicidaEditado
+      );
+      setModalEditOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Germicida actualizado',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar el germicida',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
+  };
+
+  const handleDeleteGermicida = async () => {
+    try {
+      const response = await piscinaService.deleteGermicida(piscina.id, germicida.id);
+      setModalDeleteOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Germicida eliminado',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al eliminar el germicida',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
   };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
+        <View className="flex-row items-center justify-between w-full">
           <Text className="text-text font-geist-semi-bold text-lg">
             {germicida.tipo}
           </Text>
-          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
-            <EditIcon />
-          </Pressable>
+          <View className='flex-row items-center'>
+            <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
+              <EditIcon />
+            </Pressable>
+            <Pressable
+              className="ml-2"
+              onPress={() => setModalDeleteOpen(true)}
+            >
+              <DeleteIcon />
+            </Pressable>
+          </View>
         </View>
       </View>
       <View className="flex-row items-center justify-between">
@@ -66,7 +116,7 @@ const GermicidaCard = ({
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Vida restante:</Text>
         <Text className="font-geist-semi-bold text-text text-base">
-          {germicida.vidaRestante} %
+          {germicida.vidaRestante} hs restantes - {germicida.estado}
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
@@ -81,6 +131,14 @@ const GermicidaCard = ({
           germicida={germicida}
           onClose={() => setModalEditOpen(false)}
           onSave={handleSaveGermicida}
+        />
+      )}
+      {modalDeleteOpen && (
+        <ModalEliminarEquipamiento
+          visible={modalDeleteOpen}
+          equipamiento={`Germicida ${germicida.tipo}`}
+          onClose={() => setModalDeleteOpen(false)}
+          onDelete={handleDeleteGermicida}
         />
       )}
     </ScreenCard>

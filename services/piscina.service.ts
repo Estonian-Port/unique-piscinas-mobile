@@ -1,6 +1,8 @@
 import {
   Bomba,
+  Calefaccion,
   Filtro,
+  Germicida,
   PiscinaEquipamiento,
   PiscinaListItem,
   PiscinaNueva,
@@ -75,6 +77,42 @@ class PiscinaService {
     filtro: Filtro
   ): Promise<{ data: Filtro; message: string }> => {
     const response = await api.put(`${PISCINA}/update-filtro/${piscinaId}`, filtro);
+    return { data: response.data.data, message: response.data.message };
+  }
+
+  updateGermicida = async (
+    piscinaId: number,
+    germicida: Germicida
+  ): Promise<{ data: Germicida; message: string }> => {
+    const response = await api.put(`${PISCINA}/update-germicida/${piscinaId}`, germicida);
+    return { data: response.data.data, message: response.data.message };
+  }
+
+updateCalefaccion = async (
+  piscinaId: number,
+  calefaccion: Calefaccion
+): Promise<{ data: Calefaccion; message: string }> => {
+  let tipoEnum = calefaccion.tipo;
+  if (tipoEnum === 'Bomba Calor') tipoEnum = 'BOMBA_CALOR';
+  if (tipoEnum === 'Bomba Gas') tipoEnum = 'BOMBA_GAS';
+
+  const calefaccionToSend = { ...calefaccion, tipo: tipoEnum };
+
+  const response = await api.put(`${PISCINA}/update-calefaccion/${piscinaId}`, calefaccionToSend);
+  return { data: response.data.data, message: response.data.message };
+}
+
+  deleteCalefaccion = async (
+    piscinaId: number
+  ): Promise<{ data: Calefaccion; message: string }> => {
+    const response = await api.delete(`${PISCINA}/delete-calefaccion/${piscinaId}`);
+    return { data: response.data.data, message: response.data.message };
+  }
+
+  deleteGermicida = async (
+    piscinaId: number, germicidaId: number
+  ): Promise<{ data: Germicida; message: string }> => {
+    const response = await api.delete(`${PISCINA}/delete-germicida/${piscinaId}/${germicidaId}`);
     return { data: response.data.data, message: response.data.message };
   }
 
