@@ -1,14 +1,10 @@
 import {
   ScrollView,
   Text,
-  FlatList,
   View,
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import { leo } from '@/data/mock/userMock';
 import { Screen } from '@/components/utiles/Screen';
 import BombaCard from '@/components/dashboard/bombaCard';
 import CalefaccionCard from '@/components/dashboard/calefaccionCard';
@@ -23,9 +19,20 @@ import PrivateScreen from '@/components/utiles/privateScreen';
 import { PiscinaEquipamiento, PiscinaEquipos } from '@/data/domain/piscina';
 import { useAuth } from '@/context/authContext';
 import { administracionService } from '@/services/administracion.service';
+import ModalAgregarBomba from '@/components/dashboard/modalAgregarBomba';
+import ModalAgregarGermicida from '@/components/dashboard/modalAgregarIonizador';
+import ModalAgregarCalefaccion from '@/components/dashboard/modalAgregarCalefaccion';
+import ModalAgregarUV from '@/components/dashboard/modalAgregarUV';
+import ModalAgregarIonizador from '@/components/dashboard/modalAgregarIonizador';
+import ModalAgregarTrasductor from '@/components/dashboard/modalAgregarTrasductor';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
+  const [modalAgregarCalefaccion, setModalAgregarCalefaccion] = useState(false);
+  const [modalAgregarBomba, setModalAgregarBomba] = useState(false);
+  const [modalAgregarUV, setModalAgregarUV] = useState(false);
+  const [modalAgregarTrasductor, setModalAgregarTrasductor] = useState(false);
+  const [modalAgregarIonizador, setModalAgregarIonizador] = useState(false);
   const { usuario, selectedPool } = useAuth();
   const [pool, setPool] = useState<PiscinaEquipos | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Agregar estado de loading
@@ -39,7 +46,6 @@ export default function Equipos() {
         usuario!.id,
         selectedPool.id
       );
-      console.log('Fetched pool data:', data);
       setPool(data);
     } catch (error) {
       console.error('Error fetching pool data:', error);
@@ -66,6 +72,15 @@ export default function Equipos() {
     );
   }
 
+  const sistemaGermicida = pool.sistemasGermicidas || [];
+  const tieneUv = sistemaGermicida.some((s) => s.tipo === 'UV');
+  const tieneIonizador = sistemaGermicida.some(
+    (s) => s.tipo === 'Ionizador de cobre'
+  );
+  const tieneTrasductor = sistemaGermicida.some(
+    (s) => s.tipo === 'Trasductor de ultrasonido'
+  );
+
   return (
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
@@ -77,43 +92,134 @@ export default function Equipos() {
             Bombas de filtración
           </Text>
           {pool!.bombas.map((item) => (
-            <BombaCard key={item.id} piscina={pool} bomba={item} actualizarPiscina={fetchPool} />
+            <BombaCard
+              key={item.id}
+              piscina={pool}
+              bomba={item}
+              actualizarPiscina={fetchPool}
+            />
           ))}
           {pool.bombas.length < 3 && (
-            <Pressable className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3">
+            <Pressable
+              className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3"
+              onPress={() => setModalAgregarBomba(true)}
+            >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar bomba
               </Text>
             </Pressable>
           )}
+          {modalAgregarBomba && (
+            <ModalAgregarBomba
+              visible={modalAgregarBomba}
+              onClose={() => setModalAgregarBomba(false)}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
+          )}
+
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Filtro
           </Text>
-          <FiltroCard filtro={pool.filtro} piscina={pool} actualizarPiscina={fetchPool} />
+          <FiltroCard
+            filtro={pool.filtro}
+            piscina={pool}
+            actualizarPiscina={fetchPool}
+          />
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Sistemas germicidas
           </Text>
           {pool.sistemasGermicidas.map((item) => (
-            <GermicidaCard key={item.id} germicida={item} piscina={pool} actualizarPiscina={fetchPool} />
+            <GermicidaCard
+              key={item.id}
+              germicida={item}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
           ))}
-          {pool.sistemasGermicidas.length < 3 && (
-            <Pressable className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3">
+          <View className="flex-row gap-3 justify-center items-center">
+          {!tieneUv && (
+            <Pressable
+              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+              onPress={() => setModalAgregarUV(true)}
+            >
               <Text className="font-geist-semi-bold text-text">
-                + Agregar sistema germicida
+                + Agregar UV
               </Text>
             </Pressable>
           )}
+          {modalAgregarUV && (
+            <ModalAgregarUV
+              visible={modalAgregarUV}
+              onClose={() => setModalAgregarUV(false)}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
+          )}
+          {!tieneIonizador && (
+            <Pressable
+              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+              onPress={() => setModalAgregarIonizador(true)}
+            >
+              <Text className="font-geist-semi-bold text-text">
+                + Agregar Ionizador
+              </Text>
+            </Pressable>
+          )}
+          {modalAgregarIonizador && (
+            <ModalAgregarIonizador
+              visible={modalAgregarIonizador}
+              onClose={() => setModalAgregarIonizador(false)}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
+          )}
+          {!tieneTrasductor && (
+            <Pressable
+              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+              onPress={() => setModalAgregarTrasductor(true)}
+            >
+              <Text className="font-geist-semi-bold text-text">
+                + Agregar Trasductor
+              </Text>
+            </Pressable>
+          )}
+          {modalAgregarTrasductor && (
+            <ModalAgregarTrasductor
+              visible={modalAgregarTrasductor}
+              onClose={() => setModalAgregarTrasductor(false)}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
+          )}
+          </View>
+
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Calefacción
           </Text>
           {pool.calefaccion ? (
-            <CalefaccionCard calefaccion={pool.calefaccion} piscina={pool} actualizarPiscina={fetchPool} />
+            <CalefaccionCard
+              calefaccion={pool.calefaccion}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
           ) : (
-            <Pressable className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3">
+            <Pressable
+              className="bg-gray-200 rounded-lg p-3 w-3/4 items-center mb-3"
+              onPress={() => setModalAgregarCalefaccion(true)}
+            >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar Calefacción
               </Text>
             </Pressable>
+          )}
+          {modalAgregarCalefaccion && (
+            <ModalAgregarCalefaccion
+              visible={modalAgregarCalefaccion}
+              onClose={() => setModalAgregarCalefaccion(false)}
+              piscina={pool}
+              actualizarPiscina={fetchPool}
+            />
           )}
 
           <View className="flex-row items-center justify-between mb-4 w-11/12 self-center">

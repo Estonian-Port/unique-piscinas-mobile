@@ -1,0 +1,267 @@
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Modal,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { BombaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { piscinaService } from '@/services/piscina.service';
+import DropDownPicker from 'react-native-dropdown-picker';
+
+export const marcasBomba = [
+  { id: 1, name: 'Astral' },
+  { id: 2, name: 'Hayward' },
+  { id: 3, name: 'Pentair' },
+  { id: 4, name: 'Otra' },
+];
+
+export const modelosBomba = [
+  { id: 1, name: 'Victoria Plus' },
+  { id: 2, name: 'Sena' },
+  { id: 3, name: 'Glass Plus' },
+  { id: 4, name: 'Otro' },
+];
+
+const validationSchema = Yup.object().shape({
+  marcaBombaPrimaria: Yup.string().required('Seleccione una marca de bomba'),
+  modeloBombaPrimaria: Yup.string().required('Seleccione un modelo de bomba'),
+  potenciaCVPrimaria: Yup.number()
+    .required('Ingrese la potencia en CV')
+    .typeError('La potencia debe ser un número')
+    .min(1, 'La potencia debe ser mayor que 0'),
+});
+
+const ModalAgregarBomba = ({
+  visible,
+  onClose,
+  piscina,
+  actualizarPiscina,
+}: {
+  visible: boolean;
+  onClose: () => void;
+  piscina: PiscinaEquipos;
+  actualizarPiscina: () => void;
+}) => {
+  // Estados separados para cada dropdown
+  const [openMarcaBomba, setOpenMarcaBomba] = useState(false);
+  const [openModeloBomba, setOpenModeloBomba] = useState(false);
+
+  const handleNewBomba = async (newBomba: BombaNuevo) => {
+    try {
+      piscinaService.addBomba(piscina.id, newBomba);
+    } catch {}
+  };
+
+  const bombaVacia: BombaNuevo = {
+    id: null,
+    marca: '',
+    modelo: '',
+    potencia: 0,
+    activa: true,
+  };
+
+  const formikRef = useRef<any>(null);
+
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <Formik
+        innerRef={formikRef}
+        initialValues={{
+          marcaBomba: bombaVacia.marca,
+          modeloBomba: bombaVacia.modelo,
+          potenciaBomba: bombaVacia.potencia == 0 ? '' : bombaVacia.potencia.toString(),
+        }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          const nuevaBomba: BombaNuevo = {
+            id: null,
+            marca: values.marcaBomba,
+            modelo: values.modeloBomba,
+            potencia: Number(values.potenciaBomba),
+            activa: true,
+          };
+          handleNewBomba(nuevaBomba);
+          onClose();
+        }}
+        enableReinitialize={false} // Cambiado a false para mantener el estado
+      >
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+          setFieldValue,
+          dirty,
+        }) => {
+          return (
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={{ flex: 1 }}
+            >
+              <View className="flex-1 justify-center items-center bg-black/50">
+                <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
+                  <Text className="text-lg font-geist-semi-bold text-text mb-4">
+                    Agregar Bomba
+                  </Text>
+
+                  <Text className="font-geist text-text text-base mt-3">
+                    Marca
+                  </Text>
+                  <DropDownPicker
+                    open={openMarcaBomba}
+                    value={values.marcaBomba}
+                    items={marcasBomba.map((item) => ({
+                      label: item.name,
+                      value: item.name,
+                    }))}
+                    setOpen={setOpenMarcaBomba}
+                    setValue={(callback) => {
+                      const val = callback(values.marcaBomba);
+                      setFieldValue('marcaBomba', val);
+                    }}
+                    placeholder="Seleccione una marca"
+                    zIndex={4000}
+                    zIndexInverse={1000}
+                    listMode="SCROLLVIEW"
+                    style={{
+                      borderColor: '#d1d5db', // un violeta más notorio
+                      borderWidth: 2,
+                      borderRadius: 6,
+                      backgroundColor: '#fff',
+                      paddingVertical: 12,
+                      paddingHorizontal: 10,
+                    }}
+                    dropDownContainerStyle={{
+                      borderColor: '#d1d5db',
+                      borderWidth: 2,
+                      borderRadius: 6,
+                      backgroundColor: '#f3f4f6',
+                    }}
+                    selectedItemContainerStyle={{
+                      backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                    }}
+                    selectedItemLabelStyle={{
+                      fontWeight: 'bold',
+                      color: '#7c3aed',
+                    }}
+                    placeholderStyle={{
+                      color: '#333333',
+                    }}
+                  />
+                  {touched.marcaBomba && errors.marcaBomba && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.marcaBomba}
+                    </Text>
+                  )}
+
+                  <Text className="font-geist text-text text-base mt-3">
+                    Modelo
+                  </Text>
+                  <DropDownPicker
+                    open={openModeloBomba}
+                    value={values.modeloBomba}
+                    items={modelosBomba.map((item) => ({
+                      label: item.name,
+                      value: item.name,
+                    }))}
+                    setOpen={setOpenModeloBomba}
+                    setValue={(callback) => {
+                      const val = callback(values.modeloBomba);
+                      setFieldValue('modeloBomba', val);
+                    }}
+                    placeholder="Seleccione un modelo"
+                    zIndex={3000}
+                    zIndexInverse={2000}
+                    listMode="SCROLLVIEW"
+                    style={{
+                      borderColor: '#d1d5db', // un violeta más notorio
+                      borderWidth: 2,
+                      borderRadius: 6,
+                      backgroundColor: '#fff',
+                      paddingVertical: 12,
+                      paddingHorizontal: 10,
+                    }}
+                    dropDownContainerStyle={{
+                      borderColor: '#d1d5db',
+                      borderWidth: 2,
+                      borderRadius: 6,
+                      backgroundColor: '#f3f4f6',
+                    }}
+                    selectedItemContainerStyle={{
+                      backgroundColor: '#ede9fe', // violeta claro para el seleccionado
+                    }}
+                    selectedItemLabelStyle={{
+                      fontWeight: 'bold',
+                      color: '#7c3aed',
+                    }}
+                    placeholderStyle={{
+                      color: '#333333',
+                    }}
+                  />
+                  {touched.modeloBomba && errors.modeloBomba && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.modeloBomba}
+                    </Text>
+                  )}
+
+                  <Text className="font-geist text-text text-base mt-3">
+                    Potencia (CV)
+                  </Text>
+                  <TextInput
+                    className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                    value={values.potenciaBomba.toString()}
+                    onChangeText={handleChange('potenciaBomba')}
+                    onBlur={handleBlur('potenciaBomba')}
+                    keyboardType="numeric"
+                    placeholder="Ej: 15"
+                  />
+                  {touched.potenciaBomba && errors.potenciaBomba && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.potenciaBomba}
+                    </Text>
+                  )}
+
+                  <View className="flex-row justify-between gap-3 mt-3">
+                    <Pressable
+                      onPress={onClose}
+                      className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
+                    >
+                      <Text className="text-text text-center font-geist-semi-bold">
+                        Cancelar
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      onPress={handleSubmit as any}
+                      className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    >
+                      <View className="flex-row items-center justify-center">
+                        <Text className="text-white text-center font-geist-semi-bold ml-2">
+                          Guardar cambios
+                        </Text>
+                      </View>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          );
+        }}
+      </Formik>
+    </Modal>
+  );
+};
+
+export default ModalAgregarBomba;

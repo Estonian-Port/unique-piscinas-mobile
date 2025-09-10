@@ -77,6 +77,7 @@ const CalefaccionNuevaPiscina = ({
       onSubmit={(values) => {
         if (values.tieneCalefaccion) {
           const calefaccion: CalefaccionNueva = {
+            id: null,
             tipo: values.tipoCalefaccion,
             marca: values.marcaCalefaccion,
             modelo: values.modeloCalefaccion,
