@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { piscinaService } from '@/services/piscina.service';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Toast from 'react-native-toast-message';
 
 export const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -29,9 +30,9 @@ export const modelosBomba = [
 ];
 
 const validationSchema = Yup.object().shape({
-  marcaBombaPrimaria: Yup.string().required('Seleccione una marca de bomba'),
-  modeloBombaPrimaria: Yup.string().required('Seleccione un modelo de bomba'),
-  potenciaCVPrimaria: Yup.number()
+  marcaBomba: Yup.string().required('Seleccione una marca de bomba'),
+  modeloBomba: Yup.string().required('Seleccione un modelo de bomba'),
+  potenciaBomba: Yup.number()
     .required('Ingrese la potencia en CV')
     .typeError('La potencia debe ser un número')
     .min(1, 'La potencia debe ser mayor que 0'),
@@ -54,8 +55,23 @@ const ModalAgregarBomba = ({
 
   const handleNewBomba = async (newBomba: BombaNuevo) => {
     try {
-      piscinaService.addBomba(piscina.id, newBomba);
-    } catch {}
+      console.log('Nueva bomba a agregar:', newBomba);
+      const response = await piscinaService.addBomba(piscina.id, newBomba);
+      actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Bomba agregada',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al agregar bomba',
+        text2: 'Hubo un problema al agregar la bomba. Inténtelo de nuevo.',
+        position: 'bottom',
+      });
+    }
   };
 
   const bombaVacia: BombaNuevo = {
@@ -104,7 +120,6 @@ const ModalAgregarBomba = ({
           errors,
           touched,
           setFieldValue,
-          dirty,
         }) => {
           return (
             <KeyboardAvoidingView
@@ -249,7 +264,7 @@ const ModalAgregarBomba = ({
                     >
                       <View className="flex-row items-center justify-center">
                         <Text className="text-white text-center font-geist-semi-bold ml-2">
-                          Guardar cambios
+                          Agregar Bomba
                         </Text>
                       </View>
                     </Pressable>

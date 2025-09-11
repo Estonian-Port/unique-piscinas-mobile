@@ -16,26 +16,16 @@ import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
 
 const validationSchema = Yup.object().shape({
-  marcaCalefaccion: Yup.string().when('tieneCalefaccion', {
-    is: true,
-    then: (schema) => schema.required('Seleccione una marca de calefacción'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  modeloCalefaccion: Yup.string().when('tieneCalefaccion', {
-    is: true,
-    then: (schema) => schema.required('Seleccione un modelo de calefacción'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  marcaCalefaccion: Yup.string().required(
+    'Seleccione una marca de calefacción'
+  ),
+  modeloCalefaccion: Yup.string().required(
+    'Seleccione un modelo de calefacción'
+  ),
   potenciaCalefaccion: Yup.number()
     .typeError('La potencia debe ser un número')
-    .when('tieneCalefaccion', {
-      is: true,
-      then: (schema) =>
-        schema
-          .required('Ingrese la potencia de la calefacción')
-          .min(0.1, 'La potencia debe ser mayor que 0'),
-      otherwise: (schema) => schema.notRequired(),
-    }),
+    .required('Ingrese la potencia de la calefacción')
+    .min(0.1, 'La potencia debe ser mayor que 0'),
 });
 
 const ModalAgregarCalefaccion = ({
@@ -60,17 +50,24 @@ const ModalAgregarCalefaccion = ({
 
   const handleNewCalefaccion = async (newCalefaccion: CalefaccionNueva) => {
     try {
-      const response = await piscinaService.addCalefaccion(piscina.id, newCalefaccion);
+      const response = await piscinaService.addCalefaccion(
+        piscina.id,
+        newCalefaccion
+      );
       actualizarPiscina();
       Toast.show({
         type: 'success',
         text1: 'Calefacción agregada',
         text2: response.message,
         position: 'bottom',
-        visibilityTime: 2000,
       });
-      onClose();
     } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'No se pudo agregar la calefacción',
+        position: 'bottom',
+      });
       console.error('Error al agregar la calefacción:', error);
     }
   };
@@ -87,7 +84,10 @@ const ModalAgregarCalefaccion = ({
           tipoCalefaccion: calefaccionoVacia.tipo,
           marcaCalefaccion: calefaccionoVacia.marca,
           modeloCalefaccion: calefaccionoVacia.modelo,
-          potenciaCalefaccion: calefaccionoVacia.potencia == 0 ? '' : calefaccionoVacia.potencia.toString(),
+          potenciaCalefaccion:
+            calefaccionoVacia.potencia == 0
+              ? ''
+              : calefaccionoVacia.potencia.toString(),
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
@@ -100,6 +100,7 @@ const ModalAgregarCalefaccion = ({
             activa: true,
           };
           handleNewCalefaccion(nuevaCalefaccion);
+          onClose();
         }}
       >
         {({

@@ -105,8 +105,8 @@ class PiscinaService {
     calefaccion: Calefaccion
   ): Promise<{ data: Calefaccion; message: string }> => {
     let tipoEnum = calefaccion.tipo;
-    if (tipoEnum === 'Bomba Calor') tipoEnum = 'BOMBA_CALOR';
-    if (tipoEnum === 'Bomba Gas') tipoEnum = 'BOMBA_GAS';
+    if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
+    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
 
     const calefaccionToSend = { ...calefaccion, tipo: tipoEnum };
 
@@ -140,6 +140,9 @@ class PiscinaService {
     piscinaId: number,
     germicida: GermicidaNuevo
   ): Promise<{ data: Germicida; message: string }> => {
+
+    console.log('Adding germicida:', germicida); // Log para depuración
+
     const response = await api.post(
       `${PISCINA}/add-germicida/${piscinaId}`,
       germicida
@@ -152,8 +155,8 @@ class PiscinaService {
     calefaccion: CalefaccionNueva
   ): Promise<{ data: Calefaccion; message: string }> => {
     let tipoEnum = calefaccion.tipo;
-    if (tipoEnum === 'Bomba Calor') tipoEnum = 'BOMBA_CALOR';
-    if (tipoEnum === 'Bomba Gas') tipoEnum = 'BOMBA_GAS';
+    if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
+    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
 
     const calefaccionDto = { ...calefaccion, tipo: tipoEnum };
 
@@ -171,6 +174,22 @@ class PiscinaService {
     const response = await api.post(`${PISCINA}/add-bomba/${piscinaId}`, bomba);
     return { data: response.data.data, message: response.data.message };
   };
+
+  updateCompuestos = async (
+    piscinaId: number,
+    compuestos: {
+      orp: boolean;
+      controlPH: boolean;
+      cloroSalino: boolean;
+    }
+  ): Promise<{ data: PiscinaEquipamiento; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-compuestos/${piscinaId}`,
+      compuestos
+    );
+    return { data: response.data.data, message: response.data.message };
+  }
+
 }
 
 export const piscinaService = new PiscinaService();

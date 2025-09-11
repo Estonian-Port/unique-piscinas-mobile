@@ -36,6 +36,9 @@ export interface PiscinaEquipos {
   bombas: Bomba[];
   filtro: Filtro;
   sistemasGermicidas: Germicida[];
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
   calefaccion: Calefaccion | null;
   registros: Registro[];
 }

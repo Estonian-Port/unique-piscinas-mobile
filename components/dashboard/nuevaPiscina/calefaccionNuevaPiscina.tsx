@@ -3,7 +3,11 @@ import React, { useEffect, useRef } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Calefaccion, CalefaccionNueva, PiscinaNueva } from '@/data/domain/piscina';
+import {
+  Calefaccion,
+  CalefaccionNueva,
+  PiscinaNueva,
+} from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { ThermostatIcon } from '@/assets/icons';
@@ -54,6 +58,12 @@ const CalefaccionNuevaPiscina = ({
 }) => {
   const formikRef = useRef<any>(null);
 
+  const parsearTipo = (tipo: string): string => {
+    if (tipo === 'Bomba de calor') return 'BOMBA_CALOR';
+    if (tipo === 'Bomba a gas') return 'CALENTADOR_GAS';
+    return tipo;
+  };
+
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const calefaccionExistente = nuevaPiscina.calefaccion;
@@ -63,7 +73,9 @@ const CalefaccionNuevaPiscina = ({
       tipoCalefaccion: calefaccionExistente?.tipo ?? 'Bomba de calor',
       marcaCalefaccion: calefaccionExistente?.marca ?? '',
       modeloCalefaccion: calefaccionExistente?.modelo ?? '',
-      potenciaCalefaccion: calefaccionExistente?.potencia ? calefaccionExistente.potencia.toString() : '',
+      potenciaCalefaccion: calefaccionExistente?.potencia
+        ? calefaccionExistente.potencia.toString()
+        : '',
     };
   };
 
@@ -76,19 +88,16 @@ const CalefaccionNuevaPiscina = ({
       validationSchema={validationSchema}
       onSubmit={(values) => {
         if (values.tieneCalefaccion) {
-          const calefaccion: CalefaccionNueva = {
+          const calefaccionNueva: CalefaccionNueva = {
             id: null,
-            tipo: values.tipoCalefaccion,
+            tipo: parsearTipo(values.tipoCalefaccion),
             marca: values.marcaCalefaccion,
             modelo: values.modeloCalefaccion,
             potencia: parseFloat(values.potenciaCalefaccion),
             activa: true,
           };
-          
-          setNuevaPiscina({
-            ...nuevaPiscina,
-            calefaccion: calefaccion,
-          });
+
+          nuevaPiscina.calefaccion = calefaccionNueva;
         } else {
           setNuevaPiscina({
             ...nuevaPiscina,
@@ -118,7 +127,7 @@ const CalefaccionNuevaPiscina = ({
 
         const handleSwitchChange = (value: boolean) => {
           setFieldValue('tieneCalefaccion', value);
-          
+
           // Si se desactiva la calefacción, limpiar los touched de los campos relacionados
           if (!value) {
             setTouched({
@@ -128,7 +137,7 @@ const CalefaccionNuevaPiscina = ({
               modeloCalefaccion: false,
               potenciaCalefaccion: false,
             });
-            
+
             // También limpiar los valores para un mejor UX
             setFieldValue('tipoCalefaccion', 'Bomba de calor');
             setFieldValue('marcaCalefaccion', '');
@@ -218,7 +227,9 @@ const CalefaccionNuevaPiscina = ({
                   onBlur={handleBlur('marcaCalefaccion')}
                   placeholder="Ej: Hayward"
                   editable={values.tieneCalefaccion}
-                  placeholderTextColor={!values.tieneCalefaccion ? '#a3a3a3' : '#888'}
+                  placeholderTextColor={
+                    !values.tieneCalefaccion ? '#a3a3a3' : '#888'
+                  }
                 />
                 {values.tieneCalefaccion &&
                   touched.marcaCalefaccion &&
@@ -244,7 +255,9 @@ const CalefaccionNuevaPiscina = ({
                   onBlur={handleBlur('modeloCalefaccion')}
                   placeholder="Ej: EnergyLine Pro"
                   editable={values.tieneCalefaccion}
-                  placeholderTextColor={!values.tieneCalefaccion ? '#a3a3a3' : '#888'}
+                  placeholderTextColor={
+                    !values.tieneCalefaccion ? '#a3a3a3' : '#888'
+                  }
                 />
                 {values.tieneCalefaccion &&
                   touched.modeloCalefaccion &&
@@ -271,7 +284,9 @@ const CalefaccionNuevaPiscina = ({
                   keyboardType="numeric"
                   placeholder="Ej: 13.5"
                   editable={values.tieneCalefaccion}
-                  placeholderTextColor={!values.tieneCalefaccion ? '#a3a3a3' : '#888'}
+                  placeholderTextColor={
+                    !values.tieneCalefaccion ? '#a3a3a3' : '#888'
+                  }
                 />
                 {values.tieneCalefaccion &&
                   touched.potenciaCalefaccion &&

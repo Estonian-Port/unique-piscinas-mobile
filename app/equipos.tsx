@@ -25,6 +25,7 @@ import ModalAgregarCalefaccion from '@/components/dashboard/modalAgregarCalefacc
 import ModalAgregarUV from '@/components/dashboard/modalAgregarUV';
 import ModalAgregarIonizador from '@/components/dashboard/modalAgregarIonizador';
 import ModalAgregarTrasductor from '@/components/dashboard/modalAgregarTrasductor';
+import TratamientoCard from '@/components/dashboard/tratamientoCard';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
@@ -138,61 +139,73 @@ export default function Equipos() {
             />
           ))}
           <View className="flex-row gap-3 justify-center items-center">
-          {!tieneUv && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
-              onPress={() => setModalAgregarUV(true)}
-            >
-              <Text className="font-geist-semi-bold text-text">
-                + Agregar UV
-              </Text>
-            </Pressable>
-          )}
-          {modalAgregarUV && (
-            <ModalAgregarUV
-              visible={modalAgregarUV}
-              onClose={() => setModalAgregarUV(false)}
-              piscina={pool}
-              actualizarPiscina={fetchPool}
-            />
-          )}
-          {!tieneIonizador && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
-              onPress={() => setModalAgregarIonizador(true)}
-            >
-              <Text className="font-geist-semi-bold text-text">
-                + Agregar Ionizador
-              </Text>
-            </Pressable>
-          )}
-          {modalAgregarIonizador && (
-            <ModalAgregarIonizador
-              visible={modalAgregarIonizador}
-              onClose={() => setModalAgregarIonizador(false)}
-              piscina={pool}
-              actualizarPiscina={fetchPool}
-            />
-          )}
-          {!tieneTrasductor && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
-              onPress={() => setModalAgregarTrasductor(true)}
-            >
-              <Text className="font-geist-semi-bold text-text">
-                + Agregar Trasductor
-              </Text>
-            </Pressable>
-          )}
-          {modalAgregarTrasductor && (
-            <ModalAgregarTrasductor
-              visible={modalAgregarTrasductor}
-              onClose={() => setModalAgregarTrasductor(false)}
-              piscina={pool}
-              actualizarPiscina={fetchPool}
-            />
-          )}
+            {!tieneUv && (
+              <Pressable
+                className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+                onPress={() => setModalAgregarUV(true)}
+              >
+                <Text className="font-geist-semi-bold text-text">
+                  + Agregar UV
+                </Text>
+              </Pressable>
+            )}
+            {modalAgregarUV && (
+              <ModalAgregarUV
+                visible={modalAgregarUV}
+                onClose={() => setModalAgregarUV(false)}
+                piscina={pool}
+                actualizarPiscina={fetchPool}
+              />
+            )}
+            {!tieneIonizador && (
+              <Pressable
+                className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+                onPress={() => setModalAgregarIonizador(true)}
+              >
+                <Text className="font-geist-semi-bold text-text">
+                  + Agregar Ionizador
+                </Text>
+              </Pressable>
+            )}
+            {modalAgregarIonizador && (
+              <ModalAgregarIonizador
+                visible={modalAgregarIonizador}
+                onClose={() => setModalAgregarIonizador(false)}
+                piscina={pool}
+                actualizarPiscina={fetchPool}
+              />
+            )}
+            {!tieneTrasductor && (
+              <Pressable
+                className="bg-gray-200 rounded-lg p-3 w-1/2 items-center mb-3"
+                onPress={() => setModalAgregarTrasductor(true)}
+              >
+                <Text className="font-geist-semi-bold text-text">
+                  + Agregar Trasductor
+                </Text>
+              </Pressable>
+            )}
+            {modalAgregarTrasductor && (
+              <ModalAgregarTrasductor
+                visible={modalAgregarTrasductor}
+                onClose={() => setModalAgregarTrasductor(false)}
+                piscina={pool}
+                actualizarPiscina={fetchPool}
+              />
+            )}
           </View>
+
+          <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
+            Tratamiento
+          </Text>
+
+          <TratamientoCard
+            orp={pool.orp}
+            controlPH={pool.controlAutomaticoPH}
+            cloroSalino={pool.cloroSalino}
+            piscina={pool}
+            actualizarPiscina={fetchPool}
+          />
 
           <Text className="self-start pl-5 mb-2 text-text font-geist-semi-bold text-xl">
             Calefacción
