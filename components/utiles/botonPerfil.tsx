@@ -10,8 +10,8 @@ const BotonPerfil = ({ nombreUsuario }: { nombreUsuario: string }) => {
         <Text className="text-text font-geist-bold mr-2 text-md">
           {nombreUsuario}
         </Text>
-        <View className="p-1 border rounded-full bg-gray-200 items-center justify-center">
-          <PersonIcon />
+        <View className="p-1 rounded-full bg-[#4e4965] items-center justify-center">
+          <PersonIcon color="#a59064" />
         </View>
       </Pressable>
     </Link>

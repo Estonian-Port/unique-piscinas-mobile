@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import ModalError from '@/components/utiles/modalError';
@@ -13,12 +14,14 @@ import { router } from 'expo-router';
 import { LoginIcon } from '@/assets/icons';
 import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
 import { useAuth } from '@/context/authContext';
+import { Eye, EyeOff } from 'react-native-feather';
 
 const Index = () => {
   const [email, setEmail] = useState('leo@unique.com');
   const [password, setPassword] = useState('asd');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login, usuario } = useAuth();
 
@@ -32,13 +35,13 @@ const Index = () => {
         router.replace('/pools');
       }
     }
-  }, [usuario])
+  }, [usuario]);
 
   const handleLogin = async (email: string, password: string) => {
     try {
       await login(email, password);
-    } catch (err: any) {
-      setModalMessage(err.message);
+    } catch (error: any) {
+      setModalMessage(error.response.data.error);
       setModalVisible(true);
     }
   };
@@ -52,26 +55,33 @@ const Index = () => {
           <View className="mb-4 items-center">
             <LogoUnique width={250} height={220} />
           </View>
-          <View className="border border-gray-300 rounded-md mb-4 h-10">
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="#9ca3af"
+            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3 mb-5"
+            value={email}
+            onChangeText={setEmail}
+          />
+
+          <View className="relative">
             <TextInput
-              placeholder="Email"
-              placeholderTextColor="#888888"
-              style={{ backgroundColor: '#fff', borderRadius: 5 }}
-              className="h-full w-full text-center p-2"
-              value={email}
-              onChangeText={setEmail}
-            />
-          </View>
-          <View className="border border-gray-300 rounded-md mb-2 h-10">
-            <TextInput
-              placeholder="Password"
-              placeholderTextColor="#888888"
-              style={{ backgroundColor: '#fff', borderRadius: 5, width: '100%' }}
-              secureTextEntry
-              className="h-full w-full text-center p-2"
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={password}
+              placeholder="Ingrese su contraseña"
+              placeholderTextColor="#9ca3af"
+              secureTextEntry={!showPassword}
               onChangeText={setPassword}
             />
+            <Pressable
+              className="absolute right-4 top-4"
+              onPress={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? (
+                <EyeOff width={20} height={20} />
+              ) : (
+                <Eye width={20} height={20} />
+              )}
+            </Pressable>
           </View>
           <TouchableOpacity
             onPress={() => handleLogin(email, password)}
