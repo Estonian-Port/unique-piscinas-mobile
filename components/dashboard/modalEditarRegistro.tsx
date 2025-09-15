@@ -29,28 +29,33 @@ const validationSchema = Yup.object().shape({
   tecnico: Yup.string().required('El técnico es obligatorio'),
 });
 
-type ModalNuevoRegistroProps = {
+type ModalEditarRegistroProps = {
   visible: boolean;
   onClose: () => void;
   actualizarPiscina: () => void;
   piscinaId: number;
+  registro: Registro;
 };
 
-const ModalNuevoRegistro = ({
+const ModalEditarRegistro = ({
   visible,
   onClose,
   actualizarPiscina,
   piscinaId,
-}: ModalNuevoRegistroProps) => {
+  registro,
+}: ModalEditarRegistroProps) => {
   const [showDatePicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const handleNuevoRegistro = async (registro: Registro) => {
+  const handleActualizarRegistro = async (registro: Registro) => {
     try {
-      const response = await piscinaService.crearRegistro(registro, piscinaId);
+      const response = await piscinaService.actualizarRegistro(
+        registro,
+        piscinaId
+      );
       Toast.show({
         type: 'success',
-        text1: 'Registro añadido',
+        text1: 'Registro actualizado',
         text2: response.message,
         position: 'bottom',
       });
@@ -58,8 +63,8 @@ const ModalNuevoRegistro = ({
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: 'Error al añadir el registro',
-        text2: 'Ha ocurrido un error al añadir el nuevo registro.',
+        text1: 'Error al actualizar el registro',
+        text2: 'Ha ocurrido un error al actualizar el registro.',
         position: 'bottom',
       });
     }
@@ -68,23 +73,24 @@ const ModalNuevoRegistro = ({
   return (
     <Formik
       initialValues={{
-        fecha: new Date(),
-        dispositivo: '',
-        accion: '',
-        descripcion: '',
-        tecnico: '',
+        id: registro.id,
+        fecha: registro.fecha ? new Date(registro.fecha) : new Date(),
+        dispositivo: registro.dispositivo,
+        accion: registro.accion,
+        descripcion: registro.descripcion,
+        tecnico: registro.nombreTecnico,
       }}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        const nuevoRegistro: Registro = {
-          id: 0,
+        const registroActualizado: Registro = {
+          id: registro.id,
           fecha: values.fecha.toISOString().split('T')[0],
           dispositivo: values.dispositivo,
           accion: values.accion,
           descripcion: values.descripcion,
           nombreTecnico: values.tecnico,
         };
-        handleNuevoRegistro(nuevoRegistro);
+        handleActualizarRegistro(registroActualizado);
         onClose();
       }}
       enableReinitialize={false}
@@ -96,6 +102,7 @@ const ModalNuevoRegistro = ({
         values,
         errors,
         touched,
+        dirty,
       }) => {
         return (
           <Modal
@@ -111,7 +118,7 @@ const ModalNuevoRegistro = ({
               <View className="flex-1 justify-center items-center bg-black/50">
                 <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
                   <Text className="text-text text-xl font-geist-bold mb-2 text-center">
-                    Nuevo Registro
+                    Actualizar Registro
                   </Text>
                   <View className="flex-row items-center mb-1">
                     <CalendarIcon size={16} color="#666" className="mr-2" />
@@ -238,12 +245,15 @@ const ModalNuevoRegistro = ({
                       </Text>
                     </Pressable>
                     <Pressable
+                      disabled={!dirty}
                       onPress={handleSubmit as any}
-                      className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                      className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                        !dirty ? 'opacity-50' : ''
+                      }`}
                     >
                       <View className="flex-row items-center justify-center">
                         <Text className="text-white text-center font-geist-semi-bold ml-2">
-                          Agregar Registro
+                          Guardar cambios
                         </Text>
                       </View>
                     </Pressable>
@@ -258,4 +268,4 @@ const ModalNuevoRegistro = ({
   );
 };
 
-export default ModalNuevoRegistro;
+export default ModalEditarRegistro;

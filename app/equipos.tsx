@@ -252,6 +252,8 @@ export default function Equipos() {
               <ModalNuevoRegistro
                 visible={modalNuevoRegistro}
                 onClose={() => setModalNuevoRegistro(false)}
+                actualizarPiscina={fetchPool}
+                piscinaId={pool.id}
               />
             )}
           </View>
@@ -266,7 +268,7 @@ export default function Equipos() {
 
           <ScreenCard>
             {pool.registros.map((item) => (
-              <RegistroCard key={item.id} registro={item} />
+              <RegistroCard key={item.id} registro={item} piscinaId={pool.id} actualizarPiscina={fetchPool} />
             ))}
           </ScreenCard>
         </Screen>

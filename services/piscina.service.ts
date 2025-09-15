@@ -11,6 +11,7 @@ import {
   PiscinaNueva,
   PiscinaProgramacion,
   PiscinaResume,
+  Registro,
 } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
 import { programacionFromDto } from '@/data/domain/cicloFiltrado';
@@ -187,6 +188,33 @@ class PiscinaService {
       `${PISCINA}/update-compuestos/${piscinaId}`,
       compuestos
     );
+    return { data: response.data.data, message: response.data.message };
+  }
+
+  crearRegistro = async (
+    nuevoRegistro: Registro,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.post(`${PISCINA}/add-registro/${piscinaId}`, nuevoRegistro);
+
+    return { data: response.data.data, message: response.data.message };
+  }
+
+  actualizarRegistro = async (
+    registro: Registro,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.put(`${PISCINA}/update-registro/${piscinaId}`, registro);
+
+    return { data: response.data.data, message: response.data.message };
+  }
+
+  eliminarRegistro = async (
+    registroId: number,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.delete(`${PISCINA}/delete-registro/${piscinaId}/${registroId}`);
+
     return { data: response.data.data, message: response.data.message };
   }
 

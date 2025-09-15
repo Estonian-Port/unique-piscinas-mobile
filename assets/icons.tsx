@@ -64,6 +64,10 @@ export const ConfigurationIcon = (props: any) => (
   <MaterialIcons name="settings" size={24} color="black" {...props} />
 );
 
+export const ActionIcon = (props: any) => (
+  <MaterialIcons name="edit-note" size={24} color="black" {...props} />
+);
+
 export const PowerIcon = (props: any) => (
   <MaterialIcons name="power-settings-new" size={18} color="blue" {...props} />
 );

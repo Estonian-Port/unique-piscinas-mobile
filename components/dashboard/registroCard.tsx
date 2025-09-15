@@ -1,24 +1,66 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View, Text, Pressable, Modal } from 'react-native';
+import React, { useState } from 'react';
 import {
   BuildIcon,
   CalendarIcon,
-  ClockIcon,
   ConfigurationIcon,
+  DeleteIcon,
+  EditIcon,
   InfoIcon,
-  MonitorIcon,
-  PersonIcon,
 } from '@/assets/icons';
 import { Registro } from '@/data/domain/piscina';
+import ModalEditarRegistro from './modalEditarRegistro';
+import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
 
-const RegistroCard = ({ registro }: { registro: Registro }) => {
+const RegistroCard = ({
+  registro,
+  piscinaId,
+  actualizarPiscina,
+}: {
+  registro: Registro;
+  piscinaId: number;
+  actualizarPiscina: () => void;
+}) => {
+  const [modalEditActivo, setModalEditActivo] = useState(false);
+  const [modalDeleteActivo, setModalDeleteActivo] = useState(false);
+
+  const handleDeleteRegistro = async () => {
+    try {
+      const response = await piscinaService.eliminarRegistro(
+        registro.id,
+        piscinaId
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Registro eliminado',
+        text2: response.message,
+        position: 'bottom',
+      });
+      actualizarPiscina();
+    } catch (error) {
+      console.error('Error eliminando registro:', error);
+    } finally {
+      setModalDeleteActivo(false);
+    }
+  };
+
   return (
     <View className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 mb-4">
       {/* Encabezado con la acción */}
-      <View className="bg-purple-unique px-4 py-3 border-b border-gray-100">
+      <View className="flex-row bg-purple-unique px-4 py-3 border-b border-gray-100 justify-between items-center">
         <Text className="text-white font-geist-semi-bold text-base">
           {registro.accion}
         </Text>
+        <View className="flex-row gap-3">
+          <Pressable onPress={() => setModalEditActivo(true)}>
+            <EditIcon color="#FFF" size={32} />
+          </Pressable>
+          <Pressable onPress={() => setModalDeleteActivo(true)}>
+            <DeleteIcon color="#FFF" />
+          </Pressable>
+        </View>
       </View>
 
       {/* Contenido principal */}
@@ -69,6 +111,19 @@ const RegistroCard = ({ registro }: { registro: Registro }) => {
             </Text>
           </View>
         </View>
+        <ModalEditarRegistro
+          visible={modalEditActivo}
+          onClose={() => setModalEditActivo(false)}
+          registro={registro}
+          actualizarPiscina={() => actualizarPiscina()}
+          piscinaId={piscinaId}
+        />
+        <ModalEliminarEquipamiento
+          visible={modalDeleteActivo}
+          onClose={() => setModalDeleteActivo(false)}
+          equipamiento={'Registro'}
+          onDelete={() => handleDeleteRegistro()}
+        />
       </View>
     </View>
   );
