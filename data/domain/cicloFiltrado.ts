@@ -8,7 +8,7 @@ export interface Programacion {
   horaInicio: string;
   horaFin: string;
   dias: Day[];
-  funcionFiltro: FuncionFiltro | null;
+  funcionFiltro: FuncionFiltro.FILTRAR | null;
   activa: boolean;
   tipo: ProgramacionType;
 }

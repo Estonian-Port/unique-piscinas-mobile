@@ -38,8 +38,6 @@ const ModalProgramacion = ({
   const [daysSelected, setDaysSelected] = useState<Day[]>(cicle.dias);
   const [startTime, setStartTime] = useState(localTimeStringToDate(cicle.horaInicio));
   const [endTime, setEndTime] = useState(localTimeStringToDate(cicle.horaFin));
-  const [selectedFuncionFiltro, setSelectedFuncionFiltro] = useState(cicle.funcionFiltro);
-  const [openAction, setOpenAction] = useState(false);
 
   const daysOfWeek: Day[] = [
     Day.LUNES,
@@ -56,7 +54,7 @@ const ModalProgramacion = ({
       const cicloActualizado: Programacion = {
         ...cicle,
         dias: daysSelected,
-        funcionFiltro: selectedFuncionFiltro,
+        funcionFiltro: FuncionFiltro.FILTRAR,
         horaInicio: dateToLocalTimeString(startTime),
         horaFin: dateToLocalTimeString(endTime),
       };
@@ -65,7 +63,7 @@ const ModalProgramacion = ({
       const cicloActualizado: Programacion = {
         ...cicle,
         dias: daysSelected,
-        tipo: ProgramacionType.Iluminacion,
+        tipo: ProgramacionType.ILUMINACION,
         horaInicio: dateToLocalTimeString(startTime),
         horaFin: dateToLocalTimeString(endTime),
       };
@@ -130,30 +128,6 @@ const ModalProgramacion = ({
                 onChange={setEndTime}
               />
             </View>
-
-            {hasCicleMode && (
-              <View>
-                <Text className="font-geist-semi-bold text-base mb-1">
-                  Modo
-                </Text>
-                <DropDownPicker
-                  open={openAction}
-                  value={selectedFuncionFiltro}
-                  items={actionsMode.map((item) => ({
-                    id: item.id,
-                    label: item.name,
-                    value: item.name,
-                  }))}
-                  setOpen={setOpenAction}
-                  setValue={setSelectedFuncionFiltro}
-                  placeholder="Seleccione el modo"
-                  style={{ borderColor: '#e5e7eb' }}
-                  dropDownContainerStyle={{ borderColor: '#e5e7eb' }}
-                  zIndex={3000}
-                  zIndexInverse={1000}
-                />
-              </View>
-            )}
 
             <View className="flex-row justify-between gap-3 mt-3">
               <Pressable
