@@ -16,7 +16,7 @@ const Schedule = ({
 }: {
   cicle: Programacion;
   editCicle: (cicloEditado: Programacion) => void;
-  deleteCicle: (cicloId: number) => void;
+  deleteCicle: (cicloId: number, esFiltrado: boolean) => void;
 }) => {
   const daysOfWeek: Day[] = [
     Day.LUNES,
@@ -36,8 +36,18 @@ const Schedule = ({
   };
 
   const deleteSchedule = () => {
-    deleteCicle(cicle.id);
+    deleteCicle(cicle.id, cicle.tipo === ProgramacionType.FILTRADO);
+    setOpenModalDelete(false);
   };
+
+  const cambiarEstado = (nuevoEstado: boolean) => {
+    setIsActive(nuevoEstado);
+    const cicloActualizado: Programacion = {
+      ...cicle,
+      activa: nuevoEstado,
+    };
+    editCicle(cicloActualizado);
+  }
 
   return (
     <View className="w-full rounded-md bg-white p-2 border border-gray-200">
@@ -51,7 +61,7 @@ const Schedule = ({
         {cicle.tipo === ProgramacionType.FILTRADO && (
           <View className="flex-row items-center justify-center border border-gray-200 rounded-xl p-0.5">
             <Text className="font-geist text-text text-sm mx-1">
-              {cicle.funcionFiltro}
+              Filtrar
             </Text>
           </View>
         )}
@@ -81,7 +91,7 @@ const Schedule = ({
             trackColor={{ false: '#d3d3d3', true: '#000000' }}
             thumbColor={isActive ? '#fcdb99' : '#ffffff'}
             ios_backgroundColor="#d3d3d3"
-            onValueChange={() => setIsActive(!isActive)}
+            onValueChange={() => cambiarEstado(!isActive)}
             value={isActive}
           />
           <Pressable onPress={() => setOpenModalEdit(!openModalEdit)}>

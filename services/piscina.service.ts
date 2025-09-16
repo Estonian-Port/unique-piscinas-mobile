@@ -14,7 +14,11 @@ import {
   Registro,
 } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
-import { programacionFromDto } from '@/data/domain/cicloFiltrado';
+import {
+  dayMap,
+  Programacion,
+  programacionFromDto,
+} from '@/data/domain/cicloFiltrado';
 
 const PISCINA = '/piscina';
 
@@ -141,7 +145,6 @@ class PiscinaService {
     piscinaId: number,
     germicida: GermicidaNuevo
   ): Promise<{ data: Germicida; message: string }> => {
-
     console.log('Adding germicida:', germicida); // Log para depuración
 
     const response = await api.post(
@@ -189,35 +192,86 @@ class PiscinaService {
       compuestos
     );
     return { data: response.data.data, message: response.data.message };
-  }
+  };
 
   crearRegistro = async (
     nuevoRegistro: Registro,
     piscinaId: number
   ): Promise<{ data: Registro; message: string }> => {
-    const response = await api.post(`${PISCINA}/add-registro/${piscinaId}`, nuevoRegistro);
+    const response = await api.post(
+      `${PISCINA}/add-registro/${piscinaId}`,
+      nuevoRegistro
+    );
 
     return { data: response.data.data, message: response.data.message };
-  }
+  };
 
   actualizarRegistro = async (
     registro: Registro,
     piscinaId: number
   ): Promise<{ data: Registro; message: string }> => {
-    const response = await api.put(`${PISCINA}/update-registro/${piscinaId}`, registro);
+    const response = await api.put(
+      `${PISCINA}/update-registro/${piscinaId}`,
+      registro
+    );
 
     return { data: response.data.data, message: response.data.message };
-  }
+  };
 
   eliminarRegistro = async (
     registroId: number,
     piscinaId: number
   ): Promise<{ data: Registro; message: string }> => {
-    const response = await api.delete(`${PISCINA}/delete-registro/${piscinaId}/${registroId}`);
+    const response = await api.delete(
+      `${PISCINA}/delete-registro/${piscinaId}/${registroId}`
+    );
 
     return { data: response.data.data, message: response.data.message };
-  }
+  };
 
+  addProgramacion = async (
+    piscinaId: number,
+    esFiltrado: boolean,
+    programacion: Programacion
+  ): Promise<{ data: Programacion; message: string }> => {
+    const programacionToSend = {
+      ...programacion,
+      dias: programacion.dias.map((d: string) => dayMap[d]),
+    };
+    console.log('Programacion to send:', programacionToSend); // Log para depuración
+    const response = await api.post(
+      `${PISCINA}/add-programacion/${piscinaId}/${esFiltrado}`,
+      programacionToSend
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateProgramacion = async (
+    piscinaId: number,
+    esFiltrado: boolean,
+    programacion: Programacion
+  ): Promise<{ data: Programacion; message: string }> => {
+    const programacionToSend = {
+      ...programacion,
+      dias: programacion.dias.map((d: string) => dayMap[d]),
+    };
+    const response = await api.put(
+      `${PISCINA}/update-programacion/${piscinaId}/${esFiltrado}`,
+      programacionToSend
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  deleteProgramacion = async (
+    piscinaId: number,
+    programacionId: number,
+    esFiltrado: boolean
+  ): Promise<{ data: Programacion; message: string }> => {
+    const response = await api.delete(
+      `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}/${esFiltrado}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
 }
 
 export const piscinaService = new PiscinaService();

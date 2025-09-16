@@ -17,8 +17,8 @@ import { useAuth } from '@/context/authContext';
 import { Eye, EyeOff } from 'react-native-feather';
 
 const Index = () => {
-  const [email, setEmail] = useState('leo@unique.com');
-  const [password, setPassword] = useState('hola123');
+  const [email, setEmail] = useState('gabi@unique.com');
+  const [password, setPassword] = useState('asd');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
