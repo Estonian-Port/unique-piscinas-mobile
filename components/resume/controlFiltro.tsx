@@ -1,26 +1,133 @@
 import { View, Text, Pressable } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
-import ControlScreen from './controlScreen';
-import { entradaAgua, funcionFiltro } from '@/data/domain/piscina';
+import FuncionFiltroScreen from './funcionFiltroScreen';
+import {
+  entradaAgua,
+  funcionFiltro,
+  PiscinaResume,
+} from '@/data/domain/piscina';
+import ModalBarrefondo from './modalBarrefondo';
+import { FuncionFiltro } from '@/data/domain/cicloFiltrado';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
 
 interface ControlFiltroProps {
+  piscina: PiscinaResume;
   entradaAgua: entradaAgua[];
   funcionFiltro: funcionFiltro[];
 }
 
-export default function ControlFiltro({
-  entradaAgua,
-  funcionFiltro,
-}: ControlFiltroProps) {
+export default function ControlFiltro({ piscina }: ControlFiltroProps) {
+  const [modalBarrefondoVisible, setModalBarrefondoVisible] = useState(false);
+  const [isBarrefondoActivo, setBarrefondoActivo] = useState(
+    piscina.entradaAgua?.includes('Barrefondo')
+  );
+  const [isFondoActivo, setFondoActivo] = useState(
+    piscina.entradaAgua?.includes('Fondo')
+  );
+  const [isSkimmerActivo, setSkimmerActivo] = useState(
+    piscina.entradaAgua?.includes('Skimmer')
+  );
+  const [isTanqueActivo, setTanqueActivo] = useState(
+    piscina.entradaAgua?.includes('Tanque')
+  );
 
-  var hayUnaFuncionActiva = false
-  if(funcionFiltro != undefined){
-    hayUnaFuncionActiva = funcionFiltro.length > 0 ? true : false;
+  const [hayEntradaDeAguaSeleccionada, setHayEntradaDeAguaSeleccionada] =
+    useState(piscina.entradaAgua && piscina.entradaAgua.length > 0);
+
+  useEffect(() => {
+    setHayEntradaDeAguaSeleccionada(
+      piscina.entradaAgua && piscina.entradaAgua.length > 0
+    );
+  }, [piscina]);
+
+const actualizarEntradaDeAgua = async (entradasActivas: entradaAgua[]) => {
+  console.log('Actualizando entradas de agua a:', entradasActivas);
+  try {
+    const response = await piscinaService.actualizarEntradaDeAgua(
+      piscina.id,
+      entradasActivas
+    );
+    const nuevasEntradas = response.data.entradaAgua;
+    setHayEntradaDeAguaSeleccionada(nuevasEntradas.length > 0);
+    setFondoActivo(nuevasEntradas.includes('Fondo'));
+    setBarrefondoActivo(nuevasEntradas.includes('Barrefondo'));
+    setSkimmerActivo(nuevasEntradas.includes('Skimmer'));
+    setTanqueActivo(nuevasEntradas.includes('Tanque'));
+  } catch (error) {
+    Toast.show({
+      type: 'error',
+      text1: 'Error',
+      text2: 'No se pudo actualizar la entrada de agua.',
+      position: 'bottom',
+    });
+  }
+};
+
+  const handleTanquePress = () => {
+    console.log('Entradas antes de presionar Tanque:', piscina.entradaAgua);
+    if (!isTanqueActivo) {
+      setTanqueActivo(true);
+      actualizarEntradaDeAgua(['Tanque', ...(piscina.entradaAgua || [])]);
+    } else {
+      const nuevasEntradas = (piscina.entradaAgua || []).filter(
+        (e) => e !== 'Tanque'
+      );
+      setTanqueActivo(false);
+      actualizarEntradaDeAgua(nuevasEntradas);
+    }
+  };
+
+  const desactivarDesagotar = () => {
+    if (piscina.funcionActiva.includes('drain')) {
+      const nuevasFunciones = piscina.funcionActiva.filter(
+        (f) => f !== 'drain'
+      );
+      piscinaService.actualizarFuncionFiltro(piscina.id, nuevasFunciones);
+    }
+  };
+
+  const handleSkimmerPress = () => {
+    if (!isSkimmerActivo) {
+      setSkimmerActivo(true);
+      actualizarEntradaDeAgua(['Skimmer', ...(piscina.entradaAgua || [])]);
+      desactivarDesagotar();
+    } else {
+      const nuevasEntradas = (piscina.entradaAgua || []).filter(
+        (e) => e !== 'Skimmer'
+      );
+      setSkimmerActivo(false);
+      actualizarEntradaDeAgua(nuevasEntradas);
+    }
+  };
+
+  const handleFondoPress = () => {
+    if (!isFondoActivo) {
+      setFondoActivo(true);
+      actualizarEntradaDeAgua(['Fondo', ...(piscina.entradaAgua || [])]);
+    } else {
+      const nuevasEntradas = (piscina.entradaAgua || []).filter(
+        (e) => e !== 'Fondo'
+      );
+      setFondoActivo(false);
+      actualizarEntradaDeAgua(nuevasEntradas);
+    }
   }
 
-  const isSelected = (tipo: entradaAgua) => entradaAgua?.includes(tipo)
+  const handleBarrefondoPress = () => {
+    if (!isBarrefondoActivo) {
+      setBarrefondoActivo(true);
+      actualizarEntradaDeAgua(['Barrefondo', ...(piscina.entradaAgua || [])]);
+    } else {
+      const nuevasEntradas = (piscina.entradaAgua || []).filter(
+        (e) => e !== 'Barrefondo'
+      );
+      setBarrefondoActivo(false);
+      actualizarEntradaDeAgua(nuevasEntradas);
+    }
+  };
 
   return (
     <ScreenCard>
@@ -28,7 +135,7 @@ export default function ControlFiltro({
         <Text className="font-geist-semi-bold text-3xl text-text">
           Control de Filtro
         </Text>
-        {hayUnaFuncionActiva ? (
+        {hayEntradaDeAguaSeleccionada ? (
           <View className="bg-green-200 rounded-full p-2">
             <Text className="font-geist-semi-bold text-sm text-text">
               Activado
@@ -47,10 +154,11 @@ export default function ControlFiltro({
       <View className="flex-row justify-between gap-2">
         <Pressable
           className={`rounded-md items-center p-2 flex-1 ${
-            isSelected('Fondo')
-              ? "border-2 border-blue-500 bg-blue-100"
-              : "border border-grayish-unique"
+            isFondoActivo
+              ? 'border-2 border-blue-500 bg-blue-100'
+              : 'border border-grayish-unique'
           }`}
+          onPress={() => handleFondoPress()}
         >
           <TintIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
@@ -60,34 +168,55 @@ export default function ControlFiltro({
 
         <Pressable
           className={`rounded-md items-center p-2 flex-1 ${
-            isSelected('Barrefondo')
-              ? "border-2 border-blue-500 bg-blue-100"
-              : "border border-grayish-unique"
+            isBarrefondoActivo
+              ? 'border-2 border-blue-500 bg-blue-100'
+              : 'border border-grayish-unique'
           }`}
+          onPress={() => setModalBarrefondoVisible(true)}
         >
           <BubbleIcon size={32} />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Barrefondo
           </Text>
         </Pressable>
-
-        <Pressable
-          className={`rounded-md items-center p-2 flex-1 ${
-            isSelected('Skimmer')
-              ? "border-2 border-blue-500 bg-blue-100"
-              : "border border-grayish-unique"
-          }`}
-        >
-          <EyeIcon size={32} />
-          <Text className="font-geist-semi-bold text-base text-text mt-2">
-            Skimmer
-          </Text>
-        </Pressable>
-
+        <ModalBarrefondo
+          visible={modalBarrefondoVisible}
+          onClose={() => setModalBarrefondoVisible(false)}
+          onSave={() => handleBarrefondoPress()}
+        />
+        {piscina.esDesbordante ? (
+          <Pressable
+            className={`rounded-md items-center p-2 flex-1 ${
+              isTanqueActivo
+                ? 'border-2 border-blue-500 bg-blue-100'
+                : 'border border-grayish-unique'
+            }`}
+            onPress={() => handleTanquePress()}
+          >
+            <EyeIcon size={32} />
+            <Text className="font-geist-semi-bold text-base text-text mt-2">
+              Tanque
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            className={`rounded-md items-center p-2 flex-1 ${
+              isSkimmerActivo
+                ? 'border-2 border-blue-500 bg-blue-100'
+                : 'border border-grayish-unique'
+            }`}
+            onPress={() => handleSkimmerPress()}
+          >
+            <EyeIcon size={32} />
+            <Text className="font-geist-semi-bold text-base text-text mt-2">
+              Skimmer
+            </Text>
+          </Pressable>
+        )}
       </View>
 
       {/*MENSAJE DE ADVERTENCIA */}
-      {!hayUnaFuncionActiva && (
+      {!hayEntradaDeAguaSeleccionada && (
         <View className="border border-gray-200 rounded-sm flex-row justify-between items-center py-3 px-1">
           <InfoIcon />
           <Text className="flex-1 font-geist-semi-bold text-base text-text ml-2">
@@ -98,8 +227,10 @@ export default function ControlFiltro({
       )}
 
       {/*MODO DE FILTRO */}
-      <ControlScreen></ControlScreen>
-      
+      <FuncionFiltroScreen
+        piscina={piscina}
+        entradaDeAguaActiva={hayEntradaDeAguaSeleccionada}
+      ></FuncionFiltroScreen>
     </ScreenCard>
   );
 }

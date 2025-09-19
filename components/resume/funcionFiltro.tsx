@@ -7,9 +7,10 @@ interface ControlButtonProps {
   label: string
   onPress: () => void
   position: "top" | "right" | "bottom-left" | "bottom-right" | "left"
+  activo: boolean
 }
 
-const ControlButton = ({ icon, label, onPress, position }: ControlButtonProps) => {
+const ControlButton = ({ icon, label, onPress, position, activo }: ControlButtonProps) => {
   const positionStyles = {
     top: "absolute -top-10 left-20 ml-2",
     right: "absolute top-10 -right-5",
@@ -24,6 +25,7 @@ const ControlButton = ({ icon, label, onPress, position }: ControlButtonProps) =
         onPress={onPress}
         className="items-center justify-center w-20 h-20 rounded-full bg-grayish-unique border border-gray-400"
         activeOpacity={0.7}
+        disabled={!activo}
       >
         <View className="items-center justify-center">
           {icon}
@@ -34,36 +36,39 @@ const ControlButton = ({ icon, label, onPress, position }: ControlButtonProps) =
   )
 }
 
-interface CircularControlProps {
+interface PanelFuncionesFiltroProps {
+  botonesActivos: boolean
   onFilter: () => void
   onBackwash: () => void
   onRinse: () => void
   onDrain: () => void
   onRecirculate: () => void
   onPower: () => void
-  isPowerOn: boolean
+  funcionActiva: boolean
+  opacidad?: number
 }
 
-const CircularControl = ({
+const PanelFuncionesFiltro = ({
+  botonesActivos,
   onFilter,
   onBackwash,
   onRinse,
   onDrain,
   onRecirculate,
-  onPower,
-  isPowerOn = false,
-}: CircularControlProps) => {
+  funcionActiva = false,
+  opacidad = 1,
+}: PanelFuncionesFiltroProps) => {
   return (
     <View className="flex-1 items-center justify-center w-full mt-5">
-      <View className="relative w-64 h-64">
+      <View className="relative w-64 h-64" style={{ opacity: opacidad }}>
         {/* Central power button */}
-        <TouchableOpacity
-          onPress={onPower}
-          className={`absolute top-1/2 left-1/2 -mt-16 -ml-16 w-32 h-32 rounded-full items-center justify-center ${isPowerOn ? "bg-purple-unique" : "bg-grayish-unique"}`}
-          activeOpacity={0.7}
+        <View
+          className={`absolute top-1/2 left-1/2 -mt-16 -ml-16 w-32 h-32 rounded-full items-center justify-center ${
+            funcionActiva ? "bg-purple-unique" : "bg-grayish-unique"
+          }`}
         >
-          <Power stroke={isPowerOn ? "#FFF" : "#4e4965"} width={32} height={32} />
-        </TouchableOpacity>
+          <Power stroke={funcionActiva ? "#FFF" : "#4e4965"} width={32} height={32} />
+        </View>
 
         {/* Surrounding buttons */}
         <ControlButton
@@ -71,6 +76,7 @@ const CircularControl = ({
           label="Filtrar"
           onPress={onFilter}
           position="top"
+          activo={botonesActivos}
         />
 
         <ControlButton
@@ -78,6 +84,7 @@ const CircularControl = ({
           label="Retrolavar"
           onPress={onBackwash}
           position="right"
+          activo={botonesActivos}
         />
 
         <ControlButton
@@ -85,6 +92,7 @@ const CircularControl = ({
           label="Enjuagar"
           onPress={onRinse}
           position="bottom-right"
+          activo={botonesActivos}
         />
 
         <ControlButton
@@ -92,6 +100,7 @@ const CircularControl = ({
           label="Desagotar"
           onPress={onDrain}
           position="bottom-left"
+          activo={botonesActivos}
         />
 
         <ControlButton
@@ -99,10 +108,11 @@ const CircularControl = ({
           label="Recircular"
           onPress={onRecirculate}
           position="left"
+          activo={botonesActivos}
         />
       </View>
     </View>
   )
 }
 
-export default CircularControl
+export default PanelFuncionesFiltro

@@ -85,6 +85,7 @@ export interface PiscinaResume {
   funcionActiva: funcionFiltro[];
   sistemasGermicidas: sistemaGermicida[];
   calefaccion: boolean;
+  esDesbordante: boolean;
 }
 
 export class Piscina {
@@ -177,7 +178,7 @@ export type Registro = {
   nombreTecnico: string;
 };
 
-export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';
+export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer' | 'Tanque';
 
 export type ligthsType = 'manual' | 'programmed';
 

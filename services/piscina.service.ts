@@ -3,7 +3,9 @@ import {
   BombaNuevo,
   Calefaccion,
   CalefaccionNueva,
+  entradaAgua,
   Filtro,
+  funcionFiltro,
   Germicida,
   GermicidaNuevo,
   PiscinaEquipamiento,
@@ -16,6 +18,7 @@ import {
 import api from '../helper/auth.interceptor';
 import {
   dayMap,
+  FuncionFiltro,
   Programacion,
   programacionFromDto,
 } from '@/data/domain/cicloFiltrado';
@@ -269,6 +272,28 @@ class PiscinaService {
   ): Promise<{ data: Programacion; message: string }> => {
     const response = await api.delete(
       `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}/${esFiltrado}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  actualizarEntradaDeAgua = async (
+    piscinaId: number,
+    entradaAgua: entradaAgua[]
+  ): Promise<{ data: PiscinaResume; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-entrada-agua/${piscinaId}`,
+      entradaAgua
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  actualizarFuncionFiltro = async (
+    piscinaId: number,
+    funcionFiltro: funcionFiltro[]
+  ): Promise<{ data: PiscinaResume; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-funcion-filtro/${piscinaId}`,
+      funcionFiltro
     );
     return { data: response.data.data, message: response.data.message };
   };
