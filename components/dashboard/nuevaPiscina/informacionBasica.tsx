@@ -34,6 +34,8 @@ const InformacionBasica = ({
 }) => {
   const { usuario } = useAuth();
   const [usuarios, setUsuarios] = useState<UsuarioList[]>([]);
+  const [openPatente, setOpenPatente] = useState(false);
+  const [patenteItems, setPatenteItems] = useState<{ label: string; value: string }[]>([]);
   const formikRef = useRef<any>(null);
   const [open, setOpen] = useState(false);
 
@@ -46,7 +48,20 @@ const InformacionBasica = ({
         console.error('Error fetching users:', error);
       }
     };
+    const fetchPatentes = async () => {
+      try {
+        const response = await administracionService.getPatentes();
+        if (response.length === 0) {
+          setPatenteItems([{ label: 'No hay plaquetas disponibles', value: "" }]);
+        } else {
+          setPatenteItems(response.map((patente) => ({ label: patente, value: patente })));
+        }
+      } catch (error) {
+        console.error('Error fetching patentes:', error);
+      }
+    };
     fetchUsers();
+    fetchPatentes();
   }, []);
 
   const [items, setItems] = useState<
@@ -181,14 +196,46 @@ const InformacionBasica = ({
           <Text className="font-geist text-text text-base mt-3">
             ID de la placa
           </Text>
-          <TextInput
-            className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
-            value={values.codigoPlaca.toString()}
-            onChangeText={handleChange('codigoPlaca')}
-            onBlur={handleBlur('codigoPlaca')}
-            placeholder="Ej: ASDF"
-          />
-          {touched.codigoPlaca && errors.codigoPlaca && (
+            <DropDownPicker
+            open={openPatente}
+            value={values.codigoPlaca}
+            items={patenteItems}
+            setOpen={setOpenPatente}
+            setValue={(callback) => {
+              const val = callback(values.codigoPlaca);
+              setFieldValue('codigoPlaca', val);
+            }}
+            setItems={setPatenteItems}
+            placeholder="Selecciona una patente"
+            zIndex={2000}
+            zIndexInverse={1500}
+            listMode="SCROLLVIEW"
+            style={{
+              borderColor: '#d1d5db',
+              borderWidth: 2,
+              borderRadius: 6,
+              backgroundColor: '#fff',
+              paddingVertical: 12,
+              paddingHorizontal: 10,
+            }}
+            dropDownContainerStyle={{
+              borderColor: '#d1d5db',
+              borderWidth: 2,
+              borderRadius: 6,
+              backgroundColor: '#f3f4f6',
+            }}
+            selectedItemContainerStyle={{
+              backgroundColor: '#ede9fe',
+            }}
+            selectedItemLabelStyle={{
+              fontWeight: 'bold',
+              color: '#7c3aed',
+            }}
+            placeholderStyle={{
+              color: '#333333',
+            }}
+            />
+            {touched.codigoPlaca && errors.codigoPlaca && (
             <Text className="text-red-500 mt-2">{errors.codigoPlaca}</Text>
           )}
 
