@@ -1,7 +1,6 @@
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { Screen } from '@/components/utiles/Screen';
 import { PiscinaFichaTecnica } from '@/data/domain/piscina';
-import { EditIcon } from '@/assets/icons';
 import { useEffect, useState } from 'react';
 import ModalEditarInfoGeneral from '@/components/dashboard/modalEditarInfoGeneral';
 import ModalEditarDimensiones from '@/components/dashboard/modalEditarDimensiones';
@@ -9,6 +8,7 @@ import ModalEditarNotas from '@/components/dashboard/modalEditarNotas';
 import PrivateScreen from '@/components/utiles/privateScreen';
 import { useAuth } from '@/context/authContext';
 import { administracionService } from '@/services/administracion.service';
+import { Edit2 } from 'react-native-feather';
 
 export default function FichaTecnica() {
   const { usuario, selectedPool } = useAuth();
@@ -86,7 +86,7 @@ export default function FichaTecnica() {
           {title}
         </Text>
         <Pressable onPress={action}>
-          <EditIcon />
+          <Edit2/>
         </Pressable>
       </View>
       {children}

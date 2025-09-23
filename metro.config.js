@@ -1,7 +1,11 @@
-const { getDefaultConfig } = require("expo/metro-config");
+const { getDefaultConfig } = require('expo/metro-config');
 const { withNativeWind } = require('nativewind/metro');
 
-const config = getDefaultConfig(__dirname);
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname, {
+  // [CRUCIAL] This configures the eager bundler for faster local builds
+  isEager: true,
+});
 
 // Configuración para SVG
 config.transformer = {

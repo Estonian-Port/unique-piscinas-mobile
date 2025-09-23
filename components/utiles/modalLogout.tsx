@@ -1,29 +1,52 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, Pressable } from 'react-native';
+import { X } from 'react-native-feather';
 
-type CustomModalProps = {
+type ModalLogoutProps = {
   visible: boolean;
   message: string;
   onClose: () => void;
-}
+  onCerrarSesion: () => void;
+};
 
-const ModalLogout = ({ visible, message, onClose }: CustomModalProps) => {
+const ModalLogout = ({ visible, message, onClose, onCerrarSesion }: ModalLogoutProps) => {
   return (
     <Modal
       animationType="fade"
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}>
+      onRequestClose={onClose}
+    >
       <View className="flex-1 justify-center items-center bg-black/50">
-        <View className="bg-white p-6 rounded-lg w-4/5">
-          <Text className="text-lg font-geist-bold text-center mb-4">{message}</Text>
-          
+        {/* Fondo tocable */}
+        <Pressable
+          className="absolute inset-0 bg-black/50"
+          onPress={onClose}
+        />
+
+        {/* Contenedor del modal */}
+        <View className="bg-white p-6 rounded-lg w-4/5 md:w-1/3 z-10">
+          {/* Cruz de cierre */}
           <TouchableOpacity
             onPress={onClose}
-            className="bg-red-400 p-4 rounded-lg">
-            <Text className="text-white text-center font-geist-semi-bold">Cerrar sesión</Text>
+            className="absolute top-4 right-4 p-2 z-20"
+          >
+            <X color="#9ca3af" />
           </TouchableOpacity>
 
+          <Text className="text-lg font-geist-bold text-center mb-4">
+            {message}
+          </Text>
+
+          {/* Botón cerrar sesión */}
+          <TouchableOpacity
+            onPress={onCerrarSesion}
+            className="bg-red-400 p-4 rounded-lg"
+          >
+            <Text className="text-white text-center font-geist-semi-bold">
+              Cerrar sesión
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>

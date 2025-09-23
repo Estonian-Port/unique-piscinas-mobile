@@ -12,7 +12,7 @@ import { PiscinaFichaTecnica } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
-import { CalculatorIcon } from '@/assets/icons';
+import { FastForward, Grid } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   largo: Yup.number()
@@ -217,7 +217,7 @@ const ModalEditarDimensiones = ({
                       className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center gap-2"
                       onPress={calcularVolumen}
                     >
-                      <CalculatorIcon />
+                      <FastForward />
                       <Text className="font-geist text-text">Calcular</Text>
                     </Pressable>
                   </View>

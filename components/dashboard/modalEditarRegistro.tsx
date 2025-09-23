@@ -9,18 +9,12 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import {
-  ActionIcon,
-  BuildIcon,
-  CalendarIcon,
-  ConfigurationIcon,
-  InfoIcon,
-} from '@/assets/icons';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Registro } from '@/data/domain/piscina';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Calendar, Edit, Info, Settings, Tool } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   accion: Yup.string().required('La acción es obligatoria'),
@@ -121,7 +115,7 @@ const ModalEditarRegistro = ({
                     Actualizar Registro
                   </Text>
                   <View className="flex-row items-center mb-1">
-                    <CalendarIcon size={16} color="#666" className="mr-2" />
+                    <Calendar height={16} width={16} color="#666" className="mr-2" />
                     <Text className="text-text text-base font-geist">
                       Fecha
                     </Text>
@@ -150,7 +144,7 @@ const ModalEditarRegistro = ({
                   )}
 
                   <View className="flex-row items-center mb-1">
-                    <ActionIcon size={16} color="#666" className="mr-2" />
+                    <Edit height={16} width={16}  color="#666" className="mr-2" />
                     <Text className="text-text text-base font-geist">
                       Acción
                     </Text>
@@ -170,11 +164,7 @@ const ModalEditarRegistro = ({
                   )}
 
                   <View className="flex-row items-center mb-1">
-                    <ConfigurationIcon
-                      size={16}
-                      color="#666"
-                      className="mr-2"
-                    />
+                    <Settings height={16} width={16} color="#666" className="mr-2"/>
                     <Text className="text-text text-base font-geist">
                       Dispositivo
                     </Text>
@@ -194,7 +184,7 @@ const ModalEditarRegistro = ({
                   )}
 
                   <View className="flex-row items-center mb-1">
-                    <InfoIcon size={16} color="#666" className="mr-2" />
+                    <Info height={16} width={16}  color="#666" className="mr-2" />
                     <Text className="text-text text-base font-geist">
                       Descripción
                     </Text>
@@ -217,7 +207,7 @@ const ModalEditarRegistro = ({
                   )}
 
                   <View className="flex-row items-center mb-1">
-                    <BuildIcon size={16} color="#666" className="mr-2" />
+                    <Tool height={16} width={16}  color="#666" className="mr-2" />
                     <Text className="text-text text-base font-geist">
                       Técnico
                     </Text>

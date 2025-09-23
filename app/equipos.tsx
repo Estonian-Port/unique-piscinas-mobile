@@ -11,12 +11,11 @@ import CalefaccionCard from '@/components/dashboard/calefaccionCard';
 import GermicidaCard from '@/components/dashboard/germicidaCard';
 import RegistroCard from '@/components/dashboard/registroCard';
 import { ScreenCard } from '@/components/utiles/ScreenCard';
-import { RegisterIcon } from '@/assets/icons';
 import { useEffect, useState } from 'react';
 import ModalNuevoRegistro from '@/components/dashboard/modalNuevoRegistro';
 import FiltroCard from '@/components/dashboard/filtroCard';
 import PrivateScreen from '@/components/utiles/privateScreen';
-import { PiscinaEquipamiento, PiscinaEquipos } from '@/data/domain/piscina';
+import { PiscinaEquipos } from '@/data/domain/piscina';
 import { useAuth } from '@/context/authContext';
 import { administracionService } from '@/services/administracion.service';
 import ModalAgregarBomba from '@/components/dashboard/modalAgregarBomba';
@@ -26,6 +25,7 @@ import ModalAgregarUV from '@/components/dashboard/modalAgregarUV';
 import ModalAgregarIonizador from '@/components/dashboard/modalAgregarIonizador';
 import ModalAgregarTrasductor from '@/components/dashboard/modalAgregarTrasductor';
 import TratamientoCard from '@/components/dashboard/tratamientoCard';
+import { Clipboard } from 'react-native-feather';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
@@ -243,7 +243,7 @@ export default function Equipos() {
               onPress={() => setModalNuevoRegistro(true)}
               className="bg-white border border-grayish-unique rounded-lg py-3 px-2 flex-row items-center justify-center"
             >
-              <RegisterIcon size={16} className="mr-2" />
+              <Clipboard className="mr-2" /> 
               <Text className="text-black font-geist-semi-bold text-sm">
                 Nuevo Registro
               </Text>

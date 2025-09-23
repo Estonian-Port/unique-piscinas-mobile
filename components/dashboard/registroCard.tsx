@@ -1,18 +1,11 @@
 import { View, Text, Pressable, Modal } from 'react-native';
 import React, { useState } from 'react';
-import {
-  BuildIcon,
-  CalendarIcon,
-  ConfigurationIcon,
-  DeleteIcon,
-  EditIcon,
-  InfoIcon,
-} from '@/assets/icons';
 import { Registro } from '@/data/domain/piscina';
 import ModalEditarRegistro from './modalEditarRegistro';
 import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Calendar, Delete, Edit2, Info, Settings, Tool } from 'react-native-feather';
 
 const RegistroCard = ({
   registro,
@@ -55,10 +48,10 @@ const RegistroCard = ({
         </Text>
         <View className="flex-row gap-3">
           <Pressable onPress={() => setModalEditActivo(true)}>
-            <EditIcon color="#FFF" size={32} />
+            <Edit2 color="#FFF" />
           </Pressable>
           <Pressable onPress={() => setModalDeleteActivo(true)}>
-            <DeleteIcon color="#FFF" />
+            <Delete color="#FFF" />
           </Pressable>
         </View>
       </View>
@@ -68,7 +61,7 @@ const RegistroCard = ({
         {/* Fecha y dispositivo */}
         <View className="flex-row mb-4">
           <View className="flex-1 flex-row items-center mr-2">
-            <CalendarIcon size={16} color="#666" className="mr-2" />
+            <Calendar color="#666" className="mr-2" />
             <View>
               <Text className="text-gray-500 text-xs mb-1">Fecha</Text>
               <Text className="text-gray-800 font-geist-semi-bold text-sm">
@@ -78,7 +71,7 @@ const RegistroCard = ({
           </View>
 
           <View className="flex-1 flex-row items-center">
-            <ConfigurationIcon size={16} color="#666" className="mr-2" />
+            <Settings width={16} height={16} color="#666" className="mr-2" />
             <View>
               <Text className="text-gray-500 text-xs mb-1">Dispositivo</Text>
               <Text className="text-gray-800 font-geist-semi-bold text-sm">
@@ -91,7 +84,7 @@ const RegistroCard = ({
         {/* Descripción */}
         <View className="mb-4 bg-gray-100 rounded-lg">
           <View className="flex-row items-center px-3 pt-3 mb-1">
-            <InfoIcon size={14} color="#666" className="mr-1" />
+            <Info width={14} height={14} color="#666" className="mr-1" />
             <Text className="text-gray-500 text-xs">Descripción</Text>
           </View>
           <Text className="text-gray-800 text-sm px-3 pb-3">
@@ -102,7 +95,7 @@ const RegistroCard = ({
         {/* Técnico */}
         <View className="flex-row items-center bg-gray-100 rounded-lg">
           <View className="h-8 w-8 ml-3 rounded-full bg-gray-200 items-center justify-center mr-3">
-            <BuildIcon size={16} color="#666" />
+            <Tool width={16} height={16} color="#666" />
           </View>
           <View className="py-3">
             <Text className="text-gray-500 text-xs mb-1">Técnico</Text>

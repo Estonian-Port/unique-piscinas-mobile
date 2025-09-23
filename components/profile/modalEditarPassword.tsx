@@ -1,20 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  Pressable,
-  Image,
-  TextInput,
-  Modal,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
-import { Screen } from '@/components/utiles/Screen';
-import { LogoutIcon } from '@/assets/icons';
-import { Link, router } from 'expo-router';
+import {View,Text,Pressable,TextInput,Modal,KeyboardAvoidingView, Platform,} from 'react-native';
 import { useAuth } from '@/context/authContext';
-import ModalLogout from '@/components/utiles/modalLogout';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { UsuarioCambioPassword, UsuarioLogin } from '@/data/domain/user';

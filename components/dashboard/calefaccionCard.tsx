@@ -1,12 +1,12 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { DeleteIcon, EditIcon, ThermostatIcon } from '@/assets/icons';
 import { Calefaccion, PiscinaEquipos } from '@/data/domain/piscina';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import ModalEditarCalefaccion from './modalEditarCalefaccion';
 import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
+import { Delete, Edit2, Thermometer } from 'react-native-feather';
 
 const CalefaccionCard = ({
   calefaccion,
@@ -70,20 +70,20 @@ const CalefaccionCard = ({
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center justify-between w-full">
           <View className="flex-row items-center">
-            <ThermostatIcon color={'orange'} />
+            <Thermometer color={'orange'} />
             <Text className="text-text font-geist-semi-bold text-lg">
               {calefaccion.tipo}
             </Text>
           </View>
           <View className="flex-row items-center">
             <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
-              <EditIcon />
+              <Edit2 />
             </Pressable>
             <Pressable
               className="ml-2"
               onPress={() => setModalDeleteOpen(true)}
             >
-              <DeleteIcon />
+              <Delete />
             </Pressable>
           </View>
         </View>

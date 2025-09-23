@@ -1,12 +1,12 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { AutorenewIcon, DeleteIcon, EditIcon } from '@/assets/icons';
 import { Germicida, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarGermicida from './modalEditarGermicida';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
+import { Delete, Edit2, RefreshCw } from 'react-native-feather';
 
 const GermicidaCard = ({
   germicida,
@@ -74,13 +74,13 @@ const GermicidaCard = ({
           </Text>
           <View className='flex-row items-center'>
             <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
-              <EditIcon />
+              <Edit2 />
             </Pressable>
             <Pressable
               className="ml-2"
               onPress={() => setModalDeleteOpen(true)}
             >
-              <DeleteIcon />
+              <Delete />
             </Pressable>
           </View>
         </View>
@@ -120,7 +120,7 @@ const GermicidaCard = ({
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
-        <AutorenewIcon color={'white'} size={20} />
+        <RefreshCw color={'white'} height={20} width={20} />
         <Text className="text-white font-geist text-base ml-2">
           Resetear contador
         </Text>

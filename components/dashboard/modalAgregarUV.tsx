@@ -12,11 +12,11 @@ import React, { useState } from 'react';
 import { GermicidaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { marcasUV } from './modalEditarGermicida';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
+import { Zap } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   uvMarca: Yup.string().required('Seleccione una marca de lámpara UV'),
@@ -120,7 +120,7 @@ const ModalAgregarUV = ({
                   </Text>
                   <View className="items-center justify-between">
                     <View className="flex-row items-center">
-                      <ThunderIcon size={18} color={'green'} />
+                      <Zap height={18} width={18} color={'green'} />
                       <Text className="text-text text-base font-geist ml-1">
                         Sistema UV
                       </Text>

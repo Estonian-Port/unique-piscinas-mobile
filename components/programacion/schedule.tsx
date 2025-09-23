@@ -1,6 +1,5 @@
-import { View, Text, Pressable, Switch, Modal } from 'react-native';
+import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { ClockIcon, DeleteIcon, EditIcon } from '@/assets/icons';
 import {
   Programacion,
   Day,
@@ -8,6 +7,7 @@ import {
 } from '@/data/domain/cicloFiltrado';
 import ModalProgramacion from './modalProgramacion';
 import ModalEliminarProgramacion from './modalEliminarProgramacion';
+import { Clock, Delete, Edit2 } from 'react-native-feather';
 
 const Schedule = ({
   cicle,
@@ -53,7 +53,7 @@ const Schedule = ({
     <View className="w-full rounded-md bg-white p-2 border border-gray-200">
       <View className="flex-row flex-1 justify-between">
         <View className="flex-row items-center">
-          <ClockIcon size={14} color="black" />
+          <Clock height={14} width={14}  color="black" />
           <Text className="font-geist text-text text-sm mx-2">
             {cicle.horaInicio} - {cicle.horaFin} horas
           </Text>
@@ -95,7 +95,7 @@ const Schedule = ({
             value={isActive}
           />
           <Pressable onPress={() => setOpenModalEdit(!openModalEdit)}>
-            <EditIcon color="black" />
+            <Edit2 color="black" />
           </Pressable>
           {openModalEdit && (
             <ModalProgramacion
@@ -107,7 +107,7 @@ const Schedule = ({
             />
           )}
           <Pressable onPress={() => setOpenModalDelete(true)}>
-            <DeleteIcon color="red" />
+            <Delete color="red" />
           </Pressable>
           {openModalDelete && (
             <ModalEliminarProgramacion

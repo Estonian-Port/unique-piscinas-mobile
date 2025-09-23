@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
-import { PersonIcon } from '@/assets/icons';
+import { User } from 'react-native-feather';
 
 const BotonPerfil = ({ nombreUsuario }: { nombreUsuario: string }) => {
   return (
@@ -11,7 +11,7 @@ const BotonPerfil = ({ nombreUsuario }: { nombreUsuario: string }) => {
           {nombreUsuario}
         </Text>
         <View className="p-1 rounded-full bg-[#4e4965] items-center justify-center">
-          <PersonIcon color="#a59064" />
+          <User color="white" />
         </View>
       </Pressable>
     </Link>

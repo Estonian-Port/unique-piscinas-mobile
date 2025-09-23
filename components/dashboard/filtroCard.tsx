@@ -1,11 +1,11 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, FilterIcon } from '@/assets/icons';
 import { Filtro, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarFiltro from './modalEditarFiltro';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Edit2, Filter } from 'react-native-feather';
 
 const FiltroCard = ({
   filtro,
@@ -47,13 +47,13 @@ const FiltroCard = ({
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center justify-between w-full">
           <View className="flex-row items-center">
-            <FilterIcon color={'cyan'} />
+            <Filter color={'cyan'} />
             <Text className="text-text font-geist-semi-bold text-lg">
               Filtro de {filtro.tipo}
             </Text>
           </View>
           <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
-            <EditIcon />
+            <Edit2 />
           </Pressable>
         </View>
       </View>

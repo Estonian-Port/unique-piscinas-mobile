@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { AirIcon, TintIcon } from '@/assets/icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ScreenCard } from '../utiles/ScreenCard';
+import { Droplet, Wind } from 'react-native-feather';
 
 type PhClimaProps = {
   ph: number;
@@ -76,11 +76,11 @@ const PhClimaCard = ({
         </Text>
         <View className="mt-2 gap-3">
           <View className="flex-row items-center">
-            <TintIcon color="#9B5278" size={18} />
+            <Droplet color="#9B5278" />
             <Text className="text-text text-sm ml-1">Humedad: {humidity}%</Text>
           </View>
           <View className="flex-row items-center">
-            <AirIcon />
+            <Wind />
             <Text className="text-text text-sm ml-1">Viento: {wind} km/h</Text>
           </View>
         </View>

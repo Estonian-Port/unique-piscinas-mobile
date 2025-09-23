@@ -13,7 +13,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Germicida } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
 
 export const marcasUV = [
   { id: 1, name: 'Astral' },

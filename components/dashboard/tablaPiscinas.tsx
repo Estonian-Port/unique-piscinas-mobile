@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Pressable, FlatList } from 'react-native';
-import { ConfigurationIcon, EyeIcon } from '@/assets/icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import { Eye, Settings } from 'react-native-feather';
 
 const TablaPiscinas = () => {
   const datos = Array.from({ length: 20 }, (_, index) => ({
@@ -233,13 +233,13 @@ const Fila = ({
         <View className="flex-row">
             <Link asChild href={`../(tabs)/${id}`}>
             <Pressable className="bg-white rounded-md py-2 px-4 flex-row items-center justify-center border border-gray-200 mr-2">
-              <EyeIcon size={16} />
+              <Eye height={16} width={16}/>
               <Text className="text-gray-800 text-sm ml-1">Panel</Text>
             </Pressable>
           </Link>
             <Link asChild href={`/${id}`}>
             <Pressable className="bg-white rounded-md py-2 px-4 flex-row items-center justify-center border border-gray-200">
-              <ConfigurationIcon size={16} />
+              <Settings height={16} width={16}  />
               <Text className="text-gray-800 text-sm ml-1">Equipos</Text>
             </Pressable>
           </Link>

@@ -1,11 +1,11 @@
-import { View, Text, Switch, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, TintIcon } from '@/assets/icons';
 import { Bomba, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarBomba from './modalEditarBomba';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Droplet, Edit2 } from 'react-native-feather';
 
 const BombaCard = ({
   piscina,
@@ -47,13 +47,13 @@ const BombaCard = ({
       <View className="flex-row items-center justify-between mb-1">
         <View className="flex-row items-center justify-between w-full">
           <View className="flex-row items-center">
-            <TintIcon color={'cyan'} />
+            <Droplet color={'cyan'} />
             <Text className="text-text font-geist-semi-bold text-lg">
               Bomba de filtración
             </Text>
           </View>
           <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
-            <EditIcon />
+            <Edit2 />
           </Pressable>
         </View>
       </View>

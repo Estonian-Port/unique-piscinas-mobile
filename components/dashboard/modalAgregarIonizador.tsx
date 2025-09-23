@@ -12,11 +12,11 @@ import React, { useState } from 'react';
 import { GermicidaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { marcasIonizador } from './modalEditarGermicida';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Octagon } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   ionizadorMarca: Yup.string().required('Seleccione una marca de ionizador'),
@@ -126,7 +126,7 @@ const ModalAgregarIonizador = ({
 
                   <View className="items-center justify-between">
                     <View className="flex-row items-center">
-                      <LightIcon size={18} color={'orange'} />
+                      <Octagon height={18} width={18} color={'orange'} />
                       <Text className="text-text text-base font-geist ml-1">
                         Ionizador de cobre
                       </Text>

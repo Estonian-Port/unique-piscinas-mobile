@@ -1,12 +1,12 @@
 import { View, Text, Pressable } from 'react-native';
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
 import FuncionFiltroScreen from './funcionFiltroScreen';
 import type { entradaAgua, funcionFiltro, PiscinaResume } from '@/data/domain/piscina';
 import ModalBarrefondo from './modalBarrefondo';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Box, Circle, Droplet, Eye, Info } from 'react-native-feather';
 
 interface ControlFiltroProps {
   piscina: PiscinaResume;
@@ -221,7 +221,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
           }`}
           onPress={() => handleFondoPress()}
         >
-          <TintIcon size={32} />
+          <Droplet/>
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Fondo
           </Text>
@@ -235,7 +235,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
           }`}
           onPress={() => handleBarrefondoPress()}
         >
-          <BubbleIcon size={32} />
+          <Circle />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Barrefondo
           </Text>
@@ -257,7 +257,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
             }`}
             onPress={() => handleTanquePress()}
           >
-            <EyeIcon size={32} />
+            <Box />
             <Text className="font-geist-semi-bold text-base text-text mt-2">
               Tanque
             </Text>
@@ -271,7 +271,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
             }`}
             onPress={() => handleSkimmerPress()}
           >
-            <EyeIcon size={32} />
+            <Eye />
             <Text className="font-geist-semi-bold text-base text-text mt-2">
               Skimmer
             </Text>
@@ -283,7 +283,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
       {!hayEntradaDeAguaSeleccionada && (
         <View className="flex-row items-start bg-yellow-50 border-l-4 border-yellow-400 rounded-md shadow-sm p-4 my-4 mx-1">
           <View className="mt-0.5">
-            <InfoIcon size={22} color="#b45309" />
+            <Info color="#b45309" />
           </View>
           <Text className="flex-1 font-geist-semi-bold text-base text-yellow-900 ml-3">
             Seleccione al menos una entrada de agua para activar el sistema de

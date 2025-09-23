@@ -1,19 +1,6 @@
 import { View, Text, ScrollView, Pressable } from 'react-native';
 import React, { useState } from 'react';
-import { piscinasMock } from '@/data/mock/piscinaMock';
-import { leo } from '@/data/mock/userMock';
-import { useLocalSearchParams } from 'expo-router';
-import {
-  BubbleIcon,
-  CalendarIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ClockIcon,
-  ConfigurationIcon,
-  ThermostatIcon,
-  ThunderIcon,
-  TintIcon,
-} from '@/assets/icons';
+import { Calendar, ChevronDown, ChevronUp, Circle, Clock, Droplet, Settings, Thermometer, Zap } from 'react-native-feather';
 
 type Lectura = {
   id: number;
@@ -125,19 +112,19 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
         className={`flex-row items-center justify-between ${isExpanded ? 'mb-4 pb-3 border-b border-gray-100' : ''}`}
       >
         <View className="flex-row items-center">
-          <CalendarIcon size={16} color="#666" className="mr-2" />
+          <Calendar height={16} width={16}  color="#666" className="mr-2" />
           <Text className="font-geist-semi-bold text-lg text-gray-800">
             {fecha}
           </Text>
         </View>
         <View className="flex-row items-center">
-          <ClockIcon size={16} color="#666" className="mr-2" />
+          <Clock height={16} width={16}  color="#666" className="mr-2" />
           <Text className="text-gray-600 text-md">{hora}</Text>
         </View>
         {isExpanded ? (
-          <ChevronUpIcon size={20} color="#333" />
+          <ChevronUp height={16} width={16}  color="#333" />
         ) : (
-          <ChevronDownIcon size={20} color="#333" />
+          <ChevronDown height={16} width={16}  color="#333" />
         )}
       </Pressable>
 
@@ -149,20 +136,20 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
           </Text>
           <View className="flex-row mb-4">
             <ParametroItem
-              icono={<TintIcon size={14} color={colorPH} />}
+              icono={<Droplet height={14} width={14}  color={colorPH} />}
               label="pH"
               valor={lectura.ph}
               color={colorPH}
             />
             <ParametroItem
-              icono={<TintIcon size={14} color="#2196F3" />}
+              icono={<Droplet height={14} width={14}  color="#2196F3" />}
               label="Cloro"
               valor={lectura.cloro}
               unidad="ppm"
               color="#2196F3"
             />
             <ParametroItem
-              icono={<ThunderIcon size={14} color="#FF9800" />}
+              icono={<Zap height={14} width={14}  color="#FF9800" />}
               label="Redox"
               valor={lectura.redox}
               unidad="mV"
@@ -176,14 +163,14 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
           </Text>
           <View className="flex-row mb-4">
             <ParametroItem
-              icono={<ThermostatIcon size={14} color="#F44336" />}
+              icono={<Thermometer height={14} width={14}  color="#F44336" />}
               label="Temperatura"
               valor={lectura.temperatura}
               unidad="°C"
               color="#F44336"
             />
             <ParametroItem
-              icono={<BubbleIcon size={14} color="#9C27B0" />}
+              icono={<Circle height={14} width={14}  color="#9C27B0" />}
               label="Presión"
               valor={lectura.presion}
               unidad="bar"
@@ -191,7 +178,7 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
             />
             <View className="bg-gray-50 p-3 rounded-lg flex-1 mx-1">
               <View className="flex-row items-center mb-1">
-                <ConfigurationIcon size={14} color="#666" />
+                <Settings height={14} width={14}  color="#666" />
                 <Text className="text-gray-500 text-xs ml-1">Modo Filtro</Text>
               </View>
               <Text className="font-geist-semi-bold text-sm text-gray-800 text-center">
@@ -212,7 +199,7 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
           {/* Mantenimiento */}
           <View className="bg-blue-50 p-3 rounded-lg">
             <View className="flex-row items-center mb-1">
-              <ConfigurationIcon size={14} color="#2196F3" />
+              <Settings height={14} width={14}  color="#2196F3" />
               <Text className="text-blue-600 text-xs ml-1 font-geist-semi-bold">
                 Mantenimiento
               </Text>

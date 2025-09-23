@@ -6,12 +6,12 @@ import {
   ProgramacionType,
 } from '@/data/domain/cicloFiltrado';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import ModalProgramacion from './modalProgramacion';
 import Toast from 'react-native-toast-message';
 import { useAuth } from '@/context/authContext';
 import { piscinaService } from '@/services/piscina.service';
+import { Clock, Sliders } from 'react-native-feather';
 
 const ProgramacionIluminacion = ({
   programacion,
@@ -118,7 +118,7 @@ const ProgramacionIluminacion = ({
   return (
     <ScreenCard>
       <View className="flex-row items-center  mb-4">
-        <LightIcon color="orange" size={24} />
+        <Clock color="orange" />
         <Text className="font-geist-semi-bold text-text text-2xl ml-1">
           Control de Iluminación
         </Text>
@@ -126,7 +126,7 @@ const ProgramacionIluminacion = ({
 
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <HandIcon size={18} color="light-blue" />
+          <Sliders color="light-blue" />
           <Text className="font-geist-semi-bold text-text text-base ml-1">
             Control Manual
           </Text>
@@ -142,7 +142,7 @@ const ProgramacionIluminacion = ({
 
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center">
-          <ClockIcon size={18} color="light-blue" />
+          <Clock color="light-blue" />
           <Text className="font-geist-semi-bold text-text text-base ml-1">
             Horarios programados
           </Text>

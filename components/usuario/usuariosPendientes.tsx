@@ -1,14 +1,13 @@
 import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/authContext';
-import { UsuarioPendiente, UsuarioRegistrado } from '@/data/domain/user';
+import { UsuarioPendiente } from '@/data/domain/user';
 import { administracionService } from '@/services/administracion.service';
 import { ScreenCard } from '../utiles/ScreenCard';
 
 const UsuariosPendientes = () => {
   const { usuario } = useAuth();
   const [users, setUsers] = useState<UsuarioPendiente[]>([]);
-  const [expandedUserId, setExpandedUserId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,10 +1,9 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
-import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Bomba, BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
+import { BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
