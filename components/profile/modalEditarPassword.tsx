@@ -91,13 +91,13 @@ const ModalEditarPassword = ({
           >
             <View className="flex-1 justify-center items-center bg-black/50">
               <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
-                <Text className="text-lg font-geist-semi-bold text-text">
+                <Text className="text-xl font-geist-semi-bold text-text text-center">
                   Cambiar Password
                 </Text>
-                <Text className="font-geist text-text text-sm mb-4 self-center">
+                <Text className="font-geist text-text text-sm mb-2 self-center">
                   Modifique su contraseña
                 </Text>
-                <Text className="font-geist-semi-bold text-text text-sm mt-5">
+                <Text className="font-geist-semi-bold text-text text-sm mt-2">
                   Password actual
                 </Text>
                 <View className="relative">

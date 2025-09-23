@@ -83,6 +83,7 @@ const ModalEditarPerfil = ({
           errors,
           touched,
           values,
+          dirty
         }) => (
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -90,13 +91,13 @@ const ModalEditarPerfil = ({
           >
             <View className="flex-1 justify-center items-center bg-black/50">
               <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
-                <Text className="text-lg font-geist-semi-bold text-text">
+                <Text className="text-xl font-geist-semi-bold text-text text-center">
                   Editar Información Personal
                 </Text>
                 <Text className="font-geist text-text text-sm mb-4 self-center">
                   Modifique los datos de su perfil
                 </Text>
-                <Text className="font-geist text-text text-base">Nombre</Text>
+                <Text className="font-geist-semi-bold text-text text-sm mt-2">Nombre</Text>
                 <TextInput
                   className="border h-12 rounded-lg mt-2 px-2"
                   value={values.nombre}
@@ -108,7 +109,7 @@ const ModalEditarPerfil = ({
                 {errors.nombre && touched.nombre && (
                   <Text className="text-red-500">{errors.nombre}</Text>
                 )}
-                <Text className="mt-4 font-geist text-text text-base">
+                <Text className="font-geist-semi-bold text-text text-sm mt-2">
                   Apellido
                 </Text>
                 <TextInput
@@ -122,7 +123,7 @@ const ModalEditarPerfil = ({
                 {errors.apellido && touched.apellido && (
                   <Text className="text-red-500">{errors.apellido}</Text>
                 )}
-                <Text className="mt-4 font-geist text-text text-base">
+                <Text className="font-geist-semi-bold text-text text-sm mt-2">
                   Email
                 </Text>
                 <TextInput
@@ -137,7 +138,7 @@ const ModalEditarPerfil = ({
                 {errors.email && touched.email && (
                   <Text className="text-red-500">{errors.email}</Text>
                 )}
-                <Text className="mt-4 font-geist text-text text-base">
+                <Text className="font-geist-semi-bold text-text text-sm mt-2">
                   Celular
                 </Text>
                 <TextInput
@@ -162,8 +163,11 @@ const ModalEditarPerfil = ({
                     </Text>
                   </Pressable>
                   <Pressable
+                    disabled={!dirty}
                     onPress={handleSubmit as any}
-                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                      !dirty ? 'opacity-50' : ''
+                    }`}
                   >
                     <View className="flex-row items-center justify-center">
                       <Text className="text-white text-center font-geist-semi-bold px-1">

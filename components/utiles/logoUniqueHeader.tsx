@@ -7,10 +7,15 @@ const LogoUniqueHeader = () => {
   const { usuario } = useAuth();
 
   const handlePress = () => {
+    console.log(usuario?.primerLogin);
     if (usuario?.isAdmin) {
       router.replace('/dashboard');
-    } else if (usuario?.primerLogin) {
-      router.replace('/resume');
+    } else if (!usuario?.primerLogin) {
+      if (usuario?.piscinasId && usuario.piscinasId.length > 1) {
+        router.replace('/pools');
+      } else {
+        router.replace('/dashboard');
+      }
     }
   };
 
