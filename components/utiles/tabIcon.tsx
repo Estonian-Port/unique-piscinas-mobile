@@ -22,7 +22,3 @@ const TabIcon = ({ focused, icon, title }: any) => {
   }
 
   export default TabIcon;
-
-  /*      <Text className="text-unique text-xs/10 text-white">
-          {title}
-        </Text> */

@@ -1,7 +1,6 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { users } from '@/data/mock/userMock';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';

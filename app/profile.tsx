@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { Screen } from '@/components/utiles/Screen';
-import { EditIcon, LogoutIcon } from '@/assets/icons';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { useAuth } from '@/context/authContext';
 import ModalLogout from '@/components/utiles/modalLogout';
 import ModalEditarPerfil from '@/components/profile/modalEditarPerfil';
 import ModalEditarPassword from '@/components/profile/modalEditarPassword';
+import { Edit2, LogOut } from 'react-native-feather';
 
 const Profile = () => {
   const { usuario: user, logout } = useAuth();
@@ -41,7 +41,7 @@ const Profile = () => {
             />
           </View>
         </View>
-        <View className="bg-gray-100 rounded-xl p-6 w-11/12 self-center mb-6 shadow">
+        <View className="bg-gray-100 rounded-xl p-6 w-11/12 md:w-1/3 self-center mb-6 shadow">
           <Text className="font-geist-semi-bold text-lg text-text mb-4 text-center">
             Datos personales
           </Text>
@@ -62,10 +62,10 @@ const Profile = () => {
             <Text className="font-geist text-text">{user.celular}</Text>
           </View>
         </View>
-        <View className="w-11/12 self-center items-center">
+        <View className="w-11/12 md:w-1/3 self-center items-center">
           <Pressable className="flex-row mt-2 rounded-lg bg-purple-unique p-4 w-full mb-2 justify-center"
           onPress={() => setModalEditVisible(true)}>
-            <EditIcon color="#9ca3af" />
+            <Edit2 color="#9ca3af" />
             <Text className="ml-2 font-geist-semi-bold text-white text-lg text-center">
               Editar datos personales
             </Text>
@@ -79,7 +79,7 @@ const Profile = () => {
             className="flex-row items-center justify-center mt-6 rounded-lg p-4 w-full"
             onPress={() => setModalLogoutVisible(true)}
           >
-            <LogoutIcon color="#9ca3af" />
+            <LogOut color="#9ca3af" />
             <Text className="ml-2 font-geist-semi-bold text-gray-400 text-lg text-center">
               Cerrar sesión
             </Text>
@@ -88,8 +88,8 @@ const Profile = () => {
         <ModalLogout
           visible={modalLogoutVisible}
           message={'¿Desea cerrar sesión?'}
-          onClose={handleLogout}
-        />
+          onClose={() => setModalLogoutVisible(false)}
+          onCerrarSesion={handleLogout}/>
         <ModalEditarPerfil
           visible={modalEditVisible}
           onClose={() => setModalEditVisible(false)}

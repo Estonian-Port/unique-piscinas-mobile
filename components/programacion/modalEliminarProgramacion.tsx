@@ -1,6 +1,5 @@
 import { View, Text, Pressable, KeyboardAvoidingView, Platform, Modal } from 'react-native'
 import React from 'react'
-import { DeleteIcon } from '@/assets/icons'
 
 type ModalEliminarProgramacionProps = {
   visible: boolean

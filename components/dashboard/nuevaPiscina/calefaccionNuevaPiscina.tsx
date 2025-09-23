@@ -4,13 +4,12 @@ import RadioButton from '../../utiles/radioButton';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
 import {
-  Calefaccion,
   CalefaccionNueva,
   PiscinaNueva,
 } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { ThermostatIcon } from '@/assets/icons';
+import { Thermometer } from 'react-native-feather';
 
 export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
@@ -160,7 +159,7 @@ const CalefaccionNuevaPiscina = ({
               </Text>
               <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center">
-                  <ThermostatIcon size={18} color={'orange'} />
+                  <Thermometer height={18} width={18}  color={'orange'} />
                   <Text className="text-text text-base font-geist ml-1">
                     Sistema de Calefacción
                   </Text>

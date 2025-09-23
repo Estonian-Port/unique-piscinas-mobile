@@ -11,10 +11,9 @@ import {
 import React, { useState, useEffect } from 'react';
 import ModalError from '@/components/utiles/modalError';
 import { router } from 'expo-router';
-import { LoginIcon } from '@/assets/icons';
 import LogoUnique from '../assets/images/01_LOGO_UNIQUE.svg';
 import { useAuth } from '@/context/authContext';
-import { Eye, EyeOff } from 'react-native-feather';
+import { Eye, EyeOff, LogIn } from 'react-native-feather';
 
 const Index = () => {
   const [email, setEmail] = useState('gabi@unique.com');
@@ -87,7 +86,7 @@ const Index = () => {
             onPress={() => handleLogin(email, password)}
             className="bg-gold-unique rounded-full px-4 py-2 mt-4 flex-row items-center justify-center h-14"
           >
-            <LoginIcon />
+            <LogIn color={"white"}/>
             <Text className="font-geist-semi-bold text-white ml-2">
               Iniciar Sesión
             </Text>

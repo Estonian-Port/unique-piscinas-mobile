@@ -1,12 +1,8 @@
-import { View, Text, Switch, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { DeleteIcon, EditIcon, ThermostatIcon } from '@/assets/icons';
 import { Calefaccion, PiscinaEquipos } from '@/data/domain/piscina';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
-import ModalEditarCalefaccion from './modalEditarCalefaccion';
-import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 import CompuestosCard from './compuestosCard';
 
 const TratamientoCard = ({

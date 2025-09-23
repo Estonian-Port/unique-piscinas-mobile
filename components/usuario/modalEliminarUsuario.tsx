@@ -8,10 +8,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import Toast from 'react-native-toast-message';
-import { administracionService } from '@/services/administracion.service';
 import { usuarioService } from '@/services/usuario.service';
 import { useAuth } from '@/context/authContext';
-import { WarningIcon } from '@/assets/icons';
+import { AlertCircle } from 'react-native-feather';
 
 type ModalEliminarUsuarioProps = {
   visible: boolean;
@@ -72,11 +71,7 @@ const ModalEliminarUsuario = ({
             </Text>
             {piscinasAsignadas && (
               <View className="bg-yellow-200 border-l-4 border-yellow-600 p-3 my-4 rounded-md flex-row items-center">
-                <WarningIcon
-                  color="#b45309"
-                  size={20}
-                  style={{ marginRight: 8 }}
-                />
+                <AlertCircle color="#b45309" height={20} width={20} style={{ marginRight: 8 }}/>
                 <Text className="text-yellow-800 font-geist-semi-bold">
                   ATENCIÓN. Este usuario tiene piscinas asignadas. Si lo
                   elimina, estas piscinas quedarán sin un administrador

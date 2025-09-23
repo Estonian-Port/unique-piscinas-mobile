@@ -11,11 +11,11 @@ import React, { useState } from 'react';
 import { GermicidaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { marcasTrasductor } from './modalEditarGermicida';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
+import { Activity } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   trasductorMarca: Yup.string().required('Seleccione una marca del trasductor'),
@@ -121,7 +121,7 @@ const ModalAgregarTrasductor = ({
                   </Text>
                   <View className="items-center justify-between">
                     <View className="flex-row items-center">
-                      <WavesIcon size={18} color={'blue'} />
+                      <Activity height={18} width={18} color={'blue'} />
                       <Text className="text-text text-base font-geist ml-1">
                         Trasductor de ultrasonido
                       </Text>

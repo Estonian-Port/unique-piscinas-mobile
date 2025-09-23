@@ -4,7 +4,7 @@ import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Filtro, FiltroNuevo, PiscinaNueva } from '@/data/domain/piscina';
+import { FiltroNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 

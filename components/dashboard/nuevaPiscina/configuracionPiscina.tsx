@@ -1,12 +1,12 @@
 import { View, Text, Pressable, TextInput } from 'react-native';
 import React, { useRef, useEffect } from 'react';
 import Checkbox from 'expo-checkbox';
-import { CalculatorIcon } from '@/assets/icons';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { FastForward } from 'react-native-feather';
 
 const validationSchema = Yup.object().shape({
   largo: Yup.number()
@@ -218,7 +218,7 @@ const ConfiguracionPiscina = ({
                 className="p-2 border border-gray-200 rounded-md flex-row items-center justify-center gap-2"
                 onPress={calcularVolumen}
               >
-                <CalculatorIcon />
+                <FastForward />
                 <Text className="font-geist text-text">Calcular</Text>
               </Pressable>
             </View>

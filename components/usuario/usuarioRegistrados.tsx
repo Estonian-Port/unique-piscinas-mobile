@@ -1,12 +1,10 @@
-import { View, Text, FlatList } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';  // Añadir useState
-import { diego, gabi, leo, seba } from '@/data/mock/userMock';
 import { ScreenCard } from '../utiles/ScreenCard';
 import UserItem from './userItem';
 import { administracionService } from '@/services/administracion.service';
 import { useAuth } from '@/context/authContext';
 import { UsuarioRegistrado } from '@/data/domain/user';
-import { router } from '@/.expo/types/router';
 
 const UsuarioRegistrados = () => {
   const {usuario} = useAuth();

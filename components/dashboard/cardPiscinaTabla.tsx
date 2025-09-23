@@ -1,23 +1,10 @@
-import { View, Text, Pressable, Settings } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
-import {
-  BookIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ConfigurationIcon,
-  DeleteIcon,
-  EditIcon,
-  EyeIcon,
-  HistorialIcon,
-  InfoIcon,
-  PersonIcon,
-  TagIcon,
-  TintIcon,
-} from '@/assets/icons';
 import { PiscinaRegistrada as PiscinaRegistrada } from '@/data/domain/piscina';
 import { useAuth } from '@/context/authContext';
+import { Book, ChevronDown, ChevronUp, Clock, Droplet, Eye, Info, Tag, User, Settings } from 'react-native-feather';
 
 // Componente para mostrar el estado del pH con color contextual
 const PhIndicator = ({ value }: { value: number }) => {
@@ -141,9 +128,9 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
           {pool.direccion}
         </Text>
         {isExpanded ? (
-          <ChevronUpIcon size={20} color="#333" />
+          <ChevronUp height={20} width={20} color="#333" />
         ) : (
-          <ChevronDownIcon size={20} color="#333" />
+          <ChevronDown height={20} width={20} color="#333" />
         )}
       </Pressable>
 
@@ -152,7 +139,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
           {/* Información principal */}
           <View className="border-b border-gray-200 pb-4 mb-4 mt-2 gap-2">
             <View className="flex-row items-center">
-              <PersonIcon size={16} color="#666" className="mr-2" />
+              <User height={16} width={16} color="#666" className="mr-2" />
               <Text className="text-gray-500 font-geist text-sm mr-2">
                 Propietario:
               </Text>
@@ -162,7 +149,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
             </View>
 
             <View className="flex-row items-center">
-              <TagIcon size={16} color="#666" className="mr-2" />
+              <Tag height={16} width={16} color="#666" className="mr-2" />
               <Text className="text-gray-500 font-geist text-sm mr-2">
                 Tipo:
               </Text>
@@ -174,13 +161,13 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
             </View>
 
             <View className="flex-row items-center">
-              <TintIcon size={16} color="#666" className="mr-2" />
+              <Droplet height={16} width={16} color="#666" className="mr-2" />
               <Text className="text-gray-500 font-geist text-sm mr-2">pH:</Text>
               <PhIndicator value={pool.ph} />
             </View>
 
             <View className="flex-row items-center">
-              <BookIcon size={16} color="#666" className="mr-2" />
+              <Book height={16} width={16} color="#666" className="mr-2" />
               <Text className="text-gray-500 font-geist text-sm mr-2">
                 Lecturas
               </Text>
@@ -189,7 +176,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
             <View className="flex-row justify-between mt-2">
               <Link asChild href={`/readings/${pool.id}`}>
                 <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-                  <BookIcon size={16} className="mr-2" />
+                  <Book height={16} width={16} className="mr-2" />
                   <Text className="text-black font-geist-semi-bold text-sm">
                     Nueva lectura
                   </Text>
@@ -197,7 +184,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
               </Link>
               <Link asChild href={`/readings/${pool.id}`}>
                 <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center">
-                  <HistorialIcon size={16} className="mr-2" />
+                  <Clock height={16} width={16} className="mr-2" />
                   <Text className="text-black font-geist-semi-bold text-sm">
                     Ver historial
                   </Text>
@@ -231,19 +218,19 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
 
           <View className="flex-row justify-between mt-2">
             <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handleFicha}>
-              <InfoIcon size={16} color="#fff" />
+              <Info height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Ficha
               </Text>
             </Pressable>
             <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handlePanel}>
-              <EyeIcon size={16} color="#fff" />
+              <Eye height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Panel
               </Text>
             </Pressable>
             <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center" onPress={handleEquipos}>
-              <ConfigurationIcon size={16} color="#fff" />
+              <Settings height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Equipos
               </Text>

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import PanelFuncionesFiltro from './funcionFiltro';
 import { funcionFiltro, PiscinaResume } from '@/data/domain/piscina';
-import { piscinaService } from '@/services/piscina.service';
 
 const FuncionFiltroScreen = ({
   piscina,

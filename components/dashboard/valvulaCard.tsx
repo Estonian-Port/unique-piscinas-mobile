@@ -1,8 +1,8 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
-import { AutorenewIcon, EditIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { Valvula } from '@/data/domain/piscina';
+import { Edit2, RefreshCw } from 'react-native-feather';
 
 const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
   return (
@@ -12,7 +12,7 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
           {valvula.nombre}
         </Text>
         <Pressable className="ml-2">
-          <EditIcon />
+          <Edit2 />
         </Pressable>
       </View>
       <View className="flex-row items-center justify-between">
@@ -38,7 +38,7 @@ const ValvulaCard = ({ valvula }: { valvula: Valvula }) => {
         </Text>
       </View>
       <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
-        <AutorenewIcon color={'white'} size={20} />
+        <RefreshCw color={'white'} height={20} width={20}  />
         <Text className="text-white font-geist text-base ml-2">
           Marcar como reemplazada
         </Text>

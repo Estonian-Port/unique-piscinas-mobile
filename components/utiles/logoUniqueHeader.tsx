@@ -1,4 +1,4 @@
-import { View, Image, Pressable } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import React from 'react';
 import { router } from 'expo-router';
 import { useAuth } from '@/context/authContext';
