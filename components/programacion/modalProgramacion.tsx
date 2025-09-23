@@ -10,7 +10,6 @@ import {
 import {
   Programacion,
   Day,
-  FuncionFiltro,
   ProgramacionType,
   localTimeStringToDate,
   dateToLocalTimeString,
@@ -41,14 +40,6 @@ type ModalProgramacionProps = {
   hasCicleMode: boolean;
   cicle: Programacion;
 };
-
-const actionsMode = [
-  { id: 1, name: FuncionFiltro.DESAGOTAR },
-  { id: 2, name: FuncionFiltro.RETROLAVAR },
-  { id: 3, name: FuncionFiltro.FILTRAR },
-  { id: 4, name: FuncionFiltro.RECIRCULAR },
-  { id: 5, name: FuncionFiltro.ENJUAGAR },
-];
 
 const ModalProgramacion = ({
   visible,

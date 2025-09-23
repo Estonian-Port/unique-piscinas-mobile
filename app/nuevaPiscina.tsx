@@ -54,7 +54,6 @@ const NuevaPiscina = () => {
 
   const handleSave = async () => {
     try {
-      console.log('Datos de la nueva piscina a guardar:', nuevaPiscina);
       const result = await piscinaService.create(nuevaPiscina);
       setNuevaPiscina(piscinaNuevaInicial);
       Toast.show({

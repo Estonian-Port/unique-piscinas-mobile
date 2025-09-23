@@ -18,7 +18,6 @@ export default function Resume() {
 
   useEffect(() => {
     if (selectedPool) {
-      console.log('Selected pool:', selectedPool);
       setLoading(true);
       const fetchPool = async () => {
         try {
@@ -67,6 +66,7 @@ export default function Resume() {
 
             <ControlFiltro
               piscina={piscina!}
+              setPiscina={setPiscina}
               entradaAgua={piscina!.entradaAgua}
               funcionFiltro={piscina!.funcionActiva}
             />

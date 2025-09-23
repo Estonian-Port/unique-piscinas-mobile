@@ -55,7 +55,6 @@ const ModalAgregarBomba = ({
 
   const handleNewBomba = async (newBomba: BombaNuevo) => {
     try {
-      console.log('Nueva bomba a agregar:', newBomba);
       const response = await piscinaService.addBomba(piscina.id, newBomba);
       actualizarPiscina();
       Toast.show({

@@ -18,7 +18,6 @@ import {
 import api from '../helper/auth.interceptor';
 import {
   dayMap,
-  FuncionFiltro,
   Programacion,
   programacionFromDto,
 } from '@/data/domain/cicloFiltrado';
@@ -148,8 +147,6 @@ class PiscinaService {
     piscinaId: number,
     germicida: GermicidaNuevo
   ): Promise<{ data: Germicida; message: string }> => {
-    console.log('Adding germicida:', germicida); // Log para depuración
-
     const response = await api.post(
       `${PISCINA}/add-germicida/${piscinaId}`,
       germicida
@@ -241,7 +238,6 @@ class PiscinaService {
       ...programacion,
       dias: programacion.dias.map((d: string) => dayMap[d]),
     };
-    console.log('Programacion to send:', programacionToSend); // Log para depuración
     const response = await api.post(
       `${PISCINA}/add-programacion/${piscinaId}/${esFiltrado}`,
       programacionToSend
@@ -289,11 +285,12 @@ class PiscinaService {
 
   actualizarFuncionFiltro = async (
     piscinaId: number,
-    funcionFiltro: funcionFiltro[]
+    funcionFiltro: funcionFiltro
   ): Promise<{ data: PiscinaResume; message: string }> => {
     const response = await api.put(
       `${PISCINA}/update-funcion-filtro/${piscinaId}`,
-      funcionFiltro
+      { funcion: funcionFiltro },
+      { headers: { 'Content-Type': 'application/json' } }
     );
     return { data: response.data.data, message: response.data.message };
   };

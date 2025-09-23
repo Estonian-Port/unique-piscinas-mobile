@@ -1,55 +1,41 @@
-import { useState } from "react"
-import { View, Text, SafeAreaView } from "react-native"
-import PanelFuncionesFiltro from "./funcionFiltro"
-import { PiscinaResume } from "@/data/domain/piscina";
+import { useEffect, useState } from 'react';
+import { View, Text, SafeAreaView } from 'react-native';
+import PanelFuncionesFiltro from './funcionFiltro';
+import { funcionFiltro, PiscinaResume } from '@/data/domain/piscina';
+import { piscinaService } from '@/services/piscina.service';
 
-const FuncionFiltroScreen = ({piscina, entradaDeAguaActiva} : {piscina: PiscinaResume ; entradaDeAguaActiva : boolean}) => {
-  const [activo, setActivo] = useState(entradaDeAguaActiva)
-  const [hayFuncionActiva, setHayFuncionActiva] = useState(piscina.funcionActiva.length > 0)
-
-  const handlePower = () => {
-    setHayFuncionActiva(!hayFuncionActiva)
-  }
-
-  const handleFilter = () => {
-    console.log("Filtrar")
-  }
-
-  const handleBackwash = () => {
-    console.log("Retrolavar")
-  }
-
-  const handleRinse = () => {
-    console.log("Enjuagar")
-  }
-
-  const handleDrain = () => {
-    console.log("Desagotar")
-  }
-
-  const handleRecirculate = () => {
-    console.log("Recircular")
-  }
+const FuncionFiltroScreen = ({
+  piscina,
+  entradaDeAguaActiva,
+  skimmer,
+  barrefondo,
+  handleFuncionFiltroChange,
+}: {
+  piscina: PiscinaResume;
+  entradaDeAguaActiva: boolean;
+  skimmer: boolean;
+  barrefondo: boolean;
+  handleFuncionFiltroChange: (funcion: funcionFiltro) => void;
+}) => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 items-center justify-center p-4">
-        <Text className="text-2xl mb-8 text-text font-geist-semi-bold">Control de Sistema</Text>
+        <Text className="text-2xl mb-8 text-text font-geist-semi-bold">
+          Función del Filtro
+        </Text>
 
         <PanelFuncionesFiltro
-          botonesActivos={activo}
-          onFilter={handleFilter}
-          onBackwash={handleBackwash}
-          onRinse={handleRinse}
-          onDrain={handleDrain}
-          onRecirculate={handleRecirculate}
-          onPower={handlePower}
-          funcionActiva={hayFuncionActiva}
-          opacidad={!activo ? 0.4 : 1}
+          botonesActivos={entradaDeAguaActiva}
+          onChange={handleFuncionFiltroChange}
+          funcionActiva={piscina.funcionActiva}
+          opacidad={!entradaDeAguaActiva ? 0.4 : 1}
+          skimmerActivo={skimmer}
+          barrefondoActivo={barrefondo}
         />
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default FuncionFiltroScreen
+export default FuncionFiltroScreen;

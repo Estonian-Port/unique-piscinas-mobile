@@ -1,118 +1,181 @@
-import type React from "react"
-import { View, Text, TouchableOpacity } from "react-native"
-import { Filter, RefreshCw, Trash2, Droplet, RotateCcw, Power } from "react-native-feather"
+import { funcionFiltro } from '@/data/domain/piscina';
+import type React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  Filter,
+  RefreshCw,
+  Trash2,
+  Droplet,
+  RotateCcw,
+  Power,
+} from 'react-native-feather';
 
 interface ControlButtonProps {
-  icon: React.ReactNode
-  label: string
-  onPress: () => void
-  position: "top" | "right" | "bottom-left" | "bottom-right" | "left"
-  activo: boolean
+  icon: React.ReactNode;
+  label: string;
+  onPress: () => void;
+  position: 'top' | 'right' | 'bottom-left' | 'bottom-right' | 'left';
+  activo: boolean;
+  isSelected: boolean;
 }
 
-const ControlButton = ({ icon, label, onPress, position, activo }: ControlButtonProps) => {
+const ControlButton = ({
+  icon,
+  label,
+  onPress,
+  position,
+  activo,
+  isSelected,
+}: ControlButtonProps) => {
   const positionStyles = {
-    top: "absolute -top-10 left-20 ml-2",
-    right: "absolute top-10 -right-5",
-    left: "absolute top-10 -left-5",
-    "bottom-left": "absolute bottom-0 left-0",
-    "bottom-right": "absolute bottom-0 right-0",
-  }[position]
+    top: 'absolute -top-10 left-20 ml-2',
+    right: 'absolute top-10 -right-5',
+    left: 'absolute top-10 -left-5',
+    'bottom-left': 'absolute bottom-0 left-0',
+    'bottom-right': 'absolute bottom-0 right-0',
+  }[position];
 
   return (
     <View className={`${positionStyles}`}>
       <TouchableOpacity
         onPress={onPress}
-        className="items-center justify-center w-20 h-20 rounded-full bg-grayish-unique border border-gray-400"
-        activeOpacity={0.7}
+        className={`items-center justify-center w-20 h-20 rounded-full bg-grayish-unique
+        ${
+          isSelected
+            ? 'border-2 border-grayish-unique bg-purple-unique'
+            : 'border border-gray-400'
+        }`}
+        style={{ opacity: !activo ? 0.4 : 1 }}
         disabled={!activo}
       >
         <View className="items-center justify-center">
           {icon}
-          <Text className="text-text font-geist text-xs mt-1">{label}</Text>
+          <Text
+            className={`text-text font-geist text-xs mt-1 ${
+              isSelected ? 'text-white' : ''
+            }`}
+          >
+            {label}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 interface PanelFuncionesFiltroProps {
-  botonesActivos: boolean
-  onFilter: () => void
-  onBackwash: () => void
-  onRinse: () => void
-  onDrain: () => void
-  onRecirculate: () => void
-  onPower: () => void
-  funcionActiva: boolean
-  opacidad?: number
+  botonesActivos: boolean;
+  onChange: (funcion: funcionFiltro) => void | Promise<void>;
+  funcionActiva: funcionFiltro;
+  opacidad?: number;
+  skimmerActivo: boolean;
+  barrefondoActivo: boolean;
 }
 
 const PanelFuncionesFiltro = ({
   botonesActivos,
-  onFilter,
-  onBackwash,
-  onRinse,
-  onDrain,
-  onRecirculate,
-  funcionActiva = false,
-  opacidad = 1,
+  onChange: onChange,
+  funcionActiva,
+  skimmerActivo,
+  barrefondoActivo,
 }: PanelFuncionesFiltroProps) => {
+  const hayFuncionActiva = funcionActiva !== 'REPOSO';
+
   return (
     <View className="flex-1 items-center justify-center w-full mt-5">
-      <View className="relative w-64 h-64" style={{ opacity: opacidad }}>
+      <View className="relative w-64 h-64">
         {/* Central power button */}
         <View
           className={`absolute top-1/2 left-1/2 -mt-16 -ml-16 w-32 h-32 rounded-full items-center justify-center ${
-            funcionActiva ? "bg-purple-unique" : "bg-grayish-unique"
+            hayFuncionActiva
+              ? 'bg-purple-unique'
+              : 'bg-grayish-unique border border-gray-400'
           }`}
         >
-          <Power stroke={funcionActiva ? "#FFF" : "#4e4965"} width={32} height={32} />
+          <Power
+            stroke={funcionActiva ? '#FFF' : '#4e4965'}
+            width={32}
+            height={32}
+          />
         </View>
 
-        {/* Surrounding buttons */}
         <ControlButton
-          icon={<Filter stroke="#4e4965" width={24} height={24} />}
+          icon={
+            <Filter
+              stroke={funcionActiva === 'FILTRAR' ? '#FFF' : '#4e4965'}
+              width={24}
+              height={24}
+            />
+          }
           label="Filtrar"
-          onPress={onFilter}
+          onPress={() => onChange('FILTRAR')}
           position="top"
           activo={botonesActivos}
+          isSelected={funcionActiva === 'FILTRAR'}
         />
 
         <ControlButton
-          icon={<RefreshCw stroke="#4e4965" width={24} height={24} />}
+          icon={
+            <RefreshCw
+              stroke={funcionActiva === 'RETROLAVAR' ? '#FFF' : '#4e4965'}
+              width={24}
+              height={24}
+            />
+          }
           label="Retrolavar"
-          onPress={onBackwash}
+          onPress={() => onChange('RETROLAVAR')}
           position="right"
-          activo={botonesActivos}
+          activo={botonesActivos && !barrefondoActivo}
+          isSelected={funcionActiva === 'RETROLAVAR'}
         />
 
         <ControlButton
-          icon={<Droplet stroke="#4e4965" width={24} height={24} />}
+          icon={
+            <Droplet
+              stroke={funcionActiva === 'ENJUAGAR' ? '#FFF' : '#4e4965'}
+              width={24}
+              height={24}
+            />
+          }
           label="Enjuagar"
-          onPress={onRinse}
+          onPress={() => onChange('ENJUAGAR')}
           position="bottom-right"
-          activo={botonesActivos}
+          activo={botonesActivos && !barrefondoActivo}
+          isSelected={funcionActiva === 'ENJUAGAR'}
         />
 
         <ControlButton
-          icon={<Trash2 stroke="#4e4965" width={24} height={24} />}
+          icon={
+            <Trash2
+              stroke={funcionActiva === 'DESAGOTAR' ? '#FFF' : '#4e4965'}
+              width={24}
+              height={24}
+            />
+          }
           label="Desagotar"
-          onPress={onDrain}
+          onPress={() => onChange('DESAGOTAR')}
           position="bottom-left"
-          activo={botonesActivos}
+          activo={botonesActivos && !skimmerActivo}
+          isSelected={funcionActiva === 'DESAGOTAR'}
         />
 
         <ControlButton
-          icon={<RotateCcw stroke="#4e4965" width={24} height={24} />}
+          icon={
+            <RotateCcw
+              stroke={funcionActiva === 'RECIRCULAR' ? '#FFF' : '#4e4965'}
+              width={24}
+              height={24}
+            />
+          }
           label="Recircular"
-          onPress={onRecirculate}
+          onPress={() => onChange('RECIRCULAR')}
           position="left"
-          activo={botonesActivos}
+          activo={botonesActivos && !barrefondoActivo}
+          isSelected={funcionActiva === 'RECIRCULAR'}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default PanelFuncionesFiltro
+export default PanelFuncionesFiltro;

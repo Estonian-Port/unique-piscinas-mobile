@@ -7,17 +7,32 @@ import {
   Platform,
 } from 'react-native';
 import React from 'react';
-import { FuncionFiltro } from '@/data/domain/cicloFiltrado';
+import { funcionFiltro } from '@/data/domain/piscina';
 
 const ModalBarrefondo = ({
   visible,
   onClose,
   onSave,
+  onSelected,
 }: {
   visible: boolean;
   onClose: () => void;
-  onSave: (funcion: FuncionFiltro) => void;
+  onSave: () => void;
+  onSelected: (funcion: funcionFiltro) => void;
 }) => {
+
+  const handleFiltrarPress = () => {
+    onSave();
+    onSelected('FILTRAR');
+    onClose();
+  };
+
+  const handleDesagotarPress = () => {
+    onSave();
+    onSelected('DESAGOTAR');
+    onClose();
+  }
+
   return (
     <Modal
       animationType="fade"
@@ -45,7 +60,7 @@ const ModalBarrefondo = ({
                 </Text>
               </Pressable>
               <Pressable
-                onPress={() => onSave(FuncionFiltro.FILTRAR)}
+                onPress={handleFiltrarPress}
                 className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
               >
                 <View className="flex-row items-center justify-center">
@@ -55,7 +70,7 @@ const ModalBarrefondo = ({
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => onSave(FuncionFiltro.DESAGOTAR)}
+                onPress={handleDesagotarPress}
                 className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
               >
                 <View className="flex-row items-center justify-center">

@@ -59,7 +59,7 @@ export interface PiscinaEquipamiento {
   volumen: string;
   estadoFiltro: boolean;
   entradaAgua: entradaAgua[];
-  funcionActiva: funcionFiltro[];
+  funcionActiva: funcionFiltro;
   presion: number;
   ultimaActividad: string;
   proximoCiclo: string;
@@ -82,7 +82,7 @@ export interface PiscinaResume {
   ph: number;
   diferenciaPh: number;
   entradaAgua: entradaAgua[];
-  funcionActiva: funcionFiltro[];
+  funcionActiva: funcionFiltro;
   sistemasGermicidas: sistemaGermicida[];
   calefaccion: boolean;
   esDesbordante: boolean;
@@ -150,8 +150,6 @@ export type Germicida = {
   datoExtra: number;
 };
 
-
-
 export type Valvula = {
   id: number;
   tipo: string;
@@ -180,14 +178,15 @@ export type Registro = {
 
 export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer' | 'Tanque';
 
-export type ligthsType = 'manual' | 'programmed';
-
 export type funcionFiltro =
-  | 'filter'
-  | 'backwash'
-  | 'rinse'
-  | 'drain'
-  | 'recirculate';
+  | 'FILTRAR'
+  | 'RETROLAVAR'
+  | 'DESAGOTAR'
+  | 'RECIRCULAR'
+  | 'ENJUAGAR'
+  | 'REPOSO';
+
+export type ligthsType = 'manual' | 'programmed';
 
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
 
