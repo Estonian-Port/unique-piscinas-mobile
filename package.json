@@ -19,10 +19,11 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~6.1.2",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/datetimepicker": "8.4.4",
-    "@react-native-picker/picker": "^2.11.1",
+    "@react-native-picker/picker": "2.11.1",
     "axios": "^1.10.0",
     "expo": "^54.0.10",
     "expo-blur": "~15.0.7",
@@ -60,6 +61,7 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@react-native-community/cli": "latest",
     "@babel/core": "^7.26.0",
     "@types/babel__core": "^7.20.5",
     "@types/jest": "^29.5.12",
@@ -75,7 +77,6 @@
     "metro-core": "^0.76.7",
     "react-native-svg": "15.12.1",
     "react-native-svg-transformer": "^1.5.1",
-    "react-test-renderer": "18.2.0",
     "typescript": "~5.9.2"
   },
   "private": true
