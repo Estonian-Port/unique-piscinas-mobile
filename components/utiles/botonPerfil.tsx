@@ -19,3 +19,4 @@ const BotonPerfil = ({ nombreUsuario }: { nombreUsuario: string }) => {
 };
 
 export default BotonPerfil;
+

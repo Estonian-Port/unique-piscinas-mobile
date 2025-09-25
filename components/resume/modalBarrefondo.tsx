@@ -7,31 +7,43 @@ import {
   Platform,
 } from 'react-native';
 import React from 'react';
-import { funcionFiltro } from '@/data/domain/piscina';
+import { entradaAgua, funcionFiltro } from '@/data/domain/piscina';
 
 const ModalBarrefondo = ({
   visible,
   onClose,
   onSave,
   onSelected,
+  funcionActiva,
+  entradasActivas,
 }: {
   visible: boolean;
   onClose: () => void;
-  onSave: () => void;
+  onSave: (nuevaEntrada: entradaAgua[]) => void;
   onSelected: (funcion: funcionFiltro) => void;
+  funcionActiva: funcionFiltro;
+  entradasActivas: entradaAgua[];
 }) => {
-
   const handleFiltrarPress = () => {
-    onSave();
-    onSelected('FILTRAR');
+    onSave(['Barrefondo', ...(entradasActivas || [])]);
+    if (funcionActiva !== 'FILTRAR') {
+      onSelected('FILTRAR');
+    }
     onClose();
   };
 
   const handleDesagotarPress = () => {
-    onSave();
-    onSelected('DESAGOTAR');
+    if (entradasActivas.includes('Skimmer')) {
+      const nuevasEntradas = entradasActivas.filter((e) => e !== 'Skimmer');
+      onSave(['Barrefondo', ...nuevasEntradas]);
+    } else {
+      onSave(['Barrefondo', ...(entradasActivas || [])]);
+    }
+    if (funcionActiva !== 'DESAGOTAR') {
+      onSelected('DESAGOTAR');
+    }
     onClose();
-  }
+  };
 
   return (
     <Modal

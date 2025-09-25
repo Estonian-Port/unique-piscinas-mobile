@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
 import PanelFuncionesFiltro from './funcionFiltro';
 import { funcionFiltro, PiscinaResume } from '@/data/domain/piscina';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FuncionFiltroScreen = ({
   piscina,
@@ -9,12 +10,14 @@ const FuncionFiltroScreen = ({
   skimmer,
   barrefondo,
   handleFuncionFiltroChange,
+  resetearSistema,
 }: {
   piscina: PiscinaResume;
   entradaDeAguaActiva: boolean;
   skimmer: boolean;
   barrefondo: boolean;
   handleFuncionFiltroChange: (funcion: funcionFiltro) => void;
+  resetearSistema: () => void;
 }) => {
 
   return (
@@ -31,6 +34,7 @@ const FuncionFiltroScreen = ({
           opacidad={!entradaDeAguaActiva ? 0.4 : 1}
           skimmerActivo={skimmer}
           barrefondoActivo={barrefondo}
+          onReset={resetearSistema}
         />
       </View>
     </SafeAreaView>

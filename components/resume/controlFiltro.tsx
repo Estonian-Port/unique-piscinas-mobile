@@ -2,7 +2,11 @@ import { View, Text, Pressable } from 'react-native';
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import FuncionFiltroScreen from './funcionFiltroScreen';
-import type { entradaAgua, funcionFiltro, PiscinaResume } from '@/data/domain/piscina';
+import type {
+  entradaAgua,
+  funcionFiltro,
+  PiscinaResume,
+} from '@/data/domain/piscina';
 import ModalBarrefondo from './modalBarrefondo';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
@@ -15,7 +19,10 @@ interface ControlFiltroProps {
   setPiscina: Dispatch<SetStateAction<PiscinaResume | null>>;
 }
 
-export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProps) {
+export default function ControlFiltro({
+  piscina,
+  setPiscina,
+}: ControlFiltroProps) {
   const [funcionActiva, setFuncionActiva] = useState(piscina.funcionActiva);
   const [modalBarrefondoVisible, setModalBarrefondoVisible] = useState(false);
   const [isBarrefondoActivo, setBarrefondoActivo] = useState(
@@ -51,18 +58,12 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
         ...prevPiscina!,
         entradaAgua: nuevasEntradas,
       }));
-      verificarFuncionFiltro();
+      verificarFuncionFiltro(nuevasEntradas);
       setHayEntradaDeAguaSeleccionada(nuevasEntradas.length > 0);
       setFondoActivo(nuevasEntradas.includes('Fondo'));
       setBarrefondoActivo(nuevasEntradas.includes('Barrefondo'));
       setSkimmerActivo(nuevasEntradas.includes('Skimmer'));
       setTanqueActivo(nuevasEntradas.includes('Tanque'));
-      Toast.show({
-        type: 'success',
-        text1: 'Éxito',
-        text2: 'Entrada de agua actualizada correctamente.',
-        position: 'bottom',
-      });
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -85,6 +86,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
           ...prevPiscina!,
           funcionActiva: 'REPOSO',
         }));
+        actualizarEntradaDeAgua([]);
       } else {
         const response = await piscinaService.actualizarFuncionFiltro(
           piscina.id,
@@ -101,8 +103,8 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
     }
   };
 
-  const verificarFuncionFiltro = async () => {
-    if (piscina.entradaAgua && piscina.entradaAgua.length === 0) {
+  const verificarFuncionFiltro = async (entradas: entradaAgua[]) => {
+    if (!entradas || entradas.length === 0) {
       try {
         await piscinaService.actualizarFuncionFiltro(piscina.id, 'REPOSO');
         setFuncionActiva('REPOSO');
@@ -110,12 +112,6 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
           ...prevPiscina!,
           funcionActiva: 'REPOSO',
         }));
-        Toast.show({
-          type: 'info',
-          text1: 'Información',
-          text2: 'La función del filtro se ha detenido.',
-          position: 'bottom',
-        });
       } catch (error) {
         Toast.show({
           type: 'error',
@@ -182,8 +178,13 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
     }
   };
 
-  const onSaveBarrefondo = () => {
-    actualizarEntradaDeAgua(['Barrefondo', ...(piscina.entradaAgua || [])]);
+  const handleReset = () => {
+    if (piscina.funcionActiva !== 'REPOSO') {
+      actualizarFuncionFiltro('REPOSO');
+    }
+    if (piscina.entradaAgua && piscina.entradaAgua.length > 0) {
+      actualizarEntradaDeAgua([]);
+    }
   };
 
   return (
@@ -209,9 +210,9 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
       </View>
 
       {/*ENTRADAS DE AGUA */}
-        <Text className="text-2xl mb-2 text-text font-geist-semi-bold">
-          Entradas de Agua
-        </Text>
+      <Text className="text-2xl mb-2 text-text font-geist-semi-bold">
+        Entradas de Agua
+      </Text>
       <View className="flex-row justify-between gap-2">
         <Pressable
           className={`rounded-md items-center p-2 flex-1 ${
@@ -220,8 +221,9 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
               : 'border border-grayish-unique'
           }`}
           onPress={() => handleFondoPress()}
+          
         >
-          <Droplet/>
+          <Droplet />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Fondo
           </Text>
@@ -243,10 +245,14 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
         <ModalBarrefondo
           visible={modalBarrefondoVisible}
           onClose={() => setModalBarrefondoVisible(false)}
-          onSave={() => onSaveBarrefondo()}
+          onSave={(nuevaEntrada: entradaAgua[]) =>
+            actualizarEntradaDeAgua(nuevaEntrada)
+          }
           onSelected={(funcion: funcionFiltro) =>
             actualizarFuncionFiltro(funcion)
           }
+          funcionActiva={piscina.funcionActiva}
+          entradasActivas={piscina.entradaAgua || []}
         />
         {piscina.esDesbordante ? (
           <Pressable
@@ -268,8 +274,9 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
               isSkimmerActivo
                 ? 'border-2 border-blue-500 bg-blue-100'
                 : 'border border-grayish-unique'
-            }`}
+            } ${piscina.funcionActiva === 'DESAGOTAR' && 'opacity-50'}`}
             onPress={() => handleSkimmerPress()}
+            disabled={piscina.funcionActiva === 'DESAGOTAR'}
           >
             <Eye />
             <Text className="font-geist-semi-bold text-base text-text mt-2">
@@ -301,6 +308,7 @@ export default function ControlFiltro({ piscina, setPiscina }: ControlFiltroProp
         handleFuncionFiltroChange={(funcion: funcionFiltro) =>
           actualizarFuncionFiltro(funcion)
         }
+        resetearSistema={() => handleReset()}
       />
     </ScreenCard>
   );
