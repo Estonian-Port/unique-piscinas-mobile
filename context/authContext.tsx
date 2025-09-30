@@ -1,5 +1,5 @@
 import { UsuarioLogin } from "@/data/domain/user"
-import { createContext, useContext, useEffect, useState, ReactNode } from "react"
+import { createContext, useContext, useState, ReactNode } from "react"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { authService } from "@/services/auth.service"
 import { piscinaService } from "@/services/piscina.service"

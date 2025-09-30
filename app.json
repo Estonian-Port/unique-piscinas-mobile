@@ -8,11 +8,8 @@
     "scheme": "unique",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
-      "package": "com.unique.piscinas",
+      "package": "com.estonianport.unique",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logotipo-unique.png",
@@ -28,6 +25,11 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/logotipo-unique.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.estonianport.unique",
+      "buildNumber": "1",
+      "supportsTablet": true
     },
     "plugins": [
       "expo-router",
