@@ -12,48 +12,44 @@ import WebTabBar from '@/components/utiles/webTabBar';
 import Header from '@/components/utiles/header';
 
 export default function Resume() {
-
-  const { usuario, selectedPool} = useAuth()
-  const [piscina, setPiscina] = useState<PiscinaResume | null>(null)
-  const [loading, setLoading] = useState(true)
+  const { usuario, selectedPool } = useAuth();
+  const [piscina, setPiscina] = useState<PiscinaResume | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (selectedPool) {
-      console.log('Selected pool:', selectedPool);
-      setLoading(true)
+      setLoading(true);
       const fetchPool = async () => {
         try {
-          const data = await piscinaService.getPiscinaResume(selectedPool.id)
-          const dataPh = await piscinaService.getPiscinaResumePhById(selectedPool.id)
-          setPiscina({ ...data, ...dataPh })
+          const data = await piscinaService.getPiscinaResume(selectedPool.id);
+          const dataPh = await piscinaService.getPiscinaResumePhById(
+            selectedPool.id
+          );
+          setPiscina({ ...data, ...dataPh });
         } catch (error) {
-          console.error(error)
+          console.error(error);
         } finally {
-          setLoading(false)
+          setLoading(false);
         }
-      }
-      fetchPool()
+      };
+      fetchPool();
     }
-  }, [selectedPool])
+  }, [selectedPool]);
 
   if (loading || !usuario || !selectedPool || !piscina) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
         <ActivityIndicator size="large" color="#000" />
       </View>
-    )
+    );
   }
 
   return (
     <PrivateScreen>
       <ScrollView className="flex-1 bg-white">
         <ScreenTabs>
-          <View className='w-11/12'>
-            
-            <Header 
-              usuario={usuario} 
-              piscina={selectedPool} 
-            />
+          <View className="w-11/12">
+            <Header usuario={usuario} piscina={selectedPool} />
             <WebTabBar />
 
             <PhClimaCard
@@ -69,10 +65,12 @@ export default function Resume() {
             />
 
             <ControlFiltro
+              piscina={piscina!}
+              setPiscina={setPiscina}
               entradaAgua={piscina!.entradaAgua}
               funcionFiltro={piscina!.funcionActiva}
             />
-            <Indicadores />
+            <Indicadores piscina={piscina!} />
           </View>
         </ScreenTabs>
       </ScrollView>

@@ -8,7 +8,6 @@ export interface Programacion {
   horaInicio: string;
   horaFin: string;
   dias: Day[];
-  funcionFiltro: FuncionFiltro | null;
   activa: boolean;
   tipo: ProgramacionType;
 }
@@ -18,7 +17,7 @@ export enum FuncionFiltro {
   RETROLAVAR = 'Retrolavar',
   DESAGOTAR = 'Desagotar',
   RECIRCULAR = 'Recircular',
-  ENJUAGAR = 'Enjuagar'
+  ENJUAGAR = 'Enjuagar',
 }
 
 export enum Day {
@@ -28,39 +27,66 @@ export enum Day {
   JUEVES = 'J',
   VIERNES = 'V',
   SABADO = 'S',
-  DOMINGO = 'D'
+  DOMINGO = 'D',
 }
+
+export const dayMap: Record<string, string> = {
+  L: 'MONDAY',
+  M: 'TUESDAY',
+  X: 'WEDNESDAY',
+  J: 'THURSDAY',
+  V: 'FRIDAY',
+  S: 'SATURDAY',
+  D: 'SUNDAY',
+};
 
 // Función para mapear los valores del backend al enum del frontend
 function funcionFiltroFromDto(value: string): FuncionFiltro {
   switch (value) {
-    case 'FILTRAR': return FuncionFiltro.FILTRAR;
-    case 'RETROLAVAR': return FuncionFiltro.RETROLAVAR;
-    case 'DESAGOTAR': return FuncionFiltro.DESAGOTAR;
-    case 'RECIRCULAR': return FuncionFiltro.RECIRCULAR;
-    case 'ENJUAGAR': return FuncionFiltro.ENJUAGAR;
-    default: return value as FuncionFiltro;
+    case 'FILTRAR':
+      return FuncionFiltro.FILTRAR;
+    case 'RETROLAVAR':
+      return FuncionFiltro.RETROLAVAR;
+    case 'DESAGOTAR':
+      return FuncionFiltro.DESAGOTAR;
+    case 'RECIRCULAR':
+      return FuncionFiltro.RECIRCULAR;
+    case 'ENJUAGAR':
+      return FuncionFiltro.ENJUAGAR;
+    default:
+      return value as FuncionFiltro;
   }
 }
 
 function tipoFromDto(value: string): ProgramacionType {
   switch (value) {
-    case 'FILTRADO': return ProgramacionType.FILTRADO;
-    case 'ILUMINACION': return ProgramacionType.ILUMINACION;
-    default: return value as ProgramacionType;
+    case 'FILTRADO':
+      return ProgramacionType.FILTRADO;
+    case 'ILUMINACION':
+      return ProgramacionType.ILUMINACION;
+    default:
+      return value as ProgramacionType;
   }
 }
 
 function dayFromDto(value: string): Day {
   switch (value) {
-    case 'MONDAY': return Day.LUNES;
-    case 'TUESDAY': return Day.MARTES;
-    case 'WEDNESDAY': return Day.MIERCOLES;
-    case 'THURSDAY': return Day.JUEVES;
-    case 'FRIDAY': return Day.VIERNES;
-    case 'SATURDAY': return Day.SABADO;
-    case 'SUNDAY': return Day.DOMINGO;
-    default: throw new Error(`Día no reconocido: ${value}`);
+    case 'MONDAY':
+      return Day.LUNES;
+    case 'TUESDAY':
+      return Day.MARTES;
+    case 'WEDNESDAY':
+      return Day.MIERCOLES;
+    case 'THURSDAY':
+      return Day.JUEVES;
+    case 'FRIDAY':
+      return Day.VIERNES;
+    case 'SATURDAY':
+      return Day.SABADO;
+    case 'SUNDAY':
+      return Day.DOMINGO;
+    default:
+      throw new Error(`Día no reconocido: ${value}`);
   }
 }
 
@@ -88,5 +114,3 @@ export function programacionFromDto(p: any): Programacion {
     tipo: tipoFromDto(p.tipo),
   };
 }
-
-

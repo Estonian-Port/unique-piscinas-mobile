@@ -12,9 +12,16 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.unique.piscinas",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logotipo-unique.png",
         "backgroundColor": "#ffffff"
+      },
+      "androidStatusBar": {
+        "backgroundColor": "#1F2060",
+        "translucent": false,
+        "barStyle": "light-content"
       }
     },
     "web": {
@@ -40,8 +47,8 @@
             "./assets/fonts/Geist-ExtraLight.ttf",
             "./assets/fonts/Geist-Light.ttf",
             "./assets/fonts/Geist-Regular.ttf",
-            "./assets/fonts/geist-semi-bold.ttf",
-            "./assets/fonts/Geist-Bold.ttf"     
+            "./assets/fonts/Geist-SemiBold.ttf",
+            "./assets/fonts/Geist-Bold.ttf"
           ]
         }
       ]
@@ -51,6 +58,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c500aa5e-baa9-49ac-8417-02ed749603e3"
+      }
     }
   }
 }

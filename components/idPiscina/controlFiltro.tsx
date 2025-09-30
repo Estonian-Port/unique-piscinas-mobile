@@ -1,8 +1,8 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import { BubbleIcon, EyeIcon, InfoIcon, TintIcon } from '@/assets/icons';
 import { ScreenCard } from '../utiles/ScreenCard';
-import ControlScreen from '../resume/controlScreen';
+import FuncionFiltroScreen from '../resume/funcionFiltroScreen';
+import { Circle, Droplet, Eye, Info } from 'react-native-feather';
 
 interface ControlFiltroProps {
   waterEntryFilter: EntryFilter[];
@@ -37,19 +37,19 @@ export default function ControlFiltro({
       {/*ENTRADAS DE AGUA */}
       <View className="flex-row justify-between gap-2">
         <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
-          <TintIcon size={32} />
+          <Droplet height={32} width={32}  />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Fondo
           </Text>
         </View>
         <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
-          <BubbleIcon size={32} />
+          <Circle height={32} width={32}  />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Barrefondo
           </Text>
         </View>
         <View className="border border-orange-300 rounded-md items-center p-2 flex-1">
-          <EyeIcon size={32} />
+          <Eye height={32} width={32}  />
           <Text className="font-geist-semi-bold text-base text-text mt-2">
             Skimmer
           </Text>
@@ -59,7 +59,7 @@ export default function ControlFiltro({
       {/*MENSAJE DE ADVERTENCIA */}
       {!filterControl && (
         <View className="border border-gray-200 rounded-sm flex-row justify-between items-center py-3 px-1">
-          <InfoIcon />
+          <Info />
           <Text className="flex-1 font-geist-semi-bold text-base text-text ml-2">
             Seleccione al menos una entrada de agua para activar el sistema de
             filtrado.
@@ -68,7 +68,7 @@ export default function ControlFiltro({
       )}
 
       {/*MODO DE FILTRO */}
-      <ControlScreen></ControlScreen>
+      <FuncionFiltroScreen></FuncionFiltroScreen>
       
     </ScreenCard>
   );

@@ -44,10 +44,12 @@ const Pools = () => {
           </Text>
         </View>
         {user!.piscinasId.length === 0 && (
-          <View className="w-11/12 justify-start items-center flex-1">
-            <Text className="font-geist-bold text-text text-3xl mb-3 text-center">
-              No tienes piscinas asignadas, por favor contacta a un
-              administrador.
+          <View className="w-11/12 justify-center items-center bg-yellow-50 border-l-4 border-yellow-400 rounded-md shadow-md p-6">
+            <Text className="font-geist-bold text-yellow-900 text-2xl mb-2 text-center">
+              No tienes piscinas asignadas
+            </Text>
+            <Text className="font-geist text-yellow-900 text-base text-center">
+              Por favor contacta a un administrador para que te asigne una piscina y puedas comenzar a gestionar.
             </Text>
           </View>
         )}

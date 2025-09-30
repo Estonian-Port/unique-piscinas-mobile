@@ -1,12 +1,3 @@
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  DeleteIcon,
-  EmailIcon,
-  EyeIcon,
-  RemoveIcon,
-  TelephoneIcon,
-} from '@/assets/icons';
 import { Pressable, View, Text } from 'react-native';
 import ModalAñadirPiscina from './modalAñadirPiscina';
 import { useState } from 'react';
@@ -15,6 +6,7 @@ import ModalEliminarUsuario from './modalEliminarUsuario';
 import { router } from 'expo-router';
 import { UsuarioRegistrado } from '@/data/domain/user';
 import { useAuth } from '@/context/authContext';
+import { ChevronDown, ChevronUp, Delete, Eye, Mail, MinusCircle, Phone } from 'react-native-feather';
 
 const UserItem = ({
   usuario,
@@ -52,11 +44,11 @@ const UserItem = ({
             {usuario.nombre + ' ' + usuario.apellido}
           </Text>
           <View className="flex-row gap-1 items-center">
-            <EmailIcon size={12} />
+            <Mail height={12} width={12}  />
             <Text className="font-geist text-gray-500 text-sm">{usuario.email}</Text>
           </View>
           <View className="flex-row gap-1 items-center">
-            <TelephoneIcon size={12} />
+            <Phone height={12} width={12}  />
             <Text className="font-geist text-gray-500 text-sm">{usuario.celular}</Text>
           </View>
         </View>
@@ -76,7 +68,7 @@ const UserItem = ({
             </Text>
           </View>
           <Pressable onPress={() => setModalEliminarUsuario(true)}>
-            <DeleteIcon size={26} color={'red'}></DeleteIcon>
+            <Delete height={26} width={26}  color={'red'}/>
           </Pressable>
           {modalEliminarUsuario && (
             <ModalEliminarUsuario
@@ -90,9 +82,9 @@ const UserItem = ({
             />
           )}
           {isExpanded ? (
-            <ChevronUpIcon size={20} color="#333" />
+            <ChevronUp height={20} width={20}  color="#333" />
           ) : (
-            <ChevronDownIcon size={20} color="#333" />
+            <ChevronDown height={20} width={20}  color="#333" />
           )}
         </View>
       </Pressable>
@@ -144,13 +136,13 @@ const UserItem = ({
                     className="justify-center items-center h-12 w-12"
                     onPress={() => handlePanel(piscina.id)}
                   >
-                    <EyeIcon size={22}></EyeIcon>
+                    <Eye height={22} width={22} />
                   </Pressable>
                   <Pressable
                     className="justify-center items-center h-12 w-12"
                     onPress={() => setModalDesvincularPiscina(true)}
                   >
-                    <RemoveIcon size={20}></RemoveIcon>
+                    <MinusCircle height={20} width={20}/>
                   </Pressable>
                   {modalDesvincularPiscina && (
                     <ModalDesvincularPiscina

@@ -9,9 +9,17 @@ export interface UsuarioLogin {
   nombre: string;
   apellido: string;
   email: string;
+  celular: number;
   isAdmin: boolean;
   piscinasId: number[];
   primerLogin: boolean;
+}
+
+export interface UsuarioCambioPassword {
+  email: string;
+  passwordActual: string;
+  nuevoPassword: string;
+  confirmacionPassword: string;
 }
 
 export interface UsuarioRegistrado {

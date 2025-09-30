@@ -1,39 +1,61 @@
-import { View, Text, Switch, Pressable } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, TintIcon } from '@/assets/icons';
-import { Bomba } from '@/data/domain/piscina';
+import { Bomba, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarBomba from './modalEditarBomba';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
+import { Droplet, Edit2 } from 'react-native-feather';
 
-const BombaCard = ({ bomba }: { bomba: Bomba }) => {
-  const [isActive, setIsActive] = useState(bomba.activa);
+const BombaCard = ({
+  piscina,
+  bomba,
+  actualizarPiscina,
+}: {
+  piscina: PiscinaEquipos;
+  bomba: Bomba;
+  actualizarPiscina: () => Promise<void>;
+}) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
 
   const handleSaveBomba = async (bombaEditada: Bomba) => {
-    null;
+    try {
+      const response = await piscinaService.updateBomba(
+        piscina.id,
+        bombaEditada
+      );
+      setModalEditOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Bomba actualizada',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar la bomba',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
   };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
-          <TintIcon color={'cyan'} />
-          <View className="mx-2">
-            <Text className="text-base font-geist-semi-bold text-text">
+        <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-center">
+            <Droplet color={'cyan'} />
+            <Text className="text-text font-geist-semi-bold text-lg">
               Bomba de filtración
             </Text>
           </View>
-          <Pressable onPress={() => setModalEditOpen(true)}>
-            <EditIcon />
+          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
+            <Edit2 />
           </Pressable>
         </View>
-        <Switch
-          trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor="#fcdb99"
-          ios_backgroundColor="#d3d3d3"
-          onValueChange={() => setIsActive(!isActive)}
-          value={isActive}
-        />
       </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Marca:</Text>
@@ -57,11 +79,11 @@ const BombaCard = ({ bomba }: { bomba: Bomba }) => {
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
           className={`rounded-full px-2 ${
-            isActive ? 'bg-green-500' : 'bg-red-500'
+            bomba.activa ? 'bg-green-500' : 'bg-red-500'
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-sm">
-            {isActive ? 'Activa' : 'Inactiva'}
+            {bomba.activa ? 'Activa' : 'Inactiva'}
           </Text>
         </View>
       </View>

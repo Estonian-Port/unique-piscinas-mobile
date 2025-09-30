@@ -1,19 +1,14 @@
 import { View, Text, TextInput, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import RadioButton from '../../utiles/radioButton';
-import {
-  LightIcon,
-  ThermostatIcon,
-  ThunderIcon,
-  WavesIcon,
-} from '@/assets/icons';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';
+import { Activity, Database, Thermometer, Zap } from 'react-native-feather';
 
 export type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
-export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho' | 'Diatomeas';
+export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
 export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
 
 export const marcasBomba = [
@@ -184,12 +179,6 @@ const EquiposNuevaPiscina = ({
         selected={tipoFiltro == 'Cartucho'}
         onPress={(value) => setTipoFiltro(value)}
       />
-      <RadioButton
-        value={'Diatomeas'}
-        label={'Diatomeas'}
-        selected={tipoFiltro == 'Diatomeas'}
-        onPress={(value) => setTipoFiltro(value)}
-      />
       <Text className="font-geist text-text text-base mt-3">Marca</Text>
       <DropDownPicker
         open={openMarcaFiltro}
@@ -290,7 +279,7 @@ const EquiposNuevaPiscina = ({
         </Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <ThunderIcon size={18} color={'green'} />
+            <Zap height={18} width={18}  color={'green'} />
             <Text className="text-text text-base font-geist ml-1">
               Sistema UV
             </Text>
@@ -305,7 +294,7 @@ const EquiposNuevaPiscina = ({
         </View>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <LightIcon size={18} color={'orange'} />
+            <Database height={18} width={18}  color={'orange'} />
             <Text className="text-text text-base font-geist ml-1">
               Ionizador de cobre
             </Text>
@@ -320,7 +309,7 @@ const EquiposNuevaPiscina = ({
         </View>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <WavesIcon size={18} color={'blue'} />
+            <Activity height={18} width={18}  color={'blue'} />
             <Text className="text-text text-base font-geist ml-1">
               Trasductor ultrasónico
             </Text>
@@ -340,7 +329,7 @@ const EquiposNuevaPiscina = ({
         </Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center">
-            <ThermostatIcon size={18} color={'orange'} />
+            <Thermometer height={18} width={18}  color={'orange'} />
             <Text className="text-text text-base font-geist ml-1">
               Sistema de Calefacción
             </Text>

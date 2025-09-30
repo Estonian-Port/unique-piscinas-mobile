@@ -24,23 +24,24 @@ const EstadoSistema = ({ pool }: { pool: PiscinaEquipamiento }) => {
 
       <View className="flex-row justify-between items-center w-full mb-5">
         <Text className="font-geist-semi-bold text-text text-base">
-          Modo activo:
+          Entradas de agua:
         </Text>
         <Text className="font-geist text-base text-text">
-          {pool.funcionActiva.length === 0
-            ? 'Ninguno'
-            : pool.funcionActiva.join(', ')}
+          {pool.entradaAgua.length === 0
+            ? 'Ninguna'
+            : pool.entradaAgua.join(', ')}
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center w-full mb-5">
         <Text className="font-geist-semi-bold text-text text-base">
-          Entradas activas:
+          Función activa:
         </Text>
         <Text className="font-geist text-base text-text">
-          {pool.entradaAgua.length === 0
+          {pool.funcionActiva == 'REPOSO'
             ? 'Ninguno'
-            : pool.entradaAgua.join(', ')}
+            : pool.funcionActiva.charAt(0).toUpperCase() +
+              pool.funcionActiva.slice(1).toLowerCase()}
         </Text>
       </View>
 

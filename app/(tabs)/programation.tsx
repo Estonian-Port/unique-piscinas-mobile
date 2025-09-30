@@ -15,19 +15,20 @@ const Programation = () => {
   const { usuario, selectedPool } = useAuth()
   const [piscina, setPiscina] = useState<PiscinaProgramacion | null>(null)
   const [loading, setLoading] = useState(true)
-  
+
+  const fetchPool = async () => {
+    try {
+      const data = await piscinaService.getPiscinaProgramacionById(selectedPool!.id)
+      setPiscina(data)
+    } catch (error) {
+      console.error("Error al cargar el equipamiento de la piscina:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (!piscina) {
-      const fetchPool = async () => {
-        try {
-          const data = await piscinaService.getPiscinaProgramacionById(selectedPool!.id)
-          setPiscina(data)
-        } catch (error) {
-          console.error("Error al cargar el equipamiento de la piscina:", error)
-        } finally {
-          setLoading(false)
-        }
-      }
       fetchPool()
     }
   }, [selectedPool])
@@ -50,8 +51,8 @@ const Programation = () => {
               piscina={selectedPool!} 
             />
             <WebTabBar />
-            <ProgramacionFiltrado programacion={piscina!.programacionFiltrado} />
-            <ProgramacionIluminacion programacion={piscina!.programacionIluminacion} />
+            <ProgramacionFiltrado programacion={piscina!.programacionFiltrado} actualizarPiscina={fetchPool} />
+            <ProgramacionIluminacion programacion={piscina!.programacionIluminacion} actualizarPiscina={fetchPool} />
           </View>
         </ScreenTabs>
       </ScrollView>

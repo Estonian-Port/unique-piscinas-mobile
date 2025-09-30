@@ -4,11 +4,7 @@ import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import {
-  Filtro,
-  FiltroNuevo,
-  PiscinaNueva,
-} from '@/data/domain/piscina';
+import { FiltroNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
@@ -36,15 +32,10 @@ const validationSchema = Yup.object().shape({
     .required('Ingrese el diámetro del filtro')
     .typeError('El diámetro debe ser un número')
     .min(0.1, 'El diámetro debe ser mayor que 0'),
-  datoExtra: Yup.number().when('tipoFiltro', {
-    is: (tipo: string) => tipo !== 'Diatomeas',
-    then: (schema) =>
-      schema
-        .required('Este campo es obligatorio para este tipo de filtro')
-        .typeError('El valor debe ser un número')
-        .min(0.1, 'El valor debe ser mayor que 0'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  datoExtra: Yup.number()
+    .required('Este campo es obligatorio para este tipo de filtro')
+    .typeError('El valor debe ser un número')
+    .min(0.1, 'El valor debe ser mayor que 0'),
   tiempoDeVidaUtil: Yup.number()
     .required('Ingrese el tiempo de vida útil del filtro')
     .typeError('El tiempo de vida útil debe ser un número')

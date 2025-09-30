@@ -1,101 +1,124 @@
 import { View, Text, Pressable, Switch } from 'react-native';
 import React, { useState } from 'react';
-import { Programacion } from '@/data/domain/cicloFiltrado';
+import {
+  dateToLocalTimeString,
+  Programacion,
+  ProgramacionType,
+} from '@/data/domain/cicloFiltrado';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { ClockIcon, HandIcon, LightIcon } from '@/assets/icons';
 import Schedule from './schedule';
 import ModalProgramacion from './modalProgramacion';
 import Toast from 'react-native-toast-message';
+import { useAuth } from '@/context/authContext';
+import { piscinaService } from '@/services/piscina.service';
+import { Clock, Sliders } from 'react-native-feather';
 
 const ProgramacionIluminacion = ({
   programacion,
+  actualizarPiscina,
 }: {
   programacion: Programacion[];
+  actualizarPiscina: () => Promise<void>;
 }) => {
-  const [programaciones, setProgramaciones] =
-    useState<Programacion[]>(programacion);
+  const { selectedPool } = useAuth();
   const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const programacionVaciaDeIluminacion: Programacion = {
+  const programacionVacia: Programacion = {
     id: 0,
-    horaInicio: new Date(),
-    horaFin: new Date(),
+    horaInicio: dateToLocalTimeString(new Date()),
+    horaFin: dateToLocalTimeString(new Date()),
     dias: [],
-    mode: null,
-    activa: false,
-    esProgramacionFiltro: true,
+    activa: true,
+    tipo: ProgramacionType.ILUMINACION,
   };
 
-  const hasCicles = programaciones.length > 0;
+  const hasCicles = programacion.length > 0;
 
-  const handleAddCicle = (nuevoCiclo: Programacion) => {
-    Toast.show({
-      type: 'success',
-      text1: 'Ciclo añadido',
-      text2: 'El ciclo se ha añadido correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    {/*
-    Toast.show({
-      type: 'error',
-      text1: 'Error',
-      text2: 'El ciclo no se ha podido añadir correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    */}
-    programaciones.push(nuevoCiclo);
+  const handleAddCicle = async (nuevoCiclo: Programacion) => {
+    try {
+      const response = await piscinaService.addProgramacion(
+        selectedPool!.id,
+        nuevoCiclo.tipo === ProgramacionType.FILTRADO,
+        nuevoCiclo
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Ciclo añadido',
+        text2: 'El ciclo se ha añadido correctamente',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+      actualizarPiscina();
+      setModalVisible(false);
+    } catch (error) {
+      console.error('Error adding cycle:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El ciclo no se ha podido añadir correctamente',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
   };
 
-  const handleEditCicle = (cicloEditado: Programacion) => {
-    Toast.show({
-      type: 'success',
-      text1: 'Ciclo editado',
-      text2: 'El ciclo se ha editado correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    {/*
-    Toast.show({
-      type: 'error',
-      text1: 'Error',
-      text2: 'El ciclo no se ha podido editar correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    */}
-    setProgramaciones((prev) =>
-      prev.map((c) => (c.id === cicloEditado.id ? cicloEditado : c))
-    );
+  const handleEditCicle = async (cicloEditado: Programacion) => {
+    try {
+      const response = await piscinaService.updateProgramacion(
+        selectedPool!.id,
+        cicloEditado.tipo === ProgramacionType.FILTRADO,
+        cicloEditado
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Ciclo editado',
+        text2: 'El ciclo se ha editado correctamente',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+      actualizarPiscina();
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'No se ha podiado editar el ciclo de programación',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
   };
 
-  const handleDeleteCicle = (cicloId: number) => {
-    //actualizar el back
-    Toast.show({
-      type: 'success',
-      text1: 'Ciclo eliminado',
-      text2: 'El ciclo se ha eliminado correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    {/*
-    Toast.show({
-      type: 'error',
-      text1: 'Error',
-      text2: 'El ciclo no se ha podido eliminar correctamente',
-      position: 'bottom',
-      bottomOffset: 80,
-    });
-    */}
-    setProgramaciones((prev) => prev.filter((c) => c.id !== cicloId));
+  const handleDeleteCicle = async (cicloId: number, esFiltrado: boolean) => {
+    try {
+      const response = await piscinaService.deleteProgramacion(
+        selectedPool!.id,
+        cicloId,
+        esFiltrado
+      );
+      Toast.show({
+        type: 'success',
+        text1: 'Ciclo eliminado',
+        text2: 'El ciclo se ha eliminado correctamente',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+      actualizarPiscina();
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'El ciclo no se ha podido eliminar correctamente',
+        position: 'bottom',
+        bottomOffset: 80,
+      });
+    }
   };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center  mb-4">
-        <LightIcon color="orange" size={24} />
+        <Clock color="orange" />
         <Text className="font-geist-semi-bold text-text text-2xl ml-1">
           Control de Iluminación
         </Text>
@@ -103,7 +126,7 @@ const ProgramacionIluminacion = ({
 
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <HandIcon size={18} color="light-blue" />
+          <Sliders color="light-blue" />
           <Text className="font-geist-semi-bold text-text text-base ml-1">
             Control Manual
           </Text>
@@ -119,7 +142,7 @@ const ProgramacionIluminacion = ({
 
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center">
-          <ClockIcon size={18} color="light-blue" />
+          <Clock color="light-blue" />
           <Text className="font-geist-semi-bold text-text text-base ml-1">
             Horarios programados
           </Text>
@@ -135,7 +158,7 @@ const ProgramacionIluminacion = ({
             visible={modalVisible}
             onClose={() => setModalVisible(false)}
             onSave={handleAddCicle}
-            cicle={programacionVaciaDeIluminacion}
+            cicle={programacionVacia}
             hasCicleMode={false}
           />
         )}
@@ -143,13 +166,13 @@ const ProgramacionIluminacion = ({
 
       {hasCicles ? (
         <View className="items-center justify-between gap-2">
-          {programaciones.map((ciclo) => (
+          {programacion.map((ciclo) => (
             <Schedule
               cicle={ciclo}
               key={ciclo.id}
               editCicle={handleEditCicle}
               deleteCicle={handleDeleteCicle}
-            ></Schedule>
+            />
           ))}
         </View>
       ) : (

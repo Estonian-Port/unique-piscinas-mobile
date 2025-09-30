@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Screen } from '@/components/utiles/Screen';
 import InformacionBasica from '@/components/dashboard/nuevaPiscina/informacionBasica';
 import ConfiguracionPiscina from '@/components/dashboard/nuevaPiscina/configuracionPiscina';
-import { BombaNuevo, CalefaccionNueva, FiltroNuevo, GermicidaNuevo, PiscinaNueva } from '@/data/domain/piscina';
+import { PiscinaNueva } from '@/data/domain/piscina';
 import { router } from 'expo-router';
 import BombaNuevaPiscina from '@/components/dashboard/nuevaPiscina/bombaNuevaPiscina';
 import FiltroNuevaPiscina from '@/components/dashboard/nuevaPiscina/filtroNuevaPiscina';
@@ -54,7 +54,6 @@ const NuevaPiscina = () => {
 
   const handleSave = async () => {
     try {
-      console.log('Datos de la nueva piscina a guardar:', nuevaPiscina);
       const result = await piscinaService.create(nuevaPiscina);
       setNuevaPiscina(piscinaNuevaInicial);
       Toast.show({

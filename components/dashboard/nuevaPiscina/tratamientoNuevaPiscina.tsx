@@ -6,7 +6,7 @@ import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva, GermicidaNuevo } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { LightIcon, ThunderIcon, WavesIcon } from '@/assets/icons';
+import { Activity, Database, Zap } from 'react-native-feather';
 
 export const marcasUV = [
   { id: 1, name: 'Astral' },
@@ -169,8 +169,8 @@ const TratamientoNuevaPiscina = ({
 
         if (values.uvSwitch) {
           const uv: GermicidaNuevo = {
-            id: 0,
-            tipo: 'uv',
+            id: null,
+            tipo: 'UV',
             marca: values.uvMarca,
             activa: true,
             datoExtra: parseFloat(values.uvPotencia),
@@ -181,8 +181,8 @@ const TratamientoNuevaPiscina = ({
 
         if (values.ionizadorSwitch) {
           const ionizador: GermicidaNuevo = {
-            id: 1,
-            tipo: 'ionizador',
+            id: null,
+            tipo: 'IONIZADOR',
             marca: values.ionizadorMarca,
             activa: true,
             datoExtra: parseInt(values.ionizadorElectrodos),
@@ -193,8 +193,8 @@ const TratamientoNuevaPiscina = ({
 
         if (values.trasductorSwitch) {
           const trasductor: GermicidaNuevo = {
-            id: 2,
-            tipo: 'trasductor',
+            id: null,
+            tipo: 'TRASDUCTOR',
             marca: values.trasductorMarca,
             activa: true,
             datoExtra: parseFloat(values.trasductorPotencia),
@@ -300,7 +300,7 @@ const TratamientoNuevaPiscina = ({
               <View className="items-center justify-between">
                 <View className="flex-row items-center justify-between w-full py-2">
                   <View className="flex-row items-center">
-                    <ThunderIcon size={18} color={'green'} />
+                    <Zap height={18} width={18}  color={'green'} />
                     <Text className="text-text text-base font-geist ml-1">
                       Sistema UV
                     </Text>
@@ -411,7 +411,7 @@ const TratamientoNuevaPiscina = ({
               <View className="items-center justify-between">
                 <View className="flex-row items-center justify-between w-full py-2">
                   <View className="flex-row items-center">
-                    <LightIcon size={18} color={'orange'} />
+                    <Database height={18} width={18}  color={'orange'} />
                     <Text className="text-text text-base font-geist ml-1">
                       Ionizador de cobre
                     </Text>
@@ -524,7 +524,7 @@ const TratamientoNuevaPiscina = ({
               <View className="items-center justify-between">
                 <View className="flex-row items-center justify-between w-full py-2">
                   <View className="flex-row items-center">
-                    <WavesIcon size={18} color={'blue'} />
+                    <Activity height={18} width={18}  color={'blue'} />
                     <Text className="text-text text-base font-geist ml-1">
                       Trasductor ultrasónico
                     </Text>

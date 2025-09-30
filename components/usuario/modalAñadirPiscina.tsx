@@ -7,11 +7,9 @@ import {
   Pressable,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { piscinasMock } from '@/data/mock/piscinaMock';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { administracionService } from '@/services/administracion.service';
 import { PiscinaListItem } from '@/data/domain/piscina';
-import { useAuth } from '@/context/authContext';
 import Toast from 'react-native-toast-message';
 
 type ModalAñadirPiscinaProps = {

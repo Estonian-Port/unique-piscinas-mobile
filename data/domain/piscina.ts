@@ -36,6 +36,9 @@ export interface PiscinaEquipos {
   bombas: Bomba[];
   filtro: Filtro;
   sistemasGermicidas: Germicida[];
+  cloroSalino: boolean;
+  controlAutomaticoPH: boolean;
+  orp: boolean;
   calefaccion: Calefaccion | null;
   registros: Registro[];
 }
@@ -56,7 +59,7 @@ export interface PiscinaEquipamiento {
   volumen: string;
   estadoFiltro: boolean;
   entradaAgua: entradaAgua[];
-  funcionActiva: funcionFiltro[];
+  funcionActiva: funcionFiltro;
   presion: number;
   ultimaActividad: string;
   proximoCiclo: string;
@@ -79,9 +82,10 @@ export interface PiscinaResume {
   ph: number;
   diferenciaPh: number;
   entradaAgua: entradaAgua[];
-  funcionActiva: funcionFiltro[];
+  funcionActiva: funcionFiltro;
   sistemasGermicidas: sistemaGermicida[];
   calefaccion: boolean;
+  esDesbordante: boolean;
 }
 
 export class Piscina {
@@ -121,11 +125,8 @@ export type Bomba = {
   marca: string;
   modelo: string;
   potencia: number;
-  esVelocidadVariable: boolean;
   activa: boolean;
 };
-
-
 
 export type Filtro = {
   id: number;
@@ -135,10 +136,8 @@ export type Filtro = {
   diametro: number;
   activo: boolean;
   datoExtra?: number;
-  estado?: string;
+  tiempoVidaUtil?: number;
 };
-
-
 
 //Esto se usa para traer datos del back
 export type Germicida = {
@@ -150,8 +149,6 @@ export type Germicida = {
   estado: string;
   datoExtra: number;
 };
-
-
 
 export type Valvula = {
   id: number;
@@ -179,16 +176,17 @@ export type Registro = {
   nombreTecnico: string;
 };
 
-export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer';
-
-export type ligthsType = 'manual' | 'programmed';
+export type entradaAgua = 'Fondo' | 'Barrefondo' | 'Skimmer' | 'Tanque';
 
 export type funcionFiltro =
-  | 'filter'
-  | 'backwash'
-  | 'rinse'
-  | 'drain'
-  | 'recirculate';
+  | 'FILTRAR'
+  | 'RETROLAVAR'
+  | 'DESAGOTAR'
+  | 'RECIRCULAR'
+  | 'ENJUAGAR'
+  | 'REPOSO';
+
+export type ligthsType = 'manual' | 'programmed';
 
 export type sistemaGermicida = 'UV' | 'Ionizador' | 'Trasductor';
 
@@ -227,7 +225,6 @@ export type BombaNuevo = {
   marca: string;
   modelo: string;
   potencia: number;
-  esVelocidadVariable: boolean;
   activa: boolean;
 };
 

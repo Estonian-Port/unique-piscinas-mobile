@@ -1,6 +1,7 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@/assets/icons";
+import { FAQ } from "@/data/domain/faq";
 import { useState } from "react";
 import { Pressable, View, Text } from "react-native";
+import { ChevronDown, ChevronUp } from "react-native-feather";
 
  
 const FAQItem = ({ faq }: {faq:FAQ}) => {
@@ -16,8 +17,8 @@ const FAQItem = ({ faq }: {faq:FAQ}) => {
             {faq.question}
           </Text>
           {isExpanded ? 
-            <ChevronUpIcon size={20} color="#333" /> : 
-            <ChevronDownIcon size={20} color="#333" />
+            <ChevronUp height={20} width={20}  color="#333" /> : 
+            <ChevronDown height={20} width={20}  color="#333" />
           }
         </Pressable>
         

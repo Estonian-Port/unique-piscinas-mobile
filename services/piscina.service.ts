@@ -1,12 +1,27 @@
 import {
+  Bomba,
+  BombaNuevo,
+  Calefaccion,
+  CalefaccionNueva,
+  entradaAgua,
+  Filtro,
+  funcionFiltro,
+  Germicida,
+  GermicidaNuevo,
   PiscinaEquipamiento,
   PiscinaListItem,
   PiscinaNueva,
   PiscinaProgramacion,
   PiscinaResume,
+  Registro,
 } from '@/data/domain/piscina';
 import api from '../helper/auth.interceptor';
-import { programacionFromDto } from '@/data/domain/cicloFiltrado';
+import {
+  dayMap,
+  Programacion,
+  programacionFromDto,
+} from '@/data/domain/cicloFiltrado';
+import { Lectura } from '@/app/lecturas';
 
 const PISCINA = '/piscina';
 
@@ -59,6 +74,237 @@ class PiscinaService {
     const response = await api.post(`${PISCINA}/alta`, piscina);
     return { data: response.data.data, message: response.data.message };
   };
+
+  updateBomba = async (
+    piscinaId: number,
+    bomba: Bomba
+  ): Promise<{ data: Bomba; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-bomba/${piscinaId}`,
+      bomba
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateFiltro = async (
+    piscinaId: number,
+    filtro: Filtro
+  ): Promise<{ data: Filtro; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-filtro/${piscinaId}`,
+      filtro
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateGermicida = async (
+    piscinaId: number,
+    germicida: Germicida
+  ): Promise<{ data: Germicida; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-germicida/${piscinaId}`,
+      germicida
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateCalefaccion = async (
+    piscinaId: number,
+    calefaccion: Calefaccion
+  ): Promise<{ data: Calefaccion; message: string }> => {
+    let tipoEnum = calefaccion.tipo;
+    if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
+    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
+
+    const calefaccionToSend = { ...calefaccion, tipo: tipoEnum };
+
+    const response = await api.put(
+      `${PISCINA}/update-calefaccion/${piscinaId}`,
+      calefaccionToSend
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  deleteCalefaccion = async (
+    piscinaId: number
+  ): Promise<{ data: Calefaccion; message: string }> => {
+    const response = await api.delete(
+      `${PISCINA}/delete-calefaccion/${piscinaId}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  deleteGermicida = async (
+    piscinaId: number,
+    germicidaId: number
+  ): Promise<{ data: Germicida; message: string }> => {
+    const response = await api.delete(
+      `${PISCINA}/delete-germicida/${piscinaId}/${germicidaId}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  addGermicida = async (
+    piscinaId: number,
+    germicida: GermicidaNuevo
+  ): Promise<{ data: Germicida; message: string }> => {
+    const response = await api.post(
+      `${PISCINA}/add-germicida/${piscinaId}`,
+      germicida
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  addCalefaccion = async (
+    piscinaId: number,
+    calefaccion: CalefaccionNueva
+  ): Promise<{ data: Calefaccion; message: string }> => {
+    let tipoEnum = calefaccion.tipo;
+    if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
+    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
+
+    const calefaccionDto = { ...calefaccion, tipo: tipoEnum };
+
+    const response = await api.post(
+      `${PISCINA}/add-calefaccion/${piscinaId}`,
+      calefaccionDto
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  addBomba = async (
+    piscinaId: number,
+    bomba: BombaNuevo
+  ): Promise<{ data: Bomba; message: string }> => {
+    const response = await api.post(`${PISCINA}/add-bomba/${piscinaId}`, bomba);
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateCompuestos = async (
+    piscinaId: number,
+    compuestos: {
+      orp: boolean;
+      controlPH: boolean;
+      cloroSalino: boolean;
+    }
+  ): Promise<{ data: PiscinaEquipamiento; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-compuestos/${piscinaId}`,
+      compuestos
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  crearRegistro = async (
+    nuevoRegistro: Registro,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.post(
+      `${PISCINA}/add-registro/${piscinaId}`,
+      nuevoRegistro
+    );
+
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  actualizarRegistro = async (
+    registro: Registro,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-registro/${piscinaId}`,
+      registro
+    );
+
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  eliminarRegistro = async (
+    registroId: number,
+    piscinaId: number
+  ): Promise<{ data: Registro; message: string }> => {
+    const response = await api.delete(
+      `${PISCINA}/delete-registro/${piscinaId}/${registroId}`
+    );
+
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  addProgramacion = async (
+    piscinaId: number,
+    esFiltrado: boolean,
+    programacion: Programacion
+  ): Promise<{ data: Programacion; message: string }> => {
+    const programacionToSend = {
+      ...programacion,
+      dias: programacion.dias.map((d: string) => dayMap[d]),
+    };
+    const response = await api.post(
+      `${PISCINA}/add-programacion/${piscinaId}/${esFiltrado}`,
+      programacionToSend
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  updateProgramacion = async (
+    piscinaId: number,
+    esFiltrado: boolean,
+    programacion: Programacion
+  ): Promise<{ data: Programacion; message: string }> => {
+    const programacionToSend = {
+      ...programacion,
+      dias: programacion.dias.map((d: string) => dayMap[d]),
+    };
+    const response = await api.put(
+      `${PISCINA}/update-programacion/${piscinaId}/${esFiltrado}`,
+      programacionToSend
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  deleteProgramacion = async (
+    piscinaId: number,
+    programacionId: number,
+    esFiltrado: boolean
+  ): Promise<{ data: Programacion; message: string }> => {
+    const response = await api.delete(
+      `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}/${esFiltrado}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  actualizarEntradaDeAgua = async (
+    piscinaId: number,
+    entradaAgua: entradaAgua[]
+  ): Promise<{ data: PiscinaResume; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-entrada-agua/${piscinaId}`,
+      entradaAgua
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  actualizarFuncionFiltro = async (
+    piscinaId: number,
+    funcionFiltro: funcionFiltro
+  ): Promise<{ data: PiscinaResume; message: string }> => {
+    const response = await api.put(
+      `${PISCINA}/update-funcion-filtro/${piscinaId}`,
+      { funcion: funcionFiltro },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  getLecturas = async (piscinaId: number): Promise<Lectura[]> => {
+    const response = await api.get(`${PISCINA}/lecturas/${piscinaId}`);
+    return response.data.data;
+  }
+
+  realizarLectura = async (piscinaId: number): Promise<void> => {
+    await api.post(`${PISCINA}/lectura-manual/${piscinaId}`);
+  };
+
 }
 
 export const piscinaService = new PiscinaService();

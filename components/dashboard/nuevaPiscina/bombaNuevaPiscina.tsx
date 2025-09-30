@@ -1,10 +1,9 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
-import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
-import { Bomba, BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
+import { BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
@@ -84,15 +83,12 @@ const BombaNuevaPiscina = ({
     const tieneDobleBomba = nuevaPiscina.bomba?.length === 2;
 
     return {
-      velocidadVariablePrimaria: bombaPrimaria?.esVelocidadVariable ?? false,
       marcaBombaPrimaria: bombaPrimaria?.marca ?? '',
       modeloBombaPrimaria: bombaPrimaria?.modelo ?? '',
       potenciaCVPrimaria: bombaPrimaria?.potencia
         ? bombaPrimaria.potencia.toString()
         : '',
 
-      velocidadVariableSecundaria:
-        bombaSecundaria?.esVelocidadVariable ?? false,
       marcaBombaSecundaria: bombaSecundaria?.marca ?? '',
       modeloBombaSecundaria: bombaSecundaria?.modelo ?? '',
       potenciaCVSecundaria: bombaSecundaria?.potencia
@@ -113,7 +109,6 @@ const BombaNuevaPiscina = ({
       onSubmit={(values) => {
         const bombaPrimaria: BombaNuevo = {
           id: null,
-          esVelocidadVariable: values.velocidadVariablePrimaria,
           marca: values.marcaBombaPrimaria,
           modelo: values.modeloBombaPrimaria,
           potencia: parseFloat(values.potenciaCVPrimaria),
@@ -125,7 +120,6 @@ const BombaNuevaPiscina = ({
         if (values.tieneDobleBomba) {
           const bombaSecundaria: BombaNuevo = {
             id: null,
-            esVelocidadVariable: values.velocidadVariableSecundaria,
             marca: values.marcaBombaSecundaria,
             modelo: values.modeloBombaSecundaria,
             potencia: parseFloat(values.potenciaCVSecundaria),
@@ -171,29 +165,6 @@ const BombaNuevaPiscina = ({
             <Text className="font-geist-semi-bold text-text text-md mt-3">
               Bomba principal
             </Text>
-
-            <View className="flex-row items-center mt-4">
-              <Checkbox
-                value={values.velocidadVariablePrimaria}
-                onValueChange={(value) => {
-                  setFieldValue('velocidadVariablePrimaria', value);
-                }}
-                color={values.velocidadVariablePrimaria ? '#0F0D23' : undefined}
-              />
-              <Pressable
-                onPress={() =>
-                  setFieldValue(
-                    'velocidadVariablePrimaria',
-                    !values.velocidadVariablePrimaria
-                  )
-                }
-                className="ml-2"
-              >
-                <Text className="font-geist text-text text-base">
-                  Es velocidad variable
-                </Text>
-              </Pressable>
-            </View>
 
             <Text className="font-geist text-text text-base mt-3">Marca</Text>
             <DropDownPicker
@@ -333,31 +304,6 @@ const BombaNuevaPiscina = ({
                 <Text className="font-geist-semi-bold text-text text-sm mt-3">
                   Bomba secundaria
                 </Text>
-                <View className="flex-row items-center mt-4">
-                  <Checkbox
-                    value={values.velocidadVariableSecundaria}
-                    onValueChange={(value) => {
-                      setFieldValue('velocidadVariableSecundaria', value);
-                    }}
-                    color={
-                      values.velocidadVariableSecundaria ? '#0F0D23' : undefined
-                    }
-                  />
-                  <Pressable
-                    onPress={() =>
-                      setFieldValue(
-                        'velocidadVariableSecundaria',
-                        !values.velocidadVariableSecundaria
-                      )
-                    }
-                    className="ml-2"
-                  >
-                    <Text className="font-geist text-text text-base">
-                      Es velocidad variable
-                    </Text>
-                  </Pressable>
-                </View>
-
                 <Text className="font-geist text-text text-base mt-3">
                   Marca
                 </Text>

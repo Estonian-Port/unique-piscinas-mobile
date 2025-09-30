@@ -2,7 +2,6 @@ import {
   View,
   Text,
   ScrollView,
-  SafeAreaView,
   Pressable,
   TextInput,
 } from 'react-native';
@@ -10,23 +9,9 @@ import React, { useState, useMemo } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { leo } from '@/data/mock/userMock';
 import { piscinasMock } from '@/data/mock/piscinaMock';
-import {
-  BubbleIcon,
-  CalendarIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ClockIcon,
-  ConfigurationIcon,
-  FilterIcon,
-  SearchIcon,
-  ThermostatIcon,
-  ThunderIcon,
-  TintIcon,
-} from '@/assets/icons';
-import { Screen } from '@/components/utiles/Screen';
 import LecturaCard from '@/components/dashboard/readingCard';
+import { Calendar, ChevronDown, ChevronsLeft, ChevronsRight, ChevronUp, Search } from 'react-native-feather';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Lectura = {
   id: number;
@@ -163,12 +148,35 @@ const HistorialLecturas = () => {
   const [mesSeleccionado, setMesSeleccionado] = useState(mesesDisponibles[0]);
 
   const searchPool = (id: number) => {
-    return piscinasMock.filter(
-      (piscina) => piscina.id === Number(piscinasIdReadings)
-    )[0];
+    return null
   };
 
-  const pool = searchPool(Number(piscinasIdReadings));
+  const pool = {
+    id: 1,
+    name: 'Piscina Av. San Martín 123',
+    propietario: 'Gabriel Tarquini',
+    tipo: 'Skimmer',
+    ph: 7.4,
+    equipos: [
+      { tipo: 'Uv', estado: 'Operativo' },
+      { tipo: 'Calentador', estado: 'Operativo' },
+    ],
+    direccion: '',
+    volumen: '',
+    esDesbordante: false,
+    administradorNombre: '',
+    sistemasGermicidas: [],
+    calefaccion: {
+      id: 0,
+      nombre: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      potencia: 0,
+      activa: false
+    }
+  }
+
 
   // Filtrar lecturas por mes y búsqueda
   const lecturasFiltradas = useMemo(() => {
@@ -247,8 +255,7 @@ const HistorialLecturas = () => {
               onPress={() => navegarMes('anterior')}
               disabled={!puedeIrAnterior}
             >
-              <ChevronLeftIcon 
-                size={20} 
+              <ChevronsLeft
                 color={puedeIrAnterior ? '#2563eb' : '#9ca3af'} 
               />
             </Pressable>
@@ -267,8 +274,7 @@ const HistorialLecturas = () => {
               onPress={() => navegarMes('siguiente')}
               disabled={!puedeIrSiguiente}
             >
-              <ChevronRightIcon 
-                size={20} 
+              <ChevronsRight
                 color={puedeIrSiguiente ? '#2563eb' : '#9ca3af'} 
               />
             </Pressable>
@@ -278,7 +284,7 @@ const HistorialLecturas = () => {
         {/* Barra de búsqueda y filtros */}
         <View className="flex-row mb-4">
           <View className="flex-row items-center bg-white rounded-lg px-3 flex-1 mr-2 border border-gray-200">
-            <SearchIcon size={18} color="#999" />
+            <Search color="#999" />
             <TextInput
               className="flex-1 py-2 px-2 font-geist text-base"
               placeholder="Buscar por modo filtro, mantenimiento..."
@@ -291,9 +297,9 @@ const HistorialLecturas = () => {
             onPress={toggleSortDirection}
           >
             {sortDirection === 'desc' ? (
-              <ChevronDownIcon size={18} color="#666" />
+              <ChevronDown color="#666" />
             ) : (
-              <ChevronUpIcon size={18} color="#666" />
+              <ChevronUp color="#666" />
             )}
           </Pressable>
         </View>
@@ -317,7 +323,7 @@ const HistorialLecturas = () => {
 
         {lecturasOrdenadas.length === 0 && (
           <View className="items-center justify-center py-10">
-            <CalendarIcon size={48} color="#ccc" />
+            <Calendar color="#ccc" />
             <Text className="text-gray-500 font-geist text-base mt-2">
               {searchQuery ? 
                 'No se encontraron lecturas con esos criterios' : 

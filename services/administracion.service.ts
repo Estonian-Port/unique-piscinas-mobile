@@ -57,6 +57,11 @@ class AdministracionService {
     return response.data;
   }
 
+  getPatentes = async (): Promise<string[]> => {
+    const response = await api.get(`${ADMINISTRACION}/patentes-nueva-piscina`);
+    return response.data.data;
+  }
+
 }
 
 export const administracionService = new AdministracionService();

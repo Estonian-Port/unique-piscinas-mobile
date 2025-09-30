@@ -1,39 +1,61 @@
 import { View, Text, Switch, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
-import { EditIcon, FilterIcon } from '@/assets/icons';
-import { Filtro } from '@/data/domain/piscina';
+import { Filtro, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarFiltro from './modalEditarFiltro';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
+import { Edit2, Filter } from 'react-native-feather';
 
-const FiltroCard = ({ filtro }: { filtro: Filtro }) => {
-  const [isActive, setIsActive] = useState(true);
+const FiltroCard = ({
+  filtro,
+  piscina,
+  actualizarPiscina,
+}: {
+  filtro: Filtro;
+  piscina: PiscinaEquipos;
+  actualizarPiscina: () => void;
+}) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
 
   const handleSaveFiltro = async (filtroEditado: Filtro) => {
-    console.log('Filtro editado:', filtroEditado);
+    try {
+      const response = await piscinaService.updateFiltro(
+        piscina.id,
+        filtroEditado
+      );
+      setModalEditOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Filtro actualizado',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al actualizar el filtro',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
   };
 
   return (
     <ScreenCard>
       <View className="flex-row items-center justify-between mb-1">
-        <View className="flex-row items-center">
-          <FilterIcon color={'cyan'} />
-          <View className="mx-2">
-            <Text className="text-base font-geist-semi-bold text-text">
+        <View className="flex-row items-center justify-between w-full">
+          <View className="flex-row items-center">
+            <Filter color={'cyan'} />
+            <Text className="text-text font-geist-semi-bold text-lg">
               Filtro de {filtro.tipo}
             </Text>
           </View>
-          <Pressable onPress={() => setModalEditOpen(true)}>
-            <EditIcon />
+          <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
+            <Edit2 />
           </Pressable>
         </View>
-        <Switch
-          trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor="#fcdb99"
-          ios_backgroundColor="#d3d3d3"
-          onValueChange={() => setIsActive(!isActive)}
-          value={isActive}
-        />
       </View>
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Marca:</Text>
@@ -53,30 +75,29 @@ const FiltroCard = ({ filtro }: { filtro: Filtro }) => {
           {filtro.diametro}
         </Text>
       </View>
-      {filtro.tipo !== 'Diatomeas' && (
-        <View className="flex-row items-center justify-between mb-1">
-          <Text className="font-geist text-text text-base">
-            {filtro.tipo === 'Arena'
-              ? 'Cantidad de arena (kg)'
-              : filtro.tipo === 'Vidrio'
-              ? 'Cantidad de vidrio (kg)'
-              : 'Micras del cartucho'}
-          </Text>
-          <Text className="font-geist-semi-bold tex-text text-base">
-            {filtro.datoExtra}
-          </Text>
-        </View>
-      )}
+
+      <View className="flex-row items-center justify-between mb-1">
+        <Text className="font-geist text-text text-base">
+          {filtro.tipo === 'Arena'
+            ? 'Cantidad de arena (kg)'
+            : filtro.tipo === 'Vidrio'
+            ? 'Cantidad de vidrio (kg)'
+            : 'Micras del cartucho'}
+        </Text>
+        <Text className="font-geist-semi-bold tex-text text-base">
+          {filtro.datoExtra}
+        </Text>
+      </View>
 
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
           className={`rounded-full px-2 ${
-            isActive ? 'bg-green-500' : 'bg-red-500'
+            filtro.activo ? 'bg-green-500' : 'bg-red-500'
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-sm">
-            {isActive ? 'Activa' : 'Inactiva'}
+            {filtro.activo ? 'Activa' : 'Inactiva'}
           </Text>
         </View>
       </View>
