@@ -17,6 +17,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logotipo-unique.png",
         "backgroundColor": "#ffffff"
+      },
+      "androidStatusBar": {
+        "backgroundColor": "#1F2060",
+        "translucent": false,
+        "barStyle": "light-content"
       }
     },
     "web": {

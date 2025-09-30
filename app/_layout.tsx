@@ -1,4 +1,4 @@
-import { Slot, SplashScreen } from 'expo-router';
+import { Slot, SplashScreen, usePathname } from 'expo-router';
 import './globals.css';
 import { useFonts } from 'expo-font';
 import React, { useEffect } from 'react';
@@ -9,30 +9,38 @@ import Toast from 'react-native-toast-message';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function RootLayout() {
+  const pathname = usePathname();
+  const isLoginScreen = pathname === "/";
+  
   const [fontsLoaded] = useFonts({
-    'Geist-ExtraLight': require('../assets/fonts/Geist-ExtraLight.ttf'),
-    'Geist-Light': require('../assets/fonts/Geist-Light.ttf'),
-    'Geist-Regular': require('../assets/fonts/Geist-Regular.ttf'),
-    'Geist-Bold': require('../assets/fonts/Geist-Bold.ttf'),
-    'Geist-semiBold': require('../assets/fonts/Geist-SemiBold.ttf'),
+    "Geist-ExtraLight": require("../assets/fonts/Geist-ExtraLight.ttf"),
+    "Geist-Light": require("../assets/fonts/Geist-Light.ttf"),
+    "Geist-Regular": require("../assets/fonts/Geist-Regular.ttf"),
+    "Geist-Bold": require("../assets/fonts/Geist-Bold.ttf"),
+    "Geist-semiBold": require("../assets/fonts/Geist-SemiBold.ttf"),
     ...MaterialIcons.font,
-  });
+  })
 
   useEffect(() => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded])
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded) return null
 
   return (
     <AuthProvider>
-        <SafeAreaView style={{ flex: 1 }} className="bg-white">
-          <NavBar />
-          <Slot />
-          <Toast />
-        </SafeAreaView>
+      <SafeAreaView 
+        style={{ 
+          flex: 1, 
+          backgroundColor: isLoginScreen ? '#222247' : '#FFFFFF' 
+        }}
+      >
+        <NavBar />
+        <Slot />
+        <Toast />
+      </SafeAreaView>
     </AuthProvider>
-  );
+  )
 }

@@ -10,9 +10,9 @@ import {
   ChevronUp,
   Search,
 } from 'react-native-feather';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { piscinaService } from '@/services/piscina.service';
 import { useAuth } from '@/context/authContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type Lectura = {
   id: number;
