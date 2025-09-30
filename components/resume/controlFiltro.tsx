@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction, useRef } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import FuncionFiltroScreen from './funcionFiltroScreen';
 import type {
@@ -41,11 +41,38 @@ export default function ControlFiltro({
   const [hayEntradaDeAguaSeleccionada, setHayEntradaDeAguaSeleccionada] =
     useState(piscina.entradaAgua && piscina.entradaAgua.length > 0);
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     setHayEntradaDeAguaSeleccionada(
       piscina.entradaAgua && piscina.entradaAgua.length > 0
     );
   }, [piscina]);
+
+  useEffect(() => {
+    if (hayEntradaDeAguaSeleccionada && piscina.funcionActiva === 'REPOSO') {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+      timeoutRef.current = setTimeout(() => {
+        if (piscina.funcionActiva === 'REPOSO') {
+          handleReset();
+          Toast.show({
+            type: 'info',
+            text1: 'Sistema reseteado',
+            text2: 'No se seleccionó una función de filtro en 30 segundos.',
+            position: 'bottom',
+          });
+        }
+      }, 30000);
+    } else {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    }
+
+    // Limpia timeout al desmontar
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [hayEntradaDeAguaSeleccionada, piscina.funcionActiva]);
 
   const actualizarEntradaDeAgua = async (entradasActivas: entradaAgua[]) => {
     try {

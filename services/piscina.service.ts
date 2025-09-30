@@ -21,6 +21,7 @@ import {
   Programacion,
   programacionFromDto,
 } from '@/data/domain/cicloFiltrado';
+import { Lectura } from '@/app/lecturas';
 
 const PISCINA = '/piscina';
 
@@ -294,6 +295,16 @@ class PiscinaService {
     );
     return { data: response.data.data, message: response.data.message };
   };
+
+  getLecturas = async (piscinaId: number): Promise<Lectura[]> => {
+    const response = await api.get(`${PISCINA}/lecturas/${piscinaId}`);
+    return response.data.data;
+  }
+
+  realizarLectura = async (piscinaId: number): Promise<void> => {
+    await api.post(`${PISCINA}/lectura-manual/${piscinaId}`);
+  };
+
 }
 
 export const piscinaService = new PiscinaService();

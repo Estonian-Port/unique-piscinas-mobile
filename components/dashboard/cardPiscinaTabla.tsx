@@ -4,7 +4,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Link, router } from 'expo-router';
 import { PiscinaRegistrada as PiscinaRegistrada } from '@/data/domain/piscina';
 import { useAuth } from '@/context/authContext';
-import { Book, ChevronDown, ChevronUp, Clock, Droplet, Eye, Info, Tag, User, Settings } from 'react-native-feather';
+import {
+  Book,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  Droplet,
+  Eye,
+  Info,
+  Tag,
+  User,
+  Settings,
+} from 'react-native-feather';
+import { piscinaService } from '@/services/piscina.service';
+import Toast from 'react-native-toast-message';
 
 // Componente para mostrar el estado del pH con color contextual
 const PhIndicator = ({ value }: { value: number }) => {
@@ -104,12 +117,34 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
     }
   };
 
-    const handleEquipos = async () => {
-    try {      
+  const handleEquipos = async () => {
+    try {
       await seleccionarPiscina(pool.id);
       router.push('/equipos');
     } catch (error) {
       console.error('Error seleccionando piscina:', error);
+    }
+  };
+
+  const handleLecturas = async () => {
+    try {
+      await seleccionarPiscina(pool.id);
+      router.push('/lecturas');
+    } catch (error) {
+      console.error('Error seleccionando piscina:', error);
+    }
+  };
+
+  const handleLecturaManual = async () => {
+    try {
+      await piscinaService.realizarLectura(pool.id);
+      Toast.show({
+        type: 'success',
+        text1: 'Lectura manual realizada',
+        text2: 'La lectura manual se ha realizado con éxito.',
+      });
+    } catch (error) {
+      console.error('Error realizando lectura manual:', error);
     }
   };
 
@@ -174,22 +209,24 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
             </View>
 
             <View className="flex-row justify-between mt-2">
-              <Link asChild href={`/readings/${pool.id}`}>
-                <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center">
-                  <Book height={16} width={16} className="mr-2" />
-                  <Text className="text-black font-geist-semi-bold text-sm">
-                    Nueva lectura
-                  </Text>
-                </Pressable>
-              </Link>
-              <Link asChild href={`/readings/${pool.id}`}>
-                <Pressable className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center">
-                  <Clock height={16} width={16} className="mr-2" />
-                  <Text className="text-black font-geist-semi-bold text-sm">
-                    Ver historial
-                  </Text>
-                </Pressable>
-              </Link>
+              <Pressable
+                className="bg-grayish-unique rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center"
+                onPress={handleLecturaManual}
+              >
+                <Book height={16} width={16} className="mr-2" />
+                <Text className="text-black font-geist-semi-bold text-sm">
+                  Nueva lectura
+                </Text>
+              </Pressable>
+              <Pressable
+                className="bg-grayish-unique rounded-lg py-3 flex-1 flex-row items-center justify-center"
+                onPress={handleLecturas}
+              >
+                <Clock height={16} width={16} className="mr-2" />
+                <Text className="text-black font-geist-semi-bold text-sm">
+                  Ver historial
+                </Text>
+              </Pressable>
             </View>
           </View>
 
@@ -217,19 +254,28 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
           {/* Acciones */}
 
           <View className="flex-row justify-between mt-2">
-            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handleFicha}>
+            <Pressable
+              className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center"
+              onPress={handleFicha}
+            >
               <Info height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Ficha
               </Text>
             </Pressable>
-            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center" onPress={handlePanel}>
+            <Pressable
+              className="bg-gray-900 rounded-lg py-3 flex-1 mr-3 flex-row items-center justify-center"
+              onPress={handlePanel}
+            >
               <Eye height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Panel
               </Text>
             </Pressable>
-            <Pressable className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center" onPress={handleEquipos}>
+            <Pressable
+              className="bg-gray-900 rounded-lg py-3 flex-1 flex-row items-center justify-center"
+              onPress={handleEquipos}
+            >
               <Settings height={16} width={16} color="#fff" />
               <Text className="text-white font-geist-semi-bold text-sm ml-2">
                 Equipos

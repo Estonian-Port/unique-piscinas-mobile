@@ -13,7 +13,7 @@ type Lectura = {
   presion: number;
   uv: 'Encendida' | 'Apagada';
   ionizador: 'Encendido' | 'Apagado';
-  mantenimiento: string;
+  mantenimiento: string; // 
 };
 
 // Función para formatear fecha y hora
@@ -159,19 +159,22 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
 
           {/* Parámetros físicos */}
           <Text className="text-gray-700 font-geist-semi-bold text-sm mb-3">
-            Parámetros Físicos
+            Parámetros Filtro
           </Text>
           <View className="flex-row mb-4">
-            <ParametroItem
-              icono={<Thermometer height={14} width={14}  color="#F44336" />}
-              label="Temperatura"
-              valor={lectura.temperatura}
-              unidad="°C"
-              color="#F44336"
-            />
+            {/* POR EL MOMENTO NO HABRA DATO DE TEMPERATURA */}
+            {false && (
+              <ParametroItem
+                icono={<Thermometer height={14} width={14}  color="#F44336" />}
+                label="Temperatura"
+                valor={lectura.temperatura}
+                unidad="°C"
+                color="#F44336"
+              />)
+              }
             <ParametroItem
               icono={<Circle height={14} width={14}  color="#9C27B0" />}
-              label="Presión"
+              label="Presión de trabajo"
               valor={lectura.presion}
               unidad="bar"
               color="#9C27B0"
@@ -194,6 +197,7 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
           <View className="flex-row mb-4">
             <EstadoEquipo nombre="UV" estado={lectura.uv} />
             <EstadoEquipo nombre="Ionizador" estado={lectura.ionizador} />
+            <EstadoEquipo nombre="Trasductor" estado={lectura.ionizador} />
           </View>
 
           {/* Mantenimiento */}
@@ -201,7 +205,7 @@ const LecturaCard = ({ lectura }: { lectura: Lectura }) => {
             <View className="flex-row items-center mb-1">
               <Settings height={14} width={14}  color="#2196F3" />
               <Text className="text-blue-600 text-xs ml-1 font-geist-semi-bold">
-                Mantenimiento
+                Entrada de agua activa
               </Text>
             </View>
             <Text className="text-blue-800 text-sm">
