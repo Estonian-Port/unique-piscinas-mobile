@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "Unique Piscinas",
-    "slug": "unique-piscinas",
+    "name": "Unique",
+    "slug": "unique",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logotipo-unique.png",
     "scheme": "unique",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "jsEngine": "jsc",
     "android": {
       "package": "com.estonianport.unique",
       "versionCode": 1,
@@ -47,7 +48,8 @@
             "./assets/fonts/Geist-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "assetBundlePatterns": [
       "**/*"
