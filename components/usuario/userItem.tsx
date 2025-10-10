@@ -1,5 +1,5 @@
 import { Pressable, View, Text } from 'react-native';
-import ModalAñadirPiscina from './modalAñadirPiscina';
+import ModalAnadirPiscina from './modalAnadirPiscina';
 import { useState } from 'react';
 import ModalDesvincularPiscina from './modalDesvincularPiscina';
 import ModalEliminarUsuario from './modalEliminarUsuario';
@@ -102,7 +102,7 @@ const UserItem = ({
               <Text> + Añadir Piscina</Text>
             </Pressable>
             {modalNuevaPiscina && (
-              <ModalAñadirPiscina
+              <ModalAnadirPiscina
                 visible={modalNuevaPiscina}
                 onClose={() => setModalNuevaPiscina(false)}
                 idUsuario={usuario.id}

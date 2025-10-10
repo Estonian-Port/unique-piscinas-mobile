@@ -14,11 +14,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logotipo-unique.png",
         "backgroundColor": "#ffffff"
-      },
-      "androidStatusBar": {
-        "backgroundColor": "#1F2060",
-        "translucent": false,
-        "barStyle": "light-content"
       }
     },
     "web": {
@@ -37,9 +32,8 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/logo-unique.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#ffffff",
-          "enableFullScreenImage_legacy": true
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
         }
       ],
       [

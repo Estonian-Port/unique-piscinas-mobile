@@ -3,10 +3,9 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "strict": true,
+    "jsx": "react-jsx",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
