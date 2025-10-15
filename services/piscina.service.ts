@@ -232,15 +232,15 @@ class PiscinaService {
 
   addProgramacion = async (
     piscinaId: number,
-    esFiltrado: boolean,
     programacion: Programacion
   ): Promise<{ data: Programacion; message: string }> => {
     const programacionToSend = {
       ...programacion,
       dias: programacion.dias.map((d: string) => dayMap[d]),
+      tipo: programacion.tipo.toUpperCase(),
     };
     const response = await api.post(
-      `${PISCINA}/add-programacion/${piscinaId}/${esFiltrado}`,
+      `${PISCINA}/add-programacion/${piscinaId}`,
       programacionToSend
     );
     return { data: response.data.data, message: response.data.message };
@@ -248,15 +248,15 @@ class PiscinaService {
 
   updateProgramacion = async (
     piscinaId: number,
-    esFiltrado: boolean,
     programacion: Programacion
   ): Promise<{ data: Programacion; message: string }> => {
     const programacionToSend = {
       ...programacion,
       dias: programacion.dias.map((d: string) => dayMap[d]),
+      tipo: programacion.tipo.toUpperCase(),
     };
     const response = await api.put(
-      `${PISCINA}/update-programacion/${piscinaId}/${esFiltrado}`,
+      `${PISCINA}/update-programacion/${piscinaId}`,
       programacionToSend
     );
     return { data: response.data.data, message: response.data.message };
@@ -264,11 +264,10 @@ class PiscinaService {
 
   deleteProgramacion = async (
     piscinaId: number,
-    programacionId: number,
-    esFiltrado: boolean
+    programacionId: number
   ): Promise<{ data: Programacion; message: string }> => {
     const response = await api.delete(
-      `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}/${esFiltrado}`
+      `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}`
     );
     return { data: response.data.data, message: response.data.message };
   };
@@ -299,12 +298,11 @@ class PiscinaService {
   getLecturas = async (piscinaId: number): Promise<Lectura[]> => {
     const response = await api.get(`${PISCINA}/lecturas/${piscinaId}`);
     return response.data.data;
-  }
+  };
 
   realizarLectura = async (piscinaId: number): Promise<void> => {
     await api.post(`${PISCINA}/lectura-manual/${piscinaId}`);
   };
-
 }
 
 export const piscinaService = new PiscinaService();

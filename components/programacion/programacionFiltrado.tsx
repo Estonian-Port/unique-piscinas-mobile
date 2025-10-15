@@ -39,7 +39,6 @@ const ProgramacionFiltrado = ({
     try {
       const response = await piscinaService.addProgramacion(
         selectedPool!.id,
-        nuevoCiclo.tipo === ProgramacionType.FILTRADO,
         nuevoCiclo
       );
       Toast.show({
@@ -67,7 +66,6 @@ const ProgramacionFiltrado = ({
     try {
       const response = await piscinaService.updateProgramacion(
         selectedPool!.id,
-        cicloEditado.tipo === ProgramacionType.FILTRADO,
         cicloEditado
       );
       Toast.show({
@@ -89,12 +87,11 @@ const ProgramacionFiltrado = ({
     }
   };
 
-  const handleDeleteCicle = async (cicloId: number, esFiltrado: boolean) => {
+  const handleDeleteCicle = async (cicloId: number) => {
     try {
       const response = await piscinaService.deleteProgramacion(
         selectedPool!.id,
         cicloId,
-        esFiltrado
       );
       Toast.show({
         type: 'success',
