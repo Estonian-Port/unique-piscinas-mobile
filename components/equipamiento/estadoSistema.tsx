@@ -58,16 +58,16 @@ const EstadoSistema = ({ pool }: { pool: PiscinaEquipamiento }) => {
           Última actividad:
         </Text>
         <Text className="font-geist text-base text-text">
-          {pool.ultimaActividad}
+          {pool.ultimaActividad ? pool.ultimaActividad : 'Sin actividad registrada'}
         </Text>
       </View>
 
       <View className="flex-row justify-between items-center w-full mb-5">
         <Text className="font-geist-semi-bold text-text text-base">
-          Próximo ciclo:
+          Próximo ciclo filtrado:
         </Text>
         <Text className="font-geist text-base text-text">
-          {pool.proximoCiclo}
+          {pool.proximoCiclo ? pool.proximoCiclo : 'Sin ciclos programados'}
         </Text>
       </View>
     </ScreenCard>

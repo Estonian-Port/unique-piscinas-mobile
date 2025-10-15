@@ -16,7 +16,7 @@ const Schedule = ({
 }: {
   cicle: Programacion;
   editCicle: (cicloEditado: Programacion) => void;
-  deleteCicle: (cicloId: number, esFiltrado: boolean) => void;
+  deleteCicle: (cicloId: number) => void;
 }) => {
   const daysOfWeek: Day[] = [
     Day.LUNES,
@@ -36,7 +36,7 @@ const Schedule = ({
   };
 
   const deleteSchedule = () => {
-    deleteCicle(cicle.id, cicle.tipo === ProgramacionType.FILTRADO);
+    deleteCicle(cicle.id);
     setOpenModalDelete(false);
   };
 
