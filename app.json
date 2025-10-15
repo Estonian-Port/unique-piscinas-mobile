@@ -1,27 +1,20 @@
 {
   "expo": {
-    "name": "Unique Piscinas",
-    "slug": "unique-piscinas",
+    "name": "Unique",
+    "slug": "unique",
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logotipo-unique.png",
     "scheme": "unique",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
+    "jsEngine": "jsc",
     "android": {
-      "package": "com.unique.piscinas",
+      "package": "com.estonianport.unique",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logotipo-unique.png",
         "backgroundColor": "#ffffff"
-      },
-      "androidStatusBar": {
-        "backgroundColor": "#1F2060",
-        "translucent": false,
-        "barStyle": "light-content"
       }
     },
     "web": {
@@ -29,15 +22,19 @@
       "output": "static",
       "favicon": "./assets/images/logotipo-unique.png"
     },
+    "ios": {
+      "bundleIdentifier": "com.estonianport.unique",
+      "buildNumber": "1",
+      "supportsTablet": true
+    },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/logo-unique.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#ffffff",
-          "enableFullScreenImage_legacy": true
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
         }
       ],
       [
@@ -51,7 +48,8 @@
             "./assets/fonts/Geist-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "assetBundlePatterns": [
       "**/*"

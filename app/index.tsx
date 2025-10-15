@@ -19,8 +19,8 @@ import { Eye, EyeOff, LogIn } from 'react-native-feather';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Index = () => {
-  const [email, setEmail] = useState('leo@unique.com');
-  const [password, setPassword] = useState('asd');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);

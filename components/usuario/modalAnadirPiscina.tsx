@@ -12,7 +12,7 @@ import { administracionService } from '@/services/administracion.service';
 import { PiscinaListItem } from '@/data/domain/piscina';
 import Toast from 'react-native-toast-message';
 
-type ModalAñadirPiscinaProps = {
+type ModalAnadirPiscinaProps = {
   visible: boolean;
   onClose: () => void;
   idUsuario: number;
@@ -21,14 +21,14 @@ type ModalAñadirPiscinaProps = {
   onActualizarPiscinasAsignadas: () => void;
 };
 
-const ModalAñadirPiscina = ({
+const ModalAnadirPiscina = ({
   visible,
   onClose,
   idUsuario,
   nombreUsuario,
   apellidoUsuario,
   onActualizarPiscinasAsignadas
-}: ModalAñadirPiscinaProps) => {
+}: ModalAnadirPiscinaProps) => {
   const [open, setOpen] = useState(false);
   const [piscinaSeleccionadaId, setPiscinaSeleccionadaId] = useState<number | null>(null);
   const [piscinasDisponibles, setPiscinasDisponibles] = useState<PiscinaListItem[]>([]);
@@ -124,4 +124,4 @@ const ModalAñadirPiscina = ({
   );
 };
 
-export default ModalAñadirPiscina;
+export default ModalAnadirPiscina;
