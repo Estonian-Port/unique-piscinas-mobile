@@ -5,7 +5,7 @@ export type ClimaResponse = {
   estadoClima: 'SOLEADO' | 'PARCIAL' | 'NUBLADO' | 'LLUVIA' | 'TORMENTA';
 };
 
-const API_URL = 'http://localhost:8082/clima/latest';
+const API_URL = 'https://api.clima.estonianport.com.ar/clima/latest';
 
 export const climaService = {
   async getClima(): Promise<ClimaResponse> {
