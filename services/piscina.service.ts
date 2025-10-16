@@ -324,6 +324,14 @@ class PiscinaService {
     return { data: response.data.data, message: response.data.message };
   };
 
+  encenderLucesManual = async (piscinaId: number): Promise<void> => {
+    await api.post(`${PISCINA}/encender-luces-manual/${piscinaId}`);
+  };
+
+  apagarLucesManual = async (piscinaId: number): Promise<void> => {
+    await api.post(`${PISCINA}/apagar-luces-manual/${piscinaId}`);
+  };
+
 }
 
 export const piscinaService = new PiscinaService();
