@@ -35,11 +35,52 @@ const ProgramacionIluminacion = ({
 
   const hasCicles = programacion.length > 0;
 
+  const handleLucesManual = (value: boolean) => {
+    if (!selectedPool) return;
+    if (value) {
+      try {
+        piscinaService.encenderLucesManual(selectedPool.id);
+        Toast.show({
+          type: 'success',
+          text1: 'Luces activadas',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'No se han podido activar las luces',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    } else {
+      try {
+        piscinaService.apagarLucesManual(selectedPool.id);
+        Toast.show({
+          type: 'success',
+          text1: 'Luces desactivadas',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'No se han podido desactivar las luces',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    }
+    setIsManual(value);
+  };
+
   const handleAddCicle = async (nuevoCiclo: Programacion) => {
     try {
       const response = await piscinaService.addProgramacion(
         selectedPool!.id,
-        nuevoCiclo.tipo === ProgramacionType.FILTRADO,
         nuevoCiclo
       );
       Toast.show({
@@ -67,7 +108,6 @@ const ProgramacionIluminacion = ({
     try {
       const response = await piscinaService.updateProgramacion(
         selectedPool!.id,
-        cicloEditado.tipo === ProgramacionType.FILTRADO,
         cicloEditado
       );
       Toast.show({
@@ -89,12 +129,11 @@ const ProgramacionIluminacion = ({
     }
   };
 
-  const handleDeleteCicle = async (cicloId: number, esFiltrado: boolean) => {
+  const handleDeleteCicle = async (cicloId: number) => {
     try {
       const response = await piscinaService.deleteProgramacion(
         selectedPool!.id,
-        cicloId,
-        esFiltrado
+        cicloId
       );
       Toast.show({
         type: 'success',
@@ -135,7 +174,7 @@ const ProgramacionIluminacion = ({
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
           thumbColor={isManual ? '#fcdb99' : '#ffffff'}
           ios_backgroundColor="#d3d3d3"
-          onValueChange={() => setIsManual(!isManual)}
+          onValueChange={(value) => handleLucesManual(value)}
           value={isManual}
         />
       </View>
@@ -153,15 +192,13 @@ const ProgramacionIluminacion = ({
         >
           <Text className="font-geist text-text text-base">+ Añadir</Text>
         </Pressable>
-        {modalVisible && (
-          <ModalProgramacion
-            visible={modalVisible}
-            onClose={() => setModalVisible(false)}
-            onSave={handleAddCicle}
-            cicle={programacionVacia}
-            hasCicleMode={false}
-          />
-        )}
+        <ModalProgramacion
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          onSave={handleAddCicle}
+          cicle={programacionVacia}
+          hasCicleMode={false}
+        />
       </View>
 
       {hasCicles ? (
