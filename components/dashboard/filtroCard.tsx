@@ -5,7 +5,8 @@ import { Filtro, PiscinaEquipos } from '@/data/domain/piscina';
 import ModalEditarFiltro from './modalEditarFiltro';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
-import { Edit2, Filter } from 'react-native-feather';
+import { Edit2, Filter, RefreshCw } from 'react-native-feather';
+import ModalResetearContador from './modalResetearContador';
 
 const FiltroCard = ({
   filtro,
@@ -17,6 +18,31 @@ const FiltroCard = ({
   actualizarPiscina: () => void;
 }) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
+  const [modalResetOpen, setModalResetOpen] = useState(false);
+
+  const resetearContadorFiltro = async () => {
+    try {
+      const response = await piscinaService.resetearContadorFiltro(
+        piscina.id,
+        filtro.id
+      );
+      setModalResetOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Contador reseteado',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al resetear el contador',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
+  };
 
   const handleSaveFiltro = async (filtroEditado: Filtro) => {
     try {
@@ -89,6 +115,19 @@ const FiltroCard = ({
         </Text>
       </View>
 
+      {filtro.vidaRestante !== undefined && filtro.vidaRestante <= 3 && (
+        <View className="flex-row items-center justify-between mb-1">
+          <Text className="text-text font-geist text-base">
+            Vida restante aprox.:
+          </Text>
+          <Text className="font-geist-semi-bold tex-text text-base">
+            {filtro.vidaRestante == 1
+              ? '1 mes'
+              : `${filtro.vidaRestante} meses`}
+          </Text>
+        </View>
+      )}
+
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
@@ -101,14 +140,28 @@ const FiltroCard = ({
           </Text>
         </View>
       </View>
-      {modalEditOpen && (
+      {filtro.vidaRestante !== undefined && filtro.vidaRestante <= 3 && (
+        <Pressable
+          className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
+          onPress={() => setModalResetOpen(true)}
+        >
+          <RefreshCw color={'white'} height={20} width={20} />
+          <Text className="text-white font-geist text-base ml-2">
+            Resetear contador
+          </Text>
+        </Pressable>
+      )}
         <ModalEditarFiltro
           visible={modalEditOpen}
           filtro={filtro}
           onClose={() => setModalEditOpen(false)}
           onSave={handleSaveFiltro}
         />
-      )}
+        <ModalResetearContador
+          visible={modalResetOpen}
+          onSave={resetearContadorFiltro}
+          onClose={() => setModalResetOpen(false)}
+        />
     </ScreenCard>
   );
 };

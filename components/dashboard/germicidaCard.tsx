@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 import { Delete, Edit2, RefreshCw } from 'react-native-feather';
+import ModalResetearContador from './modalResetearContador';
 
 const GermicidaCard = ({
   germicida,
@@ -19,6 +20,31 @@ const GermicidaCard = ({
 }) => {
   const [modalEditOpen, setModalEditOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [modalResetOpen, setModalResetOpen] = useState(false);
+
+  const resetearContadorGermicida = async () => {
+    try {
+      const response = await piscinaService.resetearContadorGermicida(
+        piscina.id,
+        germicida.id
+      );
+      setModalResetOpen(false);
+      await actualizarPiscina();
+      Toast.show({
+        type: 'success',
+        text1: 'Contador reseteado',
+        text2: response.message,
+        position: 'bottom',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error al resetear el contador',
+        text2: 'Intente nuevamente más tarde.',
+        position: 'bottom',
+      });
+    }
+  };
 
   const handleSaveGermicida = async (germicidaEditado: Germicida) => {
     try {
@@ -46,7 +72,10 @@ const GermicidaCard = ({
 
   const handleDeleteGermicida = async () => {
     try {
-      const response = await piscinaService.deleteGermicida(piscina.id, germicida.id);
+      const response = await piscinaService.deleteGermicida(
+        piscina.id,
+        germicida.id
+      );
       setModalDeleteOpen(false);
       await actualizarPiscina();
       Toast.show({
@@ -72,7 +101,7 @@ const GermicidaCard = ({
           <Text className="text-text font-geist-semi-bold text-lg">
             {germicida.tipo}
           </Text>
-          <View className='flex-row items-center'>
+          <View className="flex-row items-center">
             <Pressable className="ml-2" onPress={() => setModalEditOpen(true)}>
               <Edit2 />
             </Pressable>
@@ -119,28 +148,32 @@ const GermicidaCard = ({
           {germicida.vidaRestante} hs restantes - {germicida.estado}
         </Text>
       </View>
-      <Pressable className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2">
+      <Pressable
+        className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
+        onPress={() => setModalResetOpen(true)}
+      >
         <RefreshCw color={'white'} height={20} width={20} />
         <Text className="text-white font-geist text-base ml-2">
           Resetear contador
         </Text>
       </Pressable>
-      {modalEditOpen && (
-        <ModalEditarGermicida
-          visible={modalEditOpen}
-          germicida={germicida}
-          onClose={() => setModalEditOpen(false)}
-          onSave={handleSaveGermicida}
-        />
-      )}
-      {modalDeleteOpen && (
-        <ModalEliminarEquipamiento
-          visible={modalDeleteOpen}
-          equipamiento={`Germicida ${germicida.tipo}`}
-          onClose={() => setModalDeleteOpen(false)}
-          onDelete={handleDeleteGermicida}
-        />
-      )}
+      <ModalEditarGermicida
+        visible={modalEditOpen}
+        germicida={germicida}
+        onClose={() => setModalEditOpen(false)}
+        onSave={handleSaveGermicida}
+      />
+      <ModalEliminarEquipamiento
+        visible={modalDeleteOpen}
+        equipamiento={`Germicida ${germicida.tipo}`}
+        onClose={() => setModalDeleteOpen(false)}
+        onDelete={handleDeleteGermicida}
+      />
+      <ModalResetearContador
+        visible={modalResetOpen}
+        onSave={resetearContadorGermicida}
+        onClose={() => setModalResetOpen(false)}
+      />
     </ScreenCard>
   );
 };
