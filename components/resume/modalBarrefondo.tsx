@@ -6,7 +6,6 @@ import {
   Pressable,
   Platform,
 } from 'react-native';
-import React from 'react';
 import { entradaAgua, funcionFiltro } from '@/data/domain/piscina';
 
 const ModalBarrefondo = ({

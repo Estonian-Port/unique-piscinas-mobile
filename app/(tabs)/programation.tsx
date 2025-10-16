@@ -1,5 +1,4 @@
 import { View, ScrollView, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
 import { ScreenTabs } from '@/components/utiles/Screen'
 import ProgramacionIluminacion from '@/components/programacion/programacionIluminacion'
 import ProgramacionFiltrado from '@/components/programacion/programacionFiltrado'
@@ -9,6 +8,7 @@ import { useAuth } from '@/context/authContext'
 import WebTabBar from '@/components/utiles/webTabBar'
 import Header from '@/components/utiles/header'
 import { piscinaService } from '@/services/piscina.service'
+import { useEffect, useState } from 'react'
 
 const Programation = () => {
 
