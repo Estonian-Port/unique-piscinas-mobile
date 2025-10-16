@@ -108,43 +108,6 @@ const ModalEditarFiltro = ({
                 </Text>
 
                 <Text className="font-geist text-text text-base mt-3">
-                  Tipo
-                </Text>
-                <RadioButton
-                  value={'Arena'}
-                  label={'Arena'}
-                  selected={values.tipoFiltro === 'Arena'}
-                  onPress={(value) => {
-                    setFieldValue('tipoFiltro', value);
-                    setFieldTouched('tipoFiltro', true);
-                  }}
-                />
-                <RadioButton
-                  value={'Vidrio'}
-                  label={'Vidrio'}
-                  selected={values.tipoFiltro === 'Vidrio'}
-                  onPress={(value) => {
-                    setFieldValue('tipoFiltro', value);
-                    setFieldTouched('tipoFiltro', true);
-                  }}
-                />
-                <RadioButton
-                  value={'Cartucho'}
-                  label={'Cartucho'}
-                  selected={values.tipoFiltro === 'Cartucho'}
-                  onPress={(value) => {
-                    setFieldValue('tipoFiltro', value);
-                    setFieldTouched('tipoFiltro', true);
-                  }}
-                />
-
-                {touched.tipoFiltro && errors.tipoFiltro && (
-                  <Text className="text-red-500 text-sm mt-1">
-                    {errors.tipoFiltro}
-                  </Text>
-                )}
-
-                <Text className="font-geist text-text text-base mt-3">
                   Marca
                 </Text>
                 <DropDownPicker

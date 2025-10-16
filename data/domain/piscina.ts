@@ -137,6 +137,7 @@ export type Filtro = {
   activo: boolean;
   datoExtra?: number;
   tiempoVidaUtil?: number;
+  vidaRestante?: number;
 };
 
 //Esto se usa para traer datos del back

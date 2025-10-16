@@ -45,7 +45,11 @@ const EquipmentItem = ({
   estado,
 }: {
   tipo: string;
-  estado: 'Operativo' | 'Alerta' | 'Atención urgente' | 'Inactivo';
+  estado:
+    | 'Operativo'
+    | 'Requiere revisión'
+    | 'Reemplazo urgente'
+    | 'Mantenimiento';
 }) => {
   const getIcon = () => {
     switch (tipo) {
@@ -65,11 +69,13 @@ const EquipmentItem = ({
   const getStatusColor = () => {
     switch (estado) {
       case 'Operativo':
-        return '#4CAF50';
-      case 'Alerta':
-        return '#FF9800';
-      case 'Atención urgente':
-        return '#F44336';
+        return '#4CAF50'; // Verde
+      case 'Requiere revisión':
+        return '#FF9800'; // Naranja
+      case 'Reemplazo urgente':
+        return '#F44336'; // Rojo
+      case 'Mantenimiento':
+        return '#9E9E9E'; // Gris
       default:
         return '#9E9E9E';
     }
@@ -242,9 +248,9 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
                   estado={
                     sistema.estado as
                       | 'Operativo'
-                      | 'Inactivo'
-                      | 'Atención urgente'
-                      | 'Alerta'
+                      | 'Requiere revisión'
+                      | 'Reemplazo urgente'
+                      | 'Mantenimiento'
                   }
                 />
               </View>

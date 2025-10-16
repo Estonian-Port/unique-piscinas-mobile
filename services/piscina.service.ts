@@ -303,6 +303,27 @@ class PiscinaService {
   realizarLectura = async (piscinaId: number): Promise<void> => {
     await api.post(`${PISCINA}/lectura-manual/${piscinaId}`);
   };
+
+  resetearContadorFiltro = async (
+    piscinaId: number,
+    filtroId: number
+  ): Promise<{ data: Filtro; message: string }> => {
+    const response = await api.post(
+      `${PISCINA}/reset-contador-filtro/${piscinaId}/${filtroId}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
+  resetearContadorGermicida = async (
+    piscinaId: number,
+    germicidaId: number
+  ): Promise<{ data: Filtro; message: string }> => {
+    const response = await api.post(
+      `${PISCINA}/reset-contador-germicida/${piscinaId}/${germicidaId}`
+    );
+    return { data: response.data.data, message: response.data.message };
+  };
+
 }
 
 export const piscinaService = new PiscinaService();
