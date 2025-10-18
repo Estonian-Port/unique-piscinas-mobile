@@ -277,7 +277,7 @@ class PiscinaService {
     entradaAgua: entradaAgua[]
   ): Promise<{ data: PiscinaResume; message: string }> => {
     const response = await api.put(
-      `${PISCINA}/update-entrada-agua/${piscinaId}`,
+      `/estado-piscina/update-entrada-agua/${piscinaId}`,
       entradaAgua
     );
     return { data: response.data.data, message: response.data.message };
@@ -288,7 +288,7 @@ class PiscinaService {
     funcionFiltro: funcionFiltro
   ): Promise<{ data: PiscinaResume; message: string }> => {
     const response = await api.put(
-      `${PISCINA}/update-funcion-filtro/${piscinaId}`,
+      `/estado-piscina/update-funcion-filtro/${piscinaId}`,
       { funcion: funcionFiltro },
       { headers: { 'Content-Type': 'application/json' } }
     );
@@ -325,11 +325,11 @@ class PiscinaService {
   };
 
   encenderLucesManual = async (piscinaId: number): Promise<void> => {
-    await api.post(`${PISCINA}/encender-luces-manual/${piscinaId}`);
+    await api.post(`/estado-piscina/encender-luces-manuales/${piscinaId}`);
   };
 
   apagarLucesManual = async (piscinaId: number): Promise<void> => {
-    await api.post(`${PISCINA}/apagar-luces-manual/${piscinaId}`);
+    await api.post(`/estado-piscina/apagar-luces-manuales/${piscinaId}`);
   };
 
 }
