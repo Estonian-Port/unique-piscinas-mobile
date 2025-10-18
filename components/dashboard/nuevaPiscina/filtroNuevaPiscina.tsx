@@ -10,24 +10,10 @@ import { Formik } from 'formik';
 
 export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
 
-export const marcasFiltro = [
-  { id: 1, name: 'Astral' },
-  { id: 2, name: 'Hayward' },
-  { id: 3, name: 'Pentair' },
-  { id: 4, name: 'Otra' },
-];
-
-export const modelosFiltro = [
-  { id: 1, name: 'Aster' },
-  { id: 2, name: 'Cantabric' },
-  { id: 3, name: 'Berlin' },
-  { id: 4, name: 'Otro' },
-];
-
 const validationSchema = Yup.object().shape({
   tipoFiltro: Yup.string().required('Seleccione un tipo de filtro'),
-  marcaFiltro: Yup.string().required('Seleccione una marca de filtro'),
-  modeloFiltro: Yup.string().required('Seleccione un modelo de filtro'),
+  marcaFiltro: Yup.string().required('Ingrese la marca del filtro'),
+  modeloFiltro: Yup.string().required('Ingrese el modelo del filtro'),
   diametro: Yup.number()
     .required('Ingrese el diámetro del filtro')
     .typeError('El diámetro debe ser un número')
@@ -55,8 +41,6 @@ const FiltroNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const [openMarcaFiltro, setOpenMarcaFiltro] = useState(false);
-  const [openModeloFiltro, setOpenModeloFiltro] = useState(false);
   const formikRef = useRef<any>(null);
 
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
@@ -173,47 +157,12 @@ const FiltroNuevaPiscina = ({
             )}
 
             <Text className="font-geist text-text text-base mt-3">Marca</Text>
-            <DropDownPicker
-              open={openMarcaFiltro}
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.marcaFiltro}
-              items={marcasFiltro.map((item) => ({
-                label: item.name,
-                value: item.name,
-              }))}
-              setOpen={setOpenMarcaFiltro}
-              setValue={(callback) => {
-                const val = callback(values.marcaFiltro);
-                setFieldValue('marcaFiltro', val);
-              }}
-              placeholder="Seleccione una marca"
-              zIndex={3000}
-              zIndexInverse={1000}
-              onOpen={() => setOpenModeloFiltro(false)}
-              listMode="SCROLLVIEW"
-              style={{
-                borderColor: '#d1d5db', // un violeta más notorio
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#fff',
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-              }}
-              dropDownContainerStyle={{
-                borderColor: '#d1d5db',
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#f3f4f6',
-              }}
-              selectedItemContainerStyle={{
-                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-              }}
-              selectedItemLabelStyle={{
-                fontWeight: 'bold',
-                color: '#7c3aed',
-              }}
-              placeholderStyle={{
-                color: '#333333',
-              }}
+              onChangeText={handleChange('marcaFiltro')}
+              onBlur={handleBlur('marcaFiltro')}
+              placeholder="Ingrese la marca del filtro"
             />
             {errors.marcaFiltro && touched.marcaFiltro && (
               <Text className="text-red-500 text-sm mt-1">
@@ -222,47 +171,12 @@ const FiltroNuevaPiscina = ({
             )}
 
             <Text className="font-geist text-text text-base mt-3">Modelo</Text>
-            <DropDownPicker
-              open={openModeloFiltro}
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.modeloFiltro}
-              items={modelosFiltro.map((item) => ({
-                label: item.name,
-                value: item.name,
-              }))}
-              setOpen={setOpenModeloFiltro}
-              setValue={(callback) => {
-                const val = callback(values.modeloFiltro);
-                setFieldValue('modeloFiltro', val);
-              }}
-              placeholder="Seleccione un modelo"
-              zIndex={2000}
-              zIndexInverse={2000}
-              onOpen={() => setOpenMarcaFiltro(false)}
-              listMode="SCROLLVIEW"
-              style={{
-                borderColor: '#d1d5db', // un violeta más notorio
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#fff',
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-              }}
-              dropDownContainerStyle={{
-                borderColor: '#d1d5db',
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#f3f4f6',
-              }}
-              selectedItemContainerStyle={{
-                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-              }}
-              selectedItemLabelStyle={{
-                fontWeight: 'bold',
-                color: '#7c3aed',
-              }}
-              placeholderStyle={{
-                color: '#333333',
-              }}
+              onChangeText={handleChange('modeloFiltro')}
+              onBlur={handleBlur('modeloFiltro')}
+              placeholder="Ingrese el modelo del filtro"
             />
             {errors.modeloFiltro && touched.modeloFiltro && (
               <Text className="text-red-500 text-sm mt-1">

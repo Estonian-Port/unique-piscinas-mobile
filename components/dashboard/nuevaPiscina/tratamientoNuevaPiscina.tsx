@@ -8,26 +8,10 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Activity, Database, Zap } from 'react-native-feather';
 
-export const marcasUV = [
-  { id: 1, name: 'Astral' },
-  { id: 2, name: 'Hayward' },
-  { id: 3, name: 'Otra' },
-];
-
-export const marcasIonizador = [
-  { id: 1, name: 'Copper Ionizer' },
-  { id: 2, name: 'Otra' },
-];
-
-export const marcasTrasductor = [
-  { id: 1, name: 'Sonic Wave' },
-  { id: 2, name: 'Otra' },
-];
-
 const validationSchema = Yup.object().shape({
   uvMarca: Yup.string().when('uvSwitch', {
     is: true,
-    then: (schema) => schema.required('Seleccione una marca de lámpara UV'),
+    then: (schema) => schema.required('Ingrese la marca de la lámpara UV'),
     otherwise: (schema) => schema.notRequired(),
   }),
   uvPotencia: Yup.number().when('uvSwitch', {
@@ -41,7 +25,7 @@ const validationSchema = Yup.object().shape({
   }),
   ionizadorMarca: Yup.string().when('ionizadorSwitch', {
     is: true,
-    then: (schema) => schema.required('Seleccione una marca de ionizador'),
+    then: (schema) => schema.required('Ingrese la marca del ionizador'),
     otherwise: (schema) => schema.notRequired(),
   }),
   ionizadorElectrodos: Yup.number().when('ionizadorSwitch', {
@@ -55,7 +39,7 @@ const validationSchema = Yup.object().shape({
   }),
   trasductorMarca: Yup.string().when('trasductorSwitch', {
     is: true,
-    then: (schema) => schema.required('Seleccione una marca del trasductor'),
+    then: (schema) => schema.required('Ingrese la marca del trasductor'),
     otherwise: (schema) => schema.notRequired(),
   }),
   trasductorPotencia: Yup.number().when('trasductorSwitch', {
@@ -116,10 +100,6 @@ const TratamientoNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  const [openMarcaUV, setOpenMarcaUV] = useState(false);
-  const [openMarcaIonizador, setOpenMarcaIonizador] = useState(false);
-  const [openMarcaTrasductor, setOpenMarcaTrasductor] = useState(false);
-
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
     const sistemaGermicida = nuevaPiscina.sistemaGermicida || [];
@@ -318,52 +298,13 @@ const TratamientoNuevaPiscina = ({
                 {values.uvSwitch && (
                   <View className="items-start w-4/5">
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaUV}
-                      value={values.uvMarca}
-                      items={marcasUV.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaUV}
-                      setValue={(callback) => {
-                        const val = callback(values.uvMarca);
-                        setFieldValue('uvMarca', val);
-                        setFieldTouched('uvMarca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      onOpen={() => {
-                        setOpenMarcaIonizador(false);
-                        setOpenMarcaTrasductor(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
-                    />
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.uvMarca}
+                        onChangeText={handleChange('uvMarca')}
+                        onBlur={handleBlur('uvMarca')}
+                        placeholder="Ingrese la marca de la lámpara UV"
+                      />
                     {errors.uvMarca && touched.uvMarca && (
                       <Text className="text-red-500 text-xs mt-1">
                         {errors.uvMarca}
@@ -429,52 +370,13 @@ const TratamientoNuevaPiscina = ({
                 {values.ionizadorSwitch && (
                   <View className="items-start w-4/5">
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaIonizador}
-                      value={values.ionizadorMarca}
-                      items={marcasIonizador.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaIonizador}
-                      setValue={(callback) => {
-                        const val = callback(values.ionizadorMarca);
-                        setFieldValue('ionizadorMarca', val);
-                        setFieldTouched('ionizadorMarca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={2000}
-                      zIndexInverse={2000}
-                      onOpen={() => {
-                        setOpenMarcaUV(false);
-                        setOpenMarcaTrasductor(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
-                    />
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.ionizadorMarca}
+                        onChangeText={handleChange('ionizadorMarca')}
+                        onBlur={handleBlur('ionizadorMarca')}
+                        placeholder="Ingrese la marca del ionizador"
+                      />
                     {errors.ionizadorMarca && touched.ionizadorMarca && (
                       <Text className="text-red-500 text-xs mt-1">
                         {errors.ionizadorMarca}
@@ -542,52 +444,13 @@ const TratamientoNuevaPiscina = ({
                 {values.trasductorSwitch && (
                   <View className="items-start w-4/5 my-2">
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaTrasductor}
-                      value={values.trasductorMarca}
-                      items={marcasTrasductor.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaTrasductor}
-                      setValue={(callback) => {
-                        const val = callback(values.trasductorMarca);
-                        setFieldValue('trasductorMarca', val);
-                        setFieldTouched('trasductorMarca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={1000}
-                      zIndexInverse={3000}
-                      onOpen={() => {
-                        setOpenMarcaUV(false);
-                        setOpenMarcaIonizador(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
-                    />
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
+                        value={values.trasductorMarca}
+                        onChangeText={handleChange('trasductorMarca')}
+                        onBlur={handleBlur('trasductorMarca')}
+                        placeholder="Ingrese la marca del transductor"
+                      />
                     {errors.trasductorMarca && touched.trasductorMarca && (
                       <Text className="text-red-500 text-xs mt-1">
                         {errors.trasductorMarca}

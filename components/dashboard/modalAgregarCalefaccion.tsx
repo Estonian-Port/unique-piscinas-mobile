@@ -140,9 +140,9 @@ const ModalAgregarCalefaccion = ({
                   />
 
                   <RadioButton
-                    value={'Bomba a gas'}
-                    label={'Bomba a gas'}
-                    selected={values.tipoCalefaccion === 'Bomba a gas'}
+                    value={'Calentador de gas'}
+                    label={'Calentador de gas'}
+                    selected={values.tipoCalefaccion === 'Calentador de gas'}
                     onPress={(value) => {
                       setFieldValue('tipoCalefaccion', value);
                       setFieldTouched('tipoCalefaccion', true);

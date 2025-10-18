@@ -9,7 +9,7 @@ import { Activity, Database, Thermometer, Zap } from 'react-native-feather';
 
 export type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
 export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
-export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
+export type TipoCalefaccion = 'Bomba de calor' | 'Calentador de gas';
 
 export const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -353,9 +353,9 @@ const EquiposNuevaPiscina = ({
             />
 
             <RadioButton
-              value={'Bomba a gas'}
-              label={'Bomba a gas'}
-              selected={tipoCalefaccion == 'Bomba a gas'}
+              value={'Calentador de gas'}
+              label={'Calentador de gas'}
+              selected={tipoCalefaccion == 'Calentador de gas'}
               onPress={(value) => setTipoCalefaccion(value)}
             />
 

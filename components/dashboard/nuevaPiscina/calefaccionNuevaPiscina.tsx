@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Thermometer } from 'react-native-feather';
 
-export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
+export type TipoCalefaccion = 'Bomba de calor' | 'Calentador de gas';
 
 const validationSchema = Yup.object().shape({
   tipoCalefaccion: Yup.string().when('tieneCalefaccion', {
@@ -59,7 +59,7 @@ const CalefaccionNuevaPiscina = ({
 
   const parsearTipo = (tipo: string): string => {
     if (tipo === 'Bomba de calor') return 'BOMBA_CALOR';
-    if (tipo === 'Bomba a gas') return 'CALENTADOR_GAS';
+    if (tipo === 'Calentador de gas') return 'CALENTADOR_GAS';
     return tipo;
   };
 
@@ -192,9 +192,9 @@ const CalefaccionNuevaPiscina = ({
                 />
 
                 <RadioButton
-                  value={'Bomba a gas'}
-                  label={'Bomba a gas'}
-                  selected={values.tipoCalefaccion === 'Bomba a gas'}
+                  value={'Calentador de gas'}
+                  label={'Calentador de gas'}
+                  selected={values.tipoCalefaccion === 'Calentador de gas'}
                   onPress={(value) => {
                     setFieldValue('tipoCalefaccion', value);
                     setFieldTouched('tipoCalefaccion', true);

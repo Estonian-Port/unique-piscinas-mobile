@@ -114,7 +114,7 @@ class PiscinaService {
   ): Promise<{ data: Calefaccion; message: string }> => {
     let tipoEnum = calefaccion.tipo;
     if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
-    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
+    if (tipoEnum === 'Calentador de gas') tipoEnum = 'CALENTADOR_GAS';
 
     const calefaccionToSend = { ...calefaccion, tipo: tipoEnum };
 
@@ -161,7 +161,7 @@ class PiscinaService {
   ): Promise<{ data: Calefaccion; message: string }> => {
     let tipoEnum = calefaccion.tipo;
     if (tipoEnum === 'Bomba de calor') tipoEnum = 'BOMBA_CALOR';
-    if (tipoEnum === 'Bomba a gas') tipoEnum = 'CALENTADOR_GAS';
+    if (tipoEnum === 'Calentador de gas') tipoEnum = 'CALENTADOR_GAS';
 
     const calefaccionDto = { ...calefaccion, tipo: tipoEnum };
 

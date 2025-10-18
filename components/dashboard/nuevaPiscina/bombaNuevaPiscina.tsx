@@ -8,20 +8,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
 
-export const marcasBomba = [
-  { id: 1, name: 'Astral' },
-  { id: 2, name: 'Hayward' },
-  { id: 3, name: 'Pentair' },
-  { id: 4, name: 'Otra' },
-];
-
-export const modelosBomba = [
-  { id: 1, name: 'Victoria Plus' },
-  { id: 2, name: 'Sena' },
-  { id: 3, name: 'Glass Plus' },
-  { id: 4, name: 'Otro' },
-];
-
 const validationSchema = Yup.object().shape({
   marcaBombaPrimaria: Yup.string().required('Seleccione una marca de bomba'),
   modeloBombaPrimaria: Yup.string().required('Seleccione un modelo de bomba'),
@@ -33,12 +19,12 @@ const validationSchema = Yup.object().shape({
   // Validación condicional para la segunda bomba
   marcaBombaSecundaria: Yup.string().when('tieneDobleBomba', {
     is: true,
-    then: (schema) => schema.required('Seleccione una marca de bomba'),
+    then: (schema) => schema.required('Ingrese la marca de la bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
   modeloBombaSecundaria: Yup.string().when('tieneDobleBomba', {
     is: true,
-    then: (schema) => schema.required('Seleccione un modelo de bomba'),
+    then: (schema) => schema.required('Ingrese el modelo de la bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
   potenciaCVSecundaria: Yup.number().when('tieneDobleBomba', {
@@ -66,14 +52,6 @@ const BombaNuevaPiscina = ({
   nuevaPiscina: PiscinaNueva;
   setNuevaPiscina: (piscina: PiscinaNueva) => void;
 }) => {
-  // Estados separados para cada dropdown
-  const [openMarcaBombaPrimaria, setOpenMarcaBombaPrimaria] = useState(false);
-  const [openModeloBombaPrimaria, setOpenModeloBombaPrimaria] = useState(false);
-  const [openMarcaBombaSecundaria, setOpenMarcaBombaSecundaria] =
-    useState(false);
-  const [openModeloBombaSecundaria, setOpenModeloBombaSecundaria] =
-    useState(false);
-
   const formikRef = useRef<any>(null);
 
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
@@ -167,46 +145,12 @@ const BombaNuevaPiscina = ({
             </Text>
 
             <Text className="font-geist text-text text-base mt-3">Marca</Text>
-            <DropDownPicker
-              open={openMarcaBombaPrimaria}
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.marcaBombaPrimaria}
-              items={marcasBomba.map((item) => ({
-                label: item.name,
-                value: item.name,
-              }))}
-              setOpen={setOpenMarcaBombaPrimaria}
-              setValue={(callback) => {
-                const val = callback(values.marcaBombaPrimaria);
-                setFieldValue('marcaBombaPrimaria', val);
-              }}
-              placeholder="Seleccione una marca"
-              zIndex={4000}
-              zIndexInverse={1000}
-              listMode="SCROLLVIEW"
-              style={{
-                borderColor: '#d1d5db', // un violeta más notorio
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#fff',
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-              }}
-              dropDownContainerStyle={{
-                borderColor: '#d1d5db',
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#f3f4f6',
-              }}
-              selectedItemContainerStyle={{
-                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-              }}
-              selectedItemLabelStyle={{
-                fontWeight: 'bold',
-                color: '#7c3aed',
-              }}
-              placeholderStyle={{
-                color: '#333333',
-              }}
+              onChangeText={handleChange('marcaBombaPrimaria')}
+              onBlur={handleBlur('marcaBombaPrimaria')}
+              placeholder="Ingrese la marca de la bomba"
             />
             {touched.marcaBombaPrimaria && errors.marcaBombaPrimaria && (
               <Text className="text-red-500 mt-2">
@@ -215,46 +159,12 @@ const BombaNuevaPiscina = ({
             )}
 
             <Text className="font-geist text-text text-base mt-3">Modelo</Text>
-            <DropDownPicker
-              open={openModeloBombaPrimaria}
+            <TextInput
+              className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
               value={values.modeloBombaPrimaria}
-              items={modelosBomba.map((item) => ({
-                label: item.name,
-                value: item.name,
-              }))}
-              setOpen={setOpenModeloBombaPrimaria}
-              setValue={(callback) => {
-                const val = callback(values.modeloBombaPrimaria);
-                setFieldValue('modeloBombaPrimaria', val);
-              }}
-              placeholder="Seleccione un modelo"
-              zIndex={3000}
-              zIndexInverse={2000}
-              listMode="SCROLLVIEW"
-              style={{
-                borderColor: '#d1d5db', // un violeta más notorio
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#fff',
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-              }}
-              dropDownContainerStyle={{
-                borderColor: '#d1d5db',
-                borderWidth: 2,
-                borderRadius: 6,
-                backgroundColor: '#f3f4f6',
-              }}
-              selectedItemContainerStyle={{
-                backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-              }}
-              selectedItemLabelStyle={{
-                fontWeight: 'bold',
-                color: '#7c3aed',
-              }}
-              placeholderStyle={{
-                color: '#333333',
-              }}
+              onChangeText={handleChange('modeloBombaPrimaria')}
+              onBlur={handleBlur('modeloBombaPrimaria')}
+              placeholder="Ingrese el modelo de la bomba"
             />
             {touched.modeloBombaPrimaria && errors.modeloBombaPrimaria && (
               <Text className="text-red-500 mt-2">
@@ -307,46 +217,14 @@ const BombaNuevaPiscina = ({
                 <Text className="font-geist text-text text-base mt-3">
                   Marca
                 </Text>
-                <DropDownPicker
-                  open={openMarcaBombaSecundaria}
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   value={values.marcaBombaSecundaria}
-                  items={marcasBomba.map((item) => ({
-                    label: item.name,
-                    value: item.name,
-                  }))}
-                  setOpen={setOpenMarcaBombaSecundaria}
-                  setValue={(callback) => {
-                    const val = callback(values.marcaBombaSecundaria);
-                    setFieldValue('marcaBombaSecundaria', val);
-                  }}
-                  placeholder="Seleccione una marca"
-                  zIndex={2000}
-                  zIndexInverse={3000}
-                  style={{
-                    borderColor: '#d1d5db', // un violeta más notorio
-                    borderWidth: 2,
-                    borderRadius: 6,
-                    backgroundColor: '#fff',
-                    paddingVertical: 12,
-                    paddingHorizontal: 10,
-                  }}
-                  dropDownContainerStyle={{
-                    borderColor: '#d1d5db',
-                    borderWidth: 2,
-                    borderRadius: 6,
-                    backgroundColor: '#f3f4f6',
-                  }}
-                  selectedItemContainerStyle={{
-                    backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                  }}
-                  selectedItemLabelStyle={{
-                    fontWeight: 'bold',
-                    color: '#7c3aed',
-                  }}
-                  placeholderStyle={{
-                    color: '#333333',
-                  }}
+                  onChangeText={handleChange('marcaBombaSecundaria')}
+                  onBlur={handleBlur('marcaBombaSecundaria')}
+                  placeholder="Ingrese la marca de la bomba"
                 />
+
                 {touched.marcaBombaSecundaria &&
                   errors.marcaBombaSecundaria && (
                     <Text className="text-red-500 mt-2">
@@ -357,45 +235,12 @@ const BombaNuevaPiscina = ({
                 <Text className="font-geist text-text text-base mt-3">
                   Modelo
                 </Text>
-                <DropDownPicker
-                  open={openModeloBombaSecundaria}
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   value={values.modeloBombaSecundaria}
-                  items={modelosBomba.map((item) => ({
-                    label: item.name,
-                    value: item.name,
-                  }))}
-                  setOpen={setOpenModeloBombaSecundaria}
-                  setValue={(callback) => {
-                    const val = callback(values.modeloBombaSecundaria);
-                    setFieldValue('modeloBombaSecundaria', val);
-                  }}
-                  placeholder="Seleccione un modelo"
-                  zIndex={1000}
-                  zIndexInverse={4000}
-                  style={{
-                    borderColor: '#d1d5db', // un violeta más notorio
-                    borderWidth: 2,
-                    borderRadius: 6,
-                    backgroundColor: '#fff',
-                    paddingVertical: 12,
-                    paddingHorizontal: 10,
-                  }}
-                  dropDownContainerStyle={{
-                    borderColor: '#d1d5db',
-                    borderWidth: 2,
-                    borderRadius: 6,
-                    backgroundColor: '#f3f4f6',
-                  }}
-                  selectedItemContainerStyle={{
-                    backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                  }}
-                  selectedItemLabelStyle={{
-                    fontWeight: 'bold',
-                    color: '#7c3aed',
-                  }}
-                  placeholderStyle={{
-                    color: '#333333',
-                  }}
+                  onChangeText={handleChange('modeloBombaSecundaria')}
+                  onBlur={handleBlur('modeloBombaSecundaria')}
+                  placeholder="Ingrese el modelo de la bomba"
                 />
                 {touched.modeloBombaSecundaria &&
                   errors.modeloBombaSecundaria && (

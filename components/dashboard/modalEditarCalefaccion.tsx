@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import RadioButton from '../utiles/radioButton';
 
-export type TipoCalefaccion = 'Bomba de calor' | 'Bomba a gas';
+export type TipoCalefaccion = 'Bomba de calor' | 'Calentador de gas';
 
 const validationSchema = Yup.object().shape({
   marcaCalefaccion: Yup.string().required(
