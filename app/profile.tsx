@@ -16,7 +16,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) {
-      router.replace('/');
+      router.replace('/login');
     }
   }, [user]);
 

@@ -1,5 +1,4 @@
 import { Programacion } from './cicloFiltrado';
-import { Equipo } from './equipo';
 import { Usuario } from './user';
 
 export interface PiscinaRegistrada {
@@ -256,3 +255,9 @@ export type CalefaccionNueva = {
   potencia: number;
   activa: boolean;
 };
+
+export interface GenerarPatenteDTO {
+  firmware: string;
+  tipo: string;
+}
+

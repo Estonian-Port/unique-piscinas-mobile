@@ -52,7 +52,7 @@ const Registro = () => {
 
   useEffect(() => {
     if (!usuario) {
-      router.replace('/');
+      router.replace('/login');
     }
   }, [usuario]);
 
