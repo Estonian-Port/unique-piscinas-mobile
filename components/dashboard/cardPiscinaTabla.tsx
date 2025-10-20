@@ -182,7 +182,7 @@ const PoolTableCard = ({ pool }: { pool: PiscinaRegistrada }) => {
             <View className="flex-row items-center">
               <User height={16} width={16} color="#666" className="mr-2" />
               <Text className="text-gray-500 font-geist text-sm mr-2">
-                Propietario:
+                Administrador:
               </Text>
               <Text className="text-text font-geist-semi-bold text-sm">
                 {pool.nombreAdministrador}

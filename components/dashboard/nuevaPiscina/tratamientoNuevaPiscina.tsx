@@ -428,7 +428,7 @@ const TratamientoNuevaPiscina = ({
                   <View className="flex-row items-center">
                     <Activity height={18} width={18}  color={'blue'} />
                     <Text className="text-text text-base font-geist ml-1">
-                      Trasductor ultrasónico
+                      Trasductor de ultrasonido
                     </Text>
                   </View>
                   <Switch

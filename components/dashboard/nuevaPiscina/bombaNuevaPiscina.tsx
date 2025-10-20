@@ -7,6 +7,7 @@ import { BombaNuevo, PiscinaNueva } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import Checkbox from 'expo-checkbox';
+import Divider from '@/components/utiles/divider';
 
 const validationSchema = Yup.object().shape({
   marcaBombaPrimaria: Yup.string().required('Seleccione una marca de bomba'),
@@ -17,17 +18,17 @@ const validationSchema = Yup.object().shape({
     .min(1, 'La potencia debe ser mayor que 0'),
 
   // Validación condicional para la segunda bomba
-  marcaBombaSecundaria: Yup.string().when('tieneDobleBomba', {
+  marcaBombaSecundaria: Yup.string().when('tieneBombaSecundaria', {
     is: true,
     then: (schema) => schema.required('Ingrese la marca de la bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  modeloBombaSecundaria: Yup.string().when('tieneDobleBomba', {
+  modeloBombaSecundaria: Yup.string().when('tieneBombaSecundaria', {
     is: true,
     then: (schema) => schema.required('Ingrese el modelo de la bomba'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  potenciaCVSecundaria: Yup.number().when('tieneDobleBomba', {
+  potenciaCVSecundaria: Yup.number().when('tieneBombaSecundaria', {
     is: true,
     then: (schema) =>
       schema
@@ -36,7 +37,51 @@ const validationSchema = Yup.object().shape({
         .min(1, 'La potencia debe ser mayor que 0'),
     otherwise: (schema) => schema.notRequired(),
   }),
-  tieneDobleBomba: Yup.boolean(),
+  tieneBombaSecundaria: Yup.boolean(),
+
+  // Validación condicional para la segunda bomba
+  marcaBombaHidromasaje: Yup.string().when('tieneBombaHidromasaje', {
+    is: true,
+    then: (schema) => schema.required('Ingrese la marca de la bomba'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  modeloBombaHidromasaje: Yup.string().when('tieneBombaHidromasaje', {
+    is: true,
+    then: (schema) => schema.required('Ingrese el modelo de la bomba'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  potenciaCVHidromasaje: Yup.number().when('tieneBombaHidromasaje', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('Ingrese la potencia en CV')
+        .typeError('La potencia debe ser un número')
+        .min(1, 'La potencia debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  tieneBombaHidromasaje: Yup.boolean(),
+
+  // Validación condicional para la segunda bomba
+  marcaBombaCascada: Yup.string().when('tieneBombaCascada', {
+    is: true,
+    then: (schema) => schema.required('Ingrese la marca de la bomba'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  modeloBombaCascada: Yup.string().when('tieneBombaCascada', {
+    is: true,
+    then: (schema) => schema.required('Ingrese el modelo de la bomba'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  potenciaCVCascada: Yup.number().when('tieneBombaCascada', {
+    is: true,
+    then: (schema) =>
+      schema
+        .required('Ingrese la potencia en CV')
+        .typeError('La potencia debe ser un número')
+        .min(1, 'La potencia debe ser mayor que 0'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  tieneBombaCascada: Yup.boolean(),
 });
 
 const BombaNuevaPiscina = ({
@@ -56,9 +101,28 @@ const BombaNuevaPiscina = ({
 
   // Función para obtener los valores iniciales basados en el estado actual de nuevaPiscina
   const getInitialValues = () => {
-    const bombaPrimaria = nuevaPiscina.bomba?.[0];
-    const bombaSecundaria = nuevaPiscina.bomba?.[1];
-    const tieneDobleBomba = nuevaPiscina.bomba?.length === 2;
+    const bombaPrimaria = nuevaPiscina.bomba?.find(
+      (bomba) => bomba.tipo === 'Primaria'
+    );
+    const bombaSecundaria = nuevaPiscina.bomba?.find(
+      (bomba) => bomba.tipo === 'Secundaria'
+    );
+    const bombaCascada = nuevaPiscina.bomba?.find(
+      (bomba) => bomba.tipo === 'Cascada'
+    );
+    const bombaHidromasaje = nuevaPiscina.bomba?.find(
+      (bomba) => bomba.tipo === 'Hidromasaje'
+    );
+
+    const tieneBombaSecundaria = nuevaPiscina.bomba?.some(
+      (bomba) => bomba.tipo === 'Secundaria'
+    );
+    const tieneBombaCascada = nuevaPiscina.bomba?.some(
+      (bomba) => bomba.tipo === 'Cascada'
+    );
+    const tieneBombaHidromasaje = nuevaPiscina.bomba?.some(
+      (bomba) => bomba.tipo === 'Hidromasaje'
+    );
 
     return {
       marcaBombaPrimaria: bombaPrimaria?.marca ?? '',
@@ -73,7 +137,21 @@ const BombaNuevaPiscina = ({
         ? bombaSecundaria.potencia.toString()
         : '',
 
-      tieneDobleBomba: tieneDobleBomba,
+      marcaBombaCascada: bombaCascada?.marca ?? '',
+      modeloBombaCascada: bombaCascada?.modelo ?? '',
+      potenciaCVCascada: bombaCascada?.potencia
+        ? bombaCascada.potencia.toString()
+        : '',
+
+      marcaBombaHidromasaje: bombaHidromasaje?.marca ?? '',
+      modeloBombaHidromasaje: bombaHidromasaje?.modelo ?? '',
+      potenciaCVHidromasaje: bombaHidromasaje?.potencia
+        ? bombaHidromasaje.potencia.toString()
+        : '',
+
+      tieneBombaSecundaria: tieneBombaSecundaria,
+      tieneBombaCascada: tieneBombaCascada,
+      tieneBombaHidromasaje: tieneBombaHidromasaje,
     };
   };
 
@@ -90,20 +168,46 @@ const BombaNuevaPiscina = ({
           marca: values.marcaBombaPrimaria,
           modelo: values.modeloBombaPrimaria,
           potencia: parseFloat(values.potenciaCVPrimaria),
-          activa: true,
+          activa: false,
+          tipo: 'PRINCIPAL',
         };
 
         const bombas: BombaNuevo[] = [bombaPrimaria];
 
-        if (values.tieneDobleBomba) {
+        if (values.tieneBombaSecundaria) {
           const bombaSecundaria: BombaNuevo = {
             id: null,
             marca: values.marcaBombaSecundaria,
             modelo: values.modeloBombaSecundaria,
             potencia: parseFloat(values.potenciaCVSecundaria),
-            activa: true,
+            activa: false,
+            tipo: 'SECUNDARIA',
           };
           bombas.push(bombaSecundaria);
+        }
+
+        if (values.tieneBombaCascada) {
+          const bombaCascada: BombaNuevo = {
+            id: null,
+            marca: values.marcaBombaCascada,
+            modelo: values.modeloBombaCascada,
+            potencia: parseFloat(values.potenciaCVCascada),
+            activa: false,
+            tipo: 'CASCADA',
+          };
+          bombas.push(bombaCascada);
+        }
+
+        if (values.tieneBombaHidromasaje) {
+          const bombaHidromasaje: BombaNuevo = {
+            id: null,
+            marca: values.marcaBombaHidromasaje,
+            modelo: values.modeloBombaHidromasaje,
+            potencia: parseFloat(values.potenciaCVHidromasaje),
+            activa: false,
+            tipo: 'HIDROMASAJE',
+          };
+          bombas.push(bombaHidromasaje);
         }
 
         setNuevaPiscina({
@@ -127,7 +231,12 @@ const BombaNuevaPiscina = ({
         // Efecto para revalidar cuando cambia tieneDobleBomba
         useEffect(() => {
           validateForm();
-        }, [values.tieneDobleBomba, validateForm]);
+        }, [
+          values.tieneBombaSecundaria,
+          values.tieneBombaCascada,
+          values.tieneBombaHidromasaje,
+          validateForm,
+        ]);
 
         return (
           <View className="py-5">
@@ -188,28 +297,32 @@ const BombaNuevaPiscina = ({
                 {errors.potenciaCVPrimaria}
               </Text>
             )}
+            <Divider />
 
-            <View className="flex-row items-center mt-4">
+            <View className="flex-row items-center">
               <Checkbox
-                value={values.tieneDobleBomba}
+                value={values.tieneBombaSecundaria}
                 onValueChange={(value) => {
-                  setFieldValue('tieneDobleBomba', value);
+                  setFieldValue('tieneBombaSecundaria', value);
                 }}
-                color={values.tieneDobleBomba ? '#0F0D23' : undefined}
+                color={values.tieneBombaSecundaria ? '#0F0D23' : undefined}
               />
               <Pressable
                 onPress={() =>
-                  setFieldValue('tieneDobleBomba', !values.tieneDobleBomba)
+                  setFieldValue(
+                    'tieneBombaSecundaria',
+                    !values.tieneBombaSecundaria
+                  )
                 }
                 className="ml-2"
               >
                 <Text className="font-geist text-text text-base">
-                  Agregar bomba secundaria
+                  Agregar bomba Secundaria
                 </Text>
               </Pressable>
             </View>
 
-            {values.tieneDobleBomba && (
+            {values.tieneBombaSecundaria && (
               <>
                 <Text className="font-geist-semi-bold text-text text-sm mt-3">
                   Bomba secundaria
@@ -266,6 +379,169 @@ const BombaNuevaPiscina = ({
                       {errors.potenciaCVSecundaria}
                     </Text>
                   )}
+                <Divider />
+              </>
+            )}
+
+            <View className="flex-row items-center mt-4">
+              <Checkbox
+                value={values.tieneBombaCascada}
+                onValueChange={(value) => {
+                  setFieldValue('tieneBombaCascada', value);
+                }}
+                color={values.tieneBombaCascada ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() =>
+                  setFieldValue('tieneBombaCascada', !values.tieneBombaCascada)
+                }
+                className="ml-2"
+              >
+                <Text className="font-geist text-text text-base">
+                  Agregar bomba Cascada
+                </Text>
+              </Pressable>
+            </View>
+
+            {values.tieneBombaCascada && (
+              <>
+                <Text className="font-geist-semi-bold text-text text-sm mt-3">
+                  Bomba de cascada
+                </Text>
+                <Text className="font-geist text-text text-base mt-3">
+                  Marca
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.marcaBombaCascada}
+                  onChangeText={handleChange('marcaBombaCascada')}
+                  onBlur={handleBlur('marcaBombaCascada')}
+                  placeholder="Ingrese la marca de la bomba"
+                />
+
+                {touched.marcaBombaCascada && errors.marcaBombaCascada && (
+                  <Text className="text-red-500 mt-2">
+                    {errors.marcaBombaCascada}
+                  </Text>
+                )}
+
+                <Text className="font-geist text-text text-base mt-3">
+                  Modelo
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.modeloBombaCascada}
+                  onChangeText={handleChange('modeloBombaCascada')}
+                  onBlur={handleBlur('modeloBombaCascada')}
+                  placeholder="Ingrese el modelo de la bomba"
+                />
+                {touched.modeloBombaCascada && errors.modeloBombaCascada && (
+                  <Text className="text-red-500 mt-2">
+                    {errors.modeloBombaCascada}
+                  </Text>
+                )}
+
+                <Text className="font-geist text-text text-base mt-3">
+                  Potencia (CV)
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.potenciaCVCascada}
+                  onChangeText={handleChange('potenciaCVCascada')}
+                  onBlur={handleBlur('potenciaCVCascada')}
+                  keyboardType="numeric"
+                  placeholder="Ej: 15"
+                />
+                {touched.potenciaCVCascada && errors.potenciaCVCascada && (
+                  <Text className="text-red-500 mt-2">
+                    {errors.potenciaCVCascada}
+                  </Text>
+                )}
+                <Divider />
+              </>
+            )}
+
+            <View className="flex-row items-center mt-4">
+              <Checkbox
+                value={values.tieneBombaHidromasaje}
+                onValueChange={(value) => {
+                  setFieldValue('tieneBombaHidromasaje', value);
+                }}
+                color={values.tieneBombaHidromasaje ? '#0F0D23' : undefined}
+              />
+              <Pressable
+                onPress={() =>
+                  setFieldValue(
+                    'tieneBombaHidromasaje',
+                    !values.tieneBombaHidromasaje
+                  )
+                }
+                className="ml-2"
+              >
+                <Text className="font-geist text-text text-base">
+                  Agregar bomba Hidromasaje
+                </Text>
+              </Pressable>
+            </View>
+
+            {values.tieneBombaHidromasaje && (
+              <>
+                <Text className="font-geist-semi-bold text-text text-sm mt-3">
+                  Bomba de hidromasaje
+                </Text>
+                <Text className="font-geist text-text text-base mt-3">
+                  Marca
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.marcaBombaHidromasaje}
+                  onChangeText={handleChange('marcaBombaHidromasaje')}
+                  onBlur={handleBlur('marcaBombaHidromasaje')}
+                  placeholder="Ingrese la marca de la bomba"
+                />
+
+                {touched.marcaBombaHidromasaje &&
+                  errors.marcaBombaHidromasaje && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.marcaBombaHidromasaje}
+                    </Text>
+                  )}
+
+                <Text className="font-geist text-text text-base mt-3">
+                  Modelo
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.modeloBombaHidromasaje}
+                  onChangeText={handleChange('modeloBombaHidromasaje')}
+                  onBlur={handleBlur('modeloBombaHidromasaje')}
+                  placeholder="Ingrese el modelo de la bomba"
+                />
+                {touched.modeloBombaHidromasaje &&
+                  errors.modeloBombaHidromasaje && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.modeloBombaHidromasaje}
+                    </Text>
+                  )}
+
+                <Text className="font-geist text-text text-base mt-3">
+                  Potencia (CV)
+                </Text>
+                <TextInput
+                  className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
+                  value={values.potenciaCVHidromasaje}
+                  onChangeText={handleChange('potenciaCVHidromasaje')}
+                  onBlur={handleBlur('potenciaCVHidromasaje')}
+                  keyboardType="numeric"
+                  placeholder="Ej: 15"
+                />
+                {touched.potenciaCVHidromasaje &&
+                  errors.potenciaCVHidromasaje && (
+                    <Text className="text-red-500 mt-2">
+                      {errors.potenciaCVHidromasaje}
+                    </Text>
+                  )}
+                <Divider />
               </>
             )}
 

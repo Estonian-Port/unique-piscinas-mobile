@@ -125,6 +125,7 @@ export type Bomba = {
   modelo: string;
   potencia: number;
   activa: boolean;
+  tipo: string;
 };
 
 export type Filtro = {
@@ -150,12 +151,6 @@ export type Germicida = {
   datoExtra: number;
 };
 
-export type Valvula = {
-  id: number;
-  tipo: string;
-  estado: string;
-};
-
 export type Calefaccion = {
   id: number;
   tipo: string;
@@ -164,8 +159,6 @@ export type Calefaccion = {
   potencia: number;
   activa: boolean;
 };
-
-
 
 export type Registro = {
   id: number;
@@ -226,6 +219,7 @@ export type BombaNuevo = {
   modelo: string;
   potencia: number;
   activa: boolean;
+  tipo: string;
 };
 
 export type FiltroNuevo = {

@@ -91,7 +91,7 @@ export default function Equipos() {
             Editar Equipamiento - {pool.direccion}
           </Text>
           <Text className="self-start mb-2 text-text font-geist-semi-bold text-xl">
-            Bombas de filtración
+            {pool!.bombas.length > 1 ? 'Bombas' : 'Bomba'}
           </Text>
           {pool!.bombas.map((item) => (
             <BombaCard
@@ -101,7 +101,7 @@ export default function Equipos() {
               actualizarPiscina={fetchPool}
             />
           ))}
-          {pool.bombas.length < 3 && (
+          {pool.bombas.length < 4 && (
             <Pressable
               className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
               onPress={() => setModalAgregarBomba(true)}
@@ -111,14 +111,12 @@ export default function Equipos() {
               </Text>
             </Pressable>
           )}
-          {modalAgregarBomba && (
             <ModalAgregarBomba
               visible={modalAgregarBomba}
               onClose={() => setModalAgregarBomba(false)}
               piscina={pool}
               actualizarPiscina={fetchPool}
             />
-          )}
           <Divider />
           <Text className="self-start mb-2 text-text font-geist-semi-bold text-xl">
             Filtro

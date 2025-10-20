@@ -122,7 +122,7 @@ const GermicidaCard = ({
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-sm">
-            {germicida.activo ? 'Activa' : 'Inactiva'}
+            {germicida.activo ? 'Activo' : 'Inactivo'}
           </Text>
         </View>
       </View>

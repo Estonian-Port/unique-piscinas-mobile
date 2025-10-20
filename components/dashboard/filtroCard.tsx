@@ -115,53 +115,47 @@ const FiltroCard = ({
         </Text>
       </View>
 
-      {filtro.vidaRestante !== undefined && filtro.vidaRestante <= 3 && (
-        <View className="flex-row items-center justify-between mb-1">
-          <Text className="text-text font-geist text-base">
-            Vida restante aprox.:
-          </Text>
-          <Text className="font-geist-semi-bold tex-text text-base">
-            {filtro.vidaRestante == 1
-              ? '1 mes'
-              : `${filtro.vidaRestante} meses`}
-          </Text>
-        </View>
-      )}
+      <View className="flex-row items-center justify-between mb-1">
+        <Text className="text-text font-geist text-base">
+          Vida restante aprox.:
+        </Text>
+        <Text className="font-geist-semi-bold tex-text text-base">
+          {filtro.vidaRestante}
+        </Text>
+      </View>
 
       <View className="flex-row items-center justify-between">
         <Text className="text-text font-geist text-base">Estado:</Text>
         <View
           className={`rounded-full px-2 ${
-            filtro.activo ? 'bg-green-500' : 'bg-red-500'
+            filtro.activo ? 'bg-green-500' : 'bg-gray-500'
           }`}
         >
           <Text className="font-geist-semi-bold text-white text-sm">
-            {filtro.activo ? 'Activa' : 'Inactiva'}
+            {filtro.activo ? 'Activo' : 'Inactivo'}
           </Text>
         </View>
       </View>
-      {filtro.vidaRestante !== undefined && filtro.vidaRestante <= 3 && (
-        <Pressable
-          className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
-          onPress={() => setModalResetOpen(true)}
-        >
-          <RefreshCw color={'white'} height={20} width={20} />
-          <Text className="text-white font-geist text-base ml-2">
-            Resetear contador
-          </Text>
-        </Pressable>
-      )}
-        <ModalEditarFiltro
-          visible={modalEditOpen}
-          filtro={filtro}
-          onClose={() => setModalEditOpen(false)}
-          onSave={handleSaveFiltro}
-        />
-        <ModalResetearContador
-          visible={modalResetOpen}
-          onSave={resetearContadorFiltro}
-          onClose={() => setModalResetOpen(false)}
-        />
+      <Pressable
+        className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
+        onPress={() => setModalResetOpen(true)}
+      >
+        <RefreshCw color={'white'} height={20} width={20} />
+        <Text className="text-white font-geist text-base ml-2">
+          Resetear contador
+        </Text>
+      </Pressable>
+      <ModalEditarFiltro
+        visible={modalEditOpen}
+        filtro={filtro}
+        onClose={() => setModalEditOpen(false)}
+        onSave={handleSaveFiltro}
+      />
+      <ModalResetearContador
+        visible={modalResetOpen}
+        onSave={resetearContadorFiltro}
+        onClose={() => setModalResetOpen(false)}
+      />
     </ScreenCard>
   );
 };

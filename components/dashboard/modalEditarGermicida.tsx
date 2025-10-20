@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   Pressable,
-  Switch,
   Modal,
   KeyboardAvoidingView,
   Platform,
@@ -13,22 +12,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Germicida } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
-export const marcasUV = [
-  { id: 1, name: 'Astral' },
-  { id: 2, name: 'Hayward' },
-  { id: 3, name: 'Otra' },
-];
-
-export const marcasIonizador = [
-  { id: 1, name: 'Copper Ionizer' },
-  { id: 2, name: 'Otra' },
-];
-
-export const marcasTrasductor = [
-  { id: 1, name: 'Sonic Wave' },
-  { id: 2, name: 'Otra' },
-];
 
 const validationSchema = Yup.object().shape({
   uvMarca: Yup.string().when('uvSwitch', {
@@ -86,10 +69,6 @@ const ModalEditarGermicida = ({
   germicida: Germicida;
   onSave: (germicidaEditado: Germicida) => void;
 }) => {
-  const [openMarcaUV, setOpenMarcaUV] = useState(false);
-  const [openMarcaIonizador, setOpenMarcaIonizador] = useState(false);
-  const [openMarcaTrasductor, setOpenMarcaTrasductor] = useState(false);
-
   return (
     <Modal
       animationType="fade"
@@ -144,51 +123,12 @@ const ModalEditarGermicida = ({
                 {germicida.tipo === 'UV' && (
                   <>
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaUV}
+                    <TextInput
+                      className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                       value={values.marca}
-                      items={marcasUV.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaUV}
-                      setValue={(callback) => {
-                        const val = callback(values.marca);
-                        setFieldValue('marca', val);
-                        setFieldTouched('marca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={3000}
-                      zIndexInverse={1000}
-                      onOpen={() => {
-                        setOpenMarcaIonizador(false);
-                        setOpenMarcaTrasductor(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
+                      onChangeText={handleChange('marca')}
+                      onBlur={handleBlur('marca')}
+                      placeholder="Ingrese la marca del transductor"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -224,51 +164,12 @@ const ModalEditarGermicida = ({
                 {germicida.tipo === 'Ionizador' && (
                   <>
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaIonizador}
+                    <TextInput
+                      className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                       value={values.marca}
-                      items={marcasIonizador.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaIonizador}
-                      setValue={(callback) => {
-                        const val = callback(values.marca);
-                        setFieldValue('marca', val);
-                        setFieldTouched('marca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={2000}
-                      zIndexInverse={2000}
-                      onOpen={() => {
-                        setOpenMarcaUV(false);
-                        setOpenMarcaTrasductor(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
+                      onChangeText={handleChange('marca')}
+                      onBlur={handleBlur('marca')}
+                      placeholder="Ingrese la marca del transductor"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -304,51 +205,12 @@ const ModalEditarGermicida = ({
                 {germicida.tipo === 'Trasductor' && (
                   <>
                     <Text className="text-text text-sm font-geist">Marca</Text>
-                    <DropDownPicker
-                      open={openMarcaTrasductor}
+                    <TextInput
+                      className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                       value={values.marca}
-                      items={marcasTrasductor.map((item) => ({
-                        label: item.name,
-                        value: item.name, // Cambiado para consistencia
-                      }))}
-                      setOpen={setOpenMarcaTrasductor}
-                      setValue={(callback) => {
-                        const val = callback(values.marca);
-                        setFieldValue('marca', val);
-                        setFieldTouched('marca', true);
-                      }}
-                      placeholder="Seleccione una marca"
-                      zIndex={1000}
-                      zIndexInverse={3000}
-                      onOpen={() => {
-                        setOpenMarcaUV(false);
-                        setOpenMarcaIonizador(false);
-                      }}
-                      listMode="SCROLLVIEW"
-                      style={{
-                        borderColor: '#d1d5db', // un violeta más notorio
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#fff',
-                        paddingVertical: 12,
-                        paddingHorizontal: 10,
-                      }}
-                      dropDownContainerStyle={{
-                        borderColor: '#d1d5db',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        backgroundColor: '#f3f4f6',
-                      }}
-                      selectedItemContainerStyle={{
-                        backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                      }}
-                      selectedItemLabelStyle={{
-                        fontWeight: 'bold',
-                        color: '#7c3aed',
-                      }}
-                      placeholderStyle={{
-                        color: '#333333',
-                      }}
+                      onChangeText={handleChange('marca')}
+                      onBlur={handleBlur('marca')}
+                      placeholder="Ingrese la marca del transductor"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -398,7 +260,7 @@ const ModalEditarGermicida = ({
                     }`}
                   >
                     <View className="flex-row items-center justify-center">
-                      <Text className="text-white text-center font-geist-semi-bold ml-2">
+                      <Text className="text-white text-center font-geist-semi-bold">
                         Guardar cambios
                       </Text>
                     </View>

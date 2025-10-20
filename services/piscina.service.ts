@@ -79,9 +79,16 @@ class PiscinaService {
     piscinaId: number,
     bomba: Bomba
   ): Promise<{ data: Bomba; message: string }> => {
+    let tipoEnum = bomba.tipo;
+    if (tipoEnum === 'Principal') tipoEnum = 'PRINCIPAL';
+    if (tipoEnum === 'Secundaria') tipoEnum = 'SECUNDARIA';
+    if (tipoEnum === 'Hidromasaje') tipoEnum = 'HIDROMASAJE';
+    if (tipoEnum === 'Cascada') tipoEnum = 'CASCADA';
+
+    const bombaDto = { ...bomba, tipo: tipoEnum };
     const response = await api.put(
       `${PISCINA}/update-bomba/${piscinaId}`,
-      bomba
+      bombaDto
     );
     return { data: response.data.data, message: response.data.message };
   };
@@ -176,7 +183,16 @@ class PiscinaService {
     piscinaId: number,
     bomba: BombaNuevo
   ): Promise<{ data: Bomba; message: string }> => {
-    const response = await api.post(`${PISCINA}/add-bomba/${piscinaId}`, bomba);
+    let tipoEnum = bomba.tipo;
+    if (tipoEnum === 'Secundaria') tipoEnum = 'SECUNDARIA';
+    if (tipoEnum === 'Hidromasaje') tipoEnum = 'HIDROMASAJE';
+    if (tipoEnum === 'Cascada') tipoEnum = 'CASCADA';
+
+    const bombaDto = { ...bomba, tipo: tipoEnum };
+    const response = await api.post(
+      `${PISCINA}/add-bomba/${piscinaId}`,
+      bombaDto
+    );
     return { data: response.data.data, message: response.data.message };
   };
 
@@ -331,7 +347,6 @@ class PiscinaService {
   apagarLucesManual = async (piscinaId: number): Promise<void> => {
     await api.post(`/estado-piscina/apagar-luces-manuales/${piscinaId}`);
   };
-
 }
 
 export const piscinaService = new PiscinaService();
