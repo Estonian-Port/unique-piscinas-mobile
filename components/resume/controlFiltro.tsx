@@ -221,7 +221,7 @@ export default function ControlFiltro({
           Control de Filtro
         </Text>
 
-        {hayEntradaDeAguaSeleccionada ? (
+        {piscina.funcionActiva != 'REPOSO' ? (
           <View className="bg-green-200 rounded-full p-2">
             <Text className="font-geist-semi-bold text-sm text-text">
               Activado
