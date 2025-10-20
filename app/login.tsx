@@ -32,7 +32,7 @@ const Login = () => {
     if (usuario) {
       const { rol, primerLogin } = usuario;
 
-      console.log(usuario.rol)
+      console.log(usuario.rol);
       if (rol === RolType.ADMIN) {
         router.replace('/dashboard');
       } else if (rol === RolType.PAT_GEN) {
@@ -50,24 +50,25 @@ const Login = () => {
   const handleLogin = async (email: string, password: string) => {
     try {
       await login(email, password);
-  } catch (error: any) {
-    let errorMessage = 'Error desconocido';
+    } catch (error: any) {
+      let errorMessage = 'Error desconocido';
 
-    // Error de red (sin respuesta del servidor)
-    if (error.code === 'ERR_NETWORK') {
-      errorMessage = 'Error de conexión. Verifica tu conexión a internet o que el servidor esté disponible.';
-    }
-    // Error con respuesta del servidor
-    else if (error.response?.data?.error) {
-      errorMessage = error.response.data.error;
-    }
-    // Otros errores de Axios
-    else if (error.message) {
-      errorMessage = error.message;
-    }
+      // Error de red (sin respuesta del servidor)
+      if (error.code === 'ERR_NETWORK') {
+        errorMessage =
+          'Error de conexión. Verifica tu conexión a internet o que el servidor esté disponible.';
+      }
+      // Error con respuesta del servidor
+      else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error;
+      }
+      // Otros errores de Axios
+      else if (error.message) {
+        errorMessage = error.message;
+      }
 
-    setModalMessage(errorMessage);
-    setModalVisible(true);
+      setModalMessage(errorMessage);
+      setModalVisible(true);
     }
   };
 
@@ -78,7 +79,18 @@ const Login = () => {
         style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 100 }}
         className="bg-navy-unique"
       />
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+        <StatusBar style="light" backgroundColor="#1e1b4b" />
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 100,
+          }}
+          className="bg-navy-unique"
+        />
         <SafeAreaView
           style={{ flex: 1 }}
           className="bg-navy-unique"
@@ -88,7 +100,11 @@ const Login = () => {
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{ flex: 1 }}
           >
-            <View className="flex-1 items-center justify-center px-4">
+            <Pressable
+              style={{ flex: 1 }}
+              className="items-center justify-center px-4"
+              onPress={(e) => e.stopPropagation()}
+            >
               <View className="mb-8 items-center">
                 <LogoUnique width={250} height={220} />
               </View>
@@ -142,7 +158,7 @@ const Login = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </Pressable>
           </KeyboardAvoidingView>
 
           <ModalError
@@ -151,7 +167,7 @@ const Login = () => {
             onClose={() => setModalVisible(false)}
           />
         </SafeAreaView>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </>
   );
 };
