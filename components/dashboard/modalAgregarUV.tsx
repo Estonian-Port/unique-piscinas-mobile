@@ -8,12 +8,9 @@ import {
   Modal,
   Pressable,
 } from 'react-native';
-import React, { useState } from 'react';
 import { GermicidaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { marcasUV } from './modalEditarGermicida';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import { Zap } from 'react-native-feather';
@@ -41,8 +38,6 @@ const ModalAgregarUV = ({
   piscina: PiscinaEquipos;
   actualizarPiscina: () => void;
 }) => {
-  const [openMarcaUV, setOpenMarcaUV] = useState(false);
-
   const sistemaGermicida = piscina.sistemasGermicidas || [];
   const uvExistente = sistemaGermicida.find((s) => s.tipo === 'uv');
 
@@ -122,55 +117,20 @@ const ModalAgregarUV = ({
                     <View className="flex-row items-center">
                       <Zap height={18} width={18} color={'green'} />
                       <Text className="text-text text-base font-geist ml-1">
-                        Sistema UV
+                        Lámpara UV
                       </Text>
                     </View>
 
-                    <View className="items-start w-4/5">
+                    <View className="items-start w-full">
                       <Text className="text-text text-sm font-geist">
                         Marca
                       </Text>
-                      <DropDownPicker
-                        open={openMarcaUV}
+                      <TextInput
+                        className="border-2 border-gray-300 rounded-md py-4 px-3 w-full"
                         value={values.uvMarca}
-                        items={marcasUV.map((item) => ({
-                          label: item.name,
-                          value: item.name, // Cambiado para consistencia
-                        }))}
-                        setOpen={setOpenMarcaUV}
-                        setValue={(callback) => {
-                          const val = callback(values.uvMarca);
-                          setFieldValue('uvMarca', val);
-                          setFieldTouched('uvMarca', true);
-                        }}
-                        placeholder="Seleccione una marca"
-                        zIndex={3000}
-                        zIndexInverse={1000}
-                        listMode="SCROLLVIEW"
-                        style={{
-                          borderColor: '#d1d5db', // un violeta más notorio
-                          borderWidth: 2,
-                          borderRadius: 6,
-                          backgroundColor: '#fff',
-                          paddingVertical: 12,
-                          paddingHorizontal: 10,
-                        }}
-                        dropDownContainerStyle={{
-                          borderColor: '#d1d5db',
-                          borderWidth: 2,
-                          borderRadius: 6,
-                          backgroundColor: '#f3f4f6',
-                        }}
-                        selectedItemContainerStyle={{
-                          backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                        }}
-                        selectedItemLabelStyle={{
-                          fontWeight: 'bold',
-                          color: '#7c3aed',
-                        }}
-                        placeholderStyle={{
-                          color: '#333333',
-                        }}
+                        onChangeText={handleChange('uvMarca')}
+                        onBlur={handleBlur('uvMarca')}
+                        placeholder="Ingrese la marca de la lámpara UV"
                       />
                       {errors.uvMarca && touched.uvMarca && (
                         <Text className="text-red-500 text-xs mt-1">

@@ -14,6 +14,7 @@ import { Formik } from 'formik';
 import { piscinaService } from '@/services/piscina.service';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-toast-message';
+import RadioButton from '../utiles/radioButton';
 
 export const marcasBomba = [
   { id: 1, name: 'Astral' },
@@ -36,6 +37,7 @@ const validationSchema = Yup.object().shape({
     .required('Ingrese la potencia en CV')
     .typeError('La potencia debe ser un número')
     .min(1, 'La potencia debe ser mayor que 0'),
+  tipo: Yup.string().required('Seleccione un tipo de bomba'),
 });
 
 const ModalAgregarBomba = ({
@@ -49,10 +51,6 @@ const ModalAgregarBomba = ({
   piscina: PiscinaEquipos;
   actualizarPiscina: () => void;
 }) => {
-  // Estados separados para cada dropdown
-  const [openMarcaBomba, setOpenMarcaBomba] = useState(false);
-  const [openModeloBomba, setOpenModeloBomba] = useState(false);
-
   const handleNewBomba = async (newBomba: BombaNuevo) => {
     try {
       const response = await piscinaService.addBomba(piscina.id, newBomba);
@@ -73,12 +71,34 @@ const ModalAgregarBomba = ({
     }
   };
 
+  const tieneBombaSecundaria = piscina.bombas.some(
+    (bomba) => bomba.tipo === 'Secundaria'
+  );
+
+  const tieneBombaHidromasaje = piscina.bombas.some(
+    (bomba) => bomba.tipo === 'Hidromasaje'
+  );
+
+  const tieneBombaCascada = piscina.bombas.some(
+    (bomba) => bomba.tipo === 'Cascada'
+  );
+
+  const opcionesDisponibles = [
+    !tieneBombaSecundaria ? 'Secundaria' : null,
+    !tieneBombaCascada ? 'Cascada' : null,
+    !tieneBombaHidromasaje ? 'Hidromasaje' : null,
+  ].filter(Boolean) as string[];
+
+  const tipoPorDefecto =
+    opcionesDisponibles[0];
+
   const bombaVacia: BombaNuevo = {
     id: null,
     marca: '',
     modelo: '',
     potencia: 0,
     activa: true,
+    tipo: '',
   };
 
   const formikRef = useRef<any>(null);
@@ -95,7 +115,9 @@ const ModalAgregarBomba = ({
         initialValues={{
           marcaBomba: bombaVacia.marca,
           modeloBomba: bombaVacia.modelo,
-          potenciaBomba: bombaVacia.potencia == 0 ? '' : bombaVacia.potencia.toString(),
+          potenciaBomba:
+            bombaVacia.potencia == 0 ? '' : bombaVacia.potencia.toString(),
+          tipo: tipoPorDefecto,
         }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
@@ -104,7 +126,8 @@ const ModalAgregarBomba = ({
             marca: values.marcaBomba,
             modelo: values.modeloBomba,
             potencia: Number(values.potenciaBomba),
-            activa: true,
+            activa: false,
+            tipo: values.tipo,
           };
           handleNewBomba(nuevaBomba);
           onClose();
@@ -119,6 +142,7 @@ const ModalAgregarBomba = ({
           errors,
           touched,
           setFieldValue,
+          setFieldTouched,
         }) => {
           return (
             <KeyboardAvoidingView
@@ -127,53 +151,56 @@ const ModalAgregarBomba = ({
             >
               <View className="flex-1 justify-center items-center bg-black/50">
                 <View className="bg-white p-6 rounded-lg w-4/5 max-w-md">
-                  <Text className="text-lg font-geist-semi-bold text-text mb-4">
+                  <Text className="text-xl font-geist-semi-bold text-text">
                     Agregar Bomba
                   </Text>
 
                   <Text className="font-geist text-text text-base mt-3">
+                    Tipo
+                  </Text>
+                  {!tieneBombaSecundaria && (
+                    <RadioButton
+                      value={'Secundaria'}
+                      label={'Secundaria'}
+                      selected={values.tipo === 'Secundaria'}
+                      onPress={(value) => {
+                        setFieldValue('tipo', value);
+                      }}
+                    />
+                  )}
+                  {!tieneBombaCascada && (
+                    <RadioButton
+                      value={'Cascada'}
+                      label={'Cascada'}
+                      selected={values.tipo === 'Cascada'}
+                      onPress={(value) => {
+                        setFieldValue('tipo', value);
+                      }}
+                    />
+                  )}
+                  {!tieneBombaHidromasaje && (
+                    <RadioButton
+                      value={'Hidromasaje'}
+                      label={'Hidromasaje'}
+                      selected={values.tipo === 'Hidromasaje'}
+                      onPress={(value) => {
+                        setFieldValue('tipo', value);
+                      }}
+                    />
+                  )}
+                  {touched.tipo && errors.tipo && (
+                    <Text className="text-red-500 mt-2">{errors.tipo}</Text>
+                  )}
+
+                  <Text className="font-geist text-text text-base mt-3">
                     Marca
                   </Text>
-                  <DropDownPicker
-                    open={openMarcaBomba}
+                  <TextInput
+                    className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                     value={values.marcaBomba}
-                    items={marcasBomba.map((item) => ({
-                      label: item.name,
-                      value: item.name,
-                    }))}
-                    setOpen={setOpenMarcaBomba}
-                    setValue={(callback) => {
-                      const val = callback(values.marcaBomba);
-                      setFieldValue('marcaBomba', val);
-                    }}
-                    placeholder="Seleccione una marca"
-                    zIndex={4000}
-                    zIndexInverse={1000}
-                    listMode="SCROLLVIEW"
-                    style={{
-                      borderColor: '#d1d5db', // un violeta más notorio
-                      borderWidth: 2,
-                      borderRadius: 6,
-                      backgroundColor: '#fff',
-                      paddingVertical: 12,
-                      paddingHorizontal: 10,
-                    }}
-                    dropDownContainerStyle={{
-                      borderColor: '#d1d5db',
-                      borderWidth: 2,
-                      borderRadius: 6,
-                      backgroundColor: '#f3f4f6',
-                    }}
-                    selectedItemContainerStyle={{
-                      backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                    }}
-                    selectedItemLabelStyle={{
-                      fontWeight: 'bold',
-                      color: '#7c3aed',
-                    }}
-                    placeholderStyle={{
-                      color: '#333333',
-                    }}
+                    onChangeText={handleChange('marcaBomba')}
+                    onBlur={handleBlur('marcaBomba')}
+                    placeholder="Ingrese la marca de la bomba"
                   />
                   {touched.marcaBomba && errors.marcaBomba && (
                     <Text className="text-red-500 mt-2">
@@ -184,46 +211,12 @@ const ModalAgregarBomba = ({
                   <Text className="font-geist text-text text-base mt-3">
                     Modelo
                   </Text>
-                  <DropDownPicker
-                    open={openModeloBomba}
+                  <TextInput
+                    className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                     value={values.modeloBomba}
-                    items={modelosBomba.map((item) => ({
-                      label: item.name,
-                      value: item.name,
-                    }))}
-                    setOpen={setOpenModeloBomba}
-                    setValue={(callback) => {
-                      const val = callback(values.modeloBomba);
-                      setFieldValue('modeloBomba', val);
-                    }}
-                    placeholder="Seleccione un modelo"
-                    zIndex={3000}
-                    zIndexInverse={2000}
-                    listMode="SCROLLVIEW"
-                    style={{
-                      borderColor: '#d1d5db', // un violeta más notorio
-                      borderWidth: 2,
-                      borderRadius: 6,
-                      backgroundColor: '#fff',
-                      paddingVertical: 12,
-                      paddingHorizontal: 10,
-                    }}
-                    dropDownContainerStyle={{
-                      borderColor: '#d1d5db',
-                      borderWidth: 2,
-                      borderRadius: 6,
-                      backgroundColor: '#f3f4f6',
-                    }}
-                    selectedItemContainerStyle={{
-                      backgroundColor: '#ede9fe', // violeta claro para el seleccionado
-                    }}
-                    selectedItemLabelStyle={{
-                      fontWeight: 'bold',
-                      color: '#7c3aed',
-                    }}
-                    placeholderStyle={{
-                      color: '#333333',
-                    }}
+                    onChangeText={handleChange('modeloBomba')}
+                    onBlur={handleBlur('modeloBomba')}
+                    placeholder="Ingrese el modelo de la bomba"
                   />
                   {touched.modeloBomba && errors.modeloBomba && (
                     <Text className="text-red-500 mt-2">
