@@ -36,11 +36,11 @@ export default function CompuestosCard({ orp, controlPH, cloroSalino, onChange }
   };
 
   const cardStyle = (active: boolean) =>
-    `rounded-lg p-4 m-2 flex-row items-center ${active ? 'bg-white' : 'bg-gray-200 opacity-50'}`;
+    `rounded-lg py-2 px-4 my-2 w-full justify-between flex-row items-center ${active ? 'bg-gray-100' : 'bg-gray-100 opacity-50'}`;
 
   return (
     <View>
-      <View className="flex-row justify-around items-center">
+      <View className="justify-around items-center">
         <View className={cardStyle(values.orp)}>
           <Text className="font-geist-semi-bold text-text mr-2">ORP</Text>
           <Switch
