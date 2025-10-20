@@ -18,7 +18,7 @@ const usuarioVacio: NuevoUsuario = {
   email: '',
 };
 
-const NuevoUsuarioForm = () => {
+const NuevoUsuarioForm = ({ onCreated }: { onCreated: () => void }) => {
   const formikRef = useRef<any>(null);
 
   useFocusEffect(
@@ -34,7 +34,7 @@ const NuevoUsuarioForm = () => {
     try {
       formikActions.setSubmitting(true);
 
-      const response = await usuarioService.altaUsuario(usuario)
+      const response = await usuarioService.altaUsuario(usuario);
       Toast.show({
         type: 'success',
         text1: 'Usuario creado',
@@ -42,11 +42,13 @@ const NuevoUsuarioForm = () => {
         position: 'bottom',
       });
       formikActions.resetForm();
+      if (onCreated) onCreated();
     } catch (error) {
       Toast.show({
         type: 'error',
         text1: 'Error al crear usuario',
-        text2: 'Hubo un problema al crear el usuario. Por favor, inténtelo de nuevo.',
+        text2:
+          'Hubo un problema al crear el usuario. Por favor, inténtelo de nuevo.',
         position: 'bottom',
       });
     } finally {
