@@ -142,11 +142,42 @@ const GermicidaCard = ({
           {germicida.datoExtra} kW
         </Text>
       </View>
+
       <View className="flex-row items-center justify-between mb-1">
         <Text className="text-text font-geist text-base">Vida restante:</Text>
-        <Text className="font-geist-semi-bold text-text text-base">
-          {germicida.vidaRestante} hs restantes - {germicida.estado}
-        </Text>
+        <View className="flex-row items-center">
+          <Text className="font-geist-semi-bold text-text text-base">
+            {`${germicida.vidaRestante} hs restantes - `}
+          </Text>
+          {(() => {
+            const estado = germicida.estado ?? '';
+            const bgBorder =
+              {
+                Operativo: 'bg-green-300 border-green-500',
+                'Requiere revisión': 'bg-yellow-200 border-yellow-300',
+                'Reemplazo urgente': 'bg-orange-300 border-orange-500',
+                Mantenimiento: 'bg-red-300 border-red-500',
+              }[estado] ?? 'bg-gray-100 border-gray-200';
+
+            const textColor =
+              {
+                Operativo: 'text-green-800',
+                'Requiere revisión': 'text-yellow-800',
+                'Reemplazo urgente': 'text-orange-800',
+                Mantenimiento: 'text-red-800',
+              }[estado] ?? 'text-gray-800';
+
+            return (
+              <View
+                className={`flex-row items-center justify-center rounded-xl p-0.5 border ${bgBorder}`}
+              >
+                <Text className={`font-geist text-sm mx-1 ${textColor}`}>
+                  {estado}
+                </Text>
+              </View>
+            );
+          })()}
+        </View>
       </View>
       <Pressable
         className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"

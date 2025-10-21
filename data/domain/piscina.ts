@@ -137,7 +137,7 @@ export type Filtro = {
   activo: boolean;
   datoExtra?: number;
   tiempoVidaUtil?: number;
-  vidaRestante?: number;
+  vidaRestante: string;
 };
 
 //Esto se usa para traer datos del back
@@ -145,7 +145,7 @@ export type Germicida = {
   id: number;
   tipo: string;
   marca: string;
-  vidaRestante: number;
+  vidaRestante: string;
   activo: boolean;
   estado: string;
   datoExtra: number;

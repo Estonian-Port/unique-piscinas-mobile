@@ -8,6 +8,10 @@ import GermicidaEquipamiento from './germicidaEquipamiento';
 import { Filter, Info, Power, Settings } from 'react-native-feather';
 
 const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
+  const requiereAtencion = pool.sistemasGermicidas.some(
+    (germicida) => germicida.estado !== 'Operativo'
+  );
+
   return (
     <ScreenCard>
       <View className="flex-row items-center self-start mb-3">
@@ -24,7 +28,11 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
         </Text>
       </View>
       {pool.bombas.map((bomba) => (
-        <BombaCard key={bomba.id} bomba={bomba} esBombaPrincipal={bomba.id === pool.bombas[0].id} />
+        <BombaCard
+          key={bomba.id}
+          bomba={bomba}
+          esBombaPrincipal={bomba.id === pool.bombas[0].id}
+        />
       ))}
 
       <View className="flex-row items-center self-start my-2">
@@ -41,13 +49,15 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
         <GermicidaEquipamiento key={germicida.id} germicida={germicida} />
       ))}
 
-      <View className="flex-row w-full items-center rounded-md bg-yellow-100 p-2 mt-3 gap-2">
-        <Info color={'orange'} />
-        <Text className="font-geist text-text text-sm flex-shrink">
-          Algunos equipos requieren atención. Revise el estado de los
-          componentes marcados.
-        </Text>
-      </View>
+      {requiereAtencion && (
+        <View className="flex-row w-full items-center rounded-md bg-yellow-100 p-2 mt-3 gap-2">
+          <Info color={'orange'} />
+          <Text className="font-geist text-text text-sm flex-shrink">
+            Algunos sistemas germicidas requieren atención. Revise el estado de los
+            componentes marcados.
+          </Text>
+        </View>
+      )}
     </ScreenCard>
   );
 };

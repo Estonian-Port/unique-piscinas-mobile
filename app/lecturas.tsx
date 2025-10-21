@@ -151,7 +151,7 @@ const HistorialLecturas = () => {
           Mediciones de parámetros del agua por mes
         </Text>
 
-                {/* Navegador de meses */}
+        {/* Navegador de meses */}
         <View className="bg-white rounded-xl p-4 mb-4 border border-gray-200">
           <View className="flex-row items-center justify-between">
             <Pressable

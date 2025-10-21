@@ -84,13 +84,13 @@ const EquipmentItem = ({
   return (
     <View className="items-center bg-gray-50 p-3 rounded-lg">
       <MaterialIcons name={getIcon()} size={24} color={getStatusColor()} />
-      <Text className="font-geist text-text text-xs mt-1">{tipo}</Text>
+      <Text className="font-geist text-text text-xs mt-1 text-center">{tipo}</Text>
       <View
         className="mt-1 px-2 py-1 rounded-full"
         style={{ backgroundColor: getStatusColor() + '20' }}
       >
         <Text
-          className="text-xs font-geist-semi-bold"
+          className="text-xs font-geist-semi-bold text-center"
           style={{ color: getStatusColor() }}
         >
           {estado}
