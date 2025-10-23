@@ -200,6 +200,7 @@ const ModalAgregarBomba = ({
                     onChangeText={handleChange('marcaBomba')}
                     onBlur={handleBlur('marcaBomba')}
                     placeholder="Ingrese la marca de la bomba"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.marcaBomba && errors.marcaBomba && (
                     <Text className="text-red-500 mt-2">
@@ -216,6 +217,7 @@ const ModalAgregarBomba = ({
                     onChangeText={handleChange('modeloBomba')}
                     onBlur={handleBlur('modeloBomba')}
                     placeholder="Ingrese el modelo de la bomba"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.modeloBomba && errors.modeloBomba && (
                     <Text className="text-red-500 mt-2">
@@ -233,6 +235,7 @@ const ModalAgregarBomba = ({
                     onBlur={handleBlur('potenciaBomba')}
                     keyboardType="numeric"
                     placeholder="Ej: 15"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.potenciaBomba && errors.potenciaBomba && (
                     <Text className="text-red-500 mt-2">

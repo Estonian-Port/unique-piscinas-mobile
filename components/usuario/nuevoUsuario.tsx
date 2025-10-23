@@ -107,6 +107,7 @@ const NuevoUsuarioForm = ({ onCreated }: { onCreated: () => void }) => {
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
             placeholder="correo@ejemplo.com"
+            placeholderTextColor="#9CA3AF"
             keyboardType="email-address"
             autoCapitalize="none"
             autoCorrect={false}

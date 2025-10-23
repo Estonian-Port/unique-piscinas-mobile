@@ -139,6 +139,7 @@ const ModalAgregarIonizador = ({
                         onChangeText={handleChange('ionizadorMarca')}
                         onBlur={handleBlur('ionizadorMarca')}
                         placeholder="Ingrese la marca del ionizador"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.ionizadorMarca && touched.ionizadorMarca && (
                         <Text className="text-red-500 text-xs mt-1">
@@ -156,6 +157,7 @@ const ModalAgregarIonizador = ({
                           onBlur={handleBlur('ionizadorElectrodos')}
                           keyboardType="numeric"
                           placeholder="Ej: 15"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.ionizadorElectrodos &&
                           touched.ionizadorElectrodos && (
@@ -175,6 +177,7 @@ const ModalAgregarIonizador = ({
                           onBlur={handleBlur('ionizadorTiempoVidaUtil')}
                           keyboardType="numeric"
                           placeholder="Ej: 150"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.ionizadorTiempoVidaUtil &&
                           touched.ionizadorTiempoVidaUtil && (

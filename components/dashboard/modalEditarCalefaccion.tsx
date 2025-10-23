@@ -99,7 +99,7 @@ const ModalEditarCalefaccion = ({
                   onChangeText={handleChange('marcaCalefaccion')}
                   onBlur={handleBlur('marcaCalefaccion')}
                   placeholder="Ej: Hayward"
-                  placeholderTextColor={'#888'}
+                  placeholderTextColor="#9CA3AF"
                 />
                 {touched.marcaCalefaccion && errors.marcaCalefaccion && (
                   <Text className="text-red-500 mt-2">
@@ -117,7 +117,7 @@ const ModalEditarCalefaccion = ({
                   onChangeText={handleChange('modeloCalefaccion')}
                   onBlur={handleBlur('modeloCalefaccion')}
                   placeholder="Ej: EnergyLine Pro"
-                  placeholderTextColor={'#888'}
+                  placeholderTextColor="#9CA3AF"
                 />
                 {touched.modeloCalefaccion && errors.modeloCalefaccion && (
                   <Text className="text-red-500 mt-2">
@@ -136,7 +136,7 @@ const ModalEditarCalefaccion = ({
                   onBlur={handleBlur('potenciaCalefaccion')}
                   keyboardType="numeric"
                   placeholder="Ej: 13.5"
-                  placeholderTextColor={'#888'}
+                  placeholderTextColor="#9CA3AF"
                 />
                 {touched.potenciaCalefaccion && errors.potenciaCalefaccion && (
                   <Text className="text-red-500 mt-2">

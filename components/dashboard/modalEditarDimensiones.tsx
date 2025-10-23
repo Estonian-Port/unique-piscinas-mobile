@@ -173,6 +173,7 @@ const ModalEditarDimensiones = ({
                     onBlur={handleBlur('largo')}
                     keyboardType="numeric"
                     placeholder="Ej: 10"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.largo && errors.largo && (
                     <Text className="text-red-500 mt-2">{errors.largo}</Text>
@@ -188,6 +189,7 @@ const ModalEditarDimensiones = ({
                     onBlur={handleBlur('ancho')}
                     keyboardType="numeric"
                     placeholder="Ej: 5"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.ancho && errors.ancho && (
                     <Text className="text-red-500 mt-2">{errors.ancho}</Text>
@@ -203,6 +205,7 @@ const ModalEditarDimensiones = ({
                     onBlur={handleBlur('profundidad')}
                     keyboardType="numeric"
                     placeholder="Ej: 1.5"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.profundidad && errors.profundidad && (
                     <Text className="text-red-500 mt-2">
@@ -230,6 +233,7 @@ const ModalEditarDimensiones = ({
                     onBlur={handleBlur('volumen')}
                     keyboardType="numeric"
                     placeholder="Ej: 75"
+                    placeholderTextColor="#9CA3AF"
                   />
                   {touched.volumen && errors.volumen && (
                     <Text className="text-red-500 mt-2">{errors.volumen}</Text>
@@ -247,6 +251,7 @@ const ModalEditarDimensiones = ({
                         onBlur={handleBlur('volumenTC')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {touched.volumenTC && errors.volumenTC && (
                         <Text className="text-red-500 mt-2">

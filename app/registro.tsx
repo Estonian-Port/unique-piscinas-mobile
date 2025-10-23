@@ -144,6 +144,7 @@ const Registro = () => {
                   onChangeText={handleChange('nombre')}
                   onBlur={handleBlur('nombre')}
                   placeholder="Ingrese su nombre"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {touched.nombre && errors.nombre && (
                   <Text className="text-red-500 mt-2">{errors.nombre}</Text>
@@ -158,6 +159,7 @@ const Registro = () => {
                   onChangeText={handleChange('apellido')}
                   onBlur={handleBlur('apellido')}
                   placeholder="Ingrese su apellido"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {touched.apellido && errors.apellido && (
                   <Text className="text-red-500 mt-2">{errors.apellido}</Text>
@@ -172,6 +174,7 @@ const Registro = () => {
                   onChangeText={handleChange('celular')}
                   onBlur={handleBlur('celular')}
                   placeholder="Ingrese su celular"
+                  placeholderTextColor="#9CA3AF"
                   keyboardType="numeric"
                 />
                 {touched.celular && errors.celular && (
@@ -188,6 +191,7 @@ const Registro = () => {
                     onChangeText={handleChange('nuevoPassword')}
                     onBlur={handleBlur('nuevoPassword')}
                     placeholder="Ingrese su nueva contraseña"
+                    placeholderTextColor="#9CA3AF"
                     secureTextEntry={!showPassword}
                   />
                   <Pressable
@@ -217,6 +221,7 @@ const Registro = () => {
                     onChangeText={handleChange('confirmacionPassword')}
                     onBlur={handleBlur('confirmacionPassword')}
                     placeholder="Reingrese su nueva contraseña"
+                    placeholderTextColor="#9CA3AF"
                     secureTextEntry={!showPassword}
                   />
                   <Pressable

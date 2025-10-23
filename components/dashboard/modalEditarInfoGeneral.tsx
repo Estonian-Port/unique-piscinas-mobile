@@ -78,6 +78,7 @@ const ModalEditarInfoGeneral = ({
                   onChangeText={handleChange('direccion')}
                   onBlur={handleBlur('direccion')}
                   placeholder="Ej: Calle Falsa 123"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.direccion && touched.direccion && (
                   <Text className="text-red-500 text-sm mt-1">
@@ -94,6 +95,7 @@ const ModalEditarInfoGeneral = ({
                   onChangeText={handleChange('ciudad')}
                   onBlur={handleBlur('ciudad')}
                   placeholder="Ej: Ciudad de México"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.ciudad && touched.ciudad && (
                   <Text className="text-red-500 text-sm mt-1">

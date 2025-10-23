@@ -112,7 +112,7 @@ const Login = () => {
               <View style={{ width: 250 }}>
                 <TextInput
                   placeholder="Email"
-                  placeholderTextColor="#9ca3af"
+                  placeholderTextColor="#9CA3AF"
                   className="border-2 bg-white border-gray-300 rounded-md py-4 px-3 mb-5 w-full"
                   value={email}
                   onChangeText={setEmail}

@@ -89,6 +89,7 @@ const ModalEditarBomba = ({
                   onChangeText={handleChange('marcaBomba')}
                   onBlur={handleBlur('marcaBomba')}
                   placeholder="Ingrese la marca de la bomba"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.marcaBomba && touched.marcaBomba && (
                   <Text className="text-red-500">{errors.marcaBomba}</Text>
@@ -104,6 +105,7 @@ const ModalEditarBomba = ({
                   onChangeText={handleChange('modeloBomba')}
                   onBlur={handleBlur('modeloBomba')}
                   placeholder="Ingrese el modelo de la bomba"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.modeloBomba && touched.modeloBomba && (
                   <Text className="text-red-500">{errors.modeloBomba}</Text>
@@ -116,6 +118,7 @@ const ModalEditarBomba = ({
                 <TextInput
                   className="border-2 bg-white border-gray-300 rounded-md py-4 px-3"
                   placeholder="Potencia en CV"
+                  placeholderTextColor="#9CA3AF"
                   keyboardType="numeric"
                   onChangeText={handleChange('potenciaCV')}
                   value={String(values.potenciaCV)}

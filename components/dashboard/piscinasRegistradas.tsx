@@ -39,6 +39,7 @@ const PiscinasRegistradas = ({pools} : {pools: PiscinaRegistrada[]}) => {
       <TextInput
         className="border rounded-lg p-2 bg-white text-base border-gray-300 mb-5 "
         placeholder="Buscar piscina por nombre o propietario"
+        placeholderTextColor="#9CA3AF"
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
         autoCapitalize="none"

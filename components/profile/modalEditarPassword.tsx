@@ -108,7 +108,7 @@ const ModalEditarPassword = ({
                     onChangeText={handleChange('passwordActual')}
                     onBlur={handleBlur('passwordActual')}
                     placeholder="Ingrese su contraseña actual"
-                    placeholderTextColor="#9ca3af"
+                    placeholderTextColor="#9CA3AF"
                     secureTextEntry={!showPassword}
                   />
                   <Pressable

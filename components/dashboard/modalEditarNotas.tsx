@@ -74,6 +74,7 @@ const ModalEditarNotas = ({
                   onChangeText={handleChange('notas')}
                   onBlur={handleBlur('notas')}
                   placeholder="Alguna información adicional que quieras agregar..."
+                  placeholderTextColor="#9CA3AF"
                   multiline={true}
                   numberOfLines={6}
                   textAlignVertical="top"

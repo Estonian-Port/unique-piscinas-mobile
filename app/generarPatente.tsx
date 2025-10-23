@@ -51,12 +51,14 @@ const GenerarPatente = () => {
           value={firmware}
           onChangeText={setFirmware}
           placeholder="Firmware"
+          placeholderTextColor="#9CA3AF"
           className="border border-gray-300 rounded-lg p-3 w-full mb-2"
         />
         <TextInput
           value={tipo}
           onChangeText={setTipo}
           placeholder="Tipo"
+          placeholderTextColor="#9CA3AF"
           className="border border-gray-300 rounded-lg p-3 w-full mb-4"
         />
 

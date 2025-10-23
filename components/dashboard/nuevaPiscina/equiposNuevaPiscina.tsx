@@ -154,7 +154,8 @@ const EquiposNuevaPiscina = ({
         onChangeText={(number) => setPotenciaCV(number)}
         keyboardType="numeric"
         placeholder="Ej: 15"
-      ></TextInput>
+        placeholderTextColor="#9CA3AF"
+      />
 
       <Text className="font-geist-semi-bold text-text text-lg mt-2">
         Filtro
@@ -221,7 +222,8 @@ const EquiposNuevaPiscina = ({
         onChangeText={(number) => setDiametroFiltro(number)}
         keyboardType="numeric"
         placeholder="Ej: 500"
-      ></TextInput>
+        placeholderTextColor="#9CA3AF"
+      />
 
       <Text className="font-geist text-text text-base mt-3">Arena (kg)</Text>
       <TextInput
@@ -230,7 +232,8 @@ const EquiposNuevaPiscina = ({
         onChangeText={(number) => setArena(number)}
         keyboardType="numeric"
         placeholder="Ej: 75"
-      ></TextInput>
+        placeholderTextColor="#9CA3AF"
+      />
 
       <Text className="font-geist-semi-bold text-text text-lg mt-2">
         Tratamiento
@@ -366,7 +369,8 @@ const EquiposNuevaPiscina = ({
               value={marcaCalefaccion}
               onChangeText={(marca) => setMarcaCalefaccion(marca)}
               placeholder="Ej: Hayward"
-            ></TextInput>
+              placeholderTextColor="#9CA3AF"
+            />
 
             <Text className="font-geist text-text text-base mt-3">Modelo</Text>
             <TextInput
@@ -374,7 +378,8 @@ const EquiposNuevaPiscina = ({
               value={modeloCalefaccion}
               onChangeText={(modelo) => setModeloCalefaccion(modelo)}
               placeholder="Ej: EnergyLine Pro"
-            ></TextInput>
+              placeholderTextColor="#9CA3AF"
+            />
 
             <Text className="font-geist text-text text-base mt-3">
               Potencia (Kw)
@@ -385,7 +390,8 @@ const EquiposNuevaPiscina = ({
               onChangeText={(number) => setPotenciaCalefaccion(number)}
               keyboardType="numeric"
               placeholder="Ej: 13.5"
-            ></TextInput>
+              placeholderTextColor="#9CA3AF"
+            />
           </View>
         )}
       </View>

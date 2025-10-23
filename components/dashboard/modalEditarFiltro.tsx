@@ -116,6 +116,7 @@ const ModalEditarFiltro = ({
                   onChangeText={handleChange('marcaFiltro')}
                   onBlur={handleBlur('marcaFiltro')}
                   placeholder="Ingrese la marca del filtro"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.marcaFiltro && touched.marcaFiltro && (
                   <Text className="text-red-500 text-sm mt-1">
@@ -132,6 +133,7 @@ const ModalEditarFiltro = ({
                   onChangeText={handleChange('modeloFiltro')}
                   onBlur={handleBlur('modeloFiltro')}
                   placeholder="Ingrese el modelo del filtro"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.modeloFiltro && touched.modeloFiltro && (
                   <Text className="text-red-500 text-sm mt-1">
@@ -149,6 +151,7 @@ const ModalEditarFiltro = ({
                   onBlur={handleBlur('diametro')}
                   keyboardType="numeric"
                   placeholder="Ej: 500"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.diametro && touched.diametro && (
                   <Text className="text-red-500 text-sm mt-1">
@@ -170,6 +173,7 @@ const ModalEditarFiltro = ({
                   onBlur={handleBlur('datoExtra')}
                   keyboardType="numeric"
                   placeholder="Ej: 75"
+                  placeholderTextColor="#9CA3AF"
                 />
                 {errors.datoExtra && touched.datoExtra && (
                   <Text className="text-red-500 text-sm mt-1">

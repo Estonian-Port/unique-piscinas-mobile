@@ -154,6 +154,7 @@ const ModalEditarRegistro = ({
                   <TextInput
                     className="border border-grayish-unique rounded-lg p-2 mb-3"
                     placeholder="Ej: Recambio de arena en filtro"
+                    placeholderTextColor="#9CA3AF"
                     value={values.accion}
                     onChangeText={handleChange('accion')}
                     onBlur={handleBlur('accion')}
@@ -174,6 +175,7 @@ const ModalEditarRegistro = ({
                   <TextInput
                     className="border border-grayish-unique rounded-lg p-2 mb-3"
                     placeholder="Ej: Bomba principal"
+                    placeholderTextColor="#9CA3AF"
                     value={values.dispositivo}
                     onChangeText={handleChange('dispositivo')}
                     onBlur={handleBlur('dispositivo')}
@@ -197,6 +199,7 @@ const ModalEditarRegistro = ({
                     maxLength={500}
                     textAlignVertical="top"
                     placeholder="Breve descripción"
+                    placeholderTextColor="#9CA3AF"
                     value={values.descripcion}
                     onChangeText={handleChange('descripcion')}
                     onBlur={handleBlur('descripcion')}
@@ -216,6 +219,7 @@ const ModalEditarRegistro = ({
                   <TextInput
                     className="border border-grayish-unique rounded-lg p-2 mb-3"
                     placeholder="Nombre y apellido del técnico"
+                    placeholderTextColor="#9CA3AF"
                     value={values.tecnico}
                     onChangeText={handleChange('tecnico')}
                     onBlur={handleBlur('tecnico')}

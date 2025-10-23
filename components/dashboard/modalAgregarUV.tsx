@@ -131,6 +131,7 @@ const ModalAgregarUV = ({
                         onChangeText={handleChange('uvMarca')}
                         onBlur={handleBlur('uvMarca')}
                         placeholder="Ingrese la marca de la lámpara UV"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.uvMarca && touched.uvMarca && (
                         <Text className="text-red-500 text-xs mt-1">
@@ -148,6 +149,7 @@ const ModalAgregarUV = ({
                           onBlur={handleBlur('uvPotencia')}
                           keyboardType="numeric"
                           placeholder="Ej: 15"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.uvPotencia && touched.uvPotencia && (
                           <Text className="text-red-500 text-xs mt-1">
@@ -166,6 +168,7 @@ const ModalAgregarUV = ({
                           onBlur={handleBlur('uvTiempoVidaUtil')}
                           keyboardType="numeric"
                           placeholder="Ej: 150"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.uvTiempoVidaUtil &&
                           touched.uvTiempoVidaUtil && (

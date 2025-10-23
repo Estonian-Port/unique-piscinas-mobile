@@ -138,6 +138,7 @@ const ModalAgregarTrasductor = ({
                         onChangeText={handleChange('trasductorMarca')}
                         onBlur={handleBlur('trasductorMarca')}
                         placeholder="Ingrese la marca del trasductor"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.trasductorMarca && touched.trasductorMarca && (
                         <Text className="text-red-500 text-xs mt-1">
@@ -155,6 +156,7 @@ const ModalAgregarTrasductor = ({
                           onBlur={handleBlur('trasductorPotencia')}
                           keyboardType="numeric"
                           placeholder="Ej: 15"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.trasductorPotencia &&
                           touched.trasductorPotencia && (
@@ -176,6 +178,7 @@ const ModalAgregarTrasductor = ({
                           onBlur={handleBlur('trasductorTiempoVidaUtil')}
                           keyboardType="numeric"
                           placeholder="Ej: 150"
+                          placeholderTextColor="#9CA3AF"
                         />
                         {errors.trasductorTiempoVidaUtil &&
                           touched.trasductorTiempoVidaUtil && (

@@ -129,6 +129,7 @@ const ModalEditarGermicida = ({
                       onChangeText={handleChange('marca')}
                       onBlur={handleBlur('marca')}
                       placeholder="Ingrese la marca del transductor"
+                      placeholderTextColor="#9CA3AF"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -146,6 +147,7 @@ const ModalEditarGermicida = ({
                         onBlur={handleBlur('datoExtra')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.datoExtra && touched.datoExtra && (
                         <Text className="text-red-500 text-xs mt-1">
@@ -170,6 +172,7 @@ const ModalEditarGermicida = ({
                       onChangeText={handleChange('marca')}
                       onBlur={handleBlur('marca')}
                       placeholder="Ingrese la marca del transductor"
+                      placeholderTextColor="#9CA3AF"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -187,6 +190,7 @@ const ModalEditarGermicida = ({
                         onBlur={handleBlur('datoExtra')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.datoExtra && touched.datoExtra && (
                         <Text className="text-red-500 text-xs mt-1">
@@ -211,6 +215,7 @@ const ModalEditarGermicida = ({
                       onChangeText={handleChange('marca')}
                       onBlur={handleBlur('marca')}
                       placeholder="Ingrese la marca del transductor"
+                      placeholderTextColor="#9CA3AF"
                     />
                     {errors.marca && touched.marca && (
                       <Text className="text-red-500 text-xs mt-1">
@@ -228,6 +233,7 @@ const ModalEditarGermicida = ({
                         onBlur={handleBlur('datoExtra')}
                         keyboardType="numeric"
                         placeholder="Ej: 15"
+                        placeholderTextColor="#9CA3AF"
                       />
                       {errors.datoExtra && touched.datoExtra && (
                         <Text className="text-red-500 text-xs mt-1">
