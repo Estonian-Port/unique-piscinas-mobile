@@ -140,10 +140,10 @@ const FiltroNuevaPiscina = ({
                 ref={scrollViewRef}
                 enableOnAndroid={true}
                 enableAutomaticScroll={true}
-                extraScrollHeight={Platform.OS === 'ios' ? 150 : 200}
+                extraScrollHeight={Platform.OS === 'ios' ? 150 : 100}
                 extraHeight={Platform.OS === 'ios' ? 150 : 200}
                 keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ flexGrow: 1, paddingBottom: keyboardOpen ? 100 : 50 }}
                 enableResetScrollToCoords={false}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}

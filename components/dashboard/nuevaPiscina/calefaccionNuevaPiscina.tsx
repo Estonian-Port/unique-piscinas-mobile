@@ -125,7 +125,7 @@ const CalefaccionNuevaPiscina = ({
               marca: values.marcaCalefaccion,
               modelo: values.modeloCalefaccion,
               potencia: parseFloat(values.potenciaCalefaccion),
-              activa: true,
+              activa: false,
             };
 
             nuevaPiscina.calefaccion = calefaccionNueva;
@@ -180,10 +180,10 @@ const CalefaccionNuevaPiscina = ({
                 ref={scrollViewRef}
                 enableOnAndroid={true}
                 enableAutomaticScroll={true}
-                extraScrollHeight={Platform.OS === 'ios' ? 150 : 200}
-                extraHeight={Platform.OS === 'ios' ? 150 : 200}
+                extraScrollHeight={Platform.OS === 'ios' ? 30 : 30}
+                extraHeight={Platform.OS === 'ios' ? 150 : 70}
                 keyboardShouldPersistTaps="handled"
-                contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+                contentContainerStyle={{ flexGrow: 1 }}
                 enableResetScrollToCoords={false}
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={false}
@@ -344,7 +344,6 @@ const CalefaccionNuevaPiscina = ({
                   </View>
 
                   {/* Padding inferior para dar espacio sobre los botones fijos */}
-                  <View style={{ height: keyboardOpen ? 20 : 0 }} />
                 </View>
               </KeyboardAwareScrollView>
 

@@ -143,26 +143,26 @@ const BombaNuevaPiscina = ({
 
   const getInitialValues = (): FormValues => {
     const bombaPrimaria = nuevaPiscina.bomba?.find(
-      (bomba) => bomba.tipo === 'Primaria'
+      (bomba) => bomba.tipo === 'PRINCIPAL'
     );
     const bombaSecundaria = nuevaPiscina.bomba?.find(
-      (bomba) => bomba.tipo === 'Secundaria'
+      (bomba) => bomba.tipo === 'SECUNDARIA'
     );
     const bombaCascada = nuevaPiscina.bomba?.find(
-      (bomba) => bomba.tipo === 'Cascada'
+      (bomba) => bomba.tipo === 'CASCADA'
     );
     const bombaHidromasaje = nuevaPiscina.bomba?.find(
-      (bomba) => bomba.tipo === 'Hidromasaje'
+      (bomba) => bomba.tipo === 'HIDROMASAJE'
     );
 
     const tieneBombaSecundaria = nuevaPiscina.bomba?.some(
-      (bomba) => bomba.tipo === 'Secundaria'
+      (bomba) => bomba.tipo === 'SECUNDARIA'
     );
     const tieneBombaCascada = nuevaPiscina.bomba?.some(
-      (bomba) => bomba.tipo === 'Cascada'
+      (bomba) => bomba.tipo === 'CASCADA'
     );
     const tieneBombaHidromasaje = nuevaPiscina.bomba?.some(
-      (bomba) => bomba.tipo === 'Hidromasaje'
+      (bomba) => bomba.tipo === 'HIDROMASAJE'
     );
 
     return {

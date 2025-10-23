@@ -148,12 +148,12 @@ const TratamientoNuevaPiscina = ({
 
   const getInitialValues = (): FormValues => {
     const sistemaGermicida = nuevaPiscina.sistemaGermicida || [];
-    const uvExistente = sistemaGermicida.find((s) => s.tipo === 'uv');
+    const uvExistente = sistemaGermicida.find((s) => s.tipo === 'UV');
     const ionizadorExistente = sistemaGermicida.find(
-      (s) => s.tipo === 'ionizador'
+      (s) => s.tipo === 'IONIZADOR'
     );
     const trasductorExistente = sistemaGermicida.find(
-      (s) => s.tipo === 'trasductor'
+      (s) => s.tipo === 'TRASDUCTOR'
     );
 
     return {
@@ -267,8 +267,8 @@ const TratamientoNuevaPiscina = ({
                 ref={scrollViewRef}
                 enableOnAndroid={true}
                 enableAutomaticScroll={true}
-                extraScrollHeight={Platform.OS === 'ios' ? 150 : 200}
-                extraHeight={Platform.OS === 'ios' ? 150 : 200}
+                extraScrollHeight={Platform.OS === 'ios' ? 30 : 30}
+                extraHeight={Platform.OS === 'ios' ? 150 : 150}
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
                 enableResetScrollToCoords={false}
