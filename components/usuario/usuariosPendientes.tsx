@@ -48,7 +48,7 @@ const UsuariosPendientes = ({ refreshKey }: { refreshKey: number }) => {
               Invitación enviada el {user.fechaAlta}
             </Text>
           </View>
-          <View className="items-center justify-between gap-3 rounded-full px-2 py-1 bg-gray-300">
+          <View className="items-center justify-between gap-3 rounded-full px-2 py-1 bg-gray-300 border border-gray-400">
             <Text className="font-geist-semi-bold text-text text-sm text-center">
               Pendiente
             </Text>

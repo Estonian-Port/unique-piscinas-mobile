@@ -11,6 +11,7 @@ import ModalBarrefondo from './modalBarrefondo';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
 import { Box, Circle, Droplet, Eye, Info } from 'react-native-feather';
+import Divider from '../utiles/divider';
 
 interface ControlFiltroProps {
   piscina: PiscinaResume;
@@ -222,13 +223,13 @@ export default function ControlFiltro({
         </Text>
 
         {piscina.funcionActiva != 'REPOSO' ? (
-          <View className="bg-green-200 rounded-full p-2">
+          <View className="bg-green-200 rounded-full p-2 border border-green-300">
             <Text className="font-geist-semi-bold text-sm text-text">
               Activado
             </Text>
           </View>
         ) : (
-          <View className="bg-red-200 rounded-full p-2">
+          <View className="bg-yellow-100 rounded-full p-2 border border-yellow-200">
             <Text className="font-geist-semi-bold text-sm text-text">
               Desactivado
             </Text>
@@ -315,7 +316,7 @@ export default function ControlFiltro({
 
       {/*MENSAJE DE ADVERTENCIA */}
       {!hayEntradaDeAguaSeleccionada && (
-        <View className="flex-row items-start bg-yellow-50 border-l-4 border-yellow-400 rounded-md shadow-sm p-4 my-4 mx-1">
+        <View className="flex-row items-start bg-yellow-50 border-l-4 border-yellow-400 rounded-md shadow-sm p-4 mt-4 mx-1">
           <View className="mt-0.5">
             <Info color="#b45309" />
           </View>
@@ -325,6 +326,8 @@ export default function ControlFiltro({
           </Text>
         </View>
       )}
+
+      <View className="bg-gray-200 h-px mt-5 w-full"/>
 
       {/*MODO DE FILTRO */}
       <FuncionFiltroScreen

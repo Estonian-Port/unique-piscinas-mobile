@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Modal,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
   TextInput,
@@ -12,6 +11,7 @@ import { Calefaccion } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import RadioButton from '../utiles/radioButton';
+import CustomPressable from '../utiles/customPressable';
 
 const validationSchema = Yup.object().shape({
   nombre: Yup.string().required('El nombre es obligatorio'),
@@ -165,24 +165,22 @@ const ModalEditarInformacion = ({
                 )}
 
                 <View className="flex-row justify-between gap-3 mt-3">
-                  <Pressable
+                  <CustomPressable
                     onPress={onClose}
-                    className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
+                    className="bg-gray-400 rounded-lg flex-1 items-center justify-center"
                   >
                     <Text className="text-white text-center font-geist-semi-bold">
                       Cancelar
                     </Text>
-                  </Pressable>
-                  <Pressable
+                  </CustomPressable>
+                  <CustomPressable
                     onPress={handleSubmit as any}
-                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                    className="bg-purple-unique rounded-lg flex-1 items-center justify-center"
                   >
-                    <View className="flex-row items-center justify-center">
-                      <Text className="text-white text-center font-geist-semi-bold ml-2">
-                        Guardar cambios
-                      </Text>
-                    </View>
-                  </Pressable>
+                    <Text className="text-white text-center font-geist-semi-bold ml-2">
+                      Guardar cambios
+                    </Text>
+                  </CustomPressable>
                 </View>
               </View>
             </View>

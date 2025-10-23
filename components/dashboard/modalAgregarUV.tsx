@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
-  Pressable,
 } from 'react-native';
 import { GermicidaNuevo, PiscinaEquipos } from '@/data/domain/piscina';
 import * as Yup from 'yup';
@@ -14,6 +13,7 @@ import { Formik } from 'formik';
 import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import { Zap } from 'react-native-feather';
+import CustomPressable from '../utiles/customPressable';
 
 const validationSchema = Yup.object().shape({
   uvMarca: Yup.string().required('Seleccione una marca de lámpara UV'),
@@ -177,25 +177,25 @@ const ModalAgregarUV = ({
                     </View>
                   </View>
 
-                  <View className="flex-row justify-between gap-3 mt-3">
-                    <Pressable
+                  <View className="flex-row justify-between mt-3">
+                    <CustomPressable
                       onPress={onClose}
-                      className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
+                      className="bg-gray-400 rounded-lg mr-1 items-center justify-center h-12"
+                      containerClassName="w-1/2"
                     >
                       <Text className="text-text text-center font-geist-semi-bold">
                         Cancelar
                       </Text>
-                    </Pressable>
-                    <Pressable
+                    </CustomPressable>
+                    <CustomPressable
                       onPress={handleSubmit as any}
-                      className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12"
+                      className="bg-purple-unique rounded-lg ml-1 items-center justify-center h-12"
+                      containerClassName="w-1/2"
                     >
-                      <View className="flex-row items-center justify-center">
-                        <Text className="text-white text-center font-geist-semi-bold ml-2">
-                          Guardar cambios
-                        </Text>
-                      </View>
-                    </Pressable>
+                      <Text className="text-white text-center font-geist-semi-bold">
+                        Guardar cambios
+                      </Text>
+                    </CustomPressable>
                   </View>
                 </View>
               </View>

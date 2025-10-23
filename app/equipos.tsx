@@ -2,7 +2,6 @@ import {
   ScrollView,
   Text,
   View,
-  Pressable,
   ActivityIndicator,
 } from 'react-native';
 import { Screen } from '@/components/utiles/Screen';
@@ -27,6 +26,7 @@ import ModalAgregarTrasductor from '@/components/dashboard/modalAgregarTrasducto
 import TratamientoCard from '@/components/dashboard/tratamientoCard';
 import { Clipboard } from 'react-native-feather';
 import Divider from '@/components/utiles/divider';
+import CustomPressable from '@/components/utiles/customPressable';
 
 export default function Equipos() {
   const [modalNuevoRegistro, setModalNuevoRegistro] = useState(false);
@@ -102,14 +102,15 @@ export default function Equipos() {
             />
           ))}
           {pool.bombas.length < 4 && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
+            <CustomPressable
+              className="bg-gray-200 rounded-lg p-3 items-center mb-3"
               onPress={() => setModalAgregarBomba(true)}
+              containerClassName='w-1/2'
             >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar bomba
               </Text>
-            </Pressable>
+            </CustomPressable>
           )}
             <ModalAgregarBomba
               visible={modalAgregarBomba}
@@ -139,14 +140,15 @@ export default function Equipos() {
             />
           ))}
           {!tieneUv && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
+            <CustomPressable
+              className="bg-gray-200 rounded-lg p-3 items-center mb-3"
               onPress={() => setModalAgregarUV(true)}
+              containerClassName='w-1/2'
             >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar UV
               </Text>
-            </Pressable>
+            </CustomPressable>
           )}
           {modalAgregarUV && (
             <ModalAgregarUV
@@ -157,14 +159,15 @@ export default function Equipos() {
             />
           )}
           {!tieneIonizador && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
+            <CustomPressable
+              className="bg-gray-200 rounded-lg p-3 items-center mb-3"
               onPress={() => setModalAgregarIonizador(true)}
+              containerClassName='w-1/2'
             >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar Ionizador
               </Text>
-            </Pressable>
+            </CustomPressable>
           )}
           {modalAgregarIonizador && (
             <ModalAgregarIonizador
@@ -175,14 +178,15 @@ export default function Equipos() {
             />
           )}
           {!tieneTrasductor && (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
+            <CustomPressable
+              className="bg-gray-200 rounded-lg p-3 items-center mb-3"
               onPress={() => setModalAgregarTrasductor(true)}
+              containerClassName='w-1/2'
             >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar Trasductor
               </Text>
-            </Pressable>
+            </CustomPressable>
           )}
           {modalAgregarTrasductor && (
             <ModalAgregarTrasductor
@@ -214,14 +218,15 @@ export default function Equipos() {
               actualizarPiscina={fetchPool}
             />
           ) : (
-            <Pressable
-              className="bg-gray-200 rounded-lg p-3 w-11/12 items-center mb-3"
+            <CustomPressable
+              className="bg-gray-200 rounded-lg p-3 items-center mb-3"
               onPress={() => setModalAgregarCalefaccion(true)}
+              containerClassName='w-1/2'
             >
               <Text className="font-geist-semi-bold text-text">
                 + Agregar Calefacción
               </Text>
-            </Pressable>
+            </CustomPressable>
           )}
           {modalAgregarCalefaccion && (
             <ModalAgregarCalefaccion
@@ -236,7 +241,7 @@ export default function Equipos() {
             <Text className="text-text font-geist-semi-bold text-xl">
               Registros
             </Text>
-            <Pressable
+            <CustomPressable
               onPress={() => setModalNuevoRegistro(true)}
               className="bg-white border border-grayish-unique rounded-lg py-3 px-2 flex-row items-center justify-center"
             >
@@ -244,7 +249,7 @@ export default function Equipos() {
               <Text className="text-black font-geist-semi-bold text-sm">
                 Nuevo Registro
               </Text>
-            </Pressable>
+            </CustomPressable>
             {modalNuevoRegistro && (
               <ModalNuevoRegistro
                 visible={modalNuevoRegistro}

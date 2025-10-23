@@ -7,6 +7,7 @@ import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
 import { Edit2, Filter, RefreshCw } from 'react-native-feather';
 import ModalResetearContador from './modalResetearContador';
+import CustomPressable from '../utiles/customPressable';
 
 const FiltroCard = ({
   filtro,
@@ -136,7 +137,7 @@ const FiltroCard = ({
           </Text>
         </View>
       </View>
-      <Pressable
+      <CustomPressable
         className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
         onPress={() => setModalResetOpen(true)}
       >
@@ -144,7 +145,7 @@ const FiltroCard = ({
         <Text className="text-white font-geist text-base ml-2">
           Resetear contador
         </Text>
-      </Pressable>
+      </CustomPressable>
       <ModalEditarFiltro
         visible={modalEditOpen}
         filtro={filtro}

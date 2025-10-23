@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { ScreenCard } from '../utiles/ScreenCard';
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { NuevoUsuario } from '@/data/domain/user';
 import { usuarioService } from '@/services/usuario.service';
 import Toast from 'react-native-toast-message';
+import CustomPressable from '../utiles/customPressable';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -121,7 +122,7 @@ const NuevoUsuarioForm = ({ onCreated }: { onCreated: () => void }) => {
             finalizar el registro.
           </Text>
 
-          <Pressable
+          <CustomPressable
             className={`rounded-md py-2 px-4 mt-4 self-end ${
               isSubmitting ? 'bg-gray-400' : 'bg-black'
             }`}
@@ -131,7 +132,7 @@ const NuevoUsuarioForm = ({ onCreated }: { onCreated: () => void }) => {
             <Text className="font-geist-semi-bold text-sm text-center text-white">
               {isSubmitting ? 'Creando...' : 'Dar de alta usuario'}
             </Text>
-          </Pressable>
+          </CustomPressable>
         </ScreenCard>
       )}
     </Formik>

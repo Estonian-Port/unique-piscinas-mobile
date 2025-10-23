@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Modal,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
   TextInput,
@@ -13,6 +12,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { Bomba } from '@/data/domain/piscina';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import CustomPressable from '../utiles/customPressable';
 
 const validationSchema = Yup.object().shape({
   marcaBomba: Yup.string().required('Seleccione una marca de bomba'),
@@ -124,28 +124,30 @@ const ModalEditarBomba = ({
                   <Text className="text-red-500">{errors.potenciaCV}</Text>
                 )}
 
-                <View className="flex-row justify-between gap-3 mt-3">
-                  <Pressable
+                <View className="flex-row justify-between mt-3">
+                  <CustomPressable
                     onPress={onClose}
-                    className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
+                    className="bg-gray-400 rounded-lg items-center justify-center h-12 mr-1"
+                    containerClassName='w-1/2'
                   >
                     <Text className="text-text text-center font-geist-semi-bold">
                       Cancelar
                     </Text>
-                  </Pressable>
-                  <Pressable
+                  </CustomPressable>
+                  <CustomPressable  
                     disabled={!dirty}
                     onPress={handleSubmit as any}
-                    className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
+                    className={`bg-purple-unique rounded-lg items-center justify-center h-12 ml-1 ${
                       !dirty ? 'opacity-50' : ''
                     }`}
+                    containerClassName='w-1/2'
                   >
                     <View className="flex-row items-center justify-center">
                       <Text className="text-white text-center font-geist-semi-bold">
                         Guardar cambios
                       </Text>
                     </View>
-                  </Pressable>
+                  </CustomPressable>
                 </View>
               </View>
             </View>

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Switch } from 'react-native';
+import { View, Text, Switch } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import Schedule from './schedule';
@@ -13,6 +13,7 @@ import Toast from 'react-native-toast-message';
 import { piscinaService } from '@/services/piscina.service';
 import { useAuth } from '@/context/authContext';
 import { Clock, Filter } from 'react-native-feather';
+import CustomPressable from '../utiles/customPressable';
 
 const ProgramacionFiltrado = ({
   programacion,
@@ -128,12 +129,12 @@ const ProgramacionFiltrado = ({
             Ciclos programados
           </Text>
         </View>
-        <Pressable
+        <CustomPressable
           className="border border-gray-200 rounded-md p-2 items-center justify-center"
           onPress={() => setModalVisible(true)}
         >
           <Text className="font-geist text-text text-base">+ Añadir</Text>
-        </Pressable>
+        </CustomPressable>
         {modalVisible && (
           <ModalProgramacion
             visible={modalVisible}

@@ -1,4 +1,4 @@
-import { View, Text, Pressable, Switch } from 'react-native';
+import { View, Text, Switch } from 'react-native';
 import React, { useState } from 'react';
 import {
   dateToLocalTimeString,
@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message';
 import { useAuth } from '@/context/authContext';
 import { piscinaService } from '@/services/piscina.service';
 import { Clock, Sliders } from 'react-native-feather';
+import CustomPressable from '../utiles/customPressable';
 
 const ProgramacionIluminacion = ({
   programacion,
@@ -25,7 +26,7 @@ const ProgramacionIluminacion = ({
   const [modalVisible, setModalVisible] = useState(false);
 
   const programacionVacia: Programacion = {
-    id: 0,
+    id: null,
     horaInicio: dateToLocalTimeString(new Date()),
     horaFin: dateToLocalTimeString(new Date()),
     dias: [],
@@ -163,7 +164,7 @@ const ProgramacionIluminacion = ({
         </Text>
       </View>
 
-      <View className="flex-row items-center justify-between">
+      <View className="flex-row items-center justify-between mb-2">
         <View className="flex-row items-center">
           <Sliders color="light-blue" />
           <Text className="font-geist-semi-bold text-text text-base ml-1">
@@ -186,12 +187,12 @@ const ProgramacionIluminacion = ({
             Horarios programados
           </Text>
         </View>
-        <Pressable
+        <CustomPressable
           className="border border-gray-200 rounded-md p-2 items-center justify-center"
           onPress={() => setModalVisible(true)}
         >
           <Text className="font-geist text-text text-base">+ Añadir</Text>
-        </Pressable>
+        </CustomPressable>
         <ModalProgramacion
           visible={modalVisible}
           onClose={() => setModalVisible(false)}

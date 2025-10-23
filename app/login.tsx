@@ -18,6 +18,7 @@ import { useAuth } from '@/context/authContext';
 import { Eye, EyeOff, LogIn } from 'react-native-feather';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RolType } from '@/data/domain/rol';
+import CustomPressable from '@/components/utiles/customPressable';
 
 const Login = () => {
   const [email, setEmail] = useState('leo@unique.com');
@@ -32,7 +33,6 @@ const Login = () => {
     if (usuario) {
       const { rol, primerLogin } = usuario;
 
-      console.log(usuario.rol);
       if (rol === RolType.ADMIN) {
         router.replace('/dashboard');
       } else if (rol === RolType.PAT_GEN) {
@@ -147,7 +147,7 @@ const Login = () => {
                   </Pressable>
                 </View>
 
-                <TouchableOpacity
+                <CustomPressable
                   onPress={() => handleLogin(email, password)}
                   className="bg-gold-unique rounded-full px-4 py-2 flex-row items-center justify-center h-14 w-full"
                   activeOpacity={0.8}
@@ -156,7 +156,7 @@ const Login = () => {
                   <Text className="font-geist-semi-bold text-white ml-2">
                     Iniciar Sesión
                   </Text>
-                </TouchableOpacity>
+                </CustomPressable>
               </View>
             </Pressable>
           </KeyboardAvoidingView>

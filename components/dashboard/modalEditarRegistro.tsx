@@ -15,6 +15,7 @@ import { Registro } from '@/data/domain/piscina';
 import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
 import { Calendar, Edit, Info, Settings, Tool } from 'react-native-feather';
+import CustomPressable from '../utiles/customPressable';
 
 const validationSchema = Yup.object().shape({
   accion: Yup.string().required('La acción es obligatoria'),
@@ -225,29 +226,31 @@ const ModalEditarRegistro = ({
                     </Text>
                   )}
 
-                  <View className="flex-row justify-between gap-3 mt-3">
-                    <Pressable
-                      onPress={onClose}
-                      className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12"
-                    >
-                      <Text className="text-text text-center font-geist-semi-bold">
-                        Cancelar
+                <View className="flex-row justify-between mt-3">
+                  <CustomPressable
+                    onPress={onClose}
+                    className="bg-gray-400 rounded-lg items-center justify-center h-14 mr-1"
+                    containerClassName='w-1/2'
+                  >
+                    <Text className="text-text text-center font-geist-semi-bold">
+                      Cancelar
+                    </Text>
+                  </CustomPressable>
+                  <CustomPressable  
+                    disabled={!dirty}
+                    onPress={handleSubmit as any}
+                    className={`bg-purple-unique rounded-lg items-center justify-center h-14 ml-1 ${
+                      !dirty ? 'opacity-50' : ''
+                    }`}
+                    containerClassName='w-1/2'
+                  >
+                    <View className="flex-row items-center justify-center">
+                      <Text className="text-white text-center font-geist-semi-bold">
+                        Guardar cambios
                       </Text>
-                    </Pressable>
-                    <Pressable
-                      disabled={!dirty}
-                      onPress={handleSubmit as any}
-                      className={`bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 ${
-                        !dirty ? 'opacity-50' : ''
-                      }`}
-                    >
-                      <View className="flex-row items-center justify-center">
-                        <Text className="text-white text-center font-geist-semi-bold ml-2">
-                          Guardar cambios
-                        </Text>
-                      </View>
-                    </Pressable>
-                  </View>
+                    </View>
+                  </CustomPressable>
+                </View>
                 </View>
               </View>
             </KeyboardAvoidingView>

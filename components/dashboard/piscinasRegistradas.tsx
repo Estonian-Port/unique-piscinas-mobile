@@ -1,9 +1,10 @@
-import { View, Text, Pressable, TextInput, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, ScrollView, Platform } from 'react-native';
 import React, { useState } from 'react';
 import { ScreenCard } from '../utiles/ScreenCard';
 import { Link } from 'expo-router';
 import PoolTableCard from './cardPiscinaTabla';
 import { PiscinaRegistrada } from '@/data/domain/piscina';
+import CustomPressable from '../utiles/customPressable';
 
 const PiscinasRegistradas = ({pools} : {pools: PiscinaRegistrada[]}) => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -24,13 +25,13 @@ const PiscinasRegistradas = ({pools} : {pools: PiscinaRegistrada[]}) => {
         <Link asChild href="/nuevaPiscina">
 
         {Platform.OS === "web" ? (
-          <Pressable className="border rounded-md bg-[#222247] items-center justify-center">
+          <CustomPressable className="border rounded-md bg-[#222247] items-center justify-center">
               <Text className="text-white font-geist-semi-bold text-center py-2 px-4">+  Nueva Piscina</Text>
-          </Pressable>
+          </CustomPressable>
         ) : (
-          <Pressable className="border rounded-md bg-[#222247] w-12 h-12 items-center justify-center">
+          <CustomPressable className="border rounded-md bg-[#222247] w-12 h-12 items-center justify-center">
               <Text className="text-white font-geist-bold text-xl text-center">+</Text>
-          </Pressable>
+          </CustomPressable>
         )}
         </Link>
       </View>

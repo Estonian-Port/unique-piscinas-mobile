@@ -6,6 +6,7 @@ import BombaCard from './bombaEquipamiento';
 import FiltroCard from './filtroEquipamiento';
 import GermicidaEquipamiento from './germicidaEquipamiento';
 import { Filter, Info, Power, Settings } from 'react-native-feather';
+import Divider from '../utiles/divider';
 
 const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
   const requiereAtencion = pool.sistemasGermicidas.some(
@@ -43,14 +44,14 @@ const EquipamientoConfigurado = ({ pool }: { pool: PiscinaEquipamiento }) => {
       </View>
       <FiltroCard filtro={pool.filtro} />
 
-      <View className="w-full h-0.5 bg-gray-200 my-3" />
+      {pool.sistemasGermicidas.length > 0 && <Divider />}
 
       {pool.sistemasGermicidas.map((germicida) => (
         <GermicidaEquipamiento key={germicida.id} germicida={germicida} />
       ))}
 
       {requiereAtencion && (
-        <View className="flex-row w-full items-center rounded-md bg-yellow-100 p-2 mt-3 gap-2">
+        <View className="flex-row w-full items-center rounded-md bg-yellow-100 p-2 mt-3 gap-2 border-l-4 border-orange-300">
           <Info color={'orange'} />
           <Text className="font-geist text-text text-sm flex-shrink">
             Algunos sistemas germicidas requieren atención. Revise el estado de los

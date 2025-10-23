@@ -1,5 +1,6 @@
-import { View, Text, Switch, Modal, Pressable } from 'react-native';
+import { View, Text, Switch, Modal } from 'react-native';
 import React, { useState } from 'react';
+import CustomPressable from '../utiles/customPressable';
 
 type Props = {
   orp: boolean;
@@ -75,18 +76,20 @@ export default function CompuestosCard({ orp, controlPH, cloroSalino, onChange }
               ¿Desea {pendingValue ? 'agregar' : 'quitar'} este compuesto a la piscina?
             </Text>
             <View className="flex-row justify-between mt-4">
-              <Pressable
-                className="bg-gray-400 rounded-lg flex-1 items-center justify-center h-12 mx-2"
+              <CustomPressable
+                className="bg-gray-400 rounded-lg mr-1 items-center justify-center h-12"
                 onPress={handleCancel}
+                containerClassName='w-1/2'
               >
                 <Text className="text-white font-geist-semi-bold">Cancelar</Text>
-              </Pressable>
-              <Pressable
-                className="bg-purple-unique rounded-lg flex-1 items-center justify-center h-12 mx-2"
+              </CustomPressable>
+              <CustomPressable
+                className="bg-purple-unique rounded-lg ml-1 items-center justify-center h-12"
+                containerClassName='w-1/2'
                 onPress={handleConfirm}
               >
                 <Text className="text-white font-geist-semi-bold">Confirmar</Text>
-              </Pressable>
+              </CustomPressable>
             </View>
           </View>
         </View>

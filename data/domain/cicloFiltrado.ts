@@ -4,7 +4,7 @@ export enum ProgramacionType {
 }
 
 export interface Programacion {
-  id: number;
+  id: number | null;
   horaInicio: string;
   horaFin: string;
   dias: Day[];

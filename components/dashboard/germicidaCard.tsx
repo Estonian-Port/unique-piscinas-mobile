@@ -8,6 +8,7 @@ import { piscinaService } from '@/services/piscina.service';
 import ModalEliminarEquipamiento from './modalEliminarEquipamiento';
 import { Delete, Edit2, RefreshCw } from 'react-native-feather';
 import ModalResetearContador from './modalResetearContador';
+import CustomPressable from '../utiles/customPressable';
 
 const GermicidaCard = ({
   germicida,
@@ -179,7 +180,7 @@ const GermicidaCard = ({
           })()}
         </View>
       </View>
-      <Pressable
+      <CustomPressable
         className="flex-row rounded-lg bg-black py-2 items-center justify-center mt-2"
         onPress={() => setModalResetOpen(true)}
       >
@@ -187,7 +188,7 @@ const GermicidaCard = ({
         <Text className="text-white font-geist text-base ml-2">
           Resetear contador
         </Text>
-      </Pressable>
+      </CustomPressable>
       <ModalEditarGermicida
         visible={modalEditOpen}
         germicida={germicida}

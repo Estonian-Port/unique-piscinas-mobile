@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { View, Text, Pressable, TextInput } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { Screen } from '@/components/utiles/Screen';
 import { administracionService } from '@/services/administracion.service';
 import { useAuth } from '@/context/authContext';
 import { GenerarPatenteDTO } from '@/data/domain/piscina';
+import CustomPressable from '@/components/utiles/customPressable';
 
 const GenerarPatente = () => {
   const { usuario } = useAuth();
@@ -60,7 +61,7 @@ const GenerarPatente = () => {
         />
 
         {/* Botón */}
-        <Pressable
+        <CustomPressable
           disabled={loading || !firmware || !tipo}
           onPress={handleGenerarPatente}  // <= esto faltaba
           className={`rounded-lg p-4 w-full items-center ${
@@ -74,7 +75,7 @@ const GenerarPatente = () => {
           <Text className="text-white text-lg font-geist-semi-bold">
             {loading ? 'Generando...' : 'Generar'}
           </Text>
-        </Pressable>
+        </CustomPressable>
       </View>
     </Screen>
   );

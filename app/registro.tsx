@@ -7,6 +7,7 @@ import { usuarioService } from '@/services/usuario.service';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Eye, EyeOff } from 'react-native-feather';
+import CustomPressable from '@/components/utiles/customPressable';
 
 export interface UsuarioAlta {
   id: number;
@@ -235,14 +236,14 @@ const Registro = () => {
                   </Text>
                 )}
 
-                <Pressable
+                <CustomPressable
                   className="mt-6 mb-8 rounded-lg bg-gray-400 p-4 w-3/5 self-center"
                   onPress={handleSubmit as any}
                 >
                   <Text className="font-geist-semi-bold text-text text-lg text-center">
                     Guardar cambios
                   </Text>
-                </Pressable>
+                </CustomPressable>
               </View>
             </View>
           </ScrollView>

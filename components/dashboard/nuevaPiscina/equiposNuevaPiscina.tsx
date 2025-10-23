@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Switch, Pressable } from 'react-native';
+import { View, Text, TextInput, Switch } from 'react-native';
 import React, { useState } from 'react';
 import RadioButton from '../../utiles/radioButton';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -6,6 +6,7 @@ import { Link } from 'expo-router';
 import PasosFormulario from './pasosFormulario';
 import { PiscinaNueva } from '@/data/domain/piscina';
 import { Activity, Database, Thermometer, Zap } from 'react-native-feather';
+import CustomPressable from '@/components/utiles/customPressable';
 
 export type TipoBomba = 'Bomba única' | 'Doble bomba' | 'Bomba de velocidad variable';
 export type TipoFiltro = 'Arena' | 'Vidrio' | 'Cartucho';
@@ -390,25 +391,25 @@ const EquiposNuevaPiscina = ({
       </View>
       <View className="flex-row items-center justify-center gap-1 mt-5">
         <Link asChild href="/dashboard">
-          <Pressable
+          <CustomPressable
             onPress={onCancel}
             className="border border-gray-200 rounded-md p-2 items-center justify-center w-1/3"
           >
             <Text className="text-text font-geist text-base">Cancelar</Text>
-          </Pressable>
+          </CustomPressable>
         </Link>
-        <Pressable
+        <CustomPressable
           onPress={onBack}
           className="border border-gray-200 rounded-md p-2 items-center justify-center bg-grayish-unique w-1/3"
         >
           <Text className="text-text text-base font-geist">Atrás</Text>
-        </Pressable>
-        <Pressable
+        </CustomPressable>
+        <CustomPressable
           onPress={onSave}
           className="border border-gray-200 rounded-md p-2 items-center justify-center bg-gold-unique w-1/3"
         >
           <Text className="text-white text-base font-geist">Guardar</Text>
-        </Pressable>
+        </CustomPressable>
       </View>
     </View>
   );
