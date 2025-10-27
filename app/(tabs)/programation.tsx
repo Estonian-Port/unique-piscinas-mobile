@@ -52,7 +52,7 @@ const Programation = () => {
             />
             <WebTabBar />
             <ProgramacionFiltrado programacion={piscina!.programacionFiltrado} actualizarPiscina={fetchPool} />
-            <ProgramacionIluminacion programacion={piscina!.programacionIluminacion} actualizarPiscina={fetchPool} />
+            <ProgramacionIluminacion luzManual={piscina!.iluminacionManual} programacion={piscina!.programacionIluminacion} actualizarPiscina={fetchPool} />
           </View>
         </ScreenTabs>
       </ScrollView>

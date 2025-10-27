@@ -32,6 +32,7 @@ const ProgramacionFiltrado = ({
     dias: [],
     activa: true,
     tipo: ProgramacionType.FILTRADO,
+    ejecutando: false,
   };
 
   const hasCicles = programacion.length > 0;

@@ -18,11 +18,13 @@ interface ControlFiltroProps {
   entradaAgua: entradaAgua[];
   funcionFiltro: funcionFiltro | null;
   setPiscina: Dispatch<SetStateAction<PiscinaResume | null>>;
+  onUpdate?: () => Promise<void> | void;
 }
 
 export default function ControlFiltro({
   piscina,
   setPiscina,
+  onUpdate,
 }: ControlFiltroProps) {
   const [funcionActiva, setFuncionActiva] = useState(piscina.funcionActiva);
   const [modalBarrefondoVisible, setModalBarrefondoVisible] = useState(false);
@@ -92,6 +94,7 @@ export default function ControlFiltro({
       setBarrefondoActivo(nuevasEntradas.includes('Barrefondo'));
       setSkimmerActivo(nuevasEntradas.includes('Skimmer'));
       setTanqueActivo(nuevasEntradas.includes('Tanque'));
+      await onUpdate?.();
     } catch (error) {
       Toast.show({
         type: 'error',
@@ -115,6 +118,7 @@ export default function ControlFiltro({
           funcionActiva: 'REPOSO',
         }));
         actualizarEntradaDeAgua([]);
+        await onUpdate?.();
       } else {
         const response = await piscinaService.actualizarFuncionFiltro(
           piscina.id,
@@ -125,6 +129,7 @@ export default function ControlFiltro({
           ...prevPiscina!,
           funcionActiva: funcion,
         }));
+        await onUpdate?.();
       }
     } catch (error) {
       console.error(error);

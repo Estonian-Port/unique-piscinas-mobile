@@ -49,6 +49,7 @@ export interface PiscinaProgramacion {
   volumen: string;
   programacionIluminacion: Programacion[];
   programacionFiltrado: Programacion[];
+  iluminacionManual: boolean;
 }
 
 //Se usa en la vista usuario -> equipment
@@ -82,8 +83,8 @@ export interface PiscinaResume {
   diferenciaPh: number;
   entradaAgua: entradaAgua[];
   funcionActiva: funcionFiltro;
-  sistemasGermicidas: sistemaGermicida[];
-  calefaccion: boolean;
+  sistemasGermicidas: Germicida[];
+  calefaccion: Calefaccion | null;
   esDesbordante: boolean;
 }
 

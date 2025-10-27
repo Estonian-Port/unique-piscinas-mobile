@@ -167,8 +167,8 @@ const ConfiguracionPiscina = ({
                 ref={scrollViewRef}
                 enableOnAndroid={true}
                 enableAutomaticScroll={true}
-                extraScrollHeight={Platform.OS === 'ios' ? 150 : 50}
-                extraHeight={Platform.OS === 'ios' ? 150 : 100}
+                extraScrollHeight={Platform.OS === 'ios' ? 50 : 50}
+                extraHeight={Platform.OS === 'ios' ? 10 : 100}
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{ flexGrow: 1, paddingBottom: keyboardOpen ? 100 : 0 }}
                 enableResetScrollToCoords={false}

@@ -252,6 +252,7 @@ class PiscinaService {
   ): Promise<{ data: Programacion; message: string }> => {
     const programacionToSend = {
       ...programacion,
+      id: null,
       dias: programacion.dias.map((d: string) => dayMap[d]),
       tipo: programacion.tipo.toUpperCase(),
     };

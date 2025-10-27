@@ -17,12 +17,13 @@ import CustomPressable from '../utiles/customPressable';
 const ProgramacionIluminacion = ({
   programacion,
   actualizarPiscina,
+  luzManual,
 }: {
   programacion: Programacion[];
   actualizarPiscina: () => Promise<void>;
+  luzManual: boolean;
 }) => {
   const { selectedPool } = useAuth();
-  const [isManual, setIsManual] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   const programacionVacia: Programacion = {
@@ -75,7 +76,6 @@ const ProgramacionIluminacion = ({
         });
       }
     }
-    setIsManual(value);
   };
 
   const handleAddCicle = async (nuevoCiclo: Programacion) => {
@@ -173,10 +173,10 @@ const ProgramacionIluminacion = ({
         </View>
         <Switch
           trackColor={{ false: '#d3d3d3', true: '#000000' }}
-          thumbColor={isManual ? '#fcdb99' : '#ffffff'}
+          thumbColor={luzManual ? '#fcdb99' : '#ffffff'}
           ios_backgroundColor="#d3d3d3"
           onValueChange={(value) => handleLucesManual(value)}
-          value={isManual}
+          value={luzManual}
         />
       </View>
 

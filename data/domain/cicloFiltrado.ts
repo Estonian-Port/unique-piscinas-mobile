@@ -10,6 +10,7 @@ export interface Programacion {
   dias: Day[];
   activa: boolean;
   tipo: ProgramacionType;
+  ejecutando: boolean;
 }
 
 export enum FuncionFiltro {
