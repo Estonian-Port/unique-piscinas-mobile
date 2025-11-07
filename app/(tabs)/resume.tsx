@@ -11,8 +11,12 @@ import PrivateScreen from '@/components/utiles/privateScreen';
 import { useAuth } from '@/context/authContext';
 import WebTabBar from '@/components/utiles/webTabBar';
 import Header from '@/components/utiles/header';
-import { climaIconColor, climaIconComponent } from '@/components/utiles/climaIconMapper';
+import {
+  climaIconColor,
+  climaIconComponent,
+} from '@/components/utiles/climaIconMapper';
 import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
 
 export default function Resume() {
   const { usuario, selectedPool } = useAuth();
@@ -21,9 +25,10 @@ export default function Resume() {
 
   const [clima, setClima] = useState<ClimaResponse | null>(null);
 
-const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     if (!selectedPool) return;
     try {
+      setLoading(true);
       const [poolData, poolPh, climaData] = await Promise.all([
         piscinaService.getPiscinaResume(selectedPool.id),
         piscinaService.getPiscinaResumePhById(selectedPool.id),
@@ -39,12 +44,11 @@ const fetchData = useCallback(async () => {
     }
   }, [selectedPool]);
 
-  useEffect(() => {
-    if (selectedPool) {
-      setLoading(true);
+  useFocusEffect(
+    useCallback(() => {
       fetchData();
-    }
-  }, [selectedPool, fetchData]);
+    }, [fetchData])
+  );
 
   if (loading || !usuario || !selectedPool || !piscina || !clima) {
     return (
@@ -91,4 +95,3 @@ const fetchData = useCallback(async () => {
     </PrivateScreen>
   );
 }
-

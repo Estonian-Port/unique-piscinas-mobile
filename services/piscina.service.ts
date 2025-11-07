@@ -246,72 +246,6 @@ class PiscinaService {
     return { data: response.data.data, message: response.data.message };
   };
 
-  addProgramacion = async (
-    piscinaId: number,
-    programacion: Programacion
-  ): Promise<{ data: Programacion; message: string }> => {
-    const programacionToSend = {
-      ...programacion,
-      id: null,
-      dias: programacion.dias.map((d: string) => dayMap[d]),
-      tipo: programacion.tipo.toUpperCase(),
-    };
-    const response = await api.post(
-      `${PISCINA}/add-programacion/${piscinaId}`,
-      programacionToSend
-    );
-    return { data: response.data.data, message: response.data.message };
-  };
-
-  updateProgramacion = async (
-    piscinaId: number,
-    programacion: Programacion
-  ): Promise<{ data: Programacion; message: string }> => {
-    const programacionToSend = {
-      ...programacion,
-      dias: programacion.dias.map((d: string) => dayMap[d]),
-      tipo: programacion.tipo.toUpperCase(),
-    };
-    const response = await api.put(
-      `${PISCINA}/update-programacion/${piscinaId}`,
-      programacionToSend
-    );
-    return { data: response.data.data, message: response.data.message };
-  };
-
-  deleteProgramacion = async (
-    piscinaId: number,
-    programacionId: number
-  ): Promise<{ data: Programacion; message: string }> => {
-    const response = await api.delete(
-      `${PISCINA}/delete-programacion/${piscinaId}/${programacionId}`
-    );
-    return { data: response.data.data, message: response.data.message };
-  };
-
-  actualizarEntradaDeAgua = async (
-    piscinaId: number,
-    entradaAgua: entradaAgua[]
-  ): Promise<{ data: PiscinaResume; message: string }> => {
-    const response = await api.put(
-      `/estado-piscina/update-entrada-agua/${piscinaId}`,
-      entradaAgua
-    );
-    return { data: response.data.data, message: response.data.message };
-  };
-
-  actualizarFuncionFiltro = async (
-    piscinaId: number,
-    funcionFiltro: funcionFiltro
-  ): Promise<{ data: PiscinaResume; message: string }> => {
-    const response = await api.put(
-      `/estado-piscina/update-funcion-filtro/${piscinaId}`,
-      { funcion: funcionFiltro },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-    return { data: response.data.data, message: response.data.message };
-  };
-
   getLecturas = async (piscinaId: number): Promise<Lectura[]> => {
     const response = await api.get(`${PISCINA}/lecturas/${piscinaId}`);
     return response.data.data;
@@ -339,14 +273,6 @@ class PiscinaService {
       `${PISCINA}/reset-contador-germicida/${piscinaId}/${germicidaId}`
     );
     return { data: response.data.data, message: response.data.message };
-  };
-
-  encenderLucesManual = async (piscinaId: number): Promise<void> => {
-    await api.post(`/estado-piscina/encender-luces-manuales/${piscinaId}`);
-  };
-
-  apagarLucesManual = async (piscinaId: number): Promise<void> => {
-    await api.post(`/estado-piscina/apagar-luces-manuales/${piscinaId}`);
   };
 }
 

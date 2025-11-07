@@ -7,13 +7,12 @@ import {
   Programacion,
   ProgramacionType,
 } from '@/data/domain/cicloFiltrado';
-import { ciclosFiltradoMock } from '@/data/mock/cicloFiltradoMock';
 import ModalProgramacion from './modalProgramacion';
 import Toast from 'react-native-toast-message';
-import { piscinaService } from '@/services/piscina.service';
 import { useAuth } from '@/context/authContext';
 import { Clock, Filter } from 'react-native-feather';
 import CustomPressable from '../utiles/customPressable';
+import { programacionService } from '@/services/programacion.service';
 
 const ProgramacionFiltrado = ({
   programacion,
@@ -39,7 +38,7 @@ const ProgramacionFiltrado = ({
 
   const handleAddCicle = async (nuevoCiclo: Programacion) => {
     try {
-      const response = await piscinaService.addProgramacion(
+      const response = await programacionService.addProgramacion(
         selectedPool!.id,
         nuevoCiclo
       );
@@ -66,7 +65,7 @@ const ProgramacionFiltrado = ({
 
   const handleEditCicle = async (cicloEditado: Programacion) => {
     try {
-      const response = await piscinaService.updateProgramacion(
+      const response = await programacionService.updateProgramacion(
         selectedPool!.id,
         cicloEditado
       );
@@ -91,7 +90,7 @@ const ProgramacionFiltrado = ({
 
   const handleDeleteCicle = async (cicloId: number) => {
     try {
-      const response = await piscinaService.deleteProgramacion(
+      const response = await programacionService.deleteProgramacion(
         selectedPool!.id,
         cicloId,
       );
@@ -113,6 +112,56 @@ const ProgramacionFiltrado = ({
       });
     }
   };
+
+    const handleActivarCicle = async (cicloId: number) => {
+      try {
+        const response = await programacionService.activarProgramacion(
+          selectedPool!.id,
+          cicloId
+        );
+        Toast.show({
+          type: 'success',
+          text1: 'Ciclo activado',
+          text2: 'El ciclo se ha activado correctamente',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+        actualizarPiscina();
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'El ciclo no se ha podido activar correctamente',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    };
+  
+    const handleDesactivarCicle = async (cicloId: number) => {
+      try {
+        const response = await programacionService.desactivarProgramacion(
+          selectedPool!.id,
+          cicloId
+        );
+        Toast.show({
+          type: 'success',
+          text1: 'Ciclo desactivado',
+          text2: 'El ciclo se ha desactivado correctamente',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+        actualizarPiscina();
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'El ciclo no se ha podido desactivar correctamente',
+          position: 'bottom',
+          bottomOffset: 80,
+        });
+      }
+    };
 
   return (
     <ScreenCard>
@@ -152,9 +201,11 @@ const ProgramacionFiltrado = ({
           {programacion.map((ciclo) => (
             <Schedule
               cicle={ciclo}
+              key={ciclo.id}
               editCicle={handleEditCicle}
               deleteCicle={handleDeleteCicle}
-              key={ciclo.id}
+              activarCicle={handleActivarCicle}
+              desactivarCicle={handleDesactivarCicle}
             />
           ))}
         </View>

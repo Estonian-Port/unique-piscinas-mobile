@@ -8,10 +8,9 @@ import type {
   PiscinaResume,
 } from '@/data/domain/piscina';
 import ModalBarrefondo from './modalBarrefondo';
-import { piscinaService } from '@/services/piscina.service';
 import Toast from 'react-native-toast-message';
 import { Box, Circle, Droplet, Eye, Info } from 'react-native-feather';
-import Divider from '../utiles/divider';
+import { estadoPiscinaService } from '@/services/estadoPiscina.service';
 
 interface ControlFiltroProps {
   piscina: PiscinaResume;
@@ -79,7 +78,7 @@ export default function ControlFiltro({
 
   const actualizarEntradaDeAgua = async (entradasActivas: entradaAgua[]) => {
     try {
-      const response = await piscinaService.actualizarEntradaDeAgua(
+      const response = await estadoPiscinaService.actualizarEntradaDeAgua(
         piscina.id,
         entradasActivas
       );
@@ -108,7 +107,7 @@ export default function ControlFiltro({
   const actualizarFuncionFiltro = async (funcion: funcionFiltro) => {
     try {
       if (funcion === piscina.funcionActiva) {
-        const response = await piscinaService.actualizarFuncionFiltro(
+        const response = await estadoPiscinaService.actualizarFuncionFiltro(
           piscina.id,
           'REPOSO'
         );
@@ -120,7 +119,7 @@ export default function ControlFiltro({
         actualizarEntradaDeAgua([]);
         await onUpdate?.();
       } else {
-        const response = await piscinaService.actualizarFuncionFiltro(
+        const response = await estadoPiscinaService.actualizarFuncionFiltro(
           piscina.id,
           funcion
         );
@@ -139,7 +138,7 @@ export default function ControlFiltro({
   const verificarFuncionFiltro = async (entradas: entradaAgua[]) => {
     if (!entradas || entradas.length === 0) {
       try {
-        await piscinaService.actualizarFuncionFiltro(piscina.id, 'REPOSO');
+        await estadoPiscinaService.actualizarFuncionFiltro(piscina.id, 'REPOSO');
         setFuncionActiva('REPOSO');
         setPiscina((prevPiscina) => ({
           ...prevPiscina!,
